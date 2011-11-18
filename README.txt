@@ -11,6 +11,16 @@ Plone Jenkins/CI Team Members
   - Timo Stollenwerk <contact@timostollenwerk.net>
   - William Deegan <bill@baddogconsulting.com>
 
+Urgent Tasks
+============
+
+  - Plone coredev is currently triggered on each github commit to the core repo
+    no matter to which branch. This leads to load problems on jenkins.plone.org.
+    As far as I understood the discussion on that topic the best way to 
+    accomplish this is a small piece of component that sits in between github
+    and jenkins and can decide which commit should trigger a build. Another
+    option might be a Jenkins plugin. Any thoughts/ideas?
+
 
 Possible Topics / Ideas
 =======================
@@ -66,6 +76,12 @@ Work in Progress
     [ ] Move the documentation to buildout.jenkins or jenkins.plone.org ???
 
     [timo]
+
+
+Books about Jenkins/CI/Testing
+==============================
+
+  - http://www.wakaleo.com/books/jenkins-the-definitive-guide
 
 
 Examples of other Jenkins/CI instances
