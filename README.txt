@@ -11,6 +11,7 @@ Plone Jenkins/CI Team Members
 * Timo Stollenwerk
 * William Deegan
 
+
 Urgent Tasks
 ============
 
@@ -20,6 +21,9 @@ Urgent Tasks
   accomplish this is a small piece of component that sits in between github
   and jenkins and can decide which commit should trigger a build. Another
   option might be a Jenkins plugin. Any thoughts/ideas?
+
+  - https://github.com/conversation/github-jenkins-bridge
+  - http://stackoverflow.com/questions/5784329/how-can-i-make-jenkins-ci-with-git-trigger-on-pushes-to-master
 
 
 Possible Topics / Ideas
