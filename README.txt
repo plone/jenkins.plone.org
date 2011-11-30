@@ -71,7 +71,7 @@ Work in Progress
 * CODE COVERAGE RECIPE: Extend collective.xmltestreport to produce code
   coverage data that can be used by the Jenkins cobertura plugin.
 
-  [ ] Move collective.xmltestreport to github
+  [X] Move collective.xmltestreport to github: https://github.com/collective/collective.xmltestreport
 
   [ ] Create branch that includes the code coverage feature
 
