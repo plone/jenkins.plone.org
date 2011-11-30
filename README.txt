@@ -25,6 +25,9 @@ Urgent Tasks
   - https://github.com/conversation/github-jenkins-bridge
   - http://stackoverflow.com/questions/5784329/how-can-i-make-jenkins-ci-with-git-trigger-on-pushes-to-master
 
+  => UPDATE: If we disable the "Cross Site Request Forgery" setting in the 
+     Jenkins configuration, the GitHub post-commit hook works.
+
 
 Possible Topics / Ideas
 =======================
