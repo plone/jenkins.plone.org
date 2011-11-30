@@ -28,6 +28,12 @@ Urgent Tasks
   => UPDATE: If we disable the "Cross Site Request Forgery" setting in the 
      Jenkins configuration, the GitHub post-commit hook works.
 
+  => UPDATE: A user "github" has been created in the Plone LDAP and granted
+     the right to build a job on jenkins.plone.org. See
+     https://github.com/plone/plone.app.discussion/admin/hooks
+     for an example of a post-commit hook configuration. Anonymous users are
+     not allowed to trigger a build.
+     
 
 Possible Topics / Ideas
 =======================
