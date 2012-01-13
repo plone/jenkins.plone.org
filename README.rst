@@ -1,6 +1,6 @@
-================================================================================
+===============================================================================
 PlONE JENKINS/CI TEAM
-================================================================================
+===============================================================================
 
 Plone Jenkins/CI Team Members
 =============================
@@ -17,7 +17,7 @@ Urgent Tasks
 
 * Plone coredev is currently triggered on each github commit to the core repo
   no matter to which branch. This leads to load problems on jenkins.plone.org.
-  As far as I understood the discussion on that topic the best way to 
+  As far as I understood the discussion on that topic the best way to
   accomplish this is a small piece of component that sits in between github
   and jenkins and can decide which commit should trigger a build. Another
   option might be a Jenkins plugin. Any thoughts/ideas?
@@ -25,7 +25,7 @@ Urgent Tasks
   - https://github.com/conversation/github-jenkins-bridge
   - http://stackoverflow.com/questions/5784329/how-can-i-make-jenkins-ci-with-git-trigger-on-pushes-to-master
 
-  => UPDATE: If we disable the "Cross Site Request Forgery" setting in the 
+  => UPDATE: If we disable the "Cross Site Request Forgery" setting in the
      Jenkins configuration, the GitHub post-commit hook works.
 
   => UPDATE: A user "github" has been created in the Plone LDAP and granted
@@ -33,19 +33,29 @@ Urgent Tasks
      https://github.com/plone/plone.app.discussion/admin/hooks
      for an example of a post-commit hook configuration. Anonymous users are
      not allowed to trigger a build.
-     
+
 
 Possible Topics / Ideas
 =======================
 
-* Plone testing – We've got the basic bin/test bits working now. I've been slowly setting up some static analysis (pep8, zptlint, etc). Selenium/Webdriver testing is something we need to jump on. Test coverage reports. Performance testing would be outstanding. 
-* PLIP testing – The Framework Team and PLIP implementers would appreciate being able to see the current status of under-development PLIPs. 
+* Plone testing – We've got the basic bin/test bits working now. I've been slowly setting up some static analysis (pep8, zptlint, etc). Selenium/Webdriver testing is something we need to jump on. Test coverage reports. Performance testing would be outstanding.
+* PLIP testing – The Framework Team and PLIP implementers would appreciate being able to see the current status of under-development PLIPs.
 * Plone releases – Packaging. Pushing to dist.plone.org. Building installers (automating Windows installer builds is a really high priority at the moment). Nightly builds?
 * Compatibility testing – Michael's got a great set of scripts/cfgs set up to easily check a package against any/all Plone releases. I'd like to set that up and start plugging in 3rd party packages. Ideally, we could start pulling this data in to plone.org's downloads section: PFG 8.1.7 just came out, what versions of Plone does it work with? I'd also welcome testing against the current Plone development branches. If 30 add-ons break overnight, I can catch the regressions before they make it into the next release.
 
 
 Work in Progress
 ================
+
+* JENKINS SERVER:
+
+  [ ] Create fabric configuration
+
+  [ ] Install monitoring
+
+  [ ] Install notifications when jenkins is down
+
+  [timo]
 
 * JENKINS BUILDOUT: Generic Jenkins buildout file/recipe that can be used by
   Plone core, Plone core projects and collective add-ons to generate a
@@ -57,7 +67,7 @@ Work in Progress
   [X] Create buildout.jenkins project on github
 
   [X] Make buildout.jenkins work for single source Plone core projects
-    
+
   [ ] Make buildout.jenkins work for multiple source Plone core projects
 
   [ ] Use buildout.jenkins for Plone core builds
@@ -67,7 +77,7 @@ Work in Progress
   [ ] Refactor code into a recipe ???
 
   [timo]
-  
+
 * CODE COVERAGE RECIPE: Extend collective.xmltestreport to produce code
   coverage data that can be used by the Jenkins cobertura plugin.
 
