@@ -110,3 +110,10 @@ Examples of other Jenkins/CI instances
 ======================================
 
 * http://ci.typo3.org/view/TYPO3/
+
+
+Useful Jenkins Plugins
+======================
+
+* https://wiki.jenkins-ci.org/display/JENKINS/ShiningPanda+Plugin/ (Test multiple Python versions)
+
