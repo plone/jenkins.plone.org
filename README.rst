@@ -115,5 +115,8 @@ Examples of other Jenkins/CI instances
 Useful Jenkins Plugins
 ======================
 
-* https://wiki.jenkins-ci.org/display/JENKINS/ShiningPanda+Plugin/ (Test multiple Python versions)
+* https://wiki.jenkins-ci.org/display/JENKINS/JobConfigHistory+Plugin
+  Saves copies of all job and system configurations. Allows you to export job configurations.
 
+* https://wiki.jenkins-ci.org/display/JENKINS/ShiningPanda+Plugin/
+  Allows testing on multiple versions of Python.
