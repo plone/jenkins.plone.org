@@ -68,7 +68,7 @@ Work in Progress
 
   [X] Make buildout.jenkins work for single source Plone core projects
 
-  [ ] Make buildout.jenkins work for multiple source Plone core projects
+  [X] Make buildout.jenkins work for multiple source Plone core projects
 
   [ ] Use buildout.jenkins for Plone core builds
 
