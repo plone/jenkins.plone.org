@@ -1,68 +1,72 @@
 #!bin/zopepy
-import jenkins
-from lxml import etree
+import json
+import requests
+import urllib2
+from auth import github_username
+from auth import github_password
+from auth import jenkins_username
+from auth import jenkins_password
 
-from auth import JENKINS_URL
-from auth import JENKINS_USERNAME
-from auth import JENKINS_PASSWORD
+hook_url = 'https://%s:%s@jenkins.plone.org/job/plone-4.2/build' % (
+    jenkins_username,
+    jenkins_password
+    )
 
-CONFIG = {
-    'id': 'plone-4.2',
-    'name': 'Plone 4.2',
-    'repo': 'git://github.com/plone/buildout.coredev.git',
-    'packages': [
-        {
-            'id': 'plone-4.2-plone.app.layout',
-            'name': 'plone.app.layout',
-            'repo': 'git://github.com/plone/plone.app.layout.git'
-        },
-        {
-            'id': 'plone-4.2-Products.CMFPlone',
-            'name': 'Products.CMFPlone',
-            'repo': 'git://github.com/plone/Products.CMFPlone.git'
-        }
-    ]
-}
+GH_URL = 'https://api.github.com'
+
+sources = urllib2.urlopen(
+    'https://raw.github.com/plone/buildout.coredev/4.2/sources.cfg')
+html = sources.read()
 
 
-def connect():
-    return jenkins.Jenkins(
-        JENKINS_URL, JENKINS_USERNAME, JENKINS_PASSWORD)
-
-
-def get_jobs():
-    j = connect()
-    for job in j.get_jobs():
-        print job['name']
-
-
-def deploy():
-    j = connect()
-    plone_job_id = CONFIG['id']
-    plone_job_name = CONFIG['name']
-    plone_repo = CONFIG['repo']
-    # Plone Job Config
-    plone_config = open('config/plone.xml', 'r')
-    if j.job_exists(plone_job_id):
-        print("Reconfig Job %s" % plone_job_id)
-        j.reconfig_job(plone_job_id, plone_config.read())
-    else:
-        print("Create Job %s" % plone_job_id)
-        j.create_job(plone_job_id, plone_config.read())
-    # Package Job Config
-    for package in CONFIG['packages']:
-        tree = etree.parse('config/package.xml')
-        tree.find("//scm/userRemoteConfigs/hudson.plugins.git.UserRemoteConfig/url").text = package['repo']
-        tree.find("//customWorkspace").text = plone_repo
-        package_config = etree.tostring(tree)
-        if j.job_exists(package['id']):
-            print("Reconfig Job %s" % package['id'])
-            j.reconfig_job(package['id'], package_config)
-        else:
-            print("Create Job %s" % package['id'])
-            j.create_job(package['id'], package_config)
-
-
-def build():
-    j = connect()
-    j.build_job(CONFIG['id'])
+def push():
+    with requests.session(auth=(github_username, github_password)) as s:
+        for line in html.split("\n"):
+            if "${remotes:plone}" in line:
+                package = line.split("${remotes:plone}")[1]\
+                    .split("pushurl")[0]\
+                    .strip(" ").strip("/")
+                #repo_url = "git://github.com/plone/%s" % package
+                existing_hooks = json.loads(
+                    s.get(GH_URL + '/repos/plone/%s/hooks' % \
+                        package.strip(".git")).content)
+                if not 'message' in existing_hooks:
+                    if not any(h['name'] == 'web' and \
+                        h['config']['url'] == hook_url \
+                        for h in existing_hooks):
+                        # Create a new hook
+                        print("Push %s" % package)
+                        req = {
+                            'name': 'web',
+                            'active': True,
+                            'config': {
+                                'url': hook_url,
+                                'insecure_ssl': 1,
+                            }
+                        }
+                        s.post(GH_URL + '/repos/plone/%s/hooks' % \
+                            package.strip(".git"), data=json.dumps(req))
+                    else:
+                        # Edit/update a hook
+                        print("Update %s" % package)
+                        hook = [
+                            x for x in existing_hooks \
+                            if 'config' in x and \
+                            'url' in x['config'] and \
+                            x['config']['url'] == hook_url]
+                        if len(hook) > 0:
+                            hook_id = hook[0]['id']
+                            req = {
+                                'name': 'web',
+                                'active': True,
+                                'config': {
+                                    'url': hook_url,
+                                    'insecure_ssl': 1,
+                                }
+                            }
+                            hook_id = 1
+                            s.post(GH_URL + '/repos/plone/%s/hooks%s' % \
+                                (package.strip(".git"), hook_id),
+                                data=json.dumps(req))
+                        else:
+                            print("Ignore %s" % package)
