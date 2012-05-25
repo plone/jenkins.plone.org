@@ -31,42 +31,23 @@ def push():
                     s.get(GH_URL + '/repos/plone/%s/hooks' % \
                         package.strip(".git")).content)
                 if not 'message' in existing_hooks:
-                    if not any(h['name'] == 'web' and \
-                        h['config']['url'] == hook_url \
-                        for h in existing_hooks):
-                        # Create a new hook
-                        print("Push %s" % package)
-                        req = {
-                            'name': 'web',
-                            'active': True,
-                            'config': {
-                                'url': hook_url,
-                                'insecure_ssl': 1,
-                            }
+                    jenkins_hooks = [x for x in existing_hooks \
+                        if x['name'] == u'web' and \
+                           'jenkins.plone.org' in x['config']['url']]
+                    for jenkins_hook in jenkins_hooks:
+                        print("Delete post-commit hook for %s" % package.strip(".git"))
+                        s.delete(GH_URL + '/repos/plone/%s/hooks/%s' % \
+                            (package.strip(".git"), jenkins_hook['id']))
+
+                    # Create a new hook
+                    print("Create post-commit hook for %s" % package.strip(".git"))
+                    req = {
+                        'name': 'web',
+                        'active': True,
+                        'config': {
+                            'url': hook_url,
+                            'insecure_ssl': 1,
                         }
-                        s.post(GH_URL + '/repos/plone/%s/hooks' % \
-                            package.strip(".git"), data=json.dumps(req))
-                    else:
-                        # Edit/update a hook
-                        print("Update %s" % package)
-                        hook = [
-                            x for x in existing_hooks \
-                            if 'config' in x and \
-                            'url' in x['config'] and \
-                            x['config']['url'] == hook_url]
-                        if len(hook) > 0:
-                            hook_id = hook[0]['id']
-                            req = {
-                                'name': 'web',
-                                'active': True,
-                                'config': {
-                                    'url': hook_url,
-                                    'insecure_ssl': 1,
-                                }
-                            }
-                            hook_id = 1
-                            s.post(GH_URL + '/repos/plone/%s/hooks%s' % \
-                                (package.strip(".git"), hook_id),
-                                data=json.dumps(req))
-                        else:
-                            print("Ignore %s" % package)
+                    }
+                    s.post(GH_URL + '/repos/plone/%s/hooks' % \
+                        package.strip(".git"), data=json.dumps(req))
