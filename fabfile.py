@@ -88,3 +88,4 @@ def push():
             for package in packages:
                 _delete_existing_hooks(s, package, plone_version)
                 _create_hook(s, package, plone_version)
+            _create_hook(s, "buildout.coredev", plone_version)
