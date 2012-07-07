@@ -32,9 +32,52 @@ def _get_sources(plone_version):
     return packages
 
 
+def _delete_existing_hooks(s, package, plone_version):
+    """Delete existing post commit hooks from a package. We make sure that
+       hooks for a specific plone version are removed and all other hooks
+       remain untouched.
+    """
+    package_hooks = json.loads(
+        s.get(GH_URL + '/repos/plone/%s/hooks' % \
+            package.strip(".git")).content)
+    if not 'message' in package_hooks:
+        coredev_hooks = [x for x in package_hooks \
+            if x['name'] == u'web' and \
+               'jenkins.plone.org/job/plone-%s' % \
+               plone_version in x['config']['url']]
+        for coredev_hook in coredev_hooks:
+            #print("Delete post-commit hook for %s" % \
+            #    package.strip(".git"))
+            s.delete(GH_URL + '/repos/plone/%s/hooks/%s' % \
+                (package.strip(".git"), coredev_hook['id']))
+
+
+def _create_hook(s, package, plone_version):
+    """Create a post commit hook on github for a certain package that triggers
+       the Jenkins job of a specific Plone version.
+    """
+    print("Create post-commit hook for %s" % \
+        package.strip(".git"))
+    hook_url = 'https://%s:%s@jenkins.plone.org/job/plone-%s/build' % (
+        jenkins_username,
+        jenkins_password,
+        plone_version,
+        )
+    req = {
+        'name': 'web',
+        'active': True,
+        'config': {
+            'url': hook_url,
+            'insecure_ssl': 1,
+        }
+    }
+    s.post(GH_URL + '/repos/plone/%s/hooks' % \
+        package.strip(".git"), data=json.dumps(req))
+
+
 def push():
     """Creates github post-commit hooks to trigger the Jenkins jobs for
-    buildout.coredev.
+       buildout.coredev.
     """
     with requests.session(auth=(github_username, github_password)) as s:
         for plone_version in plone_versions:
@@ -43,35 +86,5 @@ def push():
             print("---------")
             packages = _get_sources(plone_version)
             for package in packages:
-                #repo_url = "git://github.com/plone/%s" % package
-                existing_hooks = json.loads(
-                    s.get(GH_URL + '/repos/plone/%s/hooks' % \
-                        package.strip(".git")).content)
-                if not 'message' in existing_hooks:
-                    jenkins_hooks = [x for x in existing_hooks \
-                        if x['name'] == u'web' and \
-                           'jenkins.plone.org/job/plone-%s' % \
-                           plone_version in x['config']['url']]
-                    for jenkins_hook in jenkins_hooks:
-                        #print("Delete post-commit hook for %s" % \
-                        #    package.strip(".git"))
-                        s.delete(GH_URL + '/repos/plone/%s/hooks/%s' % \
-                            (package.strip(".git"), jenkins_hook['id']))
-                    # Create a new hook
-                    print("Create post-commit hook for %s" % \
-                        package.strip(".git"))
-                    hook_url = 'https://%s:%s@jenkins.plone.org/job/plone-%s/build' % (
-                        jenkins_username,
-                        jenkins_password,
-                        plone_version,
-                        )
-                    req = {
-                        'name': 'web',
-                        'active': True,
-                        'config': {
-                            'url': hook_url,
-                            'insecure_ssl': 1,
-                        }
-                    }
-                    s.post(GH_URL + '/repos/plone/%s/hooks' % \
-                        package.strip(".git"), data=json.dumps(req))
+                _delete_existing_hooks(s, package, plone_version)
+                _create_hook(s, package, plone_version)
