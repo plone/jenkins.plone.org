@@ -1,4 +1,5 @@
 #!bin/zopepy
+import sys
 import json
 import requests
 import urllib2
@@ -26,9 +27,7 @@ def _get_sources(plone_version):
     for line in html.split("\n"):
         if "${remotes:plone}" in line:
             packages.append(
-                line.split("${remotes:plone}")[1]\
-                    .split("pushurl")[0]\
-                    .strip(" ").strip("/"))
+                line.split("${remotes:plone}/")[1].split(".git")[0])
     return packages
 
 
@@ -39,25 +38,27 @@ def _delete_existing_hooks(s, package, plone_version):
     """
     package_hooks = json.loads(
         s.get(GH_URL + '/repos/plone/%s/hooks' % \
-            package.strip(".git")).content)
+            package).content)
     if not 'message' in package_hooks:
         coredev_hooks = [x for x in package_hooks \
             if x['name'] == u'web' and \
                'jenkins.plone.org/job/plone-%s' % \
                plone_version in x['config']['url']]
         for coredev_hook in coredev_hooks:
-            #print("Delete post-commit hook for %s" % \
-            #    package.strip(".git"))
-            s.delete(GH_URL + '/repos/plone/%s/hooks/%s' % \
-                (package.strip(".git"), coredev_hook['id']))
+            url = GH_URL + '/repos/plone/%s/hooks/%s' % (
+                package,
+                coredev_hook['id'])
+            response = s.delete(url)
+            if response.status_code != 204:
+                _failed(url)
 
 
 def _create_hook(s, package, plone_version):
     """Create a post commit hook on github for a certain package that triggers
        the Jenkins job of a specific Plone version.
     """
-    print("Create post-commit hook for %s" % \
-        package.strip(".git"))
+    print("")
+    sys.stdout.write("Create post-commit hook for %s" % package)
     hook_url = 'https://%s:%s@jenkins.plone.org/job/plone-%s/build' % (
         jenkins_username,
         jenkins_password,
@@ -71,8 +72,22 @@ def _create_hook(s, package, plone_version):
             'insecure_ssl': 1,
         }
     }
-    s.post(GH_URL + '/repos/plone/%s/hooks' % \
-        package.strip(".git"), data=json.dumps(req))
+    url = GH_URL + '/repos/plone/%s/hooks' % package
+    response = s.post(url, data=json.dumps(req))
+    if response.status_code == 201:
+        _ok()
+    else:
+        _failed(url)
+
+
+def _ok():
+    sys.stdout.write(" [ \033[92mOK\033[0m ]")
+
+
+def _failed(url):
+    sys.stdout.write(" [ \033[93mFAILED\033[0m ]")
+    print("")
+    print(url)
 
 
 def push():
@@ -89,3 +104,4 @@ def push():
                 _delete_existing_hooks(s, package, plone_version)
                 _create_hook(s, package, plone_version)
             _create_hook(s, "buildout.coredev", plone_version)
+            print("")
