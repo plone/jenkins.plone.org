@@ -13,25 +13,23 @@ GH_URL = 'https://api.github.com'
 plone_versions = ['4.2', '4.3']
 
 
-def _get_sources(plone_version):
+def _get_sources(sources_cfg_url):
     """Get a list of all packages for a certain Plone version from the
        buildout.coredev sources.cfg.
     """
-    sources_cfg_url = 'https://raw.github.com/plone/buildout.coredev/' + \
-        '%s/sources.cfg' \
-        % plone_version
-    sources_cfg = urllib2.urlopen(sources_cfg_url)
     print("Read package list from %s" % sources_cfg_url)
+    sources_cfg = urllib2.urlopen(sources_cfg_url)
     html = sources_cfg.read()
     packages = []
     for line in html.split("\n"):
         if "${remotes:plone}" in line:
             packages.append(
                 line.split("${remotes:plone}/")[1].split(".git")[0])
+    print("%s packages found." % len(packages))
     return packages
 
 
-def _delete_existing_hooks(s, package, plone_version):
+def _delete_existing_hooks(s, package, jenkins_job_name):
     """Delete existing post commit hooks from a package. We make sure that
        hooks for a specific plone version are removed and all other hooks
        remain untouched.
@@ -42,8 +40,8 @@ def _delete_existing_hooks(s, package, plone_version):
     if not 'message' in package_hooks:
         coredev_hooks = [x for x in package_hooks \
             if x['name'] == u'web' and \
-               'jenkins.plone.org/job/plone-%s' % \
-               plone_version in x['config']['url']]
+               'jenkins.plone.org/job/%s' % \
+               jenkins_job_name in x['config']['url']]
         for coredev_hook in coredev_hooks:
             url = GH_URL + '/repos/plone/%s/hooks/%s' % (
                 package,
@@ -53,16 +51,16 @@ def _delete_existing_hooks(s, package, plone_version):
                 _failed(url)
 
 
-def _create_hook(s, package, plone_version):
+def _create_hook(s, package, jenkins_job_name):
     """Create a post commit hook on github for a certain package that triggers
        the Jenkins job of a specific Plone version.
     """
     print("")
     sys.stdout.write("Create post-commit hook for %s" % package)
-    hook_url = 'https://%s:%s@jenkins.plone.org/job/plone-%s/build' % (
+    hook_url = 'https://%s:%s@jenkins.plone.org/job/%s/build' % (
         jenkins_username,
         jenkins_password,
-        plone_version,
+        jenkins_job_name,
         )
     req = {
         'name': 'web',
@@ -99,9 +97,29 @@ def push():
             print("")
             print("Plone %s" % plone_version)
             print("---------")
-            packages = _get_sources(plone_version)
+            packages = _get_sources(
+                'https://raw.github.com/plone/buildout.coredev/%s/sources.cfg'
+                % plone_version
+            )
             for package in packages:
-                _delete_existing_hooks(s, package, plone_version)
-                _create_hook(s, package, plone_version)
-            _create_hook(s, "buildout.coredev", plone_version)
+                _delete_existing_hooks(s, package, "plone-%s" % plone_version)
+                _create_hook(s, package, "plone-%s" % plone_version)
+            _create_hook(s, "buildout.coredev", "plone-%s" % plone_version)
             print("")
+
+
+def push_deco():
+    """Creates github post-commit hooks to trigger the Jenkins jobs for
+       buildout.deco.
+    """
+    with requests.session(auth=(github_username, github_password)) as s:
+        print("")
+        print("Deco")
+        print("---------")
+        packages = _get_sources(
+            'https://raw.github.com/plone/buildout.deco/master/sources.cfg'
+        )
+        for package in packages:
+            _delete_existing_hooks(s, package, "deco")
+            _create_hook(s, package, "deco")
+        print("")
