@@ -126,3 +126,21 @@ def push_deco():
             _create_hook(s, package, "deco")
         _create_hook(s, "buildout.deco", "deco")
         print("")
+
+
+def push_plone_app_contenttypes():
+    """Creates github post-commit hooks to trigger the Jenkins jobs for
+       plone.app.contenttypes.
+    """
+    with requests.session(auth=(github_username, github_password)) as s:
+        print("")
+        print("plone.app.contenttypes")
+        print("---------")
+        packages = [
+            'plone.app.contenttypes',
+            'plone.app.collection',
+        ]
+        for package in packages:
+            _delete_existing_hooks(s, package, "plone.app.contenttypes")
+            _create_hook(s, package, "plone.app.contenttypes")
+        print("")
