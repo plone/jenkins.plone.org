@@ -35,13 +35,15 @@ def _delete_existing_hooks(s, package, jenkins_job_name):
        remain untouched.
     """
     package_hooks = json.loads(
-        s.get(GH_URL + '/repos/plone/%s/hooks' % \
+        s.get(
+            GH_URL + '/repos/plone/%s/hooks' %
             package).content)
     if not 'message' in package_hooks:
-        coredev_hooks = [x for x in package_hooks \
-            if x['name'] == u'web' and \
-               'jenkins.plone.org/job/%s' % \
-               jenkins_job_name in x['config']['url']]
+        coredev_hooks = [
+            x for x in package_hooks
+            if x['name'] == u'web' and
+            'jenkins.plone.org/job/%s' %
+            jenkins_job_name in x['config']['url']]
         for coredev_hook in coredev_hooks:
             url = GH_URL + '/repos/plone/%s/hooks/%s' % (
                 package,
@@ -61,7 +63,7 @@ def _create_hook(s, package, jenkins_job_name):
         jenkins_username,
         jenkins_password,
         jenkins_job_name,
-        )
+    )
     req = {
         'name': 'web',
         'active': True,
@@ -122,4 +124,5 @@ def push_deco():
         for package in packages:
             _delete_existing_hooks(s, package, "deco")
             _create_hook(s, package, "deco")
+        _create_hook(s, "buildout.deco", "deco")
         print("")
