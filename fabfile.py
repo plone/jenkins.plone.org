@@ -25,6 +25,9 @@ def _get_sources(sources_cfg_url):
         if "${remotes:plone}" in line:
             packages.append(
                 line.split("${remotes:plone}/")[1].split(".git")[0])
+        if "${remotes:collective}" in line:
+            packages.append(
+                line.split("${remotes:collective}/")[1].split(".git")[0])
     print("%s packages found." % len(packages))
     return packages
 
@@ -53,7 +56,7 @@ def _delete_existing_hooks(s, package, jenkins_job_name):
                 _failed(url)
 
 
-def _create_hook(s, package, jenkins_job_name):
+def _create_hook(s, package, jenkins_job_name, github_project_name="plone"):
     """Create a post commit hook on github for a certain package that triggers
        the Jenkins job of a specific Plone version.
     """
@@ -72,7 +75,10 @@ def _create_hook(s, package, jenkins_job_name):
             'insecure_ssl': 1,
         }
     }
-    url = GH_URL + '/repos/plone/%s/hooks' % package
+    url = GH_URL + '/repos/%s/%s/hooks' % (
+        github_project_name,
+        package,
+    )
     response = s.post(url, data=json.dumps(req))
     if response.status_code == 201:
         _ok()
@@ -125,6 +131,28 @@ def push_deco():
             _delete_existing_hooks(s, package, "deco")
             _create_hook(s, package, "deco")
         _create_hook(s, "buildout.deco", "deco")
+        print("")
+
+
+def push_templer():
+    """Creates github post-commit hooks to trigger the Jenkins jobs for
+       buildout.deco.
+    """
+    with requests.session(auth=(github_username, github_password)) as s:
+        print("")
+        print("Templer")
+        print("---------")
+        packages = _get_sources(
+            'https://raw.github.com/collective/buildout.templer/master/buildout.cfg'
+        )
+        for package in packages:
+            _delete_existing_hooks(s, package, "templer")
+            _create_hook(s, package, "deco", github_project_name="collective")
+        _create_hook(
+            s,
+            "buildout.templer",
+            "templer",
+            github_project_name="collective")
         print("")
 
 
