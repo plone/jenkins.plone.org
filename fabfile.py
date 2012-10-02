@@ -9,6 +9,7 @@ from auth import jenkins_username
 from auth import jenkins_password
 
 GH_URL = 'https://api.github.com'
+JENKINS_URL = 'jenkins.plone.org'
 
 plone_versions = ['4.2', '4.3']
 
@@ -45,8 +46,9 @@ def _delete_existing_hooks(s, package, jenkins_job_name):
         coredev_hooks = [
             x for x in package_hooks
             if x['name'] == u'web' and
-            'jenkins.plone.org/job/%s' %
-            jenkins_job_name in x['config']['url']]
+            '%s/job/%s' % (
+                JENKINS_URL,
+                jenkins_job_name) in x['config']['url']]
         for coredev_hook in coredev_hooks:
             url = GH_URL + '/repos/plone/%s/hooks/%s' % (
                 package,
@@ -62,9 +64,10 @@ def _create_hook(s, package, jenkins_job_name, github_project_name="plone"):
     """
     print("")
     sys.stdout.write("Create post-commit hook for %s" % package)
-    hook_url = 'https://%s:%s@jenkins.plone.org/job/%s/build' % (
+    hook_url = 'https://%s:%s@%s/job/%s/build' % (
         jenkins_username,
         jenkins_password,
+        JENKINS_URL,
         jenkins_job_name,
     )
     req = {
@@ -143,7 +146,8 @@ def push_templer():
         print("Templer")
         print("---------")
         packages = _get_sources(
-            'https://raw.github.com/collective/buildout.templer/master/buildout.cfg'
+            'https://raw.github.com/collective/buildout.templer/' +
+            'master/buildout.cfg'
         )
         for package in packages:
             _delete_existing_hooks(s, package, "templer")
