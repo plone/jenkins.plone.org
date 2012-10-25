@@ -19,6 +19,7 @@ def setup():
     sudo('apt-get dist-upgrade')
     sudo('apt-get install -y build-essential')
     sudo('apt-get install -y git-core')
+    sudo('apt-get install -y subversion')
     sudo('apt-get install -y libxml2-utils')
     sudo('apt-get install -y nodejs npm')
     sudo('npm install -g jslint')
@@ -27,11 +28,6 @@ def setup():
     setup_python_27()
     setup_jenkins_user()
     setup_jenkins_ssh()
-
-
-def test_setup_python_27():
-    run('echo "import lxml" | python2.7')
-    run('echo "import imaging" | python2.7')
 
 
 def setup_python_26():
@@ -61,6 +57,12 @@ def setup_python_26():
         sudo('rm -rf /root/tmp')
     if not exists('/usr/local/bin/python2.6'):
         sudo('ln -s /opt/python-2.6/bin/python /usr/local/bin/python2.6')
+
+
+def test_setup_python_27():
+    run('echo "print("\ok"\)" | python2.7')
+    run('echo "import lxml" | python2.7')
+    run('echo "import _imaging" | python2.7')
 
 
 def setup_python_27():
