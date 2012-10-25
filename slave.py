@@ -18,6 +18,7 @@ def setup():
     sudo('apt-get update')
     sudo('apt-get dist-upgrade')
     sudo('apt-get install -y build-essential')
+    sudo('apt-get install -y git-core')
     sudo('apt-get install -y libxml2-utils')
     sudo('apt-get install -y nodejs npm')
     sudo('npm install -g jslint')
