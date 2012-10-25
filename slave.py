@@ -29,6 +29,11 @@ def setup():
     setup_jenkins_ssh()
 
 
+def test_setup_python_27():
+    run('echo "import lxml" | python2.7')
+    run('echo "import imaging" | python2.7')
+
+
 def setup_python_26():
     """Install Python 2.6 with Imaging and LXML.
     """
@@ -54,8 +59,8 @@ def setup_python_26():
         sudo('rm -rf Python-2.6.8*')
         sudo('rm -rf Imaging-1.1.7*')
         sudo('rm -rf /root/tmp')
-    if not exists('/usr/local/bin/python-2.6'):
-        sudo('ln -s /opt/python-2.6/bin/python /usr/local/bin/python-2.6')
+    if not exists('/usr/local/bin/python2.6'):
+        sudo('ln -s /opt/python-2.6/bin/python /usr/local/bin/python2.6')
 
 
 def setup_python_27():
@@ -63,6 +68,8 @@ def setup_python_27():
     """
     sudo('apt-get install -y python2.7')
     sudo('apt-get install -y python2.7-dev')
+    # Distribute
+    sudo('curl http://python-distribute.org/distribute_setup.py | python')
     # PIL
     sudo('apt-get install -y python-imaging')
     sudo('apt-get install -y zlib1g-dev')
