@@ -201,3 +201,9 @@ def setup_eggproxy():
     """Set up collective.eggproxy to make the buildouts faster.
     """
     pass
+
+
+def setup_munin():
+    """Set up munin.
+    """
+    pass
