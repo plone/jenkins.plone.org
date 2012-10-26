@@ -39,6 +39,25 @@ def setup_git_config():
     sudo('chown jenkins:jenkins /home/jenkins/.gitconfig')
 
 
+def test_setup_python_26():
+    """Test Python 2.6 setup.
+    """
+    with settings(warn_only=True):
+        result = run('echo "import hashlib" | python2.6')
+    if result.failed:
+        abort("Python 2.7: Haslib is not properly installed!")
+
+    with settings(warn_only=True):
+        run('echo "import lxml" | python2.6')
+    if result.failed:
+        abort("Python 2.6: LXML is not properly installed!")
+
+    with settings(warn_only=True):
+        run('echo "import _imaging" | python2.6')
+    if result.failed:
+        abort("Python 2.6: LXML is not properly installed!")
+
+
 def setup_python_26():
     """Install Python 2.6 with Imaging and LXML.
     """
@@ -59,18 +78,29 @@ def setup_python_26():
         sudo('tar xfvz Imaging-1.1.7.tar.gz')
     with cd('/root/tmp/Imaging-1.1.7/'):
         sudo('/opt/python-2.6/bin/python setup.py install')
-    with cd('/root/tmp'):
-        sudo('rm -rf Python-2.6.8*')
-        sudo('rm -rf Imaging-1.1.7*')
-        sudo('rm -rf /root/tmp')
+    sudo('rm -rf /root/tmp')
     if not exists('/usr/local/bin/python2.6'):
         sudo('ln -s /opt/python-2.6/bin/python /usr/local/bin/python2.6')
+    test_setup_python_26()
 
 
 def test_setup_python_27():
-    run('echo "print("\ok"\)" | python2.7')
-    run('echo "import lxml" | python2.7')
-    run('echo "import _imaging" | python2.7')
+    """Test Python 2.7 setup.
+    """
+    with settings(warn_only=True):
+        result = run('echo "import hashlib" | python2.7')
+    if result.failed:
+        abort("Python 2.7: Haslib is not properly installed!")
+
+    with settings(warn_only=True):
+        run('echo "import lxml" | python2.7')
+    if result.failed:
+        abort("Python 2.7: LXML is not properly installed!")
+
+    with settings(warn_only=True):
+        run('echo "import _imaging" | python2.7')
+    if result.failed:
+        abort("Python 2.7: LXML is not properly installed!")
 
 
 def setup_python_27():
@@ -90,6 +120,7 @@ def setup_python_27():
     sudo('apt-get install -y libxslt1-dev libxml2-dev')
     # Test Coverage
     sudo('apt-get install enscript')
+    test_setup_python_27()
 
 
 def setup_jenkins_user():
