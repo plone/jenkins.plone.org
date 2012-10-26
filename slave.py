@@ -17,6 +17,7 @@ def setup():
     sudo('apt-get dist-upgrade')
     sudo('apt-get autoremove')
     sudo('apt-get install -y build-essential')
+    sudo('apt-get install -y htop')
     sudo('apt-get install -y ntp')
     sudo('apt-get install -y git-core')
     sudo('apt-get install -y subversion')
@@ -25,6 +26,8 @@ def setup():
     sudo('npm install -g jslint')
     sudo('apt-get install -y wv')
     sudo('apt-get install -y xvfb')
+    sudo('apt-get install libbz2-dev')
+
     setup_git_config()
     setup_python_26()
     setup_python_27()
@@ -43,9 +46,14 @@ def test_setup_python_26():
     """Test Python 2.6 setup.
     """
     with settings(warn_only=True):
+        result = run('echo "print(True)" | python2.6')
+    if result.failed:
+        abort("Python 2.6 is not properly installed!")
+
+    with settings(warn_only=True):
         result = run('echo "import hashlib" | python2.6')
     if result.failed:
-        abort("Python 2.7: Haslib is not properly installed!")
+        abort("Python 2.6: Haslib is not properly installed!")
 
     with settings(warn_only=True):
         run('echo "import lxml" | python2.6')
@@ -55,7 +63,7 @@ def test_setup_python_26():
     with settings(warn_only=True):
         run('echo "import _imaging" | python2.6')
     if result.failed:
-        abort("Python 2.6: LXML is not properly installed!")
+        abort("Python 2.6: PIL is not properly installed!")
 
 
 def setup_python_26():
@@ -80,20 +88,40 @@ def setup_python_26():
         put('etc/ssl.py.patch', '/root/tmp/Python-2.6.8/ssl.py.patch', use_sudo=True)
         sudo('patch Lib/ssl.py < ssl.py.patch')
         sudo('make install')
+    # Install PIL
     with cd('/root/tmp'):
         sudo('wget http://effbot.org/downloads/Imaging-1.1.7.tar.gz')
         sudo('tar xfvz Imaging-1.1.7.tar.gz')
     with cd('/root/tmp/Imaging-1.1.7/'):
         sudo('/opt/python2.6/bin/python setup.py install')
-    sudo('rm -rf /root/tmp')
+    # Install BZ2 Support
+    with cd('/root/tmp'):
+        sudo('wget http://labix.org/download/python-bz2/python-bz2-1.1.tar.bz2')
+        sudo('tar xfvj python-bz2-1.1.tar.bz2')
+    with cd('/root/tmp/python-bz2-1.1/'):
+        sudo('/opt/python2.6/bin/python setup.py install')
+    # Install LXML
+    with cd('/root/tmp'):
+        sudo('wget http://pypi.python.org/packages/source/l/lxml/lxml-2.3.6.tar.gz')
+        sudo('tar xfvz lxml-2.3.6.tar.gz')
+    with cd('/root/tmp/lxml-2.3.6/'):
+        sudo('/opt/python2.6/bin/python setup.py install')
+    # Create Symlink
     if not exists('/usr/local/bin/python2.6'):
         sudo('ln -s /opt/python2.6/bin/python /usr/local/bin/python2.6')
+    # Clean up
+    sudo('rm -rf /root/tmp')
     test_setup_python_26()
 
 
 def test_setup_python_27():
     """Test Python 2.7 setup.
     """
+    with settings(warn_only=True):
+        result = run('echo "print(True)" | python2.7')
+    if result.failed:
+        abort("Python 2.7 is not properly installed!")
+
     with settings(warn_only=True):
         result = run('echo "import hashlib" | python2.7')
     if result.failed:
@@ -107,7 +135,7 @@ def test_setup_python_27():
     with settings(warn_only=True):
         run('echo "import _imaging" | python2.7')
     if result.failed:
-        abort("Python 2.7: LXML is not properly installed!")
+        abort("Python 2.7: PIL is not properly installed!")
 
 
 def setup_python_27():
