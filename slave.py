@@ -4,7 +4,7 @@ from fabric.contrib.files import sed, append, exists, contains
 env.user = 'timo'
 env.hosts = [
     '152.19.4.89',
-#    '152.19.4.98',
+    '152.19.4.98',
 ]
 
 env.home = "/home/jenkins"
@@ -13,32 +13,35 @@ env.home = "/home/jenkins"
 def setup():
     """Set up slave for jenkins.plone.org.
     """
-    sudo('apt-get update')
-    sudo('apt-get dist-upgrade')
-    sudo('apt-get autoremove')
+    sudo('apt-get update -y')
+    sudo('apt-get dist-upgrade -y')
+    sudo('apt-get autoremove -y')
     sudo('apt-get install -y build-essential')
     sudo('apt-get install -y htop')
     sudo('apt-get install -y ntp')
     sudo('apt-get install -y git-core')
     sudo('apt-get install -y subversion')
     sudo('apt-get install -y libxml2-utils')
-    sudo('apt-get install -y nodejs npm')
-    sudo('npm install -g jslint')
     sudo('apt-get install -y wv')
     sudo('apt-get install -y xvfb')
-    sudo('apt-get install libbz2-dev')
+    sudo('apt-get install -y libbz2-dev')
+    sudo('apt-get install -y libxslt1-dev libxml2-dev')
+    sudo('apt-get install -y nodejs npm')
+    sudo('npm install -g jslint')
 
-    setup_git_config()
-    setup_python_26()
-    setup_python_27()
     setup_jenkins_user()
     setup_jenkins_ssh()
+    setup_git_config()
+
+    setup_python_26()
+    setup_python_27()
 
 
 def setup_git_config():
     """Set up a git configuration file (.gitconfig).
     """
-    put('etc/.gitconfig', '/home/jenkins/.gitconfig', use_sudo=True)
+    put('etc/.gitconfig', '/tmp')
+    sudo('mv /tmp/.gitconfig /home/jenkins/')
     sudo('chown jenkins:jenkins /home/jenkins/.gitconfig')
 
 
@@ -79,14 +82,14 @@ def setup_python_26():
         sudo('wget http://python.org/ftp/python/2.6.8/Python-2.6.8.tgz')
         sudo('tar xfvz Python-2.6.8.tgz')
     with cd('/root/tmp/Python-2.6.8/'):
-        put('etc/setup.py.patch', '/root/tmp/Python-2.6.8/setup.py.patch', use_sudo=True)
-        sudo('patch setup.py < setup.py.patch')
-        put('etc/ssl.patch', '/root/tmp/Python-2.6.8/ssl.patch', use_sudo=True)
-        sudo('patch Modules/_ssl.c < ssl.patch')
-        sudo('env CPPFLAGS="-I/usr/lib/x86_64-linux-gnu" LDFLAGS="-L/usr/include/x86_64-linux-gnu"  ./configure --prefix=/opt/python2.6')
+        put('etc/setup.py.patch', '/tmp')
+        sudo('patch setup.py < /tmp/setup.py.patch')
+        put('etc/ssl.patch', '/tmp')
+        sudo('patch Modules/_ssl.c < /tmp/ssl.patch')
+        sudo('env CPPFLAGS="-I/usr/lib/x86_64-linux-gnu" LDFLAGS="-L/usr/include/x86_64-linux-gnu" ./configure --prefix=/opt/python2.6')
         sudo('make')
-        put('etc/ssl.py.patch', '/root/tmp/Python-2.6.8/ssl.py.patch', use_sudo=True)
-        sudo('patch Lib/ssl.py < ssl.py.patch')
+        put('etc/ssl.py.patch', '/tmp')
+        sudo('patch Lib/ssl.py < /tmp/ssl.py.patch')
         sudo('make install')
     # Install PIL
     with cd('/root/tmp'):
@@ -152,9 +155,8 @@ def setup_python_27():
     sudo('apt-get install -y libjpeg62 libjpeg62-dev')
     # LXML
     sudo('apt-get install -y python-lxml')
-    sudo('apt-get install -y libxslt1-dev libxml2-dev')
     # Test Coverage
-    sudo('apt-get install enscript')
+    sudo('apt-get install -y enscript')
     test_setup_python_27()
 
 
@@ -170,20 +172,21 @@ def setup_jenkins_ssh():
     """
     if not exists('/home/jenkins/.ssh', use_sudo=True):
         sudo('mkdir /home/jenkins/.ssh', user='jenkins')
-    with cd('/home/jenkins/.ssh'):
-        sudo(
-            'wget https://raw.github.com/plone/jenkins.plone.org/master/jenkins.plone.org.pub',
-            user='jenkins'
-        )
-        sudo('touch authorized_keys', user='jenkins')
-        sudo(
-            'cat jenkins.plone.org.pub >> authorized_keys', user='jenkins'
-        )
-        sudo('rm jenkins.plone.org.pub', user='jenkins')
-        sudo(
-            'chmod g-w /home/jenkins/ /home/jenkins/.ssh /home/jenkins/.ssh/authorized_keys',
-            user='jenkins'
-        )
+    if not exists('/home/jenkins/.ssh/authorized_keys', use_sudo=True):
+        with cd('/home/jenkins/.ssh'):
+            sudo(
+                'wget https://raw.github.com/plone/jenkins.plone.org/master/jenkins.plone.org.pub',
+                user='jenkins'
+            )
+            sudo('touch authorized_keys', user='jenkins')
+            sudo(
+                'cat jenkins.plone.org.pub >> authorized_keys', user='jenkins'
+            )
+            sudo('rm jenkins.plone.org.pub', user='jenkins')
+            sudo(
+                'chmod g-w /home/jenkins/ /home/jenkins/.ssh /home/jenkins/.ssh/authorized_keys',
+                user='jenkins'
+            )
 
 
 # TODO -----------------------------------------------------------------------
