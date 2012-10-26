@@ -61,26 +61,33 @@ def test_setup_python_26():
 def setup_python_26():
     """Install Python 2.6 with Imaging and LXML.
     """
-    # http://lipyrary.blogspot.de/2011/05/how-to-compile-python-on-ubuntu-1104.html
-    if not exists('/root/tmp', use_sudo=True):
-        sudo('mkdir /root/tmp')
+    # http://ubuntuforums.org/showthread.php?t=1976837
+    if exists('/opt/python-2.6', use_sudo=True):
+        sudo('rm -rf /opt/python-2.6')
+    if exists('/root/tmp', use_sudo=True):
+        sudo('rm -rf /root/tmp')
+    sudo('mkdir /root/tmp')
     with cd('/root/tmp'):
         sudo('wget http://python.org/ftp/python/2.6.8/Python-2.6.8.tgz')
         sudo('tar xfvz Python-2.6.8.tgz')
     with cd('/root/tmp/Python-2.6.8/'):
-        sudo('export LDFLAGS="-L/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH)"')
-        sudo('./configure --prefix=/opt/python-2.6/')
+        put('etc/setup.py.patch', '/root/tmp/Python-2.6.8/setup.py.patch', use_sudo=True)
+        sudo('patch setup.py < setup.py.patch')
+        put('etc/ssl.patch', '/root/tmp/Python-2.6.8/ssl.patch', use_sudo=True)
+        sudo('patch Modules/_ssl.c < ssl.patch')
+        sudo('env CPPFLAGS="-I/usr/lib/x86_64-linux-gnu" LDFLAGS="-L/usr/include/x86_64-linux-gnu"  ./configure --prefix=/opt/python2.6')
         sudo('make')
+        put('etc/ssl.py.patch', '/root/tmp/Python-2.6.8/ssl.py.patch', use_sudo=True)
+        sudo('patch Lib/ssl.py < ssl.py.patch')
         sudo('make install')
-        sudo('unset LDFLAGS')
     with cd('/root/tmp'):
         sudo('wget http://effbot.org/downloads/Imaging-1.1.7.tar.gz')
         sudo('tar xfvz Imaging-1.1.7.tar.gz')
     with cd('/root/tmp/Imaging-1.1.7/'):
-        sudo('/opt/python-2.6/bin/python setup.py install')
+        sudo('/opt/python2.6/bin/python setup.py install')
     sudo('rm -rf /root/tmp')
     if not exists('/usr/local/bin/python2.6'):
-        sudo('ln -s /opt/python-2.6/bin/python /usr/local/bin/python2.6')
+        sudo('ln -s /opt/python2.6/bin/python /usr/local/bin/python2.6')
     test_setup_python_26()
 
 
