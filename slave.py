@@ -24,10 +24,19 @@ def setup():
     sudo('apt-get install -y nodejs npm')
     sudo('npm install -g jslint')
     sudo('apt-get install -y wv')
+    sudo('apt-get install -y xvfb')
+    setup_git_config()
     setup_python_26()
     setup_python_27()
     setup_jenkins_user()
     setup_jenkins_ssh()
+
+
+def setup_git_config():
+    """Set up a git configuration file (.gitconfig).
+    """
+    put('etc/.gitconfig', '/home/jenkins/.gitconfig', use_sudo=True)
+    sudo('chown jenkins:jenkins /home/jenkins/.gitconfig')
 
 
 def setup_python_26():
@@ -36,7 +45,6 @@ def setup_python_26():
     # http://lipyrary.blogspot.de/2011/05/how-to-compile-python-on-ubuntu-1104.html
     if not exists('/root/tmp', use_sudo=True):
         sudo('mkdir /root/tmp')
-
     with cd('/root/tmp'):
         sudo('wget http://python.org/ftp/python/2.6.8/Python-2.6.8.tgz')
         sudo('tar xfvz Python-2.6.8.tgz')
@@ -110,3 +118,20 @@ def setup_jenkins_ssh():
             'chmod g-w /home/jenkins/ /home/jenkins/.ssh /home/jenkins/.ssh/authorized_keys',
             user='jenkins'
         )
+
+
+# TODO -----------------------------------------------------------------------
+
+def setup_gil_user():
+    """TODO. This should be more generic. All admins need an account.
+    """
+    if not exists('/home/gil', use_sudo=True):
+        sudo('adduser gil --disabled-password --home=/home/gil')
+    sudo('adduser gil sudo')
+    # TODO: create ssh setup with public key of that user
+
+
+def setup_eggproxy():
+    """Set up collective.eggproxy to make the buildouts faster.
+    """
+    pass
