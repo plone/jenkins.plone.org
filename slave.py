@@ -6,8 +6,6 @@ env.hosts = [
     '152.19.4.89',
 #    '152.19.4.98',
 ]
-env.key_filename = ["~/.ssh/customers-dsa"]
-env.key_public_filename = '~/.ssh/customers-dsa.pub'
 
 env.home = "/home/jenkins"
 
@@ -17,7 +15,9 @@ def setup():
     """
     sudo('apt-get update')
     sudo('apt-get dist-upgrade')
+    sudo('apt-get autoremove')
     sudo('apt-get install -y build-essential')
+    sudo('apt-get install -y ntp')
     sudo('apt-get install -y git-core')
     sudo('apt-get install -y subversion')
     sudo('apt-get install -y libxml2-utils')
