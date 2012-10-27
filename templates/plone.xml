@@ -61,18 +61,20 @@ bin/jenkins-alltests -1</command>
 
   <!-- PUBLISHERS -->
   <publishers>
+    <!-- TEST REPORT -->
     <hudson.tasks.junit.JUnitResultArchiver>
       <testResults>**/parts/jenkins-test/testreports/*.xml</testResults>
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
+    <!-- EMAIL NOTIFICATION -->
     <hudson.plugins.emailext.ExtendedEmailPublisher>
       <recipientList>${email_notification_recipients}</recipientList>
       <configuredTriggers>
         <hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger>
           <email>
-            <recipientList>contact@timostollenwerk.net</recipientList>
-            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – First Failure! – {TEST_COUNTS, var=&quot;fail&quot;} failure(s)</subject>
+            <recipientList>${email_notification_recipients}</recipientList>
+            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – First Failure! – $\{TEST_COUNTS, var=&quot;fail&quot;\} failure(s)</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
             <sendToDevelopers>true</sendToDevelopers>
             <sendToRequester>false</sendToRequester>
@@ -80,21 +82,10 @@ bin/jenkins-alltests -1</command>
             <sendToRecipientList>true</sendToRecipientList>
           </email>
         </hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger>
-        <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
-          <email>
-            <recipientList></recipientList>
-            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Failing! – {TEST_COUNTS, var=&quot;fail&quot;} failure(s)</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>true</sendToDevelopers>
-            <sendToRequester>false</sendToRequester>
-            <includeCulprits>false</includeCulprits>
-            <sendToRecipientList>true</sendToRecipientList>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
         <hudson.plugins.emailext.plugins.trigger.StillFailingTrigger>
           <email>
-            <recipientList>$PROJECT_NAME – Build # $BUILD_NUMBER – Still Failing! – {TEST_COUNTS, var=&quot;fail&quot;} failure(s)</recipientList>
-            <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+            <recipientList>${email_notification_recipients}</recipientList>
+            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Still Failing! – $\{TEST_COUNTS, var=&quot;fail&quot;\} failure(s)</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
             <sendToDevelopers>true</sendToDevelopers>
             <sendToRequester>false</sendToRequester>
@@ -102,9 +93,31 @@ bin/jenkins-alltests -1</command>
             <sendToRecipientList>true</sendToRecipientList>
           </email>
         </hudson.plugins.emailext.plugins.trigger.StillFailingTrigger>
+        <hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
+          <email>
+            <recipientList>${email_notification_recipients}</recipientList>
+            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Regression! – $\{TEST_COUNTS, var=&quot;fail&quot;\} failure(s)</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <sendToDevelopers>true</sendToDevelopers>
+            <sendToRequester>false</sendToRequester>
+            <includeCulprits>false</includeCulprits>
+            <sendToRecipientList>true</sendToRecipientList>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
+        <hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
+          <email>
+            <recipientList>${email_notification_recipients}</recipientList>
+            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Improvement! – $\{TEST_COUNTS, var=&quot;fail&quot;\} failure(s)</subject>
+            <body>$PROJECT_DEFAULT_CONTENT</body>
+            <sendToDevelopers>true</sendToDevelopers>
+            <sendToRequester>false</sendToRequester>
+            <includeCulprits>false</includeCulprits>
+            <sendToRecipientList>true</sendToRecipientList>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
         <hudson.plugins.emailext.plugins.trigger.FixedTrigger>
           <email>
-            <recipientList></recipientList>
+            <recipientList>${email_notification_recipients}</recipientList>
             <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Fixed! – 0 failure(s)</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
             <sendToDevelopers>true</sendToDevelopers>
