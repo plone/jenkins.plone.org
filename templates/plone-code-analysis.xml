@@ -354,5 +354,11 @@ bin/jenkins-code-analysis</command>
       </config>
     </hudson.plugins.violations.ViolationsPublisher>
   </publishers>
-  <buildWrappers/>
+
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup>
+      <deleteDirs>false</deleteDirs>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+  </buildWrappers>
+
 </project>
