@@ -13,17 +13,26 @@ env.home = "/home/jenkins"
 def setup():
     """Set up slave for jenkins.plone.org.
     """
+    # Update system
     sudo('apt-get update -y')
     sudo('apt-get dist-upgrade -y')
     sudo('apt-get autoremove -y')
+    # Basics
     sudo('apt-get install -y build-essential')
     sudo('apt-get install -y htop')
+    # Time sync
     sudo('apt-get install -y ntp')
+    # VCS
     sudo('apt-get install -y git-core')
     sudo('apt-get install -y subversion')
     sudo('apt-get install -y libxml2-utils')
+    # Word support
     sudo('apt-get install -y wv')
+    # PDF support
+    sudo('apt-get install -y poppler-utils')
+    # X-server for robot tests
     sudo('apt-get install -y xvfb')
+    # bz2 support to extract pypi packages
     sudo('apt-get install -y libbz2-dev')
     sudo('apt-get install -y libxslt1-dev libxml2-dev')
     sudo('apt-get install -y nodejs npm')
