@@ -114,6 +114,8 @@ def setup_python_26():
         sudo('ln -s /opt/python2.6/bin/python /usr/local/bin/python2.6')
     # Clean up
     sudo('rm -rf /root/tmp')
+    # Distribute
+    sudo('curl http://python-distribute.org/distribute_setup.py | python2.6')
     test_setup_python_26()
 
 
