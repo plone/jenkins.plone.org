@@ -66,11 +66,6 @@ bin/jenkins-alltests -1</command>
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
-    <hudson.tasks.Mailer>
-      <recipients>${email_notification_recipients}</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>false</sendToIndividuals>
-    </hudson.tasks.Mailer>
     <hudson.plugins.emailext.ExtendedEmailPublisher>
       <recipientList>${email_notification_recipients}</recipientList>
       <configuredTriggers>
