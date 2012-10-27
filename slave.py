@@ -34,9 +34,12 @@ def setup():
     sudo('apt-get install -y xvfb')
     # bz2 support to extract pypi packages
     sudo('apt-get install -y libbz2-dev')
-    sudo('apt-get install -y libxslt1-dev libxml2-dev')
+    # Code analysis
+    sudo('apt-get install -y ohcount')
     sudo('apt-get install -y nodejs npm')
     sudo('npm install -g jslint')
+    sudo('npm install -g jshint')
+    sudo('npm install -g csslint')
 
     setup_jenkins_user()
     setup_jenkins_ssh()
@@ -122,6 +125,7 @@ def setup_python_26():
     with cd('/root/tmp/python-bz2-1.1/'):
         sudo('/opt/python2.6/bin/python setup.py install')
     # Install LXML
+    sudo('apt-get install -y libxslt1-dev libxml2-dev')
     with cd('/root/tmp'):
         sudo('wget http://pypi.python.org/packages/source/l/lxml/lxml-2.3.6.tar.gz')
         sudo('tar xfvz lxml-2.3.6.tar.gz')
