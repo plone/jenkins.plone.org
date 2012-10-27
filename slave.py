@@ -91,7 +91,16 @@ def setup_python_26():
         put('etc/ssl.py.patch', '/tmp')
         sudo('patch Lib/ssl.py < /tmp/ssl.py.patch')
         sudo('make install')
-    # Install PIL
+    sudo('apt-get install -y zlib1g-dev')
+    sudo('apt-get install -y libfreetype6 libfreetype6-dev')
+    sudo('apt-get install -y libjpeg-dev')
+    #http://www.sandersnewmedia.com/why/2012/04/16/installing-pil-virtualenv-ubuntu-1204-precise-pangolin/
+    if not exists('/usr/lib/`uname -i`-linux-gnu/libfreetype.so'):
+        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib/')
+    if not exists('/usr/lib/`uname -i`-linux-gnu/libjpeg.so'):
+        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libjpeg.so /usr/lib/')
+    if not exists('/usr/lib/`uname -i`-linux-gnu/libz.so'):
+        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib/')
     with cd('/root/tmp'):
         sudo('wget http://effbot.org/downloads/Imaging-1.1.7.tar.gz')
         sudo('tar xfvz Imaging-1.1.7.tar.gz')
@@ -152,9 +161,6 @@ def setup_python_27():
     sudo('curl http://python-distribute.org/distribute_setup.py | python')
     # PIL
     sudo('apt-get install -y python-imaging')
-    sudo('apt-get install -y zlib1g-dev')
-    sudo('apt-get install -y libfreetype6 libfreetype6-dev')
-    sudo('apt-get install -y libjpeg62 libjpeg62-dev')
     # LXML
     sudo('apt-get install -y python-lxml')
     # Test Coverage
