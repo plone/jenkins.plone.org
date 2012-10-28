@@ -199,6 +199,14 @@ def setup_jenkins_user():
         sudo('adduser jenkins --disabled-password --home=/home/jenkins')
 
 
+def setup_buildout_cache():
+    if not exists('/home/jenkins/.buildout'):
+        run('mkdir .buildout')
+        put('etc/default.cfg', '.buildout')
+        run('mkdir .buildout/eggs')
+        run('mkdir .buildout/downloads')
+
+
 def setup_jenkins_ssh():
     """Set up ssh key.
     """
