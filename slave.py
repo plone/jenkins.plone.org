@@ -80,6 +80,16 @@ def test_setup_python_26():
     if result.failed:
         abort("Python 2.6: PIL is not properly installed!")
 
+    with settings(warn_only=True):
+        sudo('echo "from urllib import urlopen; from cStringIO import StringIO; from PIL import Image; Image.open(StringIO(urlopen(\'http://plone.org/logo.jpg\').read()))" | python2.6')
+    if result.failed:
+        abort("Python 2.6: PIL JPEG support is not properly installed!")
+
+    with settings(warn_only=True):
+        sudo('echo "from urllib import urlopen; from cStringIO import StringIO; from PIL import Image; Image.open(StringIO(urlopen(\'http://plone.org/logo.png\').read()))" | python2.6')
+    if result.failed:
+        abort("Python 2.6: PIL PNG support is not properly installed!")
+
 
 def setup_python_26():
     """Install Python 2.6 with Imaging and LXML.
@@ -103,6 +113,7 @@ def setup_python_26():
         put('etc/ssl.py.patch', '/tmp')
         sudo('patch Lib/ssl.py < /tmp/ssl.py.patch')
         sudo('make install')
+    # PIL
     sudo('apt-get install -y zlib1g-dev')
     sudo('apt-get install -y libfreetype6 libfreetype6-dev')
     sudo('apt-get install -y libjpeg-dev')
@@ -230,4 +241,7 @@ def setup_eggproxy():
 def setup_munin():
     """Set up munin.
     """
-    pass
+    sudo('apt-get install -y munin munin-node')
+    put('etc/munin.conf', '/etc/munin/munin.conf')
+    put('etc/munin-node.conf', '/etc/munin/munin-node.conf')
+    sudo('/etc/init.d/munin-node restart')
