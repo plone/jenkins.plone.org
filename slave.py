@@ -201,11 +201,14 @@ def setup_jenkins_user():
 
 
 def setup_buildout_cache():
-    if not exists('/home/jenkins/.buildout'):
-        run('mkdir .buildout')
-        put('etc/default.cfg', '.buildout')
-        run('mkdir .buildout/eggs')
-        run('mkdir .buildout/downloads')
+    if not exists('/home/jenkins/.buildout/'):
+        sudo('mkdir /home/jenkins/.buildout', user='jenkins')
+        sudo('mkdir /home/jenkins/.buildout/eggs', user='jenkins')
+        sudo('mkdir /home/jenkins/.buildout/downloads', user='jenkins')
+    if exists('/home/jenkins/.buildout/default.cfg'):
+        sudo('rm /home/jenkins/.buildout/default.cfg', user='jenkins')
+    put('etc/default.cfg', '/tmp/')
+    sudo('cp /tmp/default.cfg /home/jenkins/.buildout/', user='jenkins')
 
 
 def setup_jenkins_ssh():
@@ -228,6 +231,14 @@ def setup_jenkins_ssh():
                 'chmod g-w /home/jenkins/ /home/jenkins/.ssh /home/jenkins/.ssh/authorized_keys',
                 user='jenkins'
             )
+
+
+# HELPER ---------------------------------------------------------------------
+
+def _sudo_put(source, destination, user):
+    put(source, '/tmp')
+    sudo('mv /tmp/%s %s' % (source, destination))
+    sudo('chown user:user %s' % (user, user, destination))
 
 
 # TODO -----------------------------------------------------------------------
