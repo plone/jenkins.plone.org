@@ -36,6 +36,7 @@ def setup():
     sudo('apt-get install -y libbz2-dev')
     # Code analysis
     sudo('apt-get install -y ohcount')
+    sudo('apt-get install -y sloccount')
     sudo('apt-get install -y nodejs npm')
     sudo('npm install -g jslint')
     sudo('npm install -g jshint')
