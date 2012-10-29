@@ -60,7 +60,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>$PYTHON27 bootstrap.py
-bin/buildout -c jenkins.cfg
+bin/buildout -c jenkins-code-analysis.cfg
 bin/jenkins-test-coverage</command>
     </hudson.tasks.Shell>
   </builders>
