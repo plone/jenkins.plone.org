@@ -76,7 +76,7 @@ bin/jenkins-alltests -1</command>
             <recipientList>${email_notification_recipients}</recipientList>
             <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Regression! – ${dollar}{TEST_COUNTS, var=&quot;fail&quot;} failure(s)</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>true</sendToDevelopers>
+            <sendToDevelopers>false</sendToDevelopers>
             <sendToRequester>false</sendToRequester>
             <includeCulprits>false</includeCulprits>
             <sendToRecipientList>true</sendToRecipientList>
@@ -87,7 +87,7 @@ bin/jenkins-alltests -1</command>
             <recipientList>${email_notification_recipients}</recipientList>
             <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Improvement! – ${dollar}{TEST_COUNTS, var="fail"} failure(s)</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>true</sendToDevelopers>
+            <sendToDevelopers>false</sendToDevelopers>
             <sendToRequester>false</sendToRequester>
             <includeCulprits>false</includeCulprits>
             <sendToRecipientList>true</sendToRecipientList>
@@ -98,7 +98,7 @@ bin/jenkins-alltests -1</command>
             <recipientList>${email_notification_recipients}</recipientList>
             <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Fixed! – 0 failure(s)</subject>
             <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>true</sendToDevelopers>
+            <sendToDevelopers>false</sendToDevelopers>
             <sendToRequester>false</sendToRequester>
             <includeCulprits>false</includeCulprits>
             <sendToRecipientList>true</sendToRecipientList>
