@@ -71,17 +71,6 @@ bin/jenkins-alltests -1</command>
     <hudson.plugins.emailext.ExtendedEmailPublisher>
       <recipientList>${email_notification_recipients}</recipientList>
       <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger>
-          <email>
-            <recipientList>${email_notification_recipients}</recipientList>
-            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – First Failure! – ${dollar}{TEST_COUNTS, var=&quot;fail&quot;} failure(s)</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>true</sendToDevelopers>
-            <sendToRequester>false</sendToRequester>
-            <includeCulprits>false</includeCulprits>
-            <sendToRecipientList>true</sendToRecipientList>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger>
         <hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
           <email>
             <recipientList>${email_notification_recipients}</recipientList>
