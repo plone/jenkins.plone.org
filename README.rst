@@ -130,3 +130,6 @@ Useful Jenkins Plugins
 
 * https://wiki.jenkins-ci.org/display/JENKINS/ShiningPanda+Plugin/
   Allows testing on multiple versions of Python.
+
+* W3C validation:
+  https://wiki.jenkins-ci.org/display/JENKINS/Unicorn+Validation+Plugin
