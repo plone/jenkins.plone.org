@@ -22,6 +22,8 @@ def setup():
     sudo('apt-get install -y htop')
     # Time sync
     sudo('apt-get install -y ntp')
+    # Keep /tmp clean
+    sudo('apt-get install tmpreaper')
     # VCS
     sudo('apt-get install -y git-core')
     sudo('apt-get install -y subversion')
