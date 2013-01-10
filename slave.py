@@ -17,6 +17,8 @@ def setup():
     sudo('apt-get update -y')
     sudo('apt-get dist-upgrade -y')
     sudo('apt-get autoremove -y')
+    # Configure locales
+    sudo('dpkg-reconfigure locales')
     # Basics
     sudo('apt-get install -y build-essential')
     sudo('apt-get install -y htop')
