@@ -70,9 +70,9 @@ bin/jenkins-test</command>
     <!-- ROBOT REPORT -->
     <hudson.plugins.robot.RobotPublisher>
       <outputPath>parts/jenkins-test</outputPath>
-      <reportFileName></reportFileName>
-      <logFileName></logFileName>
-      <outputFileName></outputFileName>
+      <reportFileName>robot_report.html</reportFileName>
+      <logFileName>robot_log.html</logFileName>
+      <outputFileName>robot_output.xml</outputFileName>
       <passThreshold>100.0</passThreshold>
       <unstableThreshold>80.0</unstableThreshold>
       <logFileLink>robot_log.html</logFileLink>
