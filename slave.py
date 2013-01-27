@@ -34,8 +34,6 @@ def setup():
     sudo('apt-get install -y wv')
     # PDF support
     sudo('apt-get install -y poppler-utils')
-    # X-server for robot tests
-    sudo('apt-get install -y xvfb')
     # bz2 support to extract pypi packages
     sudo('apt-get install -y libbz2-dev')
     # Code analysis
@@ -52,6 +50,8 @@ def setup():
 
     setup_python_26()
     setup_python_27()
+
+    setup_xfvb()
 
 
 def setup_git_config():
@@ -195,6 +195,36 @@ def setup_python_27():
     # Test Coverage
     sudo('apt-get install -y enscript')
     test_setup_python_27()
+
+
+def setup_xfvb():
+    #if xvfb_is_properly_installed():
+    #    return
+    # virtual display
+    sudo('aptitude install -y xvfb')
+    # installs xclock (to test things are working),
+    # and xwd (for taking screenshots)
+    sudo('aptitude install -y x11-apps')
+    # to avoid warnings when staring xvfb
+    sudo('aptitude install -y xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic')
+    sudo('aptitude install -y imagemagick   # for converting screenshots')
+    sudo('aptitude -y install firefox')
+
+
+def xvfb_is_properly_installed():
+    #retval = run('/usr/bin/Xvfb :5 -ac -screen 0 1024x768x8', warn_only=True)
+    #if retval.failed:
+    #    return True
+    retval = run('xclock -display :5.0 &', warn_only=True)
+    if retval.failed:
+        return True
+    retval = run('xwd -root -display :5.0 -out outputfile', warn_only=True)
+    if retval.failed:
+        return True
+    retval = run('convert outputfile outputfile.png', warn_only=True)
+    if retval.failed:
+        return True
+    return
 
 
 def setup_jenkins_user():
