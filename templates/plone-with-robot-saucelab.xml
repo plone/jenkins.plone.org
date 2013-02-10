@@ -82,7 +82,7 @@ export BROWSER
 echo $SELENIUM_DRIVER
 echo $DESIRED_CAPABILITIES
 echo $BROWSER
-bin/test</command>
+bin/jenkins-test-robot</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
