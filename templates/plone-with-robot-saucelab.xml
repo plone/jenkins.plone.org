@@ -51,7 +51,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>$PYTHON27 bootstrap.py
-bin/buildout
+bin/buildout -c jenkins.cfg
 
 export REMOTE_URL=&quot;http://plone:230449d8-361a-4eca-ae14-5ed0b9be0941@ondemand.saucelabs.com:80/wd/hub&quot;
 export ZSERVER_HOST=&quot;0.0.0.0&quot;
