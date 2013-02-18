@@ -1,0 +1,4 @@
+Xvfb installation:
+
+Name: default
+Directory in which to find Xvfb executable: /usr/bin
