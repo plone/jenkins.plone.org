@@ -54,8 +54,8 @@
   <builders>
     <hudson.tasks.Shell>
       <command>${python} bootstrap.py
-bin/buildout -c jenkins.cfg
-bin/jenkins-test</command>
+bin/buildout -c ${buildout_cfg}
+bin/${buildout_run}</command>
     </hudson.tasks.Shell>
   </builders>
 
