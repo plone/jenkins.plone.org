@@ -128,6 +128,7 @@ bin/${buildout_run}</command>
   </publishers>
 
   <buildWrappers>
+    <!-- Cleanup Workspace -->
     <hudson.plugins.ws__cleanup.PreBuildCleanup>
       <deleteDirs>false</deleteDirs>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
@@ -142,5 +143,6 @@ bin/${buildout_run}</command>
     </org.jenkinsci.plugins.xvfb.XvfbBuildWrapper>
 
   </buildWrappers>
+
 
 </project>

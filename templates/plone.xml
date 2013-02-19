@@ -114,6 +114,7 @@ bin/jenkins-alltests -1</command>
   </publishers>
 
   <buildWrappers>
+    <!-- Cleanup Workspace -->
     <hudson.plugins.ws__cleanup.PreBuildCleanup>
       <deleteDirs>false</deleteDirs>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
