@@ -86,7 +86,7 @@ def test_setup_python_26():
         abort("Python 2.6: PIL is not properly installed!")
 
     with settings(warn_only=True):
-        sudo('echo "from urllib import urlopen; from cStringIO import StringIO; from PIL import Image; Image.open(StringIO(urlopen(\'http://plone.org/logo.jpg\').read()))" | python2.6')
+        sudo("""echo "from urllib import urlopen; from cStringIO import StringIO; from PIL import Image; Image.open(StringIO(urlopen('http://plone.org/logo.jpg').read())).size" | python2.6""")
     if result.failed:
         abort("Python 2.6: PIL JPEG support is not properly installed!")
 
