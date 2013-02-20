@@ -67,56 +67,12 @@ bin/jenkins-alltests -1</command>
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
-    <!-- EMAIL NOTIFICATION -->
-    <hudson.plugins.emailext.ExtendedEmailPublisher>
-      <recipientList>${email_notification_recipients}</recipientList>
-      <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
-          <email>
-            <recipientList>${email_notification_recipients}</recipientList>
-            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Regression! – ${dollar}{TEST_COUNTS, var=&quot;fail&quot;} failure(s)</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>false</sendToDevelopers>
-            <sendToRequester>false</sendToRequester>
-            <includeCulprits>false</includeCulprits>
-            <sendToRecipientList>true</sendToRecipientList>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
-        <hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
-          <email>
-            <recipientList>${email_notification_recipients}</recipientList>
-            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Improvement! – ${dollar}{TEST_COUNTS, var="fail"} failure(s)</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>false</sendToDevelopers>
-            <sendToRequester>false</sendToRequester>
-            <includeCulprits>false</includeCulprits>
-            <sendToRecipientList>true</sendToRecipientList>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
-        <hudson.plugins.emailext.plugins.trigger.FixedTrigger>
-          <email>
-            <recipientList>${email_notification_recipients}</recipientList>
-            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Fixed! – 0 failure(s)</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>false</sendToDevelopers>
-            <sendToRequester>false</sendToRequester>
-            <includeCulprits>false</includeCulprits>
-            <sendToRecipientList>true</sendToRecipientList>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.FixedTrigger>
-      </configuredTriggers>
-      <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
-      <presendScript></presendScript>
-    </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
 
   <buildWrappers>
     <!-- Cleanup Workspace -->
     <hudson.plugins.ws__cleanup.PreBuildCleanup>
-      <deleteDirs>false</deleteDirs>
+      <deleteDirs>true</deleteDirs>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
   </buildWrappers>
 

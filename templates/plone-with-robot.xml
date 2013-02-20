@@ -68,80 +68,36 @@ bin/${buildout_run}</command>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
     <!-- ROBOT REPORT -->
-    <hudson.plugins.robot.RobotPublisher>
+    <hudson.plugins.robot.RobotPublisher plugin="robot@1.2.3">
       <outputPath>parts/jenkins-test</outputPath>
       <reportFileName>robot_report.html</reportFileName>
       <logFileName>robot_log.html</logFileName>
       <outputFileName>robot_output.xml</outputFileName>
       <passThreshold>100.0</passThreshold>
       <unstableThreshold>80.0</unstableThreshold>
-      <logFileLink>robot_log.html</logFileLink>
+      <logFileLink>robot_report.html#total_all</logFileLink>
       <otherFiles>
-        <string></string>
+        <string>robot_*.png</string>
       </otherFiles>
       <onlyCritical>true</onlyCritical>
     </hudson.plugins.robot.RobotPublisher>
-    <!-- EMAIL NOTIFICATION -->
-    <hudson.plugins.emailext.ExtendedEmailPublisher>
-      <recipientList>${email_notification_recipients}</recipientList>
-      <configuredTriggers>
-        <hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
-          <email>
-            <recipientList>${email_notification_recipients}</recipientList>
-            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Regression! – ${dollar}{TEST_COUNTS, var=&quot;fail&quot;} failure(s)</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>false</sendToDevelopers>
-            <sendToRequester>false</sendToRequester>
-            <includeCulprits>false</includeCulprits>
-            <sendToRecipientList>true</sendToRecipientList>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
-        <hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
-          <email>
-            <recipientList>${email_notification_recipients}</recipientList>
-            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Improvement! – ${dollar}{TEST_COUNTS, var="fail"} failure(s)</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>false</sendToDevelopers>
-            <sendToRequester>false</sendToRequester>
-            <includeCulprits>false</includeCulprits>
-            <sendToRecipientList>true</sendToRecipientList>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
-        <hudson.plugins.emailext.plugins.trigger.FixedTrigger>
-          <email>
-            <recipientList>${email_notification_recipients}</recipientList>
-            <subject>$PROJECT_NAME – Build # $BUILD_NUMBER – Fixed! – 0 failure(s)</subject>
-            <body>$PROJECT_DEFAULT_CONTENT</body>
-            <sendToDevelopers>false</sendToDevelopers>
-            <sendToRequester>false</sendToRequester>
-            <includeCulprits>false</includeCulprits>
-            <sendToRecipientList>true</sendToRecipientList>
-          </email>
-        </hudson.plugins.emailext.plugins.trigger.FixedTrigger>
-      </configuredTriggers>
-      <contentType>default</contentType>
-      <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT</defaultContent>
-      <attachmentsPattern></attachmentsPattern>
-      <presendScript></presendScript>
-    </hudson.plugins.emailext.ExtendedEmailPublisher>
   </publishers>
 
   <buildWrappers>
     <!-- Cleanup Workspace -->
-    <hudson.plugins.ws__cleanup.PreBuildCleanup>
-      <deleteDirs>false</deleteDirs>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.12">
+      <deleteDirs>true</deleteDirs>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <!-- Robot XVFB -->
-    <org.jenkinsci.plugins.xvfb.XvfbBuildWrapper>
+    <org.jenkinsci.plugins.xvfb.XvfbBuildWrapper plugin="xvfb@1.0.7">
       <installationName>default</installationName>
       <screen>1024x768x24</screen>
       <debug>false</debug>
       <timeout>0</timeout>
       <displayNameOffset>1</displayNameOffset>
       <additionalOptions></additionalOptions>
+      <shutdownWithBuild>false</shutdownWithBuild>
     </org.jenkinsci.plugins.xvfb.XvfbBuildWrapper>
-
   </buildWrappers>
 
 
