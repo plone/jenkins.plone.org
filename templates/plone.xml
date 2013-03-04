@@ -74,6 +74,14 @@ bin/jenkins-alltests -1</command>
     <hudson.plugins.ws__cleanup.PreBuildCleanup>
       <deleteDirs>true</deleteDirs>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <!-- ZSERVER Port Allocation -->
+    <org.jvnet.hudson.plugins.port__allocator.PortAllocator plugin="port-allocator@1.5">
+      <ports>
+        <org.jvnet.hudson.plugins.port__allocator.DefaultPortType>
+          <name>ZSERVER_PORT</name>
+        </org.jvnet.hudson.plugins.port__allocator.DefaultPortType>
+      </ports>
+    </org.jvnet.hudson.plugins.port__allocator.PortAllocator>
   </buildWrappers>
 
 </project>
