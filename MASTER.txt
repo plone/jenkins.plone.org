@@ -1,4 +1,17 @@
+VIEW CONFIGURATION
+------------------
+
+New View: Core (Plone 4.2/4.3 - Python 2.6/2.7)
+          + Column Testresult
+
+
+JENKINS CONFIGURATION
+---------------------
+
+Standard View: Core
+
 Xvfb installation:
 
 Name: default
 Directory in which to find Xvfb executable: /usr/bin
+
