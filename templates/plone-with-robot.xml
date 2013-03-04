@@ -88,6 +88,14 @@ bin/${buildout_run}</command>
     <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.12">
       <deleteDirs>true</deleteDirs>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <!-- ZSERVER Port Allocation -->
+    <org.jvnet.hudson.plugins.port__allocator.PortAllocator plugin="port-allocator@1.5">
+      <ports>
+        <org.jvnet.hudson.plugins.port__allocator.DefaultPortType>
+          <name>ZSERVER_PORT</name>
+        </org.jvnet.hudson.plugins.port__allocator.DefaultPortType>
+      </ports>
+    </org.jvnet.hudson.plugins.port__allocator.PortAllocator>
     <!-- Robot XVFB -->
     <org.jenkinsci.plugins.xvfb.XvfbBuildWrapper plugin="xvfb@1.0.7">
       <installationName>default</installationName>
