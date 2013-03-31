@@ -76,8 +76,9 @@ bin/${options['buildout_run']}</command>
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
+    
+    {% if options['email_notification'] == 'True' %}
     <!-- EMAIL NOTIFICATION -->
-    {% if options['email_notification'] %}
     <hudson.plugins.emailext.ExtendedEmailPublisher>
       <recipientList>${options['email_notification_recipients']}</recipientList>
       <configuredTriggers>
@@ -121,8 +122,9 @@ bin/${options['buildout_run']}</command>
       <attachmentsPattern></attachmentsPattern>
       <presendScript></presendScript>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
+    {% end %}
+    {% if options['robot_report'] == 'True' %}
     <!-- ROBOT REPORT -->
-    {% if options['robot_report'] %}
     <hudson.plugins.robot.RobotPublisher plugin="robot@1.2.3">
       <outputPath>parts/jenkins-test</outputPath>
       <reportFileName>robot_report.html</reportFileName>
@@ -137,8 +139,8 @@ bin/${options['buildout_run']}</command>
       <onlyCritical>true</onlyCritical>
     </hudson.plugins.robot.RobotPublisher>
     {% end %}
+    {% if options['code_analysis'] == 'True' %}
     <!-- CODE ANALYSIS -->
-    {% if options['code_analysis'] %}
     <hudson.plugins.tasks.TasksPublisher>
       <healthy></healthy>
       <unHealthy></unHealthy>
@@ -446,7 +448,7 @@ bin/${options['buildout_run']}</command>
       </ports>
     </org.jvnet.hudson.plugins.port__allocator.PortAllocator>
     <!-- Robot XVFB -->
-    {% if options['robot_report'] %}
+    {% if options['robot_report'] == 'True' %}
     <org.jenkinsci.plugins.xvfb.XvfbBuildWrapper plugin="xvfb@1.0.7">
       <installationName>default</installationName>
       <screen>1024x768x24</screen>
