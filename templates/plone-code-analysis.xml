@@ -4,7 +4,7 @@
   <!-- BASICS -->
   <actions/>
   <description></description>
-  <displayName>${displayName}</displayName>
+  <displayName>${options['displayName']}</displayName>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.plugins.git.GitSCM">
@@ -13,12 +13,12 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name></name>
         <refspec></refspec>
-        <url>${git_url}</url>
+        <url>${options['git_url']}</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${git_branch}</name>
+        <name>${options['git_branch']}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <disableSubmodules>false</disableSubmodules>
@@ -55,7 +55,7 @@
   <!-- BUILDERS -->
   <builders>
     <hudson.tasks.Shell>
-      <command>${python} bootstrap.py
+      <command>${options['python']} bootstrap.py
 bin/buildout -c jenkins-code-analysis.cfg
 bin/jenkins-code-analysis</command>
     </hudson.tasks.Shell>

@@ -2,7 +2,7 @@
 <project>
   <actions/>
   <description></description>
-  <displayName>${displayName}</displayName>
+  <displayName>${options['displayName']}</displayName>
   <keepDependencies>false</keepDependencies>
   <properties>
     <com.tikal.hudson.plugins.notification.HudsonNotificationProperty plugin="notification@1.4">
@@ -20,12 +20,12 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name></name>
         <refspec></refspec>
-        <url>${git_url}</url>
+        <url>${options['git_url']}</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${git_branch}</name>
+        <name>${options['git_branch']}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <disableSubmodules>false</disableSubmodules>
@@ -51,7 +51,7 @@
     <includedRegions></includedRegions>
     <scmName></scmName>
   </scm>
-  <assignedNode>${node}</assignedNode>
+  <assignedNode>${options['node']}</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -62,9 +62,9 @@
   <!-- BUILDERS -->
   <builders>
     <hudson.tasks.Shell>
-      <command>${python} bootstrap.py
-bin/buildout -c ${buildout_cfg}
-bin/${buildout_run}</command>
+      <command>${options['python']} bootstrap.py
+bin/buildout -c ${options['buildout_cfg']}
+bin/${options['buildout_run']}</command>
     </hudson.tasks.Shell>
   </builders>
 
