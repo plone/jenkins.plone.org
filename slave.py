@@ -51,6 +51,9 @@ def setup():
     setup_python_26()
     setup_python_27()
 
+    setup_firefox()
+    setup_chrome()
+
     setup_xfvb()
 
 
@@ -204,7 +207,6 @@ def setup_xfvb():
     # to avoid warnings when staring xvfb
     sudo('aptitude install -y xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic')
     sudo('aptitude install -y imagemagick   # for converting screenshots')
-    sudo('aptitude -y install firefox')
 
 
 def xvfb_is_properly_installed():
@@ -261,6 +263,22 @@ def setup_jenkins_ssh():
                 'chmod g-w /home/jenkins/ /home/jenkins/.ssh /home/jenkins/.ssh/authorized_keys',
                 user='jenkins'
             )
+
+
+def setup_firefox():
+    sudo('aptitude -y install firefox')
+
+
+def setup_chrome():
+    sudo("wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -")
+    sudo("sh -c 'echo deb http://dl.google.com/linux/chrome/deb/ stable main > /etc/apt/sources.list.d/google.list'")
+    sudo("apt-get update")
+    sudo("apt-get install -y google-chrome-stable")
+    sudo("wget http://chromedriver.googlecode.com/files/chromedriver_linux32_26.0.1383.0.zip")
+    sudo("apt-get install -y unzip")
+    sudo("unzip chromedriver_linux32_26.0.1383.0.zip")
+    sudo("mv chromedriver /usr/local/bin")
+    sudo("rm -rf chromedriver*")
 
 
 # HELPER ---------------------------------------------------------------------
