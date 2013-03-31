@@ -169,53 +169,6 @@ bin/${options['buildout_run']}</command>
       <pattern>packages/**/*</pattern>
       <excludePattern>packages/**/*.png, packages/**/*.gif,  packages/**/*.jpg, packages/**/*.zip, packages/**/*.ppt, packages/**/*.jar,   packages/**/*.stx, packages/**/CHANGES.txt, packages/**/HISTORY.txt, packages/**/INSTALL.txt, packages/**/*.rst, packages/**/CHANGELOG.txt, packages/**/ChangeLog, packages/unittest2, packages/**/*.pyc,packages/**/*.pyo</excludePattern>
     </hudson.plugins.tasks.TasksPublisher>
-    <hudson.plugins.warnings.WarningsPublisher>
-      <healthy></healthy>
-      <unHealthy></unHealthy>
-      <thresholdLimit>low</thresholdLimit>
-      <pluginName>[WARNINGS] </pluginName>
-      <defaultEncoding></defaultEncoding>
-      <canRunOnFailed>false</canRunOnFailed>
-      <useDeltaValues>false</useDeltaValues>
-      <thresholds>
-        <unstableTotalAll></unstableTotalAll>
-        <unstableTotalHigh></unstableTotalHigh>
-        <unstableTotalNormal></unstableTotalNormal>
-        <unstableTotalLow></unstableTotalLow>
-        <failedTotalAll></failedTotalAll>
-        <failedTotalHigh></failedTotalHigh>
-        <failedTotalNormal></failedTotalNormal>
-        <failedTotalLow></failedTotalLow>
-      </thresholds>
-      <shouldDetectModules>false</shouldDetectModules>
-      <dontComputeNew>true</dontComputeNew>
-      <doNotResolveRelativePaths>false</doNotResolveRelativePaths>
-      <parserConfigurations>
-        <hudson.plugins.warnings.ParserConfiguration>
-          <pattern>**/parts/jenkins-test/pyflakes.log</pattern>
-          <parserName>pyflakes</parserName>
-        </hudson.plugins.warnings.ParserConfiguration>
-        <hudson.plugins.warnings.ParserConfiguration>
-          <pattern>**/parts/jenkins-test/zptlint.log</pattern>
-          <parserName>zptlint</parserName>
-        </hudson.plugins.warnings.ParserConfiguration>
-        <hudson.plugins.warnings.ParserConfiguration>
-          <pattern>**/parts/jenkins-test/flake8.log</pattern>
-          <parserName>Flake8</parserName>
-        </hudson.plugins.warnings.ParserConfiguration>
-      </parserConfigurations>
-      <consoleParsers>
-        <hudson.plugins.warnings.ConsoleParser>
-          <parserName>zptlint</parserName>
-        </hudson.plugins.warnings.ConsoleParser>
-        <hudson.plugins.warnings.ConsoleParser>
-          <parserName>pyflakes</parserName>
-        </hudson.plugins.warnings.ConsoleParser>
-        <hudson.plugins.warnings.ConsoleParser>
-          <parserName>Flake8</parserName>
-        </hudson.plugins.warnings.ConsoleParser>
-      </consoleParsers>
-    </hudson.plugins.warnings.WarningsPublisher>
     <hudson.plugins.analysis.collector.AnalysisPublisher>
       <healthy></healthy>
       <unHealthy></unHealthy>
@@ -248,10 +201,6 @@ bin/${options['buildout_run']}</command>
       <artifacts>**/parts/jenkins-test/*.log</artifacts>
       <latestOnly>false</latestOnly>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.sloccount.SloccountPublisher>
-      <pattern>**/parts/jenkins-test/sloccount.sc</pattern>
-      <encoding></encoding>
-    </hudson.plugins.sloccount.SloccountPublisher>
     <hudson.plugins.violations.ViolationsPublisher>
       <config>
         <suppressions class="tree-set">
