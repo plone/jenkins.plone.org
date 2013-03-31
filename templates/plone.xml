@@ -76,6 +76,51 @@ bin/${options['buildout_run']}</command>
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
+    <!-- EMAIL NOTIFICATION -->
+    {% if options['email_notification'] %}
+    <hudson.plugins.emailext.ExtendedEmailPublisher>
+      <recipientList>${options['email_notification_recipients']}</recipientList>
+      <configuredTriggers>
+        <hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
+          <email>
+            <recipientList>${options['email_notification_recipients']}</recipientList>
+            <subject>${options['dollar']}PROJECT_NAME - Build # ${options['dollar']}BUILD_NUMBER - Regression! - ${options['dollar']}{TEST_COUNTS, var=&quot;fail&quot;} failure(s)</subject>
+            <body>${options['dollar']}PROJECT_DEFAULT_CONTENT</body>
+            <sendToDevelopers>false</sendToDevelopers>
+            <sendToRequester>false</sendToRequester>
+            <includeCulprits>false</includeCulprits>
+            <sendToRecipientList>true</sendToRecipientList>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
+        <hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
+          <email>
+            <recipientList>${options['email_notification_recipients']}</recipientList>
+            <subject>${options['dollar']}PROJECT_NAME - Build # ${options['dollar']}BUILD_NUMBER - Improvement! - ${options['dollar']}{TEST_COUNTS, var="fail"} failure(s)</subject>
+            <body>${options['dollar']}PROJECT_DEFAULT_CONTENT</body>
+            <sendToDevelopers>false</sendToDevelopers>
+            <sendToRequester>false</sendToRequester>
+            <includeCulprits>false</includeCulprits>
+            <sendToRecipientList>true</sendToRecipientList>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
+        <hudson.plugins.emailext.plugins.trigger.FixedTrigger>
+          <email>
+            <recipientList>${options['email_notification_recipients']}</recipientList>
+            <subject>${options['dollar']}PROJECT_NAME - Build # ${options['dollar']}BUILD_NUMBER - Fixed! - 0 failure(s)</subject>
+            <body>${options['dollar']}PROJECT_DEFAULT_CONTENT</body>
+            <sendToDevelopers>false</sendToDevelopers>
+            <sendToRequester>false</sendToRequester>
+            <includeCulprits>false</includeCulprits>
+            <sendToRecipientList>true</sendToRecipientList>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.FixedTrigger>
+      </configuredTriggers>
+      <contentType>default</contentType>
+      <defaultSubject>${options['dollar']}DEFAULT_SUBJECT</defaultSubject>
+      <defaultContent>${options['dollar']}DEFAULT_CONTENT</defaultContent>
+      <attachmentsPattern></attachmentsPattern>
+      <presendScript></presendScript>
+    </hudson.plugins.emailext.ExtendedEmailPublisher>
     <!-- ROBOT REPORT -->
     {% if options['robot_report'] %}
     <hudson.plugins.robot.RobotPublisher plugin="robot@1.2.3">
