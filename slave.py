@@ -1,6 +1,8 @@
 from fabric.api import *
 from fabric.contrib.files import sed, append, exists, contains
 
+import ConfigParser
+
 env.user = 'timo'
 env.hosts = [
     '152.19.4.89',
@@ -8,6 +10,12 @@ env.hosts = [
 ]
 
 env.home = "/home/jenkins"
+
+auth_config = ConfigParser.ConfigParser()
+auth_config.readfp(open('auth.cfg'))
+jenkins_username = auth_config.get("buildout", "jenkins-username")
+jenkins_password = auth_config.get("buildout", "jenkins-password")
+jenkins_apitoken = auth_config.get("buildout", "jenkins-apitoken")
 
 
 def setup():
@@ -264,6 +272,15 @@ def setup_jenkins_ssh():
                 user='jenkins'
             )
 
+
+def setup_connect_to_master():
+    sudo("apt-get install -y openjdk-7-jre")
+    if not exists('/home/jenkins/slave.jar', use_sudo=True):
+        sudo("wget http://jenkins.plone.org/jnlpJars/slave.jar")
+    sudo("java -jar slave.jar -jnlpUrl http://jenkins.plone.org/computer/Slave1/slave-agent.jnlp -jnlpCredentials %s:%s &" % (
+        jenkins_username,
+        jenkins_apitoken,
+    ))
 
 def setup_firefox():
     sudo('aptitude -y install firefox')
