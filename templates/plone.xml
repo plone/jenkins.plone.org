@@ -68,6 +68,9 @@ bin/${options['buildout_run']}
 {% if options['code_analysis'] == 'True' %}
 bin/jenkins-code-analysis
 {% end %}
+{% if options['test-coverage'] == 'True' %}
+bin/jenkins-test-coverage
+{% end %}
       </command>
     </hudson.tasks.Shell>
   </builders>
@@ -80,7 +83,68 @@ bin/jenkins-code-analysis
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
-    
+
+    {% if options['test-coverage'] == 'True' %}
+    <!-- TEST COVERAGE -->
+    <hudson.plugins.cobertura.CoberturaPublisher>
+      <coberturaReportFile>**/parts/jenkins-test/coverage.xml</coberturaReportFile>
+      <onlyStable>true</onlyStable>
+      <failUnhealthy>false</failUnhealthy>
+      <failUnstable>false</failUnstable>
+      <autoUpdateHealth>false</autoUpdateHealth>
+      <autoUpdateStability>false</autoUpdateStability>
+      <healthyTarget>
+        <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>CONDITIONAL</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>7000000</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>LINE</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>8000000</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>METHOD</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>8000000</int>
+          </entry>
+        </targets>
+      </healthyTarget>
+      <unhealthyTarget>
+        <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>CONDITIONAL</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>0</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>LINE</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>0</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>METHOD</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>0</int>
+          </entry>
+        </targets>
+      </unhealthyTarget>
+      <failingTarget>
+        <targets class="enum-map" enum-type="hudson.plugins.cobertura.targets.CoverageMetric">
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>CONDITIONAL</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>0</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>LINE</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>0</int>
+          </entry>
+          <entry>
+            <hudson.plugins.cobertura.targets.CoverageMetric>METHOD</hudson.plugins.cobertura.targets.CoverageMetric>
+            <int>0</int>
+          </entry>
+        </targets>
+      </failingTarget>
+      <sourceEncoding>ASCII</sourceEncoding>
+    </hudson.plugins.cobertura.CoberturaPublisher>
+    {% end %}
+
     {% if options['email_notification'] == 'True' %}
     <!-- EMAIL NOTIFICATION -->
     <hudson.plugins.emailext.ExtendedEmailPublisher>
@@ -127,6 +191,7 @@ bin/jenkins-code-analysis
       <presendScript></presendScript>
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     {% end %}
+
     {% if options['robot_report'] == 'True' %}
     <!-- ROBOT REPORT -->
     <hudson.plugins.robot.RobotPublisher plugin="robot@1.2.3">
