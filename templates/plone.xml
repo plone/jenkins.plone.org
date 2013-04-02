@@ -68,8 +68,8 @@ bin/${options['buildout_run']}
 {% if options['code_analysis'] == 'True' %}
 bin/jenkins-code-analysis
 {% end %}
-{% if options['test-coverage'] == 'True' %}
-bin/jenkins-test-coverage
+{% if options['test_coverage'] == 'True' %}
+bin/jenkins-test_coverage
 {% end %}
       </command>
     </hudson.tasks.Shell>
@@ -84,7 +84,7 @@ bin/jenkins-test-coverage
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
 
-    {% if options['test-coverage'] == 'True' %}
+    {% if options['test_coverage'] == 'True' %}
     <!-- TEST COVERAGE -->
     <hudson.plugins.cobertura.CoberturaPublisher>
       <coberturaReportFile>**/parts/jenkins-test/coverage.xml</coberturaReportFile>
