@@ -69,7 +69,7 @@ bin/${options['buildout_run']}
 bin/jenkins-code-analysis
 {% end %}
 {% if options['test_coverage'] == 'True' %}
-bin/jenkins-test_coverage
+bin/jenkins-test-coverage
 {% end %}
       </command>
     </hudson.tasks.Shell>
