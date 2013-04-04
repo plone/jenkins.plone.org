@@ -65,12 +65,8 @@
       <command>${options['python']} bootstrap.py -c ${options['buildout_cfg']}
 bin/buildout -c ${options['buildout_cfg']}
 bin/${options['buildout_run']}
-{% if options['code_analysis'] == 'True' %}
-bin/jenkins-code-analysis
-{% end %}
-{% if options['test_coverage'] == 'True' %}
-bin/jenkins-test-coverage
-{% end %}
+{% if options['code_analysis'] == 'True' %}bin/jenkins-code-analysis{% end %}
+{% if options['test_coverage'] == 'True' %}bin/jenkins-test-coverage{% end %}
       </command>
     </hudson.tasks.Shell>
   </builders>
