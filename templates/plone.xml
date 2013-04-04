@@ -5,6 +5,8 @@
   <displayName>${options['displayName']}</displayName>
   <keepDependencies>false</keepDependencies>
   <properties>
+    {% if options.get('notification_endpoint', 'False') == 'True' %}
+    <!-- NOTIFICATION ENDPOINT -->
     <com.tikal.hudson.plugins.notification.HudsonNotificationProperty plugin="notification@1.4">
       <endpoints>
         <com.tikal.hudson.plugins.notification.Endpoint>
@@ -13,6 +15,7 @@
         </com.tikal.hudson.plugins.notification.Endpoint>
       </endpoints>
     </com.tikal.hudson.plugins.notification.HudsonNotificationProperty>
+    {% end %}
   </properties>  
   <scm class="hudson.plugins.git.GitSCM">
     <configVersion>2</configVersion>
