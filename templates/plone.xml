@@ -391,9 +391,9 @@ bin/jenkins-test-coverage
             <string>pep8</string>
             <hudson.plugins.violations.TypeConfig>
               <type>pep8</type>
-              <min>10</min>
-              <max>999</max>
-              <unstable>999</unstable>
+              <min>${options.get('pep8_min', 10)}</min>
+              <max>${options.get('pep8_max', 999)}</max>
+              <unstable>${options.get('pep8_unstable', 999)}</unstable>
               <usePattern>false</usePattern>
               <pattern>**/parts/jenkins-test/flake8.log</pattern>
             </hudson.plugins.violations.TypeConfig>
