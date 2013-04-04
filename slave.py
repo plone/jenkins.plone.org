@@ -52,6 +52,7 @@ def setup():
     sudo('npm install -g jshint')
     sudo('npm install -g csslint')
 
+    setup_buildout_cache()
     setup_jenkins_user()
     setup_jenkins_ssh()
     setup_git_config()
