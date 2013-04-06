@@ -4,10 +4,10 @@
   <description></description>
   <displayName>${options['displayName']}</displayName>
   <logRotator>
-    <daysToKeep>7</daysToKeep>
-    <numToKeep>20</numToKeep>
-    <artifactDaysToKeep>-1</artifactDaysToKeep>
-    <artifactNumToKeep>-1</artifactNumToKeep>
+    <daysToKeep>${options.get('daysToKeep', '3')}</daysToKeep>
+    <numToKeep>${options.get('numToKeep', '10')}</numToKeep>
+    <artifactDaysToKeep>${options.get('artifactDaysToKeep', '1')}</artifactDaysToKeep>
+    <artifactNumToKeep>${options.get('artifactNumToKeep', '3')}</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties>
