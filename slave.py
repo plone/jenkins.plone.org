@@ -51,6 +51,8 @@ def setup():
     sudo('npm install -g jslint')
     sudo('npm install -g jshint')
     sudo('npm install -g csslint')
+    # Robot Framework
+    sudo('apt-get install -y python-tk')
 
     setup_buildout_cache()
     setup_jenkins_user()
