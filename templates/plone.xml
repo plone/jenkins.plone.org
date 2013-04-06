@@ -3,6 +3,12 @@
   <actions/>
   <description></description>
   <displayName>${options['displayName']}</displayName>
+  <logRotator>
+    <daysToKeep>7</daysToKeep>
+    <numToKeep>20</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties>
     {% if options.get('notification_endpoint', 'False') == 'True' %}
