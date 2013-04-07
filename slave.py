@@ -51,7 +51,8 @@ def setup():
     sudo('npm install -g jslint')
     sudo('npm install -g jshint')
     sudo('npm install -g csslint')
-    # Robot Framework
+    # Robot Framework (This dependency is only necessary when 'Library  Dialogs'
+    # are added to the robot setup, which shouldn't happen)
     sudo('apt-get install -y python-tk')
 
     setup_buildout_cache()
