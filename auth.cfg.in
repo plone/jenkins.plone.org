@@ -1,0 +1,3 @@
+[buildout]
+jenkins-username =
+jenkins-password =
