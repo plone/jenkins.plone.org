@@ -22,7 +22,7 @@
       </endpoints>
     </com.tikal.hudson.plugins.notification.HudsonNotificationProperty>
     {% end %}
-  </properties>  
+  </properties>
   <scm class="hudson.plugins.git.GitSCM">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
@@ -60,7 +60,9 @@
     <includedRegions></includedRegions>
     <scmName></scmName>
   </scm>
+  {% if options.get('node', False) != False %}
   <assignedNode>${options.get('node', '')}</assignedNode>
+  {% end %}
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
