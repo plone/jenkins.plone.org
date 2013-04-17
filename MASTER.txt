@@ -1,8 +1,19 @@
 VIEW CONFIGURATION
 ------------------
 
-New View: Core (Plone 4.2/4.3 - Python 2.6/2.7)
-          + Column Testresult
+Core (Plone 4.2/4.3 - Python 2.6/2.7)::
+
+  + Column Testresult
+
+Packages::
+
+  Use a regular expression to include jobs into the view: Checked
+  Regular expression: ^plone.app.*
+
+Pull Requests::
+
+  Use a regular expression to include jobs into the view: Checked
+  Regular expression: ^pull-request.* 
 
 
 JENKINS CONFIGURATION
