@@ -59,6 +59,7 @@ def setup():
     setup_jenkins_user()
     setup_jenkins_ssh()
     setup_git_config()
+    setup_tmpreaper()
 
     setup_python_26()
     setup_python_27()
@@ -75,6 +76,11 @@ def setup_git_config():
     put('etc/.gitconfig', '/tmp')
     sudo('mv /tmp/.gitconfig /home/jenkins/')
     sudo('chown jenkins:jenkins /home/jenkins/.gitconfig')
+
+
+def setup_tmpreaper():
+    put('etc/tmpreaper.conf', '/tmp')
+    sudo('mv /tmp/tmpreaper.conf /etc/')
 
 
 def test_setup_python_26():
@@ -285,6 +291,7 @@ def setup_connect_to_master():
         jenkins_username,
         jenkins_apitoken,
     ))
+
 
 def setup_firefox():
     sudo('aptitude -y install firefox')
