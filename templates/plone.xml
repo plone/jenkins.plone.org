@@ -72,8 +72,24 @@
 
   <!-- BUILDERS -->
   <builders>
+    {% if options.get('plone_core_package', False) != False %}
     <hudson.tasks.Shell>
-      <command>${options['python']} bootstrap.py -c ${options['buildout_cfg']}
+      <command>
+# bootstrap.py
+wget http://downloads.buildout.org/2/bootstrap.py
+# jenkins.cfg
+echo "[buildout]" >> jenkins.cfg
+echo "extends = https://raw.github.com/plone/buildout.jenkins/master/plone-4.3-core-package.cfg" >> jenkins.cfg
+echo "jenkins-test-eggs = ${options['displayName']} [test]" >> jenkins.cfg
+echo "[versions]" >> jenkins.cfg
+echo "${options['displayName']} = " >> jenkins.cfg
+echo "" >> jenkins.cfg
+      </command>
+    </hudson.tasks.Shell>
+    {% end %}
+    <hudson.tasks.Shell>
+      <command>
+${options['python']} bootstrap.py -c ${options['buildout_cfg']}
 bin/buildout -c ${options['buildout_cfg']}
 bin/${options['buildout_run']}
 {% if options['code_analysis'] == 'True' %}bin/jenkins-code-analysis{% end %}
