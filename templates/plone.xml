@@ -2,7 +2,9 @@
 <project>
   <actions/>
   <description></description>
-  <displayName>${options['displayName']}</displayName>
+  {% if options.get('displayName', 'False') != 'False' %}
+  <displayName>${options.get('displayName')}</displayName>
+  {% end %}
   <logRotator>
     <daysToKeep>${options.get('daysToKeep', '3')}</daysToKeep>
     <numToKeep>${options.get('numToKeep', '10')}</numToKeep>
@@ -80,9 +82,9 @@ wget http://downloads.buildout.org/2/bootstrap.py
 # jenkins.cfg
 echo "[buildout]" >> jenkins.cfg
 echo "extends = https://raw.github.com/plone/buildout.jenkins/master/plone-4.3-core-package.cfg" >> jenkins.cfg
-echo "jenkins-test-eggs = ${options['displayName']} [test]" >> jenkins.cfg
+echo "jenkins-test-eggs = ${options['jobname']} [test]" >> jenkins.cfg
 echo "[versions]" >> jenkins.cfg
-echo "${options['displayName']} = " >> jenkins.cfg
+echo "${options['jobname']} = " >> jenkins.cfg
 echo "" >> jenkins.cfg
       </command>
     </hudson.tasks.Shell>
