@@ -78,7 +78,7 @@
     <hudson.tasks.Shell>
       <command>
 # bootstrap.py
-wget http://downloads.buildout.org/2/bootstrap.py
+wget http://downloads.buildout.org/1/bootstrap.py
 # jenkins.cfg
 echo "[buildout]" >> jenkins.cfg
 echo "extends = https://raw.github.com/plone/buildout.jenkins/master/plone-4.3-core-package.cfg" >> jenkins.cfg
