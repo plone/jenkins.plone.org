@@ -56,6 +56,8 @@ def setup():
     sudo('apt-get install -y python-tk')
     # Java is needed to connect the Jenkins slaves
     sudo("apt-get install -y openjdk-7-jre")
+    # LXML
+    sudo('apt-get install -y libxslt1-dev libxml2-dev')
 
     setup_jenkins_user()
     setup_jenkins_ssh()
