@@ -51,13 +51,15 @@ def setup():
     sudo('npm install -g jslint')
     sudo('npm install -g jshint')
     sudo('npm install -g csslint')
-    # Robot Framework (This dependency is only necessary when 'Library  Dialogs'
-    # are added to the robot setup, which shouldn't happen)
+    # Robot Framework (This dependency is only necessary when
+    # 'Library  Dialogs' are added to the robot setup, which shouldn't happen)
     sudo('apt-get install -y python-tk')
+    # Java is needed to connect the Jenkins slaves
+    sudo("apt-get install -y openjdk-7-jre")
 
-    setup_buildout_cache()
     setup_jenkins_user()
     setup_jenkins_ssh()
+    setup_buildout_cache()
     setup_git_config()
     setup_tmpreaper()
 
@@ -118,7 +120,16 @@ def test_setup_python_26():
 
 
 def setup_python_26():
-    """Install Python 2.6 with Imaging and LXML.
+    """Install Python 2.6.
+    """
+    sudo('add-apt-repository -y ppa:fkrull/deadsnakes')
+    sudo('apt-get update')
+    sudo('apt-get install -y python2.6 python2.6-dev')
+
+
+def setup_python_26_old():
+    """Install Python 2.6 with Imaging and LXML. This is the old and ugly way
+    with patches and stuff.
     """
     # http://ubuntuforums.org/showthread.php?t=1976837
     if exists('/opt/python-2.6', use_sudo=True):
