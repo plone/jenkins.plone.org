@@ -124,9 +124,44 @@ def test_setup_python_26():
 def setup_python_26():
     """Install Python 2.6.
     """
+    # Python 2.6
     sudo('add-apt-repository -y ppa:fkrull/deadsnakes')
     sudo('apt-get update')
     sudo('apt-get install -y python2.6 python2.6-dev')
+    # PIL
+    #http://www.sandersnewmedia.com/why/2012/04/16/installing-pil-virtualenv-ubuntu-1204-precise-pangolin/
+    sudo('apt-get install -y zlib1g-dev')
+    sudo('apt-get install -y libfreetype6 libfreetype6-dev')
+    sudo('apt-get install -y libjpeg-dev')
+    if not exists('/usr/lib/`uname -i`-linux-gnu/libfreetype.so'):
+        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib/')
+    if not exists('/usr/lib/`uname -i`-linux-gnu/libjpeg.so'):
+        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libjpeg.so /usr/lib/')
+    if not exists('/usr/lib/`uname -i`-linux-gnu/libz.so'):
+        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib/')
+    if not exists('/root/tmp'):
+        sudo('mkdir /root/tmp')
+    with cd('/root/tmp'):
+        sudo('wget http://effbot.org/downloads/Imaging-1.1.7.tar.gz')
+        sudo('tar xfvz Imaging-1.1.7.tar.gz')
+    with cd('/root/tmp/Imaging-1.1.7/'):
+        sudo('/usr/bin/python2.6 setup.py install')
+    # Install BZ2 Support
+    with cd('/root/tmp'):
+        sudo('wget http://labix.org/download/python-bz2/python-bz2-1.1.tar.bz2')
+        sudo('tar xfvj python-bz2-1.1.tar.bz2')
+    with cd('/root/tmp/python-bz2-1.1/'):
+        sudo('/usr/bin/python2.6 setup.py install')
+    # Install LXML
+    sudo('apt-get install -y libxslt1-dev libxml2-dev')
+    with cd('/root/tmp'):
+        sudo('wget http://pypi.python.org/packages/source/l/lxml/lxml-2.3.6.tar.gz')
+        sudo('tar xfvz lxml-2.3.6.tar.gz')
+    with cd('/root/tmp/lxml-2.3.6/'):
+        sudo('/usr/bin/python2.6 setup.py install')
+    # Clean up
+    sudo('rm -rf /root/tmp')
+    test_setup_python_26()
 
 
 def setup_python_26_old():
