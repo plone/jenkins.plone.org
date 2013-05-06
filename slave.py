@@ -30,6 +30,8 @@ def setup():
     # Basics
     sudo('apt-get install -y build-essential')
     sudo('apt-get install -y htop')
+    # Remove zope.interface to avoid buildout problems
+    sudo('apt-get remove -y python-zope.interface')
     # Time sync
     sudo('apt-get install -y ntp')
     # Keep /tmp clean
