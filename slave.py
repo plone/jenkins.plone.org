@@ -369,13 +369,35 @@ def _sudo_put(source, destination, user):
 
 # TODO -----------------------------------------------------------------------
 
-def setup_gil_user():
-    """TODO. This should be more generic. All admins need an account.
-    """
-    if not exists('/home/gil', use_sudo=True):
-        sudo('adduser gil --disabled-password --home=/home/gil')
-    sudo('adduser gil sudo')
-    # TODO: create ssh setup with public key of that user
+def setup_users():
+    _setup_user(username='ramon', key='ramon.pub')
+
+
+def _setup_user(username, key):
+    # setup user
+    if not exists('/home/%s' % username, use_sudo=True):
+        sudo('adduser %s --disabled-password --home=/home/%s' % (
+            username, username))
+    sudo('adduser %s sudo' % username)
+    # setup ssh key
+    if not exists('/home/%s/.ssh' % username, use_sudo=True):
+        sudo('mkdir /home/%s/.ssh' % username, user=username)
+    if exists('/home/%s/.ssh/authorized_keys' % username):
+        sudo('rm /home/%s/.ssh/authorized_keys' % username)
+    with cd('/home/%s/.ssh' % username):
+        sudo(
+            'wget https://raw.github.com/plone/jenkins.plone.org/master/etc/%s' % key,
+            user=username
+        )
+        sudo('touch authorized_keys', user=username)
+        sudo(
+            'cat %s >> authorized_keys' % key, user=username
+        )
+        sudo('rm %s' % key, user=username)
+        sudo(
+            'chmod g-w /home/%s /home/%s/.ssh /home/%s/.ssh/authorized_keys' % (username, username, username),
+            user=username
+        )
 
 
 def setup_eggproxy():
