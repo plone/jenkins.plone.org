@@ -60,6 +60,11 @@ def setup():
     sudo("apt-get install -y openjdk-7-jre")
     # LXML
     sudo('apt-get install -y libxslt1-dev libxml2-dev')
+    # LOCALES
+    sudo('echo "en_GB.ISO8859-15 ISO-8859-15" >> /var/lib/locales/supported.d/local')
+    sudo('echo "en_US.ISO8859-15 ISO-8859-15" >> /var/lib/locales/supported.d/local')
+    sudo('echo "en_US.ISO-8859-1 ISO-8859-1" >> /var/lib/locales/supported.d/local')
+    sudo('dpkg-reconfigure locales')
 
     setup_jenkins_user()
     setup_jenkins_ssh()
@@ -135,11 +140,11 @@ def setup_python_26():
     sudo('apt-get install -y zlib1g-dev')
     sudo('apt-get install -y libfreetype6 libfreetype6-dev')
     sudo('apt-get install -y libjpeg-dev')
-    if not exists('/usr/lib/`uname -i`-linux-gnu/libfreetype.so'):
+    if exists('/usr/lib/`uname -i`-linux-gnu/libfreetype.so'):
         sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib/')
-    if not exists('/usr/lib/`uname -i`-linux-gnu/libjpeg.so'):
+    if exists('/usr/lib/`uname -i`-linux-gnu/libjpeg.so'):
         sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libjpeg.so /usr/lib/')
-    if not exists('/usr/lib/`uname -i`-linux-gnu/libz.so'):
+    if exists('/usr/lib/`uname -i`-linux-gnu/libz.so'):
         sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib/')
     if not exists('/root/tmp'):
         sudo('mkdir /root/tmp')
