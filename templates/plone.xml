@@ -96,7 +96,6 @@ bin/buildout -c ${options['buildout_cfg']}
 bin/${options['buildout_run']}
 {% if options['code_analysis'] == 'True' %}bin/jenkins-code-analysis{% end %}
 {% if options['test_coverage'] == 'True' %}bin/jenkins-test-coverage{% end %}
-echo "CHANGES=\"$(git log -1 --pretty=%B)\"" >> parts/jenkins-test/CHANGES.log
       </command>
     </hudson.tasks.Shell>
   </builders>
