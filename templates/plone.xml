@@ -6,9 +6,9 @@
   <displayName>${options.get('displayName')}</displayName>
   {% end %}
   <logRotator>
-    <daysToKeep>${options.get('daysToKeep', '3')}</daysToKeep>
+    <daysToKeep>${options.get('daysToKeep', '')}</daysToKeep>
     <numToKeep>${options.get('numToKeep', '10')}</numToKeep>
-    <artifactDaysToKeep>${options.get('artifactDaysToKeep', '1')}</artifactDaysToKeep>
+    <artifactDaysToKeep>${options.get('artifactDaysToKeep', '')}</artifactDaysToKeep>
     <artifactNumToKeep>${options.get('artifactNumToKeep', '3')}</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
