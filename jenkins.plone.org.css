@@ -4,3 +4,7 @@
   background: #329FD7;
 }
 
+body {
+  background: red !important;
+}
+
