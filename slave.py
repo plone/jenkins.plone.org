@@ -5,8 +5,14 @@ import ConfigParser
 
 env.user = 'timo'
 env.hosts = [
+    # Slave 1 (Ian)
     '152.19.4.89',
+    # Slave 2 (Ian)
     '152.19.4.98',
+    # Slave 3 (Wyn)
+    #'10.71.102.5'
+    # Slave 4 (Timo)
+    #'88.198.77.5',
 ]
 
 env.home = "/home/jenkins"
@@ -35,7 +41,9 @@ def setup():
     # Time sync
     sudo('apt-get install -y ntp')
     # Keep /tmp clean
-    sudo('apt-get install tmpreaper')
+    sudo('apt-get install -y tmpreaper')
+    # for add-apt-repository
+    sudo('apt-get install -y python-software-properties')
     # VCS
     sudo('apt-get install -y git-core')
     sudo('apt-get install -y subversion')
@@ -140,12 +148,12 @@ def setup_python_26():
     sudo('apt-get install -y zlib1g-dev')
     sudo('apt-get install -y libfreetype6 libfreetype6-dev')
     sudo('apt-get install -y libjpeg-dev')
-    if exists('/usr/lib/`uname -i`-linux-gnu/libfreetype.so'):
-        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib/')
-    if exists('/usr/lib/`uname -i`-linux-gnu/libjpeg.so'):
-        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libjpeg.so /usr/lib/')
-    if exists('/usr/lib/`uname -i`-linux-gnu/libz.so'):
-        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib/')
+    if not exists('/usr/lib/libfreetype.so'):
+        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib/libfreetype.so')
+    if not exists('/usr/lib/libjpeg.so'):
+        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libjpeg.so /usr/lib/libjpeg.so')
+    if not exists('/usr/lib/libz.so'):
+        sudo('ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib/libz.so')
     if not exists('/root/tmp'):
         sudo('mkdir /root/tmp')
     with cd('/root/tmp'):
@@ -376,7 +384,6 @@ def _sudo_put(source, destination, user):
 
 def setup_users():
     _setup_user(username='ramon', key='ramon.pub')
-
 
 def _setup_user(username, key):
     # setup user
