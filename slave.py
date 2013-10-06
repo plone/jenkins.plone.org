@@ -237,7 +237,7 @@ def setup_python_26_old():
     # Clean up
     sudo('rm -rf /root/tmp')
     # Install Setuptools
-    sudo('wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | python2.7')
+    sudo('wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | python2.6')
     test_setup_python_26()
 
 
