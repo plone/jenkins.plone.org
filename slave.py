@@ -13,6 +13,8 @@ env.hosts = [
     #'10.71.102.5'
     # Slave 4 (Timo)
     #'88.198.77.5',
+    # Slave 5 (Timo)
+    #'188.40.97.212',
 ]
 
 env.home = "/home/jenkins"
@@ -31,8 +33,6 @@ def setup():
     sudo('apt-get update -y')
     sudo('apt-get dist-upgrade -y')
     sudo('apt-get autoremove -y')
-    # Configure locales
-    sudo('dpkg-reconfigure locales')
     # Basics
     sudo('apt-get install -y build-essential')
     sudo('apt-get install -y htop')
