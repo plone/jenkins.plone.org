@@ -236,6 +236,8 @@ def setup_python_26_old():
         sudo('ln -s /opt/python2.6/bin/python /usr/local/bin/python2.6')
     # Clean up
     sudo('rm -rf /root/tmp')
+    # Install Setuptools
+    sudo('wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | python2.7')
     test_setup_python_26()
 
 
@@ -274,6 +276,8 @@ def setup_python_27():
     sudo('apt-get install -y python-lxml')
     # Test Coverage
     sudo('apt-get install -y enscript')
+    # Install Setuptools
+    sudo('wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | python2.7')
     test_setup_python_27()
 
 
