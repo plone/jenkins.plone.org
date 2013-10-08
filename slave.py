@@ -88,6 +88,8 @@ def setup():
 
     setup_xfvb()
 
+    setup_clean()
+
 
 def setup_git_config():
     """Set up a git configuration file (.gitconfig).
@@ -429,3 +431,10 @@ def setup_munin():
     put('etc/munin.conf', '/etc/munin/munin.conf')
     put('etc/munin-node.conf', '/etc/munin/munin-node.conf')
     sudo('/etc/init.d/munin-node restart')
+
+def setup_clean():
+    sudo('apt-get --purge -y autoremove')
+    sudo('apt-get --purge -y clean')
+    sudo('rm -f /var/cache/apt/archives/*.deb')
+    sudo('rm -f /var/cache/apt/*cache.bin')
+    sudo('rm -f /var/lib/apt/lists/*_Packages')
