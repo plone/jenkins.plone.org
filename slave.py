@@ -353,10 +353,10 @@ def setup_jenkins_ssh():
 
 
 def setup_connect_to_master():
-    sudo("apt-get install -y openjdk-7-jre")
+    sudo('apt-get install -y openjdk-7-jre')
     if not exists('/home/jenkins/slave.jar', use_sudo=True):
-        sudo("wget http://jenkins.plone.org/jnlpJars/slave.jar")
-    sudo("java -jar slave.jar -jnlpUrl http://jenkins.plone.org/computer/Slave1/slave-agent.jnlp -jnlpCredentials %s:%s &" % (
+        sudo('wget http://jenkins.plone.org/jnlpJars/slave.jar')
+    sudo('java -jar slave.jar -jnlpUrl http://jenkins.plone.org/computer/Slave1/slave-agent.jnlp -jnlpCredentials %s:%s &' % (
         jenkins_username,
         jenkins_apitoken,
     ))
@@ -367,15 +367,15 @@ def setup_firefox():
 
 
 def setup_chrome():
-    sudo("wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -")
-    sudo("sh -c 'echo deb http://dl.google.com/linux/chrome/deb/ stable main > /etc/apt/sources.list.d/google.list'")
-    sudo("apt-get update")
-    sudo("apt-get install -y google-chrome-stable")
-    sudo("wget http://chromedriver.googlecode.com/files/chromedriver_linux32_26.0.1383.0.zip")
-    sudo("apt-get install -y unzip")
-    sudo("unzip chromedriver_linux32_26.0.1383.0.zip")
-    sudo("mv chromedriver /usr/local/bin")
-    sudo("rm -rf chromedriver*")
+    sudo('wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -')
+    sudo('echo deb http://dl.google.com/linux/chrome/deb/ stable main > /etc/apt/sources.list.d/google.list')
+    sudo('apt-get update')
+    sudo('apt-get install -y google-chrome-stable')
+    sudo('wget http://chromedriver.googlecode.com/files/chromedriver_linux32_26.0.1383.0.zip')
+    sudo('apt-get install -y unzip')
+    sudo('unzip chromedriver_linux32_26.0.1383.0.zip')
+    sudo('mv chromedriver /usr/local/bin')
+    sudo('rm -rf chromedriver*')
 
 
 # HELPER ---------------------------------------------------------------------
