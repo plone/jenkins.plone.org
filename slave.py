@@ -88,6 +88,8 @@ def setup():
 
     setup_xfvb()
 
+    setup_clean()
+
 
 def setup_git_config():
     """Set up a git configuration file (.gitconfig).
@@ -285,13 +287,13 @@ def setup_xfvb():
     #if xvfb_is_properly_installed():
     #    return
     # virtual display
-    sudo('aptitude install -y xvfb')
+    sudo('apt-get install -y xvfb')
     # installs xclock (to test things are working),
     # and xwd (for taking screenshots)
-    sudo('aptitude install -y x11-apps')
+    sudo('apt-get install -y x11-apps')
     # to avoid warnings when staring xvfb
-    sudo('aptitude install -y xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic')
-    sudo('aptitude install -y imagemagick   # for converting screenshots')
+    sudo('apt-get install -y xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic')
+    sudo('apt-get install -y imagemagick   # for converting screenshots')
 
 
 def xvfb_is_properly_installed():
@@ -361,7 +363,7 @@ def setup_connect_to_master():
 
 
 def setup_firefox():
-    sudo('aptitude -y install firefox')
+    sudo('apt-get -y install firefox')
 
 
 def setup_chrome():
@@ -429,3 +431,10 @@ def setup_munin():
     put('etc/munin.conf', '/etc/munin/munin.conf')
     put('etc/munin-node.conf', '/etc/munin/munin-node.conf')
     sudo('/etc/init.d/munin-node restart')
+
+def setup_clean():
+    sudo('apt-get --purge -y autoremove')
+    sudo('apt-get --purge -y clean')
+    sudo('rm -f /var/cache/apt/archives/*.deb')
+    sudo('rm -f /var/cache/apt/*cache.bin')
+    sudo('rm -f /var/lib/apt/lists/*_Packages')
