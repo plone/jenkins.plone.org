@@ -257,6 +257,13 @@ for j in ${options['dollar']}i;
     </hudson.plugins.emailext.ExtendedEmailPublisher>
     {% end %}
 
+    {% if options.get('plone_core', 'False') != 'False' %}
+    <org.jenkinsci.plugins.custom__history.SaveHistory plugin="CustomHistory@1.6">
+      <fname>CHANGES.log</fname>
+      <exitOnFail>false</exitOnFail>
+    </org.jenkinsci.plugins.custom__history.SaveHistory>
+    {% end %}
+
     {% if options['robot_report'] == 'True' %}
     <!-- ROBOT REPORT -->
     <hudson.plugins.robot.RobotPublisher plugin="robot@1.2.3">
