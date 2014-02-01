@@ -24,6 +24,22 @@
       </endpoints>
     </com.tikal.hudson.plugins.notification.HudsonNotificationProperty>
     {% end %}
+    {% if options.get('plone_core', 'False') != 'False' %}
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.TextParameterDefinition>
+          <name>plonechanges</name>
+          <description/>
+          <defaultValue>http://jenkins.plone.org/roboto/static/changeset/noset</defaultValue>
+        </hudson.model.TextParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>repo</name>
+          <description/>
+          <defaultValue>no repo</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    {% end %}
   </properties>
   <scm class="hudson.plugins.git.GitSCM">
     <configVersion>2</configVersion>
@@ -74,6 +90,13 @@
 
   <!-- BUILDERS -->
   <builders>
+    {% if options.get('plone_core', 'False') != 'False' %}
+    <hudson.tasks.Shell>
+      <command>echo "Save to CHANGES.log"
+wget ${options['dollar']}plonechanges -O CHANGES.log
+      </command>
+    </hudson.tasks.Shell>
+    {% end %}
     {% if options.get('plone_core_package', 'False') != 'False' %}
     <hudson.tasks.Shell>
       <command>
@@ -98,6 +121,20 @@ bin/${options['buildout_run']}
 {% if options['test_coverage'] == 'True' %}bin/jenkins-test-coverage{% end %}
       </command>
     </hudson.tasks.Shell>
+    {% if options.get('plone_core', 'False') != 'False' %}
+    <hudson.tasks.Shell>
+      <command>i=`ls src`
+echo "[sources]" &gt;snapshoot.cfg
+for j in ${options['dollar']}i;
+    do
+        cd src/${options['dollar']}j;
+        h=`git log -n1 --pretty=oneline | cut -d " " -f 1`
+        a=`git remote show origin | grep Fetch | cut -c 14-`
+        if [[ ${options['dollar']}a =~ "buildout.coredev.git" ]] ; then  echo "SVN ${options['dollar']}a"; else   echo "${options['dollar']}j = git ${options['dollar']}a rev=${options['dollar']}h" &gt;&gt; ../../snapshoot.cfg; fi
+        cd ../..; done</command>
+    </hudson.tasks.Shell>
+    {% end %}
+
   </builders>
 
   <!-- PUBLISHERS -->
