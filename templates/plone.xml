@@ -212,6 +212,7 @@ for j in ${options['dollar']}i;
     <hudson.plugins.emailext.ExtendedEmailPublisher>
       <recipientList>${options['email_notification_recipients']}</recipientList>
       <configuredTriggers>
+        <!-- Regression -->
         <hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
           <email>
             <recipientList>${options['email_notification_recipients']}</recipientList>
@@ -223,6 +224,7 @@ for j in ${options['dollar']}i;
             <sendToRecipientList>true</sendToRecipientList>
           </email>
         </hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
+        <!-- Improvement -->
         <hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
           <email>
             <recipientList>${options['email_notification_recipients']}</recipientList>
@@ -234,6 +236,7 @@ for j in ${options['dollar']}i;
             <sendToRecipientList>true</sendToRecipientList>
           </email>
         </hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
+        <!-- Fixed -->
         <hudson.plugins.emailext.plugins.trigger.FixedTrigger>
           <email>
             <recipientList>${options['email_notification_recipients']}</recipientList>
