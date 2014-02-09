@@ -522,6 +522,24 @@ for j in ${options['dollar']}i;
       </config>
     </hudson.plugins.violations.ViolationsPublisher>
     {% end %}
+
+    {% if options.get('build_trigger', 'False') != 'False' %}
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.20">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.NodeParameters/>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>CHANGES=${options['dollar']}CHANGES</properties>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+          </configs>
+          <projects>${options['build_trigger']}</projects>
+          <condition>ALWAYS</condition>
+          <triggerWithNoParameters>true</triggerWithNoParameters>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
+    {% end %}
   </publishers>
 
   <buildWrappers>
