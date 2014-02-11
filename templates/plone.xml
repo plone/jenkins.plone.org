@@ -140,11 +140,13 @@ for j in ${options['dollar']}i;
   <!-- PUBLISHERS -->
   <publishers>
     <!-- TEST REPORT -->
+    {% if options['test_report'] == 'True' %}
     <hudson.tasks.junit.JUnitResultArchiver>
       <testResults>**/parts/jenkins-test/testreports/*.xml</testResults>
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
+    {% end %}
 
     {% if options['test_coverage'] == 'True' %}
     <!-- TEST COVERAGE -->
