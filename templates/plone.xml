@@ -224,6 +224,18 @@ for j in ${options['dollar']}i;
             <sendToRecipientList>true</sendToRecipientList>
           </email>
         </hudson.plugins.emailext.plugins.trigger.RegressionTrigger>
+        <!-- Still Failing -->
+        <hudson.plugins.emailext.plugins.trigger.StillFailingTrigger>
+          <email>
+            <recipientList>${options['email_notification_recipients']}</recipientList>
+            <subject>${options['dollar']}PROJECT_NAME - Build # ${options['dollar']}BUILD_NUMBER - Still failing! - ${options['dollar']}{TEST_COUNTS, var=&quot;fail&quot;} failure(s)</subject>
+            <body>${options['dollar']}PROJECT_DEFAULT_CONTENT</body>
+            <sendToDevelopers>false</sendToDevelopers>
+            <sendToRequester>false</sendToRequester>
+            <includeCulprits>false</includeCulprits>
+            <sendToRecipientList>true</sendToRecipientList>
+          </email>
+        </hudson.plugins.emailext.plugins.trigger.StillFailingTrigger>
         <!-- Improvement -->
         <hudson.plugins.emailext.plugins.trigger.ImprovementTrigger>
           <email>
