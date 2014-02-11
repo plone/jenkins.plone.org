@@ -565,6 +565,9 @@ for j in ${options['dollar']}i;
         <org.jvnet.hudson.plugins.port__allocator.DefaultPortType>
           <name>ZSERVER_PORT</name>
         </org.jvnet.hudson.plugins.port__allocator.DefaultPortType>
+        <org.jvnet.hudson.plugins.port__allocator.DefaultPortType>
+          <name>FTPSERVER_PORT</name>
+        </org.jvnet.hudson.plugins.port__allocator.DefaultPortType>
       </ports>
     </org.jvnet.hudson.plugins.port__allocator.PortAllocator>
     <!-- Robot XVFB -->
