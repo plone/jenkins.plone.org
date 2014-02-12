@@ -58,6 +58,9 @@ def setup():
     sudo('apt-get install -y ohcount')
     sudo('apt-get install -y sloccount')
     sudo('apt-get install -y nodejs npm')
+    # Set npm config registry
+    sudo('npm config set registry http://registry.npmjs.org/')
+    # Install packages with npm
     sudo('npm install -g jslint')
     sudo('npm install -g jshint')
     sudo('npm install -g csslint')
