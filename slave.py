@@ -296,7 +296,7 @@ def setup_xfvb():
     sudo('apt-get install -y x11-apps')
     # to avoid warnings when staring xvfb
     sudo('apt-get install -y xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic')
-    sudo('apt-get install -y imagemagick   # for converting screenshots')
+    sudo('apt-get install -y imagemagick')   # for converting screenshots'
 
 
 def xvfb_is_properly_installed():
