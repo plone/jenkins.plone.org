@@ -77,15 +77,13 @@
     <hudson.tasks.Shell>
       <command>${options['python']} bootstrap.py -c ${options['buildout_cfg']}
 bin/buildout -c ${options['buildout_cfg']}
-bin/jenkins-package-dependencies
-bin/jenkins-package-dependencies-with-tests
-bin/jenkins-package-dependencies-cmf
-bin/jenkins-package-dependencies-cmf-imports</command>
+${options['scripts']}
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>package-dependencies*.txt,**/cmf{,-deps}/*.{dot,png,txt}</artifacts>
+      <artifacts>${options['artifacts']}</artifacts>
       <latestOnly>false</latestOnly>
       <allowEmptyArchive>false</allowEmptyArchive>
     </hudson.tasks.ArtifactArchiver>
