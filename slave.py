@@ -64,6 +64,8 @@ def setup():
     sudo('npm install -g jslint')
     sudo('npm install -g jshint')
     sudo('npm install -g csslint')
+    # Mockup
+    sudo('apt-get install -y phantomjs')
     # Robot Framework (This dependency is only necessary when
     # 'Library  Dialogs' are added to the robot setup, which shouldn't happen)
     sudo('apt-get install -y python-tk')
