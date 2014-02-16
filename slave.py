@@ -10,11 +10,11 @@ env.hosts = [
     # Slave 2 (Ian)
     '152.19.4.98',
     # Slave 3 (Wyn)
-    #'10.71.102.5'
+    '81.90.66.139',
     # Slave 4 (Timo)
     #'88.198.77.5',
     # Slave 5 (Timo)
-    #'188.40.97.212',
+    '188.40.97.212',
 ]
 
 env.home = "/home/jenkins"
