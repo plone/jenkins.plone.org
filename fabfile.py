@@ -76,6 +76,7 @@ def setup():
     sudo('echo "en_US.ISO-8859-1 ISO-8859-1" >> /var/lib/locales/supported.d/local')
     sudo('dpkg-reconfigure locales')
 
+    setup_node()
     setup_jenkins_user()
     setup_jenkins_ssh()
     setup_buildout_cache()
