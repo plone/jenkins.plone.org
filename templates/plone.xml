@@ -140,7 +140,7 @@ for j in ${options['dollar']}i;
   <!-- PUBLISHERS -->
   <publishers>
     <!-- TEST REPORT -->
-    {% if options['test_report'] == 'True' %}
+    {% if options.get('test_report', 'False') != 'False' %}
     <hudson.tasks.junit.JUnitResultArchiver>
       <testResults>**/parts/jenkins-test/testreports/*.xml</testResults>
       <keepLongStdio>false</keepLongStdio>
@@ -148,7 +148,7 @@ for j in ${options['dollar']}i;
     </hudson.tasks.junit.JUnitResultArchiver>
     {% end %}
 
-    {% if options['test_coverage'] == 'True' %}
+    {% if options.get('test_coverage', 'False') != 'False' %}
     <!-- TEST COVERAGE -->
     <hudson.plugins.cobertura.CoberturaPublisher>
       <coberturaReportFile>**/parts/jenkins-test/coverage.xml</coberturaReportFile>
@@ -209,7 +209,7 @@ for j in ${options['dollar']}i;
     </hudson.plugins.cobertura.CoberturaPublisher>
     {% end %}
 
-    {% if options['email_notification'] == 'True' %}
+    {% if options.get('email_notification', 'False') != 'False' %}
     <!-- EMAIL NOTIFICATION -->
     <hudson.plugins.emailext.ExtendedEmailPublisher>
       <recipientList>${options['email_notification_recipients']}</recipientList>
@@ -588,7 +588,7 @@ for j in ${options['dollar']}i;
       </ports>
     </org.jvnet.hudson.plugins.port__allocator.PortAllocator>
     <!-- Robot XVFB -->
-    {% if options['robot_report'] == 'True' %}
+    {% if options.get('robot_report', 'False') != 'False' %}
     <org.jenkinsci.plugins.xvfb.XvfbBuildWrapper plugin="xvfb@1.0.7">
       <installationName>default</installationName>
       <screen>1024x768x24</screen>
