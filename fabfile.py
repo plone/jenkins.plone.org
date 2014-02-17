@@ -74,7 +74,9 @@ def setup():
     # LXML
     sudo('apt-get install -y libxslt1-dev libxml2-dev')
     # graphviz
-    sudo('apt-get install -y graphviz')
+    # XXX: graphviz currently breaks the robot results because they include all
+    # circular deps warnings
+    #sudo('apt-get install -y graphviz')
     # LOCALES
     sudo('echo "en_GB.ISO8859-15 ISO-8859-15" >> /var/lib/locales/supported.d/local')
     sudo('echo "en_US.ISO8859-15 ISO-8859-15" >> /var/lib/locales/supported.d/local')
