@@ -57,13 +57,6 @@ def setup():
     # Code analysis
     sudo('apt-get install -y ohcount')
     sudo('apt-get install -y sloccount')
-    sudo('apt-get install -y nodejs npm')
-    # Set npm config registry
-    sudo('npm config set registry http://registry.npmjs.org/')
-    # Install packages with npm
-    sudo('npm install -g jslint')
-    sudo('npm install -g jshint')
-    sudo('npm install -g csslint')
     # Mockup
     sudo('apt-get install -y phantomjs')
     # Robot Framework (This dependency is only necessary when
@@ -98,6 +91,27 @@ def setup():
     setup_xfvb()
 
     setup_clean()
+
+
+def setup_node():
+    # Remove sys nodejs
+    sudo('apt-get remove -y nodejs npm')
+    # Install Node 0.8.9
+    sudo('wget http://nodejs.org/dist/v0.8.9/node-v0.8.9.tar.gz')
+    sudo('tar xfvz node-v0.8.9.tar.gz')
+    with cd('node-v0.8.9'):
+        sudo('./configure')
+        sudo('make')
+        sudo('make install')
+    sudo('rm -rf node-v0.8.9/')
+    # XXX: Why is this necessary?
+    sudo('npm install -g grunt-cli')
+    # Set npm config registry
+    sudo('npm config set registry http://registry.npmjs.org/')
+    # Install packages with npm
+    sudo('npm install -g jslint')
+    sudo('npm install -g jshint')
+    sudo('npm install -g csslint')
 
 
 def setup_git_config():
