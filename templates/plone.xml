@@ -142,7 +142,7 @@ for j in ${options['dollar']}i;
     <!-- TEST REPORT -->
     {% if options.get('test_report', 'False') != 'False' %}
     <hudson.tasks.junit.JUnitResultArchiver>
-      <testResults>**/parts/jenkins-test/testreports/*.xml</testResults>
+      <testResults>parts/jenkins-test/testreports/*.xml</testResults>
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
@@ -151,7 +151,7 @@ for j in ${options['dollar']}i;
     {% if options.get('test_coverage', 'False') != 'False' %}
     <!-- TEST COVERAGE -->
     <hudson.plugins.cobertura.CoberturaPublisher>
-      <coberturaReportFile>**/parts/jenkins-test/coverage.xml</coberturaReportFile>
+      <coberturaReportFile>parts/jenkins-test/coverage.xml</coberturaReportFile>
       <onlyStable>true</onlyStable>
       <failUnhealthy>false</failUnhealthy>
       <failUnstable>false</failUnstable>
@@ -368,7 +368,7 @@ for j in ${options['dollar']}i;
       <isWarningsDeactivated>false</isWarningsDeactivated>
     </hudson.plugins.analysis.collector.AnalysisPublisher>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>**/parts/jenkins-test/*.log</artifacts>
+      <artifacts>parts/jenkins-test/*.log</artifacts>
       <latestOnly>false</latestOnly>
     </hudson.tasks.ArtifactArchiver>
     <hudson.plugins.violations.ViolationsPublisher>
@@ -430,7 +430,7 @@ for j in ${options['dollar']}i;
               <max>999</max>
               <unstable>999</unstable>
               <usePattern>false</usePattern>
-              <pattern>**/parts/jenkins-test/xml-csslint/**/*.xml</pattern>
+              <pattern>parts/jenkins-test/xml-csslint/**/*.xml</pattern>
             </hudson.plugins.violations.TypeConfig>
           </entry>
           <entry>
@@ -485,7 +485,7 @@ for j in ${options['dollar']}i;
               <max>999</max>
               <unstable>999</unstable>
               <usePattern>false</usePattern>
-              <pattern>**/parts/jenkins-test/xml-jshint/**/*.xml</pattern>
+              <pattern>parts/jenkins-test/xml-jshint/**/*.xml</pattern>
             </hudson.plugins.violations.TypeConfig>
           </entry>
           <entry>
@@ -496,7 +496,7 @@ for j in ${options['dollar']}i;
               <max>${options.get('pep8_max', 999)}</max>
               <unstable>${options.get('pep8_unstable', 999)}</unstable>
               <usePattern>false</usePattern>
-              <pattern>**/parts/jenkins-test/flake8.log</pattern>
+              <pattern>parts/jenkins-test/flake8.log</pattern>
             </hudson.plugins.violations.TypeConfig>
           </entry>
           <entry>
