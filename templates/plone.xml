@@ -584,6 +584,16 @@ for j in ${options['dollar']}i;
     <hudson.plugins.ws__cleanup.PreBuildCleanup>
       <deleteDirs>true</deleteDirs>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <!-- Timeout -->
+    {% if options.get('build_timeout', 'False') != 'False' %}
+     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.12.2">
+      <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
+        <timeoutMinutes>${options['build_timeout']}</timeoutMinutes>
+      </strategy>
+      <failBuild>true</failBuild>
+      <writingDescription>false</writingDescription>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    {% end %}
     <!-- ZSERVER Port Allocation -->
     <org.jvnet.hudson.plugins.port__allocator.PortAllocator plugin="port-allocator@1.5">
       <ports>
