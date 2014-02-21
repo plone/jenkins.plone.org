@@ -209,6 +209,14 @@ for j in ${options['dollar']}i;
     </hudson.plugins.cobertura.CoberturaPublisher>
     {% end %}
 
+    {% if options.get('artifacts', 'False') != 'False' %}
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>${options['artifacts']}</artifacts>
+      <latestOnly>false</latestOnly>
+      <allowEmptyArchive>false</allowEmptyArchive>
+    </hudson.tasks.ArtifactArchiver>
+    {% end %}
+
     {% if options.get('email_notification', 'False') != 'False' %}
     <!-- EMAIL NOTIFICATION -->
     <hudson.plugins.emailext.ExtendedEmailPublisher>
