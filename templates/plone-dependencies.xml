@@ -88,5 +88,10 @@ ${options['scripts']}
       <allowEmptyArchive>false</allowEmptyArchive>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
-  <buildWrappers/>
+  <buildWrappers>
+    <!-- Cleanup Workspace -->
+    <hudson.plugins.ws__cleanup.PreBuildCleanup>
+      <deleteDirs>true</deleteDirs>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+  </buildWrappers>
 </project>
