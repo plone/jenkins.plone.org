@@ -590,7 +590,7 @@ for j in ${options['dollar']}i;
       <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
         <timeoutMinutes>${options['build_timeout']}</timeoutMinutes>
       </strategy>
-      <failBuild>true</failBuild>
+      <failBuild>false</failBuild>
       <writingDescription>false</writingDescription>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     {% end %}
