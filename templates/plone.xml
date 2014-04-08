@@ -213,7 +213,7 @@ for j in ${options['dollar']}i;
     <hudson.tasks.ArtifactArchiver>
       <artifacts>${options['artifacts']}</artifacts>
       <latestOnly>false</latestOnly>
-      <allowEmptyArchive>false</allowEmptyArchive>
+      <allowEmptyArchive>true</allowEmptyArchive>
     </hudson.tasks.ArtifactArchiver>
     {% end %}
 
