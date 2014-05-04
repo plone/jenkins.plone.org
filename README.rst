@@ -7,7 +7,7 @@ Plone Jenkins/CI Team Members
 
 * Eric Steele
 * Michael Mulich
-* Thomas Desvain
+* Thomas Desvenain
 * Timo Stollenwerk
 * William Deegan
 
