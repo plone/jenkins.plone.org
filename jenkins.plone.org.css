@@ -1,7 +1,8 @@
 @charset "utf-8";
 
 #top-panel {
-  background: url('http://plone.org/logo.png') no-repeat scroll 0 0;
+  background: url('http://plone.org/logo.png') no-repeat scroll 10px center;
+  height: 60px;
 }
 
 #top-panel table tbody tr td img {
@@ -9,6 +10,6 @@
 }
 
 .top-sticker {
-  top: 56px;
+  top: 60px !important;
 }
 
