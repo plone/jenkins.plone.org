@@ -11,5 +11,6 @@
 
 .top-sticker {
   top: 60px !important;
+  border-top: 1px solid #D3D7CF;
 }
 
