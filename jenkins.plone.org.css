@@ -1,5 +1,10 @@
 @charset "utf-8";
 
+#top-panel {
+  background: none;
+  height: 100px;
+}
+
 #top-panel table tbody tr td img {
   display: none;
 }
