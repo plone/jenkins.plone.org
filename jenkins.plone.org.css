@@ -5,6 +5,6 @@
 }
 
 body {
-  background: red !important;
+  border-top: 10px solid black;
 }
 
