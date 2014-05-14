@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 #top-panel {
-  background: url('http://plone.org/logo') no-repeat scroll 0 0;
+  background: url('http://plone.org/logo.png') no-repeat scroll 0 0;
 }
 
 #top-panel table tbody tr td img {
