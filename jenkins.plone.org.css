@@ -1,10 +1,7 @@
 @charset "utf-8";
 
-#top-panel {
-  background: #329FD7;
+#top-panel table tbody tr td img {
+  display: none;
 }
 
-body {
-  border-top: 10px solid black;
-}
 
