@@ -18,3 +18,7 @@ body {
   border-top: 1px solid #D3D7CF;
 }
 
+#searchform {
+  display: none;
+}
+
