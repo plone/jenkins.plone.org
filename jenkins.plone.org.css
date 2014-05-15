@@ -21,7 +21,8 @@ body {
   display: none;
 }
 
-#login-field span {
+#login-field span,
+#login-field span a {
   color: black;
 }
 
