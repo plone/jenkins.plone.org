@@ -21,9 +21,11 @@ body {
   display: none;
 }
 
-#login-field span,
+#login-field span {
+  color: black;
+}
+
 #login-field span a {
   color: black;
-  padding-right: 5px;
 }
 
