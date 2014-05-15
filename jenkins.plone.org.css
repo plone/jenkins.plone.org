@@ -24,5 +24,6 @@ body {
 #login-field span,
 #login-field span a {
   color: black;
+  padding-right: 5px;
 }
 
