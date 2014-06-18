@@ -38,6 +38,11 @@
     - apt: name=python2.7-dev state=present
     # PIL
     - apt: name=python-imaging state=present
+    - apt: name=zlib1g-dev state=present
+    - apt: name=libfreetype6 state=present
+    - apt: name=libfreetype6-dev state=present
+    - apt: name=libjpeg-dev state=present
+    - apt: name=libjpeg8-dev state=present
     # LXML
     - apt: name=python-lxml state=present
     # Test Coverage
