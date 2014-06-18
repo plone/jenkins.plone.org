@@ -1,0 +1,2 @@
+slave5.jenkins.plone.org
+
