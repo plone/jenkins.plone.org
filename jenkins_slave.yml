@@ -12,6 +12,7 @@
     # Basics
     - apt: name=build-essential state=present
     - apt: name=htop state=present
+    - apt: name=curl state=present
     # Remove zope.interface to avoid buildout problems
     #- apt: name=python-zope.interface state=absent
     # Time sync
