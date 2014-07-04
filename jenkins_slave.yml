@@ -40,7 +40,9 @@
     # PIL
     # http://stackoverflow.com/questions/8915296/python-image-library-fails-with-message-decoder-jpeg-not-available-pil
     - name: Download PIP
-      shell: curl -O https://bootstrap.pypa.io/get-pip.py | python
+      shell: curl -kLO https://bootstrap.pypa.io/get-pip.py
+    - name: Install pip
+      command: python2.7 get-pip.py
     - pip: name=Pillow
     # make sure the PIL/Pillow system packages are not installed
     - apt: name=python-imaging state=absent
@@ -113,7 +115,7 @@
     # git config
     - name: git config
       template: src=etc/.gitconfig dest=/home/jenkins/.gitconfig owner=jenkins group=jenkins
-    # buildout cache 
+    # buildout cache
     - name: Creates directory
       file: path=/home/jenkins/.buildout state=directory owner=jenkins group=jenkins
     - name: Creates directory
