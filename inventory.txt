@@ -1,2 +1,2 @@
-slave5.jenkins.plone.org
-
+rackspace1.jenkins.plone.org
+rackspace2.jenkins.plone.org
