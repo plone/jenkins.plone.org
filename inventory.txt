@@ -1,2 +1,5 @@
-rackspace1.jenkins.plone.org
-rackspace2.jenkins.plone.org
+node1.jenkins.plone.org
+node2.jenkins.plone.org
+node3.jenkins.plone.org
+node4.jenkins.plone.org
+
