@@ -110,7 +110,7 @@
       get_url: url=https://raw.githubusercontent.com/plone/jenkins.plone.org/master/jenkins.plone.org.pub dest=/tmp/jenkins.authorized_keys
       delegate_to: 127.0.0.1
     - name: Create authorized_keys from the file that just downloaded
-      authorized_key: user=jenkins key='{{ lookup("file", "/tmp/jenkins.authorized_keys") }}''
+      authorized_key: user=jenkins key="{{ lookup('file', '/tmp/jenkins.authorized_keys') }}"
 
     # git config
     - name: git config
