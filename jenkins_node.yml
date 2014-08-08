@@ -125,11 +125,11 @@
     - name: Buildout cache
       template: src=etc/default.cfg dest=/home/jenkins/.buildout/default.cfg owner=jenkins group=jenkins
 
-    # Set Timezone to US/Pacifica (default was: 'Etc/UTC')
+    # Set Timezone to US/Pacific (default was: 'Etc/UTC')
     # XXX: Only a single test requires this in plone.app.form 2.2.x
     # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
-    - name: Set timezone to US/Pacifica
-      copy: content='US/Pacifica'
+    - name: Set timezone to US/Pacific
+      copy: content='US/Pacific'
             dest=/etc/timezone
             owner=root
             group=root
