@@ -124,3 +124,50 @@
       file: path=/home/jenkins/.buildout/downloads state=directory owner=jenkins group=jenkins
     - name: Buildout cache
       template: src=etc/default.cfg dest=/home/jenkins/.buildout/default.cfg owner=jenkins group=jenkins
+
+    # Set Timezone to US/Pacifica (default was: 'Etc/UTC')
+    # XXX: Only a single test requires this in plone.app.form 2.2.x
+    # https://github.com/plone/plone.app.form/blob/2.2.x/plone/app/form/widgets/datecomponents.txt
+    - name: Set timezone to US/Pacifica
+      copy: content='US/Pacifica'
+            dest=/etc/timezone
+            owner=root
+            group=root
+            mode=0644
+            backup=yes
+    - name: update timezone
+      command: dpkg-reconfigure --frontend noninteractive tzdata
+
+    # Python 2.6
+    - apt_repository: repo='ppa:fkrull/deadsnakes' state=present
+    - apt: name=python2.6 state=present
+    - apt: name=python2.6-dev state=present
+    # Python 2.6 - LXML
+    - name: fetch lxml source
+      get_url: url=http://pypi.python.org/packages/source/l/lxml/lxml-2.3.6.tar.gz dest=/tmp/
+    - name: unpack lxml tarball
+      command: tar zxf lxml-2.3.6.tar.gz chdir=/tmp
+    - name: install lxml
+      command: python2.6 setup.py install chdir=/tmp/lxml-2.3.6
+    # Python 2.6 - BZ2
+    - name: fetch bz2 source
+      get_url: url=http://labix.org/download/python-bz2/python-bz2-1.1.tar.bz2 dest=/tmp/
+    - name: unpack bz2 tarball
+      command: tar xfvj python-bz2-1.1.tar.bz2 chdir=/tmp
+    - name: install lxml
+      command: python2.6 setup.py install chdir=/tmp/python-bz2-1.1
+    # Python 2.6 - Imaging
+    - apt: name=zlib1g-dev state=present
+    - apt: name=libfreetype6 state=present
+    - apt: name=libfreetype6-dev state=present
+    - apt: name=libjpeg-dev state=present
+    # https://unix.stackexchange.com/questions/105265/install-pil-pillow-via-pip-in-debian-testing-jessie
+    - name: freetype symlink
+      file: src=/usr/include/freetype2 dest=/usr/include/freetype state=link
+    - name: fetch imaging source
+      get_url: url=http://effbot.org/downloads/Imaging-1.1.7.tar.gz dest=/tmp/
+    - name: unpack imaging tarball
+      command: tar zxf Imaging-1.1.7.tar.gz chdir=/tmp
+    - name: install imaging
+      command: python2.6 setup.py install chdir=/tmp/Imaging-1.1.7
+
