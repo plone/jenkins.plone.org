@@ -102,3 +102,22 @@ Other ideas
 - if it's a branch with a certain name on it and tests do pass merge it?
   - this would create a new commit, so it will be already checked again
 - report back to github about the results?
+
+
+Pipeline visualization
+======================
+
+There are a few Jenkins plugins that allow to visualize job pipelines,
+here are some findings on them:
+
+- `Build Pipeline Plugin <https://wiki.jenkins-ci.org/display/JENKINS/Build+Pipeline+Plugin>`_
+  Allows you to create views where you can see the pipeline of a given job and all its downstream jobs
+
+- `Build Graph View Plugin <https://wiki.jenkins-ci.org/display/JENKINS/Build+Graph+View+Plugin>`_
+  On each build of a job you get a link to see the pipeline.
+
+- `Delivery Pipeline Plugin <https://wiki.jenkins-ci.org/display/JENKINS/Delivery+Pipeline+Plugin>`_
+  Like ``Build Pipeline Plugin`` let's you create a view to see pipelines,
+  but contrary to the other, it let's you see more than one pipeline per view.
+
+Opinion: the second and specially the third are the most interesting ones.
