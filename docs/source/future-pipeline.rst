@@ -92,7 +92,8 @@ A possible pipeline could be:
 
 - is the package in ``buildout.coredev`` checkouts? If not, abort and send an email
 - do tests on the package itself pass? If not, abort and send an email
-- run all tests
+- run all tests on buildout.coredev
+  - and possibly split that into 3 different jobs: unittest, integration and robot framework
 
 Other ideas
 
