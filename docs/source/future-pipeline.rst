@@ -81,3 +81,24 @@ which frezees the current state of buildout.coredev and let's other downstream j
 reuse that buildout.coredev to run as many things as needed.
 
 The cherry on top is that thatnks to ``Archive for Clone Workspace SCM`` the changelog of the upstream job is replicated on downstream jobs.
+
+
+What this enable?
+=================
+
+To get more reliable test runs and early feedback on breakages.
+
+A possible pipeline could be:
+
+- is the package in ``buildout.coredev`` checkouts? If not, abort and send an email
+- do tests on the package itself pass? If not, abort and send an email
+- run all tests
+
+Other ideas
+
+- code analysis?
+- coverage?
+- create eggs if everything works?
+- if it's a branch with a certain name on it and tests do pass merge it?
+  - this would create a new commit, so it will be already checked again
+- report back to github about the results?
