@@ -7,36 +7,56 @@
   tasks:
     # Update all packages to the latest version
     - apt: upgrade=dist update_cache=yes
-    # Java is needed in order to connect the Jenkins slaves to the master
-    - apt: name=openjdk-7-jre state=present
+
     # Basics
-    - apt: name=build-essential state=present
-    - apt: name=htop state=present
-    - apt: name=curl state=present
-    # Remove zope.interface to avoid buildout problems
-    #- apt: name=python-zope.interface state=absent
-    # Time sync
-    - apt: name=ntp state=present
-    # Keep /tmp clean
-    - apt: name=tmpreaper state=present
-    # for add-apt-repository
-    - apt: name=python-software-properties state=present
-    # VCS
-    - apt: name=git-core state=present
-    - apt: name=subversion state=present
-    - apt: name=libxml2-utils state=present
-    # Word support
-    - apt: name=wv state=present
-    # PDF support
-    - apt: name=poppler-utils state=present
-    # bz2 support to extract pypi packages
-    - apt: name=libbz2-dev state=present
-    # Code analysis
-    - apt: name=ohcount state=present
-    - apt: name=sloccount state=present
-    # Python 2.7
-    - apt: name=python2.7 state=present
-    - apt: name=python2.7-dev state=present
+    apt: name={{item}} state=present
+    with_items:
+        - build-essential
+        - htop
+        - curl
+        - openjdk-7-jre
+        - ntp
+        - python-software-properties
+        - git-core
+        - subversion
+        - libxml2-utils
+        - wv
+        - poppler-utils
+        - libbz2-dev
+        - ohcount
+        - sloccount
+        - python2.7
+        - python2.7-dev
+        - tmpreaper
+        - zlib1g-dev
+        - libfreetype6
+        - libfreetype6-dev
+        - libjpeg-dev
+        - libjpeg62-dev
+        - libjpeg8-dev
+        - python-lxml
+        - enscript
+        - libxslt1-dev
+        - libxml2-dev
+        - libxml2-utils
+        - libssl-dev
+        - libssl-doc
+        - zlib1g-dev
+        - xvfb
+        - x11-apps
+        - xfonts-100dpi
+        - xfonts-75dpi
+        - xfonts-scalable
+        - xfonts-cyrillic
+        - imagemagick
+        - firefox
+
+# Make sure these are not installed
+    apt: name={{item}} state=absent
+    with_items:
+        - python-imaging
+        - python-pil
+
     # PIL
     # http://stackoverflow.com/questions/8915296/python-image-library-fails-with-message-decoder-jpeg-not-available-pil
     - name: Download PIP
@@ -44,16 +64,7 @@
     - name: Install pip
       command: python2.7 get-pip.py
     - pip: name=Pillow
-    # make sure the PIL/Pillow system packages are not installed
-    - apt: name=python-imaging state=absent
-    - apt: name=python-pil state=absent
-    # install libs that Pillow needs
-    - apt: name=zlib1g-dev state=present
-    - apt: name=libfreetype6 state=present
-    - apt: name=libfreetype6-dev state=present
-    - apt: name=libjpeg-dev state=present
-    - apt: name=libjpeg62-dev state=absent
-    - apt: name=libjpeg8-dev state=present
+
     # Create symlinks so that Pillow can find the libs
     - name: libjpeg symlink
       file: src=/usr/lib/x86_64-linux-gnu/libjpeg.so dest=/usr/lib/libjpeg.so state=link
@@ -61,27 +72,7 @@
       file: src=/usr/lib/x86_64-linux-gnu/libfreetype.so dest=/usr/lib/libfreetype.so state=link
     - name: libz symlink
       file: src=/usr/lib/x86_64-linux-gnu/libz.so dest=/usr/lib/libz.so state=link
-    # LXML
-    - apt: name=python-lxml state=present
-    # Test Coverage
-    - apt: name=enscript state=present
-    # LXML
-    - apt: name=libxslt1-dev state=present
-    - apt: name=libxml2-dev state=present
-    - apt: name=libxml2-utils state=present
-    - apt: name=libssl-dev state=present
-    - apt: name=libssl-doc state=present
-    - apt: name=zlib1g-dev state=present
-    # xvfb
-    - apt: name=xvfb state=present
-    - apt: name=x11-apps state=present
-    - apt: name=xfonts-100dpi state=present
-    - apt: name=xfonts-75dpi state=present
-    - apt: name=xfonts-scalable state=present
-    - apt: name=xfonts-cyrillic state=present
-    - apt: name=imagemagick state=present
-    # firefox
-    - apt: name=firefox state=present
+
     # nodejs
     - name: fetch node.js source
       get_url: url=http://nodejs.org/dist/node-latest.tar.gz dest=/tmp/
