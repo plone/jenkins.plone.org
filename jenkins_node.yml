@@ -50,6 +50,7 @@
         - xfonts-cyrillic
         - imagemagick
         - firefox
+        - ufw
 
 # Make sure these are not installed
     apt: name={{item}} state=absent
@@ -161,4 +162,16 @@
       command: tar zxf Imaging-1.1.7.tar.gz chdir=/tmp
     - name: install imaging
       command: python2.6 setup.py install chdir=/tmp/Imaging-1.1.7
+
+    # UFW
+    - name: Set UFW to deny all
+      ufw: state=enabled policy=deny
+    - name: Set UFW to allow OpenSSH
+      ufw: rule=allow name=OpenSSH
+    - name: Set UFW to allow Port 80
+      ufw: rule=allow port=80 proto=tcp
+    - name: Set UFW to allow Port 443
+      ufw: rule=allow port=443 proto=tcp
+    - name: Set UFW to allow port 4949 from munin master
+      ufw: rule=allow src=162.209.104.107 proto=tcp port=4949
 
