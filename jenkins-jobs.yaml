@@ -1,0 +1,36 @@
+- job:
+    name: plone-5.0-python-2.7
+    project-type: freestyle
+    display-name: Plone 5.0 - Python 2.7
+    scm:
+        - git:
+            url: git://github.com/plone/buildout.coredev.git
+            branches:
+                - '5.0'
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py -c jenkins.cfg
+            bin/buildout -c jenkins.cfg
+            bin/jenkins-alltests --all
+
+    publishers:
+        - junit:
+            results: parts/jenkins-test/testreports/*.xml
+
+        - email-ext:
+            recipients: plone-testbot@lists.plone.org
+            regression: true
+
+        - robot:
+            output-path: parts/jenkins-test
+            log-file-link: robot_report.html#total_all
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
