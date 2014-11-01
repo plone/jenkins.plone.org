@@ -52,6 +52,7 @@
     builders:
         - shell: |
             cd buildout.coredev
+            mkdir -p parts/jenkins-test
             ./bin/jenkins-test -s {package}
 
     publishers:
