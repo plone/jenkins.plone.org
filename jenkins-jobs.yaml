@@ -20,7 +20,7 @@
             rm -rf buildout.coredev > /dev/null
             git clone https://github.com/plone/buildout.coredev.git
             cd buildout.coredev
-            git checkout -t origin/{plone-version}
+            git checkout {plone-version}
             {pybinary} bootstrap.py -c jenkins.cfg -v {buildout-version}
             ./bin/buildout -c jenkins.cfg buildout:eggs-directory=/var/lib/jenkins/buildout-shared-eggs
             for folder in parts/* ; do touch ${{folder}}/.KEEP_ME; done
