@@ -22,7 +22,7 @@
             cd buildout.coredev
             git checkout -t origin/{plone-version}
             {pybinary} bootstrap.py -c jenkins.cfg -v {buildout-version}
-            ./bin/buildout -c jenkins.cfg
+            ./bin/buildout -c jenkins.cfg buildout:eggs-directory=/var/lib/jenkins/buildout-shared-eggs
 
     publishers:
         - clone-workspace:
