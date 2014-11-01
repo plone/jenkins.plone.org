@@ -129,6 +129,8 @@
             organization: plone
         - plone.app.uuid:
             organization: plone
+        - plone.app.form:
+            organization: plone
     plone-version:
         - '5.0':
             buildout-version: '2.2.1'
