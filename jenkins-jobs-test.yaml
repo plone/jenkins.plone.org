@@ -15,3 +15,9 @@
     python-version: 2.7
     jobs:
         - '{name}-python-{python-version}'
+
+- project:
+    name: plone.testing
+    python-version: 2.7
+    jobs:
+        - '{name}-python-{python-version}'
