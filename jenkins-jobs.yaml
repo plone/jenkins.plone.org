@@ -116,7 +116,7 @@
                 - robot_*.png
 
         - trigger:
-            project: '{name}-{plone-version}-py{python-version}'
+            project: 'plone-{plone-version}-py{python-version}'
             threshold: SUCCESS
 
 - project:
