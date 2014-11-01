@@ -21,8 +21,8 @@
             git clone https://github.com/plone/buildout.coredev.git
             cd buildout.coredev
             git checkout -t origin/{plone-version}
-            {pybinary} bootstrap.py -v {buildout-version}
-            ./bin/buildout
+            {pybinary} bootstrap.py -c jenkins.cfg -v {buildout-version}
+            ./bin/buildout -c jenkins.cfg
 
     publishers:
         - clone-workspace:
