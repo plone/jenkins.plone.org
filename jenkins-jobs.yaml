@@ -23,6 +23,7 @@
             git checkout -t origin/{plone-version}
             {pybinary} bootstrap.py -c jenkins.cfg -v {buildout-version}
             ./bin/buildout -c jenkins.cfg buildout:eggs-directory=/var/lib/jenkins/buildout-shared-eggs
+            for folder in parts/* ; do touch ${{folder}}/.KEEP_ME; done
 
     publishers:
         - clone-workspace:
@@ -52,7 +53,6 @@
     builders:
         - shell: |
             cd buildout.coredev
-            mkdir -p parts/jenkins-test
             ./bin/jenkins-test -s {package}
 
     publishers:
