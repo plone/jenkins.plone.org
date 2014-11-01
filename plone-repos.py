@@ -3,8 +3,6 @@ from github import Github
 import re
 from netrc import netrc
 
-user = 'plone'
-
 white_list_re = [
     'plone.app.*',
     'plone.*',
@@ -22,13 +20,18 @@ black_list_re = [
 ]
 
 
-def get_github_repo_list():
+def get_github_api():
+    login, account, password = netrc().authenticators('github.com')
+    return Github(login, password)
+
+
+def get_github_repo_list(gh=None):
     """ Return list of repo name we have to test in Jenkins
     """
+    if not gh:
+        gh = get_github_api()
     wl = []
     all_repos = []
-    login, account, password = netrc().authenticators('github.com')
-    gh = Github(login, password)
     plone = gh.get_organization('plone')
     for repo in plone.get_repos():
         repo_name = repo.name
@@ -46,4 +49,6 @@ def get_github_repo_list():
 
 
 if __name__ == "__main__":
-    get_github_repo_list()
+    # gh = Github()
+    gh = None
+    get_github_repo_list(gh)
