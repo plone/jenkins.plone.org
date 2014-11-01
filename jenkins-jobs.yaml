@@ -130,9 +130,9 @@
         - plone.app.uuid:
             organization: plone
     plone-version:
-        - '5.0'
+        - '5.0':
             buildout-version: '2.2.1'
-        - '4.3'
+        - '4.3':
             buildout-version: '1.7.1'
     python-version:
         - '2.7':
