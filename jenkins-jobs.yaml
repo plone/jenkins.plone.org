@@ -36,7 +36,6 @@
             project: '{name}-{package}-{plone-version}-py{python-version}-tests'
             threshold: SUCCESS
 
-
 - job-template:
     # Per-package test runner
     # The 'seed' job runs this job to run tests on the package itself.
