@@ -131,13 +131,14 @@
             organization: plone
     plone-version:
         - '5.0'
+            buildout-version: '2.2.1'
         - '4.3'
+            buildout-version: '1.7.1'
     python-version:
         - '2.7':
             pybinary: 'python2.7'
         - '2.6':
             pybinary: 'python2.6'
-    buildout-version: '2.2.1'
     jobs:
       - '{name}-{package}-{plone-version}-py{python-version}-seed'
       - '{name}-{package}-{plone-version}-py{python-version}-tests'
