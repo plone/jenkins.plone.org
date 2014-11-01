@@ -1,0 +1,17 @@
+- job-template:
+    name: '{name}-python-{python-version}'
+    project-type: freestyle
+    display-name: '{name} - Python {python-version}'
+    scm:
+        - git:
+            url: git://github.com/plone/buildout.coredev.git
+            branches:
+                - '5.0'
+    builders:
+        - shell: 'echo {name} {python-version}'
+
+- project:
+    name: plone.login
+    python-version: 2.7
+    jobs:
+        - '{name}-python-{python-version}'
