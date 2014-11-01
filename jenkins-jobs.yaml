@@ -56,7 +56,7 @@
 
     publishers:
         - junit:
-            results: parts/jenkins-test/testreports/*.xml
+            results: buildout.coredev/parts/jenkins-test/testreports/*.xml
 
         - email-ext:
             recipients: plone-testbot@lists.plone.org
