@@ -74,6 +74,42 @@
             other-files:
                 - robot_*.png
 
+- job-template:
+    # Run all tests
+    # Runs all tests from buildout.coredev.
+    name: '{name}-{package}-{plone-version}-py{python-version}'
+    project-type: freestyle
+    display-name: '{package} {plone-version} Python {python-version}'
+    scm:
+        - workspace:
+            parent-job: '{name}-{package}-{plone-version}-py{python-version}-seed'
+            criteria: Any
+
+    builders:
+        - shell: |
+            cd buildout.coredev
+            ./bin/jenkins-test --all
+
+    publishers:
+        - junit:
+            results: parts/jenkins-test/testreports/*.xml
+
+        - email-ext:
+            recipients: plone-testbot@lists.plone.org
+            regression: true
+
+        - robot:
+            output-path: parts/jenkins-test
+            log-file-link: robot_report.html#total_all
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
 - project:
     # All package specific related jobs are grouped here:
     # A matrix of package, plone version and python version jobs are created.
@@ -96,3 +132,4 @@
     jobs:
       - '{name}-{package}-{plone-version}-py{python-version}-seed'
       - '{name}-{package}-{plone-version}-py{python-version}-tests'
+      - '{name}-{package}-{plone-version}-py{python-version}'
