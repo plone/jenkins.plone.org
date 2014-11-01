@@ -1,4 +1,9 @@
 - job-template:
+    # Main (per-package) setup job:
+    # GitHub triggers these jobs,
+    # which are responsible to freeze buildout.coredev
+    # status and pass it on to downstream jobs,
+    # where the CI (tests, code analysis, release...) is actually done
     name: '{name}-{package}-{plone-version}-py{python-version}-seed'
     project-type: freestyle
     display-name: '{package} {plone-version} Python {python-version} (seed)'
@@ -33,6 +38,10 @@
 
 
 - job-template:
+    # Per-package test runner
+    # The 'seed' job runs this job to run tests on the package itself.
+    # This way we can give early feedback to developers that made a commit
+    # without having to way to run all packages tests.
     name: '{name}-{package}-{plone-version}-py{python-version}-tests'
     project-type: freestyle
     display-name: '{package} {plone-version} Python {python-version} (tests)'
@@ -67,6 +76,9 @@
                 - robot_*.png
 
 - project:
+    # All package specific related jobs are grouped here:
+    # A matrix of package, plone version and python version jobs are created.
+    # So 4 jobs per package.
     name: package
     package:
         - plone.login:
