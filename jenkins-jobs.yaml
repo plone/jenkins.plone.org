@@ -92,7 +92,7 @@
     builders:
         - shell: |
             cd buildout.coredev
-            ./bin/jenkins-test --all
+            ./bin/jenkins-alltests
 
     publishers:
         - junit:
