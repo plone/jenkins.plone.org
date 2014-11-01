@@ -93,7 +93,8 @@
     builders:
         - shell: |
             cd buildout.coredev
-            ./bin/jenkins-alltests
+            sed -i 's/-seed//g' bin/jenkins-alltests
+            ./bin/jenkins-alltests -u
 
     publishers:
         - junit:
