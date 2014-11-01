@@ -74,6 +74,10 @@
             other-files:
                 - robot_*.png
 
+        - trigger:
+            project: '{name}-{package}-{plone-version}-py{python-version}'
+            threshold: SUCCESS
+
 - job-template:
     # Run all tests
     # Runs all tests from buildout.coredev.
