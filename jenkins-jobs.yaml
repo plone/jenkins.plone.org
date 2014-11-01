@@ -64,7 +64,7 @@
             regression: true
 
         - robot:
-            output-path: parts/jenkins-test
+            output-path: buildout.coredev/parts/jenkins-test
             log-file-link: robot_report.html#total_all
             report-html: robot_report.html
             log-html: robot_log.html
@@ -97,14 +97,14 @@
 
     publishers:
         - junit:
-            results: parts/jenkins-test/testreports/*.xml
+            results: buildout.coredev/parts/jenkins-test/testreports/*.xml
 
         - email-ext:
             recipients: plone-testbot@lists.plone.org
             regression: true
 
         - robot:
-            output-path: parts/jenkins-test
+            output-path: buildout.coredev/parts/jenkins-test
             log-file-link: robot_report.html#total_all
             report-html: robot_report.html
             log-html: robot_log.html
