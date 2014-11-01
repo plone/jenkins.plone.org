@@ -1,18 +1,50 @@
-- job:
-    name: plone-5.0-python-2.7
+- job-template:
+    name: '{name}-{package}-{plone-version}-py{python-version}-seed'
     project-type: freestyle
-    display-name: Plone 5.0 - Python 2.7
-    scm:
-        - git:
-            url: git://github.com/plone/buildout.coredev.git
-            branches:
-                - '5.0'
+    display-name: '{package} {plone-version} Python {python-version} (seed)'
+
+    properties:
+        - github:
+            url: https://github.com/{organization}/{package}/
+
+    triggers:
+        - github
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py -c jenkins.cfg
-            bin/buildout -c jenkins.cfg
-            bin/jenkins-alltests --all
+            rm -rf buildout.coredev > /dev/null
+            git clone https://github.com/plone/buildout.coredev.git
+            cd buildout.coredev
+            git checkout -t origin/{plone-version}
+            {pybinary} bootstrap.py -v {buildout-version}
+            ./bin/buildout
+
+    publishers:
+        - clone-workspace:
+              criteria: 'any'
+              archive-method: 'tar'
+              override-default-excludes: true
+              workspace-glob: 'buildout.coredev/**/*'
+              workspace-exclude-glob: ''
+
+        - trigger:
+            project: '{name}-{package}-{plone-version}-py{python-version}-tests'
+            threshold: SUCCESS
+
+
+- job-template:
+    name: '{name}-{package}-{plone-version}-py{python-version}-tests'
+    project-type: freestyle
+    display-name: '{package} {plone-version} Python {python-version} (tests)'
+    scm:
+        - workspace:
+            parent-job: '{name}-{package}-{plone-version}-py{python-version}-seed'
+            criteria: Any
+
+    builders:
+        - shell: |
+            cd buildout.coredev
+            ./bin/jenkins-test -s {package}
 
     publishers:
         - junit:
@@ -34,3 +66,22 @@
             other-files:
                 - robot_*.png
 
+- project:
+    name: package
+    package:
+        - plone.login:
+            organization: plone
+        - plone.api:
+            organization: plone
+    plone-version:
+        - '5.0'
+        - '4.3'
+    python-version:
+        - '2.7':
+            pybinary: 'python2.7'
+        - '2.6':
+            pybinary: 'python2.6'
+    buildout-version: '2.2.1'
+    jobs:
+      - '{name}-{package}-{plone-version}-py{python-version}-seed'
+      - '{name}-{package}-{plone-version}-py{python-version}-tests'
