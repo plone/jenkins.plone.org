@@ -114,6 +114,10 @@
             other-files:
                 - robot_*.png
 
+        - trigger:
+            project: '{name}-{plone-version}-py{python-version}'
+            threshold: SUCCESS
+
 - project:
     # All package specific related jobs are grouped here:
     # A matrix of package, plone version and python version jobs are created.
@@ -137,3 +141,29 @@
       - '{name}-{package}-{plone-version}-py{python-version}-seed'
       - '{name}-{package}-{plone-version}-py{python-version}-tests'
       - '{name}-{package}-{plone-version}-py{python-version}'
+
+- job-template:
+    # buildout.coredev main template:
+    # This job runs all tests from all packages.
+    name: '{name}-{plone-version}-py{python-version}'
+    project-type: freestyle
+    display-name: 'Plone {plone-version} Python {python-version}'
+
+    publishers:
+        - aggregate-tests:
+            include-failed-builds: true
+
+- project:
+    # Plone global project.
+    # A matrix of Plone and Python versions jobs are created.
+    name: plone
+    plone-version:
+        - '5.0'
+        - '4.3'
+    python-version:
+        - '2.7':
+            pybinary: 'python2.7'
+        - '2.6':
+            pybinary: 'python2.6'
+    jobs:
+      - '{name}-{plone-version}-py{python-version}'
