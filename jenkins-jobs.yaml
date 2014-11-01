@@ -120,9 +120,9 @@
     # So 4 jobs per package.
     name: package
     package:
-        - plone.login:
+        - plone.dexterity:
             organization: plone
-        - plone.api:
+        - plone.app.uuid:
             organization: plone
     plone-version:
         - '5.0'
