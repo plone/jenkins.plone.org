@@ -82,7 +82,7 @@
     wrappers:
         - xvfb:
             name: default
-            screen: 1024x768x2
+            screen: 1024x768x24
 
 - job-template:
     # Run all tests
@@ -128,7 +128,7 @@
     wrappers:
         - xvfb:
             name: default
-            screen: 1024x768x2
+            screen: 1024x768x24
 
 - project:
     # All package specific related jobs are grouped here:
