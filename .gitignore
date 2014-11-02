@@ -10,7 +10,6 @@ auth.py
 /build
 /dist
 /local.cfg
-/*.egg-info
 /.installed.cfg
 *.pyc
 /.Python
@@ -19,8 +18,9 @@ auth.py
 /.project
 /.pydevproject
 /.mr.developer.cfg
-/src/*
 *.mo
+/src/*.*
+/src/jenkins.plone.org.egg-info
 docs/Makefile
 docs/make.bat
 docs/doctrees
