@@ -79,6 +79,11 @@
             project: '{name}-{package}-{plone-version}-py{python-version}'
             threshold: SUCCESS
 
+    wrappers:
+        - xvfb:
+            name: default
+            screen: 1024x768x2
+
 - job-template:
     # Run all tests
     # Runs all tests from buildout.coredev.
@@ -119,6 +124,11 @@
         - trigger:
             project: 'plone-{plone-version}-py{python-version}'
             threshold: SUCCESS
+
+    wrappers:
+        - xvfb:
+            name: default
+            screen: 1024x768x2
 
 - project:
     # All package specific related jobs are grouped here:
