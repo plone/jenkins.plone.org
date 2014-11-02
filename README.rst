@@ -12,6 +12,63 @@ Plone Jenkins/CI Team Members
 * William Deegan
 
 
+New configuration setup
+=======================
+
+.. error::
+   Do **NOT** merge this branch ``jenkins-job-builder``,
+   this docs are just a temporal brain dump of what's still pending.
+
+What's done:
+
+[X] Basic YAML configuration for a few Jenkins jobs:
+
+  - A first job that archives buildout.coredev for later reuse
+  - A job that runs all tests from the package
+  - A job that runs all tests
+  - A general job that collects test results *(pending)*
+
+  See ``docs/source/future-pipeline.rst``.
+  But ignore the job shell parts, for that the current YAML configuration works.
+
+[X] Integration with GitHub
+
+  Again see ``docs/source/future-pipeline.rst``.
+
+[X] Add missing configurations not provided by jenkins-job-builder.
+
+  So far only ``xvfb``, but probably more will be needed.
+  Maybe it should be moved out in a jenkins-job-builder-plone package?
+
+[X] Create a script that gets all repositories from GitHub so we can feed YAML with it.
+
+  *The integration with YAML file is not done.*
+
+TODO:
+
+- collect test results from upstream tests on the main jobs
+- test how it works running tests on nodes
+- test parallel builds (which archive uses from 'seed' job)
+- allow relative paths on p.r.alltests (@mpeeters is working on it)
+- try parallelizing the pipeline
+- finish YAML configuration so it matches current jenkins.plone.org
+    - needs to be checked with Timo what's actually needed
+- cleanup on rst files
+- cleanup on buildout files, there's no need to generate jenkins configuration anymore
+- update ansible playbooks for jenkins server and jenkins node
+- how to solve the jenkins job that creats jenkins jobs:
+  integration with GitHub means that (at least up to now) command line
+  access to the server does not work, but we need to create this first
+  jenkins job that creates the other jenkins jobs
+- integrate the script to get GitHub repositories into YAML
+- investigate a way to reduce amount of needed jobs:
+  right now we need to create X*N jobs (X: packages and N: jobs per package)
+  the idea would be that we only need X+N so that all non-seed jobs are shared
+- is there a way to:
+  - run only unittest: yes (-u on zope.testrunner or p.r.alltests)
+  - run only doctests: no idea
+  - run only robot tests: *hack on production jenkins*
+
 Possible Topics / Ideas
 =======================
 
