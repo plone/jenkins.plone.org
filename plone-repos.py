@@ -19,6 +19,10 @@ black_list_re = [
     'plonedev.vagrant',
 ]
 
+YAML_FORMAT = """
+        - {0}:
+            organization: plone"""
+
 
 def get_github_api():
     login, account, password = netrc().authenticators('github.com')
@@ -48,7 +52,21 @@ def get_github_repo_list(gh=None):
     return wl
 
 
+def modify_yaml_config(repos):
+    """Adds all GitHub repos on YAML configuration."""
+    with open('jenkins-jobs.yaml.in', 'r') as yaml_in, \
+            open('jenkins-jobs.yaml', 'w') as yaml_out:
+        for line in yaml_in:
+            if 'PACKAGE_REPLACE_ME' in line:
+                for repo in repos:
+                    yaml_out.write(YAML_FORMAT.format(repo))
+            else:
+                yaml_out.write(line)
+
+
+
 if __name__ == "__main__":
     # gh = Github()
     gh = None
-    get_github_repo_list(gh)
+    repos = get_github_repo_list(gh)
+    modify_yaml_config(repos)

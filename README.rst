@@ -42,8 +42,6 @@ What's done:
 
 [X] Create a script that gets all repositories from GitHub so we can feed YAML with it.
 
-  *The integration with YAML file is not done.*
-
 TODO:
 
 - collect test results from upstream tests on the main jobs
@@ -60,7 +58,6 @@ TODO:
   integration with GitHub means that (at least up to now) command line
   access to the server does not work, but we need to create this first
   jenkins job that creates the other jenkins jobs
-- integrate the script to get GitHub repositories into YAML
 - investigate a way to reduce amount of needed jobs:
   right now we need to create X*N jobs (X: packages and N: jobs per package)
   the idea would be that we only need X+N so that all non-seed jobs are shared

@@ -136,14 +136,7 @@
     # So 4 jobs per package.
     name: package
     package:
-        - plone.dexterity:
-            organization: plone
-        - plone.app.uuid:
-            organization: plone
-        - plone.app.form:
-            organization: plone
-        - plone.app.collection:
-            organization: plone
+        - PACKAGE_REPLACE_ME:
     plone-version:
         - '5.0':
             buildout-version: '2.2.1'
