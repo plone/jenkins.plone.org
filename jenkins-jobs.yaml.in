@@ -152,8 +152,8 @@
     python-version:
         - '2.7':
             pybinary: 'python2.7'
-        - '2.6':
-            pybinary: 'python2.6'
+#        - '2.6':
+#            pybinary: 'python2.6'
     jobs:
       - '{name}-{package}-{plone-version}-py{python-version}-seed'
       - '{name}-{package}-{plone-version}-py{python-version}-tests'
