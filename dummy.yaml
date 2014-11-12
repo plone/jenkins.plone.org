@@ -143,7 +143,7 @@
     # So 4 jobs per package.
     name: package
     package:
-        - plone.app.collection:
+        - plone.app.dexterity:
             organization: plone
     plone-version:
         - '5.0':
