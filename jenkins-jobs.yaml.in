@@ -80,6 +80,9 @@
             project: '{name}-{package}-{plone-version}-py{python-version}'
             threshold: SUCCESS
 
+        - fingerprint:
+            files: 'buildout.coredev/parts/jenkins-test/testreports/*.xml, buildout.coredev/parts/jenkins-test'
+
     wrappers:
         - xvfb:
             name: default
@@ -125,6 +128,9 @@
         - trigger:
             project: 'plone-{plone-version}-py{python-version}'
             threshold: SUCCESS
+
+        - fingerprint:
+            files: 'buildout.coredev/parts/jenkins-test/testreports/*.xml, buildout.coredev/parts/jenkins-test'
 
     wrappers:
         - xvfb:
