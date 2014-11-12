@@ -113,17 +113,17 @@
             recipients: plone-testbot@lists.plone.org
             regression: true
 
-        - robot:
-            output-path: buildout.coredev/parts/jenkins-test
-            log-file-link: robot_report.html#total_all
-            report-html: robot_report.html
-            log-html: robot_log.html
-            output-xml: robot_output.xml
-            pass-threshold: 100.0
-            unstable-threshold: 80.0
-            only-critical: true
-            other-files:
-                - robot_*.png
+#        - robot:
+#            output-path: buildout.coredev/parts/jenkins-test
+#            log-file-link: robot_report.html#total_all
+#            report-html: robot_report.html
+#            log-html: robot_log.html
+#            output-xml: robot_output.xml
+#            pass-threshold: 100.0
+#            unstable-threshold: 80.0
+#            only-critical: true
+#            other-files:
+#                - robot_*.png
 
         - trigger:
             project: 'plone-{plone-version}-py{python-version}'
