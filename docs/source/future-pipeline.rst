@@ -122,3 +122,31 @@ here are some findings on them:
   but contrary to the other, it let's you see more than one pipeline per view.
 
 Opinion: the second and specially the third are the most interesting ones.
+
+
+Jenkins job to configure jenkins jobs
+=====================================
+
+Sounds hacky right? But it is so convinient.
+
+Create a jenkins job with the following configuration:
+
+- git repository: git://github.com/plone/jenkins.plone.org.git
+
+  - branch: any or your specific needs here
+
+- Enable ``Build when a change is pushed to GitHub``
+
+- Make the job execute the following script::
+
+    virtualenv . -p python2.7
+    bin/python2.7 setup.py develop
+    bin/jenkins-jobs --conf /var/lib/jenkins/jenkins.ini update dummy.yaml
+
+  - your ``dummy.yaml`` or other parameters may vary
+
+
+That's it!
+
+Now whenever you push a commit to jenkins.plone.org repository,
+your jobs will be automatically reconfigured!
