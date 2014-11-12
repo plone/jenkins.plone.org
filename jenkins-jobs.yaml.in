@@ -17,6 +17,7 @@
 
     builders:
         - shell: |
+            mkdir -p /var/lib/jenkins/buildout-shared-eggs
             rm -rf buildout.coredev > /dev/null
             git clone https://github.com/plone/buildout.coredev.git
             cd buildout.coredev
