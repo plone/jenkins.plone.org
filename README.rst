@@ -24,9 +24,12 @@ What's done:
 [X] Basic YAML configuration for a few Jenkins jobs:
 
   - A first job that archives buildout.coredev for later reuse
+
+    - this job also aggregates all test results
+
   - A job that runs all tests from the package
   - A job that runs all tests
-  - A general job that collects test results *(pending)*
+  - A general job that does nothing
 
   See ``docs/source/future-pipeline.rst``.
   But ignore the job shell parts, for that the current YAML configuration works.
@@ -42,10 +45,10 @@ What's done:
 
 [X] Create a script that gets all repositories from GitHub so we can feed YAML with it.
 
+[X] Test on nodes. So far no problems.
+
 TODO:
 
-- collect test results from upstream tests on the main jobs
-- test how it works running tests on nodes
 - test parallel builds (which archive uses from 'seed' job)
 - allow relative paths on p.r.alltests (@mpeeters is working on it)
 - try parallelizing the pipeline
