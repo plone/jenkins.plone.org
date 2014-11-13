@@ -12,6 +12,10 @@
         - github:
             url: https://github.com/{organization}/{package}/
 
+    scm:
+        - git:
+            url: git://github.com/{organization}/{package}.git
+
     triggers:
         - github
 
