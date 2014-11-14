@@ -29,6 +29,8 @@
             {pybinary} bootstrap.py -c jenkins.cfg -v {buildout-version}
             ./bin/buildout -c jenkins.cfg buildout:eggs-directory=/var/lib/jenkins/buildout-shared-eggs
             for folder in parts/* ; do touch ${{folder}}/.KEEP_ME; done
+            mkdir -p parts/jenkins-test/testreports
+            touch parts/jenkins-test/testreports/.KEEP_ME
 
     publishers:
         - clone-workspace:
@@ -46,11 +48,11 @@
             include-failed-builds: true
 
         - archive:
-            artifacts: 'buildout.coredev/parts/jenkins-test'
+            artifacts: 'buildout.coredev/parts/jenkins-test/testreports/*'
             allow-empty: 'true'
 
         - fingerprint:
-            files: 'buildout.coredev/parts/jenkins-test'
+            files: 'buildout.coredev/parts/jenkins-test/testreports/*.xml'
 
 - job-template:
     # Per-package test runner
@@ -94,8 +96,12 @@
             project: '{name}-{package}-{plone-version}-py{python-version}'
             threshold: SUCCESS
 
+        - archive:
+            artifacts: 'buildout.coredev/parts/jenkins-test/testreports/*'
+            allow-empty: 'true'
+
         - fingerprint:
-            files: 'buildout.coredev/parts/jenkins-test'
+            files: 'buildout.coredev/parts/jenkins-test/testreports/*.xml'
 
     wrappers:
         - xvfb:
@@ -143,8 +149,12 @@
             project: 'plone-{plone-version}-py{python-version}'
             threshold: SUCCESS
 
+        - archive:
+            artifacts: 'buildout.coredev/parts/jenkins-test/testreports/*'
+            allow-empty: 'true'
+
         - fingerprint:
-            files: 'buildout.coredev/parts/jenkins-test'
+            files: 'buildout.coredev/parts/jenkins-test/testreports/*.xml'
 
     wrappers:
         - xvfb:
