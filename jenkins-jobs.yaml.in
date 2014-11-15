@@ -41,6 +41,45 @@
               workspace-exclude-glob: ''
 
         - trigger:
+            project: '{name}-{package}-{plone-version}-py{python-version}-checkout'
+            threshold: SUCCESS
+
+        - aggregate-tests:
+            include-failed-builds: true
+
+        - archive:
+            artifacts: 'buildout.coredev/parts/jenkins-test/testreports/*'
+            allow-empty: 'true'
+
+        - fingerprint:
+            files: 'buildout.coredev/parts/jenkins-test/testreports/*.xml'
+
+- job-template:
+    # Per-package auto-checkout verification
+    # The 'seed' job runs this job to run the auto-checkout verification for
+    # the package
+    name: '{name}-{package}-{plone-version}-py{python-version}-checkout'
+    project-type: freestyle
+    display-name: '{package} {plone-version} Python {python-version} (checkout)'
+    scm:
+        - workspace:
+            parent-job: '{name}-{package}-{plone-version}-py{python-version}-seed'
+            criteria: Any
+
+    builders:
+        - shell: |
+            cd buildout.coredev
+            ./bin/manage check-checkout {package} checkouts.cfg
+
+    publishers:
+        - clone-workspace:
+              criteria: 'any'
+              archive-method: 'tar'
+              override-default-excludes: true
+              workspace-glob: 'buildout.coredev/**/*'
+              workspace-exclude-glob: ''
+
+        - trigger:
             project: '{name}-{package}-{plone-version}-py{python-version}-tests'
             threshold: SUCCESS
 
@@ -56,7 +95,7 @@
 
 - job-template:
     # Per-package test runner
-    # The 'seed' job runs this job to run tests on the package itself.
+    # The 'checkout' job runs this job to run tests on the package itself.
     # This way we can give early feedback to developers that made a commit
     # without having to way to run all packages tests.
     name: '{name}-{package}-{plone-version}-py{python-version}-tests'
@@ -64,7 +103,7 @@
     display-name: '{package} {plone-version} Python {python-version} (tests)'
     scm:
         - workspace:
-            parent-job: '{name}-{package}-{plone-version}-py{python-version}-seed'
+            parent-job: '{name}-{package}-{plone-version}-py{python-version}-checkout'
             criteria: Any
 
     builders:
@@ -180,6 +219,7 @@
 #            pybinary: 'python2.6'
     jobs:
       - '{name}-{package}-{plone-version}-py{python-version}-seed'
+      - '{name}-{package}-{plone-version}-py{python-version}-checkout'
       - '{name}-{package}-{plone-version}-py{python-version}-tests'
       - '{name}-{package}-{plone-version}-py{python-version}'
 

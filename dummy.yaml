@@ -206,7 +206,7 @@
     # So 4 jobs per package.
     name: package
     package:
-        - plone.app.collection:
+        - plone.resource:
             organization: plone
     plone-version:
         - '5.0':
