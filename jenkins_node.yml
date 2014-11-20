@@ -61,16 +61,15 @@
       file: src=/usr/lib/x86_64-linux-gnu/libfreetype.so dest=/usr/lib/libfreetype.so state=link
     - name: libz symlink
       file: src=/usr/lib/x86_64-linux-gnu/libz.so dest=/usr/lib/libz.so state=link
-    # LXML
-    - apt: name=python-lxml state=present
     # Test Coverage
     - apt: name=enscript state=present
     # LXML
+    - apt: name=python-lxml state=present
     - apt: name=libxslt1-dev state=present
     - apt: name=libxml2-dev state=present
     - apt: name=libxml2-utils state=present
     - apt: name=libssl-dev state=present
-    - apt: name=libssl-doc state=present
+    - apt: name=libssl-doc state=present  # doc???
     - apt: name=zlib1g-dev state=present
     # xvfb
     - apt: name=xvfb state=present
