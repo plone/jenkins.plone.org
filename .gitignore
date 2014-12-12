@@ -19,7 +19,7 @@ auth.py
 /.project
 /.pydevproject
 /.mr.developer.cfg
-/src/*
+/src/jenkins.plone.org*
 *.mo
 docs/Makefile
 docs/make.bat
