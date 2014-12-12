@@ -1,3 +1,3 @@
-[submodule "src/plone.jenkins_server"]
-	path = src/plone.jenkins_server
+[submodule "roles/plone.jenkins_server"]
+	path = roles/plone.jenkins_server
 	url = git@github.com:plone/plone.jenkins_server.git
