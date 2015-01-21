@@ -34,6 +34,9 @@
     # Code analysis
     - apt: name=ohcount state=present
     - apt: name=sloccount state=present
+    # Install and configure tmpreaper to clean /tmp every night
+    - apt: name=tmpreaper state=present
+    - lineinfile: dest=/etc/tmpreaper.conf regexp=^TMPREAPER_TIME= line=TMPREAPER_TIME=24
     # Python 2.7
     - apt: name=python2.7 state=present
     - apt: name=python2.7-dev state=present
@@ -80,7 +83,11 @@
     - apt: name=xfonts-cyrillic state=present
     - apt: name=imagemagick state=present
     # firefox
-    - apt: name=firefox state=present
+    - apt: name=firefox state=absent
+    - name: download firefox 34
+      shell: wget http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fubuntuzilla%2Ffiles%2Fmozilla%2Fapt%2Fpool%2Fmain%2Ff%2Ffirefox-mozilla-build%2Ffirefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb chdir=/tmp/
+    - name: install firefox 34
+      apt: deb=/tmp/firefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb\?r\=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fubuntuzilla%2Ffiles%2Fmozilla%2Fapt%2Fpool%2Fmain%2Ff%2Ffirefox-mozilla-build%2Ffirefox-mozilla-build_34.0.5-0ubuntu1_amd64.deb
     # nodejs
     - name: fetch node.js source
       get_url: url=http://nodejs.org/dist/node-latest.tar.gz dest=/tmp/
@@ -95,6 +102,8 @@
       shell: /usr/bin/make chdir=/tmp/{{ node_dir.stdout }}
     - name: make install
       shell: /usr/bin/make install chdir=/tmp/{{ node_dir.stdout }}
+    - name: clean up node install
+      shell: rm -rf /tmp/node-*
     # npm
     - npm: name=bower global=yes state=present
     - npm: name=jshint global=yes state=present
