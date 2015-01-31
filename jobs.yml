@@ -1,0 +1,193 @@
+# YAML based configuration for jobs on jenkins.plone.org.
+#
+# Use this configuration with jenkins-job-builder:
+# https://github.com/openstack-infra/jenkins-job-builder
+#
+# To run it:
+# git clone git@github.com:plone/jenkins.plone.org.git
+# (change branch if needed)
+# python setup.py develop # to install dependencies and make our code available
+# jenkins-jobs --conf jenkins.ini test jobs -o output
+#
+# After running the above an output folder will be populated with jenkins jobs.
+# See jenkins-job options to put into production or your server of choice.
+
+- project:
+    name: Plone 4.3
+    python-version:
+        - '2.7':
+            pybinary: '$PYTHON27'
+        - '2.6':
+            pybinary: '$PYTHON26'
+    jobs:
+        - 'plone-4.3-python-{python-version}'
+
+
+- job-template:
+    # Plone 4.3 job definition.
+    # TODO:
+    # - email-ext quite a few things
+    name: 'plone-4.3-python-{python-version}'
+    project-type: freestyle
+    display-name: 'Plone 4.3 - Python {python-version}'
+    concurrent: true
+    disabled: false
+    logrotate:
+        daysToKeep: 60
+        numToKeep: 100
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    notifications:
+        - http:
+            url: http://localhost/roboto/callback/corecommit?jk_job_id=cfcc93c8589240b493869bcea552f4f7_plone-4.3-python-{python-version}
+            format: JSON
+
+    parameters:
+        - text:
+            name: plonechanges
+            default: http://jenkins.plone.org/roboto/static/changeset/noset
+        - string:
+            name: repo
+            default: 'no repo'
+
+    properties:
+        - custom-throttle:
+            total: '0'
+            enable: '' # false
+
+        - disk-usage
+
+    scm:
+        - buildout-coredev:
+            branch: '4.3'
+
+    builders:
+        - shell: |
+            echo "Save to CHANGES.log"
+            wget $plonechanges -O CHANGES.log
+
+        - shell: |
+            {pybinary} bootstrap.py -c jenkins.cfg
+            bin/buildout -c jenkins.cfg
+            bin/jenkins-alltests -1
+
+        - shell: |
+            i=`ls src`
+            echo "[sources]" > snapshoot.cfg
+            for j in $i;
+                do
+                    cd src/$j;
+                    h=`git log -n1 --pretty=oneline | cut -d " " -f 1`
+                    a=`git remote show origin | grep Fetch | cut -c 14-`
+                    if [[ $a =~ "buildout.coredev.git" ]] ; then  echo "SVN $a"; else   echo "$j = git $a rev=$h" >> ../../snapshoot.cfg; fi
+                    cd ../..; done
+
+    publishers:
+        - custom-junit
+
+        - custom-archive:
+            glob: 'CHANGES.log'
+
+        - custom-email-ext
+
+        - custom-history:
+            file: CHANGES.log
+
+        - robot:
+            output-path: parts/jenkins-test
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
+        - custom-xvfb
+
+
+###
+# MACROS
+###
+
+- property:
+    name: custom-throttle
+    properties:
+        - throttle:
+            max-total: '{total}'
+            enabled: '{enable}'
+            option: project
+
+- scm:
+    name: buildout-coredev
+    scm:
+        - git:
+            url: git://github.com/plone/buildout.coredev.git
+            branches:
+                - '{branch}'
+            wipe-workspace: false
+            tag-builds: true
+
+- publisher:
+    name: custom-junit
+    publishers:
+        - junit:
+            results: parts/jenkins-test/testreports/*.xml
+            keep-long-stdio: false
+
+- publisher:
+    name: custom-email-ext
+    publishers:
+        - email-ext:
+            recipients: plone-testbot@lists.plone.org
+            reply-to:
+            content-type: default
+            regression: true
+            failure: false
+            improvement: true
+            still-failing: true
+            fixed: true
+
+- publisher:
+    name: custom-archive
+    publishers:
+        - archive:
+            artifacts: '{glob}'
+            allow-empty: 'true'
+
+- wrapper:
+    name: custom-workspace-cleanup
+    wrappers:
+        - workspace-cleanup:
+            dirmatch: true
+
+- wrapper:
+    name: custom-timeout
+    wrappers:
+        - timeout:
+            timeout: 180
+            type: absolute
+
+- wrapper:
+    name: custom-port-allocator
+    wrappers:
+        - port-allocator:
+            names:
+                - ZSERVER_PORT
+                - FTPSERVER_PORT
+
+- wrapper:
+    name: custom-xvfb
+    wrappers:
+        - xvfb:
+            name: default
+            screen: 1024x768x24
+            debug: false
+            timeout: 0
+            shutdown: false
