@@ -13,6 +13,14 @@
 # See jenkins-job options to put into production or your server of choice.
 
 - project:
+    name: Plone 5.0
+    jobs:
+        - 'plone-5.0-python-2.7'
+        - 'plone-5.0-python-2.7-robot'
+        - 'plone-5.0-python-2.7-at'
+
+
+- project:
     name: Plone 4.3
     python-version:
         - '2.7':
@@ -110,6 +118,236 @@
         - custom-timeout
         - custom-port-allocator
         - custom-xvfb
+
+- job:
+    # Plone 5.0 core tests job definition.
+    # TODO:
+    # - email-ext quite a few things
+    name: plone-5.0-python-2.7
+    project-type: freestyle
+    display-name: 'Plone 5.0 - Python 2.7'
+    concurrent: true
+    disabled: false
+
+    logrotate:
+        daysToKeep: 60
+        numToKeep: 100
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    notifications:
+        - http:
+            url: http://localhost/roboto/callback/corecommit?jk_job_id=deae59e52df042659f2276760c7819e6_plone-5.0-python-2.7
+            format: JSON
+
+    parameters:
+        - text:
+            name: plonechanges
+            default: http://jenkins.plone.org/roboto/static/changeset/noset
+        - string:
+            name: repo
+            default: 'no repo'
+
+    properties:
+        - custom-throttle:
+            total: '7'
+            enable: 'true'
+
+        - disk-usage
+
+    scm:
+        - buildout-coredev:
+            branch: '5.0-all-commits'
+
+    builders:
+        - shell: |
+            echo "Save to CHANGES.log"
+            wget $plonechanges -O CHANGES.log
+            echo "REPO"
+            echo $repo
+
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
+            bin/buildout -c jenkins.cfg
+            bin/jenkins-alltests
+
+    triggers:
+        - github
+
+    publishers:
+        - aggregate-tests:
+            include-failed-builds: true
+
+        - custom-junit
+
+        - custom-archive:
+            glob: 'CHANGES.log,parts/jenkins-test/testreports/*.xml,src'
+
+        - custom-history:
+            file: CHANGES.log
+
+        - fingerprint:
+            files: 'parts/jenkins-test/testreports/*.xml'
+            record-artifacts: true
+
+        - custom-email-ext
+
+        - trigger-parameterized-builds:
+            - project: plone-5.0-python-2.7-at
+              predefined-parameters: 'CHANGES=$CHANGES'
+              no-parameters: true
+            - project: plone-5.0-python-2.7-robot
+              predefined-parameters: 'CHANGES=$CHANGES'
+              no-parameters: true
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
+
+
+- job:
+    # Plone 5.0 robot tests job definition.
+    # TODO:
+    # - email-ext quite a few things
+    name: plone-5.0-python-2.7-robot
+    project-type: freestyle
+    display-name: 'Plone 5.0 - Python 2.7 - Robot Framework Tests'
+    concurrent: true
+    disabled: false
+    node: 'Node1'
+
+    logrotate:
+        daysToKeep: 60
+        numToKeep: 100
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    properties:
+        - custom-throttle:
+            total: '7'
+            enable: 'true'
+
+        - disk-usage
+
+    scm:
+        - buildout-coredev:
+            branch: '5.0-all-commits'
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg -v 2.2.1
+            bin/buildout -c jenkins.cfg
+            ROBOTSUITE_PREFIX=ONLYROBOT
+            bin/jenkins-alltests -t ONLYROBOT --all
+
+    triggers:
+        - github
+
+    publishers:
+        - aggregate-tests:
+            include-failed-builds: false
+
+        - custom-archive:
+            glob: 'CHANGES.log,parts/jenkins-test/testreports/*.xml,src'
+
+        - fingerprint:
+            files: 'parts/jenkins-test/testreports/*.xml'
+            record-artifacts: true
+
+        - custom-email-ext
+
+        - robot:
+            output-path: parts/jenkins-test
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
+        - trigger-parameterized-builds:
+            - project: plone-5.0-python-2.7-at
+              no-parameters: true
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
+        - custom-xvfb
+
+        - inject:
+            properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
+
+
+- job:
+    # Plone 5.0 Archetypes tests job definition.
+    # TODO:
+    # - copy artifact doNotFingerprintArtifacts
+    # - email-ext quite a few things
+    name: plone-5.0-python-2.7-at
+    project-type: freestyle
+    display-name: 'Plone 5.0 - Python 2.7 - Archetypes'
+    concurrent: true
+    disabled: false
+    node: 'Ubuntu14.04'
+
+    logrotate:
+        daysToKeep: 60
+        numToKeep: 100
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    notifications:
+        - http:
+            url: http://localhost/roboto/callback/corecommit?jk_job_id=deae59e52df042659f2276760c7819e6_plone-5.0-python-2.7
+            format: JSON
+
+    properties:
+        - custom-throttle:
+            total: '0'
+            enable: '' # false
+
+        - disk-usage
+
+    scm:
+        - buildout-coredev:
+            branch: '5.0-all-commits'
+
+    triggers:
+        - github
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg -v 2.2.1
+            bin/buildout -c jenkins.cfg
+            bin/jenkins-alltests-at
+
+        - copyartifact:
+            project: plone-5.0-python-2.7
+            filter: 'parts/jenkins-test/testreports/*.xml'
+            which-build: upstream-build
+            optional: true
+
+
+    publishers:
+        - custom-junit
+
+        - custom-archive:
+            glob: 'CHANGES.log,parts/jenkins-test/testreports/*.xml'
+
+        - custom-email-ext
+
+        - trigger-parameterized-builds:
+            - project: plone-5.0-python-2.7-results
+              no-parameters: true
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
 
 
 ###
