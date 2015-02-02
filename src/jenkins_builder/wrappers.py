@@ -18,14 +18,14 @@ def xvfb(parser, xml_parent, data):
 
     Example::
 
-      properties:
+      wrappers:
         - xvfb:
             name: default
             screen: 1024x768x24
 
     Extended example::
 
-      properties:
+      wrappers:
         - xvfb:
             name: default
             screen: 1024x768x24

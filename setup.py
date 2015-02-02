@@ -39,7 +39,7 @@ setup(
     ],
     entry_points={
         'jenkins_jobs.wrappers': [
-            'xvfb = jenkins_builder.builder:xvfb'
+            'xvfb = jenkins_builder.wrappers:xvfb'
         ],
     },
 )
