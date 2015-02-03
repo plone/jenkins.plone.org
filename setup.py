@@ -41,5 +41,8 @@ setup(
         'jenkins_jobs.wrappers': [
             'xvfb = jenkins_builder.wrappers:xvfb',
         ],
+        'jenkins_jobs.properties': [
+            'disk-usage = jenkins_builder.properties:disk_usage',
+        ],
     },
 )
