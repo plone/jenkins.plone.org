@@ -44,5 +44,8 @@ setup(
         'jenkins_jobs.properties': [
             'disk-usage = jenkins_builder.properties:disk_usage',
         ],
+        'jenkins_jobs.publishers': [
+            'custom-history = jenkins_builder.publishers:custom_history',
+        ],
     },
 )
