@@ -31,6 +31,15 @@
         - 'plone-4.3-python-{python-version}'
 
 
+- project:
+    name: PLIPs
+    plip:
+        - edit-member-ttw:
+            buildout: plips/plip13350-edit-member-schema-ttw.cfg
+    jobs:
+        - 'plip-{plip}'
+
+
 - job-template:
     # Plone 4.3 job definition.
     # TODO:
@@ -349,6 +358,62 @@
         - custom-timeout
         - custom-port-allocator
 
+
+- job-template:
+    # PLIPs jobs definition
+    name: 'plip-{plip}'
+    project-type: freestyle
+    display-name: 'PLIP - {plip}'
+    concurrent: true
+    disabled: false
+    logrotate:
+        daysToKeep: 60
+        numToKeep: 100
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    notifications:
+        - http:
+            url: http://localhost/roboto/callback/corecommit?jk_job_id=d1dcc66a21fc442199d48b39f3a31370_plone-5.0-python-2.7
+            format: JSON
+
+    properties:
+        - custom-throttle:
+            total: '7'
+            enable: 'true'
+
+        - disk-usage
+
+    scm:
+        - buildout-coredev:
+            branch: '5.0'
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c {buildout}
+            bin/buildout -c {buildout}
+            bin/alltests --all
+            bin/alltests-at
+
+    publishers:
+        - custom-junit
+
+        - robot:
+            output-path: parts/jenkins-test
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
+        - custom-xvfb
 
 ###
 # MACROS
