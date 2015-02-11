@@ -64,3 +64,4 @@ Manage Jenkins -> Manage Nodes -> New Node (Dumb node):
 PYTHON:/usr/bin/python2.7
 PYTHON27:/usr/bin/python2.7
 PYTHON26:/usr/bin/python2.6
+
