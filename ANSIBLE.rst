@@ -14,6 +14,10 @@ Fetch Ansible Galaxy Dependencies as Git Submodules::
 
 Change inventory.txt and make sure that you can connect to the machines listed there.
 
+Copy your public ssh key to the machine::
+
+  $ ssh-copy-id -i ~/.ssh/<SSH-KEY>.pub root@<SERVER_IP>
+
 Run Playbook::
 
   $ ansible-playbook -i inventory.txt test.jenkins.plone.org.yml
