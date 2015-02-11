@@ -1,3 +1,12 @@
+===============================================================================
+How to Set Up jenkins.plone.org
+===============================================================================
+
+Checkout this repository::
+
+  $ git clone git@github.com:plone/jenkins.plone.org.git 
+  $ cd jenkins.plone.org
+
 Create and activate virtualenv::
 
   $ virtualenv .env
