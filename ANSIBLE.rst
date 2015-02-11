@@ -59,4 +59,8 @@ Manage Jenkins -> Manage Nodes -> New Node (Dumb node):
 * Labels: rackspace Ubuntu14.04 Python27
 * Host: node1.jenkins.plone.org
 * Credentials: jenkins (jenkins.plone.org private ssh key)
+* Node Properties -> Environment variables:
 
+PYTHON:/usr/bin/python2.7
+PYTHON27:/usr/bin/python2.7
+PYTHON26:/usr/bin/python2.6
