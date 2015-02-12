@@ -4,3 +4,6 @@
 [submodule "roles/ansible-jenkins"]
 	path = roles/ansible-jenkins
 	url = git@github.com:ICTO/ansible-jenkins.git
+[submodule "src/jenkins-job-builder"]
+	path = src/jenkins-job-builder
+	url = git@github.com:gforcada/jenkins-job-builder.git
