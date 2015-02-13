@@ -6,9 +6,6 @@ recursive=False
 allow_duplicates=False
 
 [jenkins]
-# Add your own credentials
-# log in int https://jenkins.plone.org
-# edit your user and get the API token
 user=gforcada
 password=12345678901234567890
-url=https://jenkins.plone.org
+url=http://localhost

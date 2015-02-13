@@ -1,16 +1,17 @@
-==============================================================================
+==============================
 jenkins.plone.org Set Up Howto
-==============================================================================
+==============================
 
-This document describes how to set up the entire Jenkins infrastructure for jenkins.plone.org. Those are the main steps:
+This document describes how to set up the entire Jenkins infrastructure for jenkins.plone.org.
+Those are the main steps:
 
   * Set up Jenkins server (jenkins.plone.org, with Ansible)
   * Set up Jenkins node (node[1-x].jenkins.plone.org, with Ansible)
   * Set up the Jenkins jobs on the Jenkins server (with Jenkins Job Builder)
 
 
-Prerequisits
-============
+Prerequisites
+=============
 
 Checkout this repository::
 
@@ -51,7 +52,7 @@ Set Up Jenkins Nodes
 
 ::
 
-  $ ansible-playbook -i inventory jenkins_nodes.yml
+  $ ansible-playbook -i inventory.txt jenkins_nodes.yml
 
 
 Set Up Jenkins Jobs
@@ -76,7 +77,7 @@ Put this repository also on development mode::
 
 Test the jobs are properly setup::
 
-  $ jenkins-jobs test jobs.yml -o output
+  $ jenkins-jobs --conf jenkins.ini.in test jobs.yml -o output
 
 .. note::
    A folder named ``output`` should contain one file per each jenkins job
@@ -86,7 +87,9 @@ Create your own ``jenkins.ini`` by copying it from ``jenkins.ini.in``::
 
   $ cp jenkins.ini.in jenkins.ini
 
-Add your own credentials to jenkins.ini. You can find them when you log into Jenkins and copy your API token (e.g. http://jenkins.plone.org/user/tisto/configure).
+Add your own credentials to jenkins.ini.
+You can find them when you log into Jenkins and copy your API token
+(e.g. http://jenkins.plone.org/user/tisto/configure).
 
 Now finally install the jobs on the server::
 
@@ -97,7 +100,8 @@ Now finally install the jobs on the server::
 Manual Jenkins Configuration
 ----------------------------
 
-There are currently a few steps that we need to carry out manually. We will automate them later.
+There are currently a few steps that we need to carry out manually.
+We will automate them later.
 
 Manage Jenkins -> Configure System:
 
@@ -128,4 +132,3 @@ Manage Jenkins -> Manage Nodes -> New Node (Dumb node):
   PYTHON:/usr/bin/python2.7
   PYTHON27:/usr/bin/python2.7
   PYTHON26:/usr/bin/python2.6
-
