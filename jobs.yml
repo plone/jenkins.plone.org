@@ -224,7 +224,6 @@
     display-name: 'Plone 5.0 - Python 2.7 - Robot Framework Tests'
     concurrent: true
     disabled: false
-    node: 'Node1'
 
     logrotate:
         daysToKeep: 60
