@@ -13,7 +13,7 @@ Install jenkins master and nodes
 
 Checkout this repository::
 
-  $ git clone git@github.com:plone/jenkins.plone.org.git 
+  $ git clone git@github.com:plone/jenkins.plone.org.git
   $ cd jenkins.plone.org
 
 Create and activate virtualenv::

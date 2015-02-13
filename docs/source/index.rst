@@ -10,6 +10,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   setup
    future-pipeline
 
 Indices and tables
