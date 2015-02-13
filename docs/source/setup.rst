@@ -1,15 +1,16 @@
-===============================
-How to Set Up jenkins.plone.org
-===============================
+==============================================================================
+jenkins.plone.org Set Up Howto
+==============================================================================
 
-There are two main steps:
+This document describes how to set up the entire Jenkins infrastructure for jenkins.plone.org. Those are the main steps:
 
-- install jenkins master and nodes (done with ansible, see below)
-- configure jenkins jobs (done with jenkins-job-builder, see futher below)
+  * Set up Jenkins server (jenkins.plone.org, with Ansible)
+  * Set up Jenkins node (node[1-x].jenkins.plone.org, with Ansible)
+  * Set up the Jenkins jobs on the Jenkins server (with Jenkins Job Builder)
 
 
-Install jenkins master and nodes
-================================
+Prerequisits
+============
 
 Checkout this repository::
 
@@ -36,47 +37,24 @@ Copy your public ssh key to the machine::
 
   $ ssh-copy-id -i ~/.ssh/<SSH-KEY>.pub root@<SERVER_IP>
 
-Run Playbook::
 
-  $ ansible-playbook -i inventory.txt jenkins.plone.org.yml
+Set Up Jenkins Server
+---------------------
+
+::
+
+  $ ansible-playbook -i inventory.txt jenkins_server.yml
 
 
-Manual Configuration
+Set Up Jenkins Nodes
 --------------------
 
-We will automate this later.
+::
 
-Manage Jenkins -> Configure System:
+  $ ansible-playbook -i inventory jenkins_nodes.yml
 
-* # of executors: 0
-* System Admin e-mail address: tisto@plone.org
-
-Manage Jenkins -> Manage Credentials -> Add Credentials: SSH Username with private key:
-
-* Scope: System
-* Username: jenkins
-* Description: jenkins.plone.org private ssh key
-* Private Key: From a file on Jenkins master: File: /var/lib/jenkins/jenkins.plone.org
-
-=> Upload jenkins.plone.org private ssh key manually to /var/lib/jenkins
-=> chown jenkins:jenkins jenkins.plone.org
-
-Manage Jenkins -> Manage Nodes -> New Node (Dumb node):
-
-* # of executors: 1 (later 3)
-* Remote root directory: /home/jenkins
-* Labels: rackspace Ubuntu14.04 Python27
-* Host: node1.jenkins.plone.org
-* Credentials: jenkins (jenkins.plone.org private ssh key)
-* Node Properties -> Environment variables:
-
-PYTHON:/usr/bin/python2.7
-PYTHON27:/usr/bin/python2.7
-PYTHON26:/usr/bin/python2.6
-
-
-Configure jenkins jobs
-======================
+Set Up Jenkins Jobs
+-------------------
 
 *Do the steps described above to clone,
 activate virtualenv and fetch submodules*.
@@ -112,3 +90,41 @@ Add your own credentials to jenkins.ini. You can find them when you log into Jen
 Now finally install the jobs on the server::
 
   $ jenkins-jobs --conf jenkins.ini update jobs.yml
+
+
+
+Manual Jenkins Configuration
+----------------------------
+
+There are currently a few steps that we need to carry out manually. We will automate them later.
+
+Manage Jenkins -> Configure System:
+
+* # of executors: 0
+* System Admin e-mail address: tisto@plone.org
+
+Manage Jenkins -> Manage Credentials -> Add Credentials: SSH Username with private key:
+
+* Scope: System
+* Username: jenkins
+* Description: jenkins.plone.org private ssh key
+* Private Key: From a file on Jenkins master: File: /var/lib/jenkins/jenkins.plone.org
+
+=> Upload jenkins.plone.org private ssh key manually to /var/lib/jenkins
+=> chown jenkins:jenkins jenkins.plone.org
+
+Manage Jenkins -> Manage Nodes -> New Node (Dumb node):
+
+* # of executors: 1 (later 3)
+* Remote root directory: /home/jenkins
+* Labels: rackspace Ubuntu14.04 Python27
+* Host: node1.jenkins.plone.org
+* Credentials: jenkins (jenkins.plone.org private ssh key)
+* Node Properties -> Environment variables:
+
+::
+
+  PYTHON:/usr/bin/python2.7
+  PYTHON27:/usr/bin/python2.7
+  PYTHON26:/usr/bin/python2.6
+
