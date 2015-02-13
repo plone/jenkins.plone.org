@@ -38,7 +38,7 @@ Copy your public ssh key to the machine::
 
 Run Playbook::
 
-  $ ansible-playbook -i inventory.txt jenkins.plone.org.yml
+  $ ansible-playbook -i inventory.txt jenkins_server.yml
 
 
 Manual Configuration
