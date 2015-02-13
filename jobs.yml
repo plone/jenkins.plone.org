@@ -55,6 +55,53 @@
         - 'ploneorg-themepreview'
 
 
+- project:
+    name: Theme test on browsers
+    browser:
+        - 'android':
+            browser-name: 'android'
+            platform: 'Linux'
+            version: '4.1'
+        - 'chrome':
+            browser-name: 'chrome'
+            platform: 'Windows 8'
+            version: '26'
+        - 'firefox':
+            browser-name: 'firefox'
+            platform: 'Windows 8'
+            version: '26'
+        - 'ie10':
+            browser-name: 'Internet Explorer'
+            platform: 'Windows 8'
+            version: '10'
+        - 'ie11':
+            browser-name: 'Internet Explorer'
+            platform: 'Windows 8'
+            version: '11'
+        - 'ie8':
+            browser-name: 'Internet Explorer'
+            platform: 'Windows 7'
+            version: '8'
+        - 'ie9':
+            browser-name: 'Internet Explorer'
+            platform: 'Windows 7'
+            version: '9'
+        - 'ipad':
+            browser-name: 'ipad'
+            platform: 'OS X 10.9'
+            version: '7'
+        - 'iphone':
+            browser-name: 'iPhone'
+            platform: 'OS X 10.9'
+            version: '7'
+        - 'safari':
+            browser-name: 'safari'
+            platform: 'OS X 10.9'
+            version: '7'
+    jobs:
+        - 'plone-5.0-themetest-{browser}'
+
+
 - job-template:
     # Plone 4.3 job definition.
     # TODO:
@@ -563,6 +610,89 @@
                 ROBOT_CONFIGURE_PACKAGES=plone.app.widgets,ploneorg.core
                 ROBOT_APPLY_PROFILES=ploneorg.core:default
                 ROBOT_INSTALL_PRODUCTS=Products.DateRecurringIndex
+
+
+- job-template:
+    # Plone 5.0 theme preview on browsers (using Sauce labs).
+    name: 'plone-5.0-themetest-{browser}'
+    project-type: freestyle
+    display-name: 'Plone 5.0 - Theme test - {browser}'
+    concurrent: true
+    disabled: true
+    logrotate:
+        daysToKeep: 20
+        numToKeep: 30
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    notifications:
+        - http:
+            url: http://localhost
+            format: JSON
+
+    properties:
+        - throttle:
+            max-total: '0'
+            enabled: 'true'
+            option: category
+            categories:
+                - sauce-labs-concurrent-builds-limit
+
+        - disk-usage
+
+    scm:
+        - buildout-coredev:
+            branch: '5.0'
+
+    triggers:
+        - timed: '@midnight'
+
+    builders:
+        - shell: |
+            # Set selenium grid variables
+            export ROBOT_PORT=$ZSERVER_PORT
+            export ROBOT_REMOTE_URL=$SAUCE_REMOTE_URL
+            export ROBOT_BUILD_NUMBER=coredev-$BUILD_NUMBER
+            export ROBOT_DESIRED_CAPABILITIES="platform:{platform},browserName:{browser-name},version:{version},tunnel-identifier:$NODE_NAME-$EXECUTOR_NUMBER"
+
+            # This setups build-specific tunnel for Sauce Labs:
+            rm -f CONNECTED
+            if [ ! -f Sauce-Connect.jar ]
+            then
+                wget http://saucelabs.com/downloads/Sauce-Connect-latest.zip
+                unzip Sauce-Connect-latest.zip
+            fi
+            java -jar Sauce-Connect.jar $SAUCE_USERNAME $SAUCE_ACCESS_KEY -i $NODE_NAME-$EXECUTOR_NUMBER -f CONNECTED 1>/dev/null &
+            JAVA_PID=$!
+            bash -c "while [ ! -f CONNECTED ]; do sleep 2; done"
+
+            # This just runs robot tests as usual
+            export ROBOT_APPLY_PROFILES=plone.app.contenttypes:default
+            export ROBOT_INSTALL_PRODUCTS=Products.DateRecurringIndex
+
+            $PYTHON27 bootstrap.py -c buildout.cfg
+            bin/buildout -c buildout.cfg
+            bin/themepreview-build src/plone.themepreview/source build
+
+            # Finally, this kills the tunnel
+            kill -0 $JAVA_PID && kill $JAVA_PID || true
+
+    publishers:
+        - html-publisher:
+            name: report
+            dir: build
+            files: "index.html"
+            keep-all: false
+            allow-missing: false
+
+    wrappers:
+        - custom-workspace-cleanup
+        - timeout:
+            timeout: 240
+            type: absolute
+        - port-allocator:
+            names:
+                - ZSERVER_PORT
 
 
 ###
