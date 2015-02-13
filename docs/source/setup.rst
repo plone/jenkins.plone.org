@@ -103,7 +103,11 @@ Test the jobs are properly setup::
    A folder named ``output`` should contain one file per each jenkins job
    configured on jobs.yml
 
-Put your credentials on ``jenkins.ini`` (see the file for how to get them).
+Create your own ``jenkins.ini`` by copying it from ``jenkins.ini.in``::
+
+  $ cp jenkins.ini.in jenkins.ini
+
+Add your own credentials to jenkins.ini. You can find them when you log into Jenkins and copy your API token (e.g. http://jenkins.plone.org/user/tisto/configure).
 
 Now finally install the jobs on the server::
 
