@@ -167,7 +167,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.0-all-commits'
+            branch: '5.0'
 
     builders:
         - shell: |
@@ -241,7 +241,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.0-all-commits'
+            branch: '5.0'
 
     builders:
         - shell: |
@@ -323,7 +323,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.0-all-commits'
+            branch: '5.0'
 
     triggers:
         - github
