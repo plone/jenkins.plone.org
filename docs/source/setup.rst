@@ -77,7 +77,7 @@ Put this repository also on development mode::
 
 Test the jobs are properly setup::
 
-  $ jenkins-jobs test jobs.yml -o output
+  $ jenkins-jobs --conf jenkins.ini.in test jobs.yml -o output
 
 .. note::
    A folder named ``output`` should contain one file per each jenkins job
