@@ -49,6 +49,12 @@
         - 'plone-{plone-version}-themetest'
 
 
+- project:
+    name: Plone.org themepreview
+    jobs:
+        - 'ploneorg-themepreview'
+
+
 - job-template:
     # Plone 4.3 job definition.
     # TODO:
@@ -487,6 +493,76 @@
         - custom-timeout
         - custom-port-allocator
         - custom-xvfb
+
+
+- job:
+    # Plone.org theme preview.
+    name: 'ploneorg-themepreview'
+    project-type: freestyle
+    display-name: 'Plone.org - theme preview'
+    concurrent: true
+    disabled: false
+    node: Slave
+    logrotate:
+        daysToKeep: 20
+        numToKeep: 30
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    notifications:
+        - http:
+            url: http://localhost
+            format: JSON
+
+    properties:
+        - custom-throttle:
+            total: '0'
+            enable: '' # false
+
+        - disk-usage
+
+    scm:
+        - git:
+            url: git://github.com/plone/ploneorg.core.git
+            branches:
+                - 'master'
+            wipe-workspace: false
+            tag-builds: true
+
+    triggers:
+        - timed: '@midnight'
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py -c buildout.cfg
+            bin/buildout -c buildout.cfg
+            bin/sphinx-build src/plone.themepreview/source build
+
+    publishers:
+        - html-publisher:
+            name: report
+            dir: build
+            files: "index.html"
+            keep-all: false
+            allow-missing: false
+
+    wrappers:
+        - custom-workspace-cleanup
+        - port-allocator:
+            names:
+                - ZSERVER_PORT
+        - xvfb:
+            name: default
+            screen: 1200x900x24
+            debug: false
+            timeout: 0
+            shutdown: false
+
+        - inject:
+            properties-content: |
+                ROBOT_CONFIGURE_PACKAGES=plone.app.widgets,ploneorg.core
+                ROBOT_APPLY_PROFILES=ploneorg.core:default
+                ROBOT_INSTALL_PRODUCTS=Products.DateRecurringIndex
 
 
 ###
