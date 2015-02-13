@@ -40,6 +40,15 @@
         - 'plip-{plip}'
 
 
+- project:
+    name: Theme preview
+    plone-version:
+        - '5.0'
+        - '4.3'
+    jobs:
+        - 'plone-{plone-version}-themetest'
+
+
 - job-template:
     # Plone 4.3 job definition.
     # TODO:
@@ -415,6 +424,70 @@
         - custom-timeout
         - custom-port-allocator
         - custom-xvfb
+
+
+- job-template:
+    # Plone theme preview.
+    # TODO:
+    # - email-ext quite a few things
+    name: 'plone-{plone-version}-themetest'
+    project-type: freestyle
+    display-name: 'Plone {plone-version} - Themetest'
+    concurrent: true
+    disabled: false
+    node: Slave
+    logrotate:
+        daysToKeep: 20
+        numToKeep: 30
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    notifications:
+        - http:
+            url: http://localhost
+            format: JSON
+
+    properties:
+        - custom-throttle:
+            total: '0'
+            enable: '' # false
+
+        - disk-usage
+
+    scm:
+        - git:
+            url: git://github.com/plone/plone.themepreview.git
+            branches:
+                - 'master'
+            wipe-workspace: false
+            tag-builds: true
+
+    triggers:
+        - timed: '@midnight'
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c buildout.cfg
+            bin/buildout -c buildout.cfg
+            bin/sphinx-build source build
+
+    publishers:
+        - email-ext:
+            recipients: tisto@plone.org, asko.soukka@iki.fi
+            reply-to:
+            content-type: default
+            regression: true
+            failure: false
+            improvement: true
+            still-failing: true
+            fixed: true
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
+        - custom-xvfb
+
 
 ###
 # MACROS
