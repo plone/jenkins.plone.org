@@ -19,3 +19,9 @@ Plone Jenkins/CI Team Members
 * Eric Steele
 * Timo Stollenwerk
 * Héctor Velarde
+
+
+Tasks we are working on
+=======================
+
+https://github.com/plone/jenkins.plone.org/issues
