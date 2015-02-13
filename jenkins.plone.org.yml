@@ -5,3 +5,11 @@
   remote_user: root
   roles:
     - plone.jenkins_server
+
+  tasks:
+    - name: Checkout mr.roboto
+      git: repo=https://github.com/plone/mr.roboto.git dest=/srv/mr.roboto
+    - name: Run mr.roboto bootstrap
+      shell: python2.7 bootstrap.py chdir=/srv/mr.roboto/
+    - name: Run mr.roboto buildout
+      shell: bin/buildout chdir=/srv/mr.roboto/
