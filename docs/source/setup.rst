@@ -29,8 +29,7 @@ Install Ansible::
 
 Fetch Ansible Galaxy Dependencies as Git Submodules::
 
-  $ git submodule init
-  $ git submodule update
+  $ git submodule update --init
 
 Change inventory.txt and make sure that you can connect to the machines listed there.
 
