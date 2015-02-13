@@ -20,6 +20,8 @@ auth.py
 /.pydevproject
 /.mr.developer.cfg
 /src/jenkins.plone.org*
+/src/jenkins-job-builder
+/src/collective.recipe.jenkinsjob
 *.mo
 docs/Makefile
 docs/make.bat
