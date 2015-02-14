@@ -7,7 +7,7 @@ node {
   git branch: '5.0', changelog: true, poll: true, url: 'https://github.com/plone/buildout.coredev.git'
   sh "python2.7 bootstrap.py"
   sh "bin/buildout -c jenkins.cfg"
-  sh "tar -c -f buildout.tar bin parts develop-eggs var src"
+  sh "tar -c -f buildout.tar bin parts src"
   archive 'buildout.tar'
 }
 
