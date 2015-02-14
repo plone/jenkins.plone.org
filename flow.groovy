@@ -11,7 +11,7 @@ stage name: 'Test'
 parallel(
   test1: {
     node {
-      unarchive mapping: ['**/*': '.']
+      unarchive mapping: ['*': '.']
       sh "bin/buildout -c jenkins.cfg"
       sh "bin/jenkins-test -s plone.app.discussion"
       step([$class: 'ArtifactArchiver', artifacts: 'parts/jenkins-test/testreports/*.xml', fingerprint: true])
@@ -20,8 +20,7 @@ parallel(
   },
   test2: {
     node {
-      unarchive mapping: ['**/*': '.']
-      sh "ls -al"
+      unarchive mapping: ['*': '.']
       sh "bin/buildout -c jenkins.cfg"
       sh "bin/jenkins-test -s plone.app.dexterity"
       step([$class: 'ArtifactArchiver', artifacts: 'parts/jenkins-test/testreports/*.xml', fingerprint: true])
