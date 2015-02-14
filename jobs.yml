@@ -487,7 +487,6 @@
     display-name: 'Plone {plone-version} - Themetest'
     concurrent: true
     disabled: false
-    node: Slave
     logrotate:
         daysToKeep: 20
         numToKeep: 30
@@ -548,7 +547,6 @@
     display-name: 'Plone.org - theme preview'
     concurrent: true
     disabled: false
-    node: Slave
     logrotate:
         daysToKeep: 20
         numToKeep: 30
