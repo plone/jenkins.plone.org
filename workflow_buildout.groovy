@@ -17,4 +17,5 @@ node {
   unarchive mapping: ['buildout.tar': '.']
   sh "tar -x -f buildout.tar"
   sh "ls -al"
+  sh "bin/test -s plone.app.discussion"
 }
