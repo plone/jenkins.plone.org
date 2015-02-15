@@ -17,6 +17,10 @@ body {
   margin: 5px;
 }
 
+#header .searchbox {
+  display: none;
+}
+
 #breadcrumbBar {
   background: transparent;
 }
