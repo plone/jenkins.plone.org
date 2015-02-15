@@ -65,15 +65,6 @@ Put jenkins-job-builder in development mode::
   $ cd src/jenkins-job-builder
   $ python setup.py develop
 
-Put this repository also on development mode::
-
-  $ cd ../..  # go back to the root
-  $ python setup.py develop
-
-.. note::
-   Activate first jenkins-job-builder **and** later jenkins.plone.org so that
-   you don't end up with two versions of jenkins-job-builder on the virtualenv.
-
 Test the jobs are properly setup::
 
   $ jenkins-jobs --conf jenkins.ini.in test jobs.yml -o output
