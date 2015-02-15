@@ -18,17 +18,15 @@ parallel(
   alltests: {
     node {
       prepareBuildout()
-      sh "bin/jenkins-alltests --group=Plone"
-      sh "find parts"
-      // step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
+      sh "bin/jenkins-alltests"
+      step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
     }
   },
   alltestsat: {
     node {
       prepareBuildout()
-      sh "bin/jenkins-alltests-at --group=AT_plone_app_testing"
-      sh "find parts"
-      // step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
+      sh "bin/jenkins-alltests-at"
+      step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
     }
   }
 )
