@@ -4,15 +4,17 @@ body {
   border-top: 11px solid #329FD7;
 }
 
-/*
-#jenkins-home-link img {
+#jenkins-head-icon,
+#jenkins-name-icon {
   display: none;
 }
 
-#header {
+#jenkins-home-link {
   background: url('http://docs.plone.org/_static/img/plone.svg') no-repeat scroll 10px center;
   width: 215px;
 }
+
+/*
 
 #header .logo {
   margin: 5px;
