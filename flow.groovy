@@ -15,28 +15,35 @@ node {
 
 stage 'Test'
 parallel(
-  alltest: {
+  alltests: {
     node {
-      sh "rm -rf *"
-      unarchive mapping: ['buildout.tar': '.']
-      sh "tar -x -f buildout.tar"
-      sh "bin/jenkins-alltests"
-      step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
+      prepareBuildout()
+      sh "bin/jenkins-alltests --group=Plone"
+      sh "find parts"
+      // step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
     }
   },
-  alltestat: {
+  alltestsat: {
     node {
-      sh "rm -rf *"
-      unarchive mapping: ['buildout.tar': '.']
-      sh "tar -x -f buildout.tar"
-      sh "bin/jenkins-alltests-at"
-      step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
+      prepareBuildout()
+      sh "bin/jenkins-alltests-at --group=AT_plone_app_testing"
+      sh "find parts"
+      // step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
     }
   }
 )
 
 stage 'Notification'
 node {
-  stage 'Notification'
   step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'tisto@plone.org', sendToIndividuals: true])
+}
+
+
+/**
+* Prepare buildout by cleaning up the workspace, and fetching buildout.
+*/
+def prepareBuildout() {
+  sh "rm -rf *"
+  unarchive mapping: ['buildout.tar': '.']
+  sh "tar -x -f buildout.tar"
 }
