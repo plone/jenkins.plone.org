@@ -12,3 +12,11 @@ body {
   background: url('http://docs.plone.org/_static/img/plone.svg') no-repeat scroll 10px center;
   width: 215px;
 }
+
+#breadcrumbBar {
+  background: transparent;
+}
+
+#breadcrumbs {
+  border-top: 1px solid #D3D7CF;
+}
