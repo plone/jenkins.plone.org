@@ -13,8 +13,16 @@ body {
   width: 215px;
 }
 
+#header .logo {
+  margin: 5px;
+}
+
 #breadcrumbBar {
   background: transparent;
+}
+
+#breadcrumbBar .top-sticker {
+  top: 61;
 }
 
 #breadcrumbs {
