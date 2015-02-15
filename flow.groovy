@@ -7,7 +7,7 @@ stage 'Build'
 node {
   sh "rm -rf *"
   git branch: '5.0', changelog: true, poll: true, url: 'https://github.com/plone/buildout.coredev.git'
-  sh "python2.7 bootstrap.py"
+  sh "python2.7 bootstrap.py -c jenkins.cfg"
   sh "bin/buildout -c jenkins.cfg"
   sh "tar -c -f buildout.tar bin parts src"
   archive 'buildout.tar'
@@ -15,23 +15,21 @@ node {
 
 stage 'Test'
 parallel(
-  test1: {
+  alltest: {
     node {
       sh "rm -rf *"
       unarchive mapping: ['buildout.tar': '.']
       sh "tar -x -f buildout.tar"
-      sh "ls -al"
-      sh "bin/jenkins-test -s plone.app.discussion"
+      sh "bin/jenkins-alltests"
       step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
     }
   },
-  test2: {
+  alltestat: {
     node {
       sh "rm -rf *"
       unarchive mapping: ['buildout.tar': '.']
       sh "tar -x -f buildout.tar"
-      sh "ls -al"
-      sh "bin/jenkins-test -s plone.app.dexterity"
+      sh "bin/jenkins-alltests-at"
       step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
     }
   }
