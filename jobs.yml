@@ -363,7 +363,6 @@
     display-name: 'Plone 5.0 - Python 2.7 - Archetypes'
     concurrent: true
     disabled: false
-    node: 'Ubuntu14.04'
 
     logrotate:
         daysToKeep: 60
