@@ -724,7 +724,7 @@
     name: custom-email-ext
     publishers:
         - email-ext:
-            recipients: plone-testbot@lists.plone.org
+            recipients: tisto@plone.org
             reply-to:
             content-type: default
             regression: true
