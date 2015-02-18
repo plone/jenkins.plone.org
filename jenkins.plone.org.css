@@ -14,6 +14,14 @@ body {
   width: 215px;
 }
 
+.job-status-blue img {
+  display: none;
+}
+
+.job-status-blue:first-child {
+  background-color: green;
+}
+
 /*
 
 #header .logo {
