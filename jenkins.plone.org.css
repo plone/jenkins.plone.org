@@ -10,7 +10,7 @@ body {
 }
 
 #header {
-  background-color: black;
+  background-color: black !important;
 }
 
 #jenkins-home-link {
