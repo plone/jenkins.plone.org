@@ -236,8 +236,6 @@
         - github
 
     publishers:
-        - aggregate-tests:
-            include-failed-builds: true
 
         - custom-junit
 
@@ -305,8 +303,6 @@
         - github
 
     publishers:
-        - aggregate-tests:
-            include-failed-builds: false
 
         - custom-archive:
             glob: 'CHANGES.log,parts/jenkins-test/testreports/*.xml,src'
