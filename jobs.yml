@@ -151,17 +151,6 @@
             bin/buildout -c jenkins.cfg
             bin/jenkins-alltests -1
 
-        - shell: |
-            i=`ls src`
-            echo "[sources]" > snapshoot.cfg
-            for j in $i;
-                do
-                    cd src/$j;
-                    h=`git log -n1 --pretty=oneline | cut -d " " -f 1`
-                    a=`git remote show origin | grep Fetch | cut -c 14-`
-                    if [[ $a =~ "buildout.coredev.git" ]] ; then  echo "SVN $a"; else   echo "$j = git $a rev=$h" >> ../../snapshoot.cfg; fi
-                    cd ../..; done
-
     publishers:
         - custom-junit
 
