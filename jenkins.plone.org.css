@@ -9,9 +9,14 @@ body {
   display: none;
 }
 
+#header {
+  background-color: black;
+}
+
 #jenkins-home-link {
   background: url('http://docs.plone.org/_static/img/plone.svg') no-repeat scroll 10px center;
   width: 215px;
+  text-indent: -999px;
 }
 
 /* Dooney Jenkins Theme: https://github.com/kevinburke/doony
