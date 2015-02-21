@@ -4,3 +4,5 @@ node3.jenkins.plone.org
 node4.jenkins.plone.org
 
 test.jenkins.plone.org ansible_ssh_host=78.47.49.108
+
+local ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222
