@@ -1,5 +1,5 @@
 ---
-# Jenkins server for Plone CI testing
+# Jenkins server to test jenkins.plone.org locally with vagrant
 
 - hosts: local
   remote_user: vagrant
