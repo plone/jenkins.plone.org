@@ -37,4 +37,15 @@ just run::
 And that will re-run the ansible playbook once again,
 and hopefully fixing the previous problem.
 
+You can enjoy your newly jenkins.plone.org master server locally at:
+
+``http://localhost:8080``
+
+.. note::
+   There seems to be some problems with nginx.
+
+   POST requests get the port (8080) removed on the response,
+   but fear not,
+   adding the port back on the wrong URL makes it work again.
+
 *Enjoy!*
