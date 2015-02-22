@@ -22,7 +22,19 @@ Set up
 * from within a clone of jenkins.plone.org repository checkout run::
 
     vagrant up
-    ssh-copy-id vagrant@127.0.0.1 -p 2222 # so that you can ssh without being asked for the password
-    ansible-playbook -i inventory.txt jenkins_local.yml
+
+Yes,
+that's it,
+``vagrant`` will automatically run the ansible playbook.
+
+If,
+for whichever reason,
+the playbook fails,
+just run::
+
+  vagrant provision
+
+And that will re-run the ansible playbook once again,
+and hopefully fixing the previous problem.
 
 *Enjoy!*
