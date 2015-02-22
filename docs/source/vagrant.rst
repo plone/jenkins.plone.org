@@ -48,4 +48,11 @@ You can enjoy your newly jenkins.plone.org master server locally at:
    but fear not,
    adding the port back on the wrong URL makes it work again.
 
+Finally,
+to run ``jenkins-job-builder`` on it,
+just run::
+
+  jenkins-job --conf jenkins.ini.in update jobs.yml
+
+
 *Enjoy!*
