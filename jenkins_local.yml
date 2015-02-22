@@ -5,3 +5,13 @@
   remote_user: vagrant
   roles:
     - plone.jenkins_server
+
+  tasks:
+    # most probably this vagrant box will not have a public Internet IP
+    # so it makes sense to disable security completely so you can play
+    # without any problem
+    - name: Disable login on jenkins
+      sudo: yes
+      replace: dest=/var/lib/jenkins/config.xml regexp='<useSecurity>true</useSecurity>' replace='<useSecurity>false</useSecurity>'
+      notify:
+      - 'Restart Jenkins'
