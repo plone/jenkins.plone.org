@@ -8,4 +8,4 @@ allow_duplicates=False
 [jenkins]
 user=gforcada
 password=12345678901234567890
-url=http://localhost
+url=http://localhost:8080
