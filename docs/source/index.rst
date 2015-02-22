@@ -9,6 +9,7 @@ Contents:
    :maxdepth: 2
 
    setup
+   vagrant
    future-pipeline
 
 .. include:: ../../README.rst
