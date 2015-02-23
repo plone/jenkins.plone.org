@@ -3,14 +3,9 @@
 # Use this configuration with jenkins-job-builder:
 # https://github.com/openstack-infra/jenkins-job-builder
 #
-# To run it:
-# git clone git@github.com:plone/jenkins.plone.org.git
-# (change branch if needed)
-# python setup.py develop # to install dependencies and make our code available
-# jenkins-jobs --conf jenkins.ini test jobs -o output
+# See [1] on how to use these jobs defined below.
 #
-# After running the above an output folder will be populated with jenkins jobs.
-# See jenkins-job options to put into production or your server of choice.
+# [1] http://jenkinsploneorg.readthedocs.org
 
 - project:
     name: workflow
