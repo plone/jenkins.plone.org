@@ -13,6 +13,12 @@
 # See jenkins-job options to put into production or your server of choice.
 
 - project:
+    name: workflow
+    jobs:
+        - 'workflow-5.0'
+
+
+- project:
     name: Plone 5.0
     jobs:
         - 'plone-5.0-python-2.7'
@@ -674,6 +680,17 @@
         - port-allocator:
             names:
                 - ZSERVER_PORT
+
+- job:
+    name: 'workflow-5.0'
+    project-type: workflow
+    definitions:
+        - script:
+            filename: 'flow.groovy'
+        - scm:
+            url: https://github.com/plone/jenkins.plone.org.git
+            branches:
+                - '*/master'
 
 
 ###
