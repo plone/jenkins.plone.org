@@ -5,8 +5,22 @@
   remote_user: vagrant
   roles:
     - plone.jenkins_server
+  vars:
+    jenkins_admins:
+      - tisto
+      - gforcada
+      - svx
+      - bloodbare
+    github_orgs:
+      - plone
+      - collective
+    node_names:
+      - Node1
+      - Node2
+      - Node3
+      - Node4
   vars_files:
-    - jenkins_config.yml
+    - secrets.yml
 
   tasks:
     # most probably this vagrant box will not have a public Internet IP
