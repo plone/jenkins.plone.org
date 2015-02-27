@@ -1,6 +1,5 @@
 jenkins.ini
 secrets.yml
-auth.cfg
 auth.py
 /develop-eggs
 /eggs
