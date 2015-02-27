@@ -112,9 +112,9 @@ Manage Jenkins -> Configure System:
     * User Name: jenkins@plone.org
     * Password: ...
 
- * Theme:
+* Theme:
 
-   * URL of theme CSS: https://rawgit.com/plone/jenkins.plone.org/master/jenkins.plone.org.css
+  * URL of theme CSS: https://rawgit.com/plone/jenkins.plone.org/master/jenkins.plone.org.css
 
 Manage Jenkins -> Manage Credentials -> Add Credentials: SSH Username with private key:
 
