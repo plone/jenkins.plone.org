@@ -118,11 +118,6 @@
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
 
-    notifications:
-        - http:
-            url: http://localhost/roboto/callback/corecommit?jk_job_id=cfcc93c8589240b493869bcea552f4f7_plone-4.3-python-{python-version}
-            format: JSON
-
     parameters:
         - text:
             name: plonechanges
@@ -196,11 +191,6 @@
         numToKeep: 100
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
-
-    notifications:
-        - http:
-            url: http://localhost/roboto/callback/corecommit?jk_job_id=deae59e52df042659f2276760c7819e6_plone-5.0-python-2.7
-            format: JSON
 
     parameters:
         - text:
@@ -356,11 +346,6 @@
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
 
-    notifications:
-        - http:
-            url: http://localhost/roboto/callback/corecommit?jk_job_id=deae59e52df042659f2276760c7819e6_plone-5.0-python-2.7
-            format: JSON
-
     properties:
         - custom-throttle:
             total: '0'
@@ -418,11 +403,6 @@
         numToKeep: 100
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
-
-    notifications:
-        - http:
-            url: http://localhost/roboto/callback/corecommit?jk_job_id=d1dcc66a21fc442199d48b39f3a31370_plone-5.0-python-2.7
-            format: JSON
 
     properties:
         - custom-throttle:
