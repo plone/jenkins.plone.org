@@ -99,7 +99,6 @@ Github post-commit hook for buildout.coredev:
 
 Manage Jenkins -> Configure System:
 
-* # of executors: 0
 * System Admin e-mail address: tisto@plone.org
 * E-mail Notification:
 
