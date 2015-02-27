@@ -5,6 +5,8 @@
   remote_user: root
   roles:
     - plone.jenkins_server
+  vars_files:
+    - jenkins_config.yml
 
   tasks:
     # Install mr.roboto

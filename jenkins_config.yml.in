@@ -1,0 +1,6 @@
+github_app_client_id: 1234567890
+github_app_client_secret: 1234567890abcdef1234567890abcdef1234567890abcdef
+jenkins_admins:
+  - gforcada
+github_orgs:
+  - plone

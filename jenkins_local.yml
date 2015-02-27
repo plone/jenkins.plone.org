@@ -5,6 +5,8 @@
   remote_user: vagrant
   roles:
     - plone.jenkins_server
+  vars_files:
+    - jenkins_config.yml
 
   tasks:
     # most probably this vagrant box will not have a public Internet IP
