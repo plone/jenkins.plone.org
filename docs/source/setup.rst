@@ -102,14 +102,18 @@ Manage Jenkins -> Configure System:
 * # of executors: 0
 * System Admin e-mail address: tisto@plone.org
 * E-mail Notification:
+
   * SMTP Server: smtp.gmail.com
   * Use SSL: True
   * SMTP Port: 465
   * Reply-To Address: jenkins@plone.org
   * Use SMTP Authentication: True
+
     * User Name: jenkins@plone.org
     * Password: ...
+
  * Theme:
+
    * URL of theme CSS: https://rawgit.com/plone/jenkins.plone.org/master/jenkins.plone.org.css
 
 Manage Jenkins -> Manage Credentials -> Add Credentials: SSH Username with private key:
