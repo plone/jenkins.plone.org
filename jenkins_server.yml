@@ -6,6 +6,7 @@
   roles:
     - plone.jenkins_server
   vars:
+    admin_email: tisto@plone.org
     jenkins_admins:
       - tisto
       - gforcada
