@@ -142,10 +142,6 @@
 
     builders:
         - shell: |
-            echo "Save to CHANGES.log"
-            wget $plonechanges -O CHANGES.log
-
-        - shell: |
             {pybinary} bootstrap.py -c jenkins.cfg
             bin/buildout -c jenkins.cfg
             bin/jenkins-alltests -1
@@ -153,13 +149,7 @@
     publishers:
         - custom-junit
 
-        - custom-archive:
-            glob: 'CHANGES.log'
-
         - custom-email-ext
-
-        - custom-history:
-            file: CHANGES.log
 
         - robot:
             output-path: parts/jenkins-test
@@ -216,12 +206,6 @@
 
     builders:
         - shell: |
-            echo "Save to CHANGES.log"
-            wget $plonechanges -O CHANGES.log
-            echo "REPO"
-            echo $repo
-
-        - shell: |
             $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
             bin/buildout -c jenkins.cfg
             bin/jenkins-alltests
@@ -234,10 +218,7 @@
         - custom-junit
 
         - custom-archive:
-            glob: 'CHANGES.log,parts/jenkins-test/testreports/*.xml,src'
-
-        - custom-history:
-            file: CHANGES.log
+            glob: 'parts/jenkins-test/testreports/*.xml,src'
 
         - fingerprint:
             files: 'parts/jenkins-test/testreports/*.xml'
@@ -299,7 +280,7 @@
     publishers:
 
         - custom-archive:
-            glob: 'CHANGES.log,parts/jenkins-test/testreports/*.xml,src'
+            glob: 'parts/jenkins-test/testreports/*.xml,src'
 
         - fingerprint:
             files: 'parts/jenkins-test/testreports/*.xml'
@@ -380,7 +361,7 @@
         - custom-junit
 
         - custom-archive:
-            glob: 'CHANGES.log,parts/jenkins-test/testreports/*.xml'
+            glob: 'parts/jenkins-test/testreports/*.xml'
 
         - custom-email-ext
 
