@@ -93,6 +93,10 @@ Manual Jenkins Configuration
 There are currently a few steps that we need to carry out manually.
 We will automate them later.
 
+Github post-commit hook for buildout.coredev:
+
+* Go to https://github.com/plone/buildout.coredev/settings/hooks and add a 'http://jenkins.plone.org/github-webhook/' post-commit hook.
+
 Manage Jenkins -> Configure System:
 
 * # of executors: 0
