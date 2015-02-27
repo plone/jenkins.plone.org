@@ -16,13 +16,3 @@
       shell: python2.7 bootstrap.py chdir=/srv/mr.roboto/
     - name: Run mr.roboto buildout
       shell: bin/buildout chdir=/srv/mr.roboto/
-    - name: mr.roboto nginx sites-available
-      template: src=etc/nginx/mrroboto dest=/etc/nginx/sites-available/mrroboto owner=root group=root mode=0755
-    - name: mr.roboto nginx sites-enabled
-      file: path=/etc/nginx/sites-enabled/mrroboto state=link src=/etc/nginx/sites-available/mrroboto
-      notify: Restart nginx
-
-  handlers:
-
-    - name: Restart nginx
-      action: service name=nginx state=restarted
