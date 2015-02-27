@@ -133,6 +133,9 @@
 
         - disk-usage
 
+    triggers:
+        - github
+
     scm:
         - buildout-coredev:
             branch: '4.3'
