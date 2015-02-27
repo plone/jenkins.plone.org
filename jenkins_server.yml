@@ -18,3 +18,9 @@
       shell: python2.7 bootstrap.py chdir=/srv/mr.roboto/
     - name: Run mr.roboto buildout
       shell: bin/buildout chdir=/srv/mr.roboto/
+      notify: Restart mr.roboto
+
+  handlers:
+
+    - name: Start mr.roboto
+      supervisorctl: name=all state=started config=/srv/mr.roboto/supervisord.conf
