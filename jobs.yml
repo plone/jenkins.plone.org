@@ -226,14 +226,6 @@
 
         - custom-email-ext
 
-        - trigger-parameterized-builds:
-            - project: plone-5.0-python-2.7-at
-              predefined-parameters: 'CHANGES=$CHANGES'
-              no-parameters: true
-            - project: plone-5.0-python-2.7-robot
-              predefined-parameters: 'CHANGES=$CHANGES'
-              no-parameters: true
-
     wrappers:
         - custom-workspace-cleanup
         - custom-timeout
@@ -299,10 +291,6 @@
             other-files:
                 - robot_*.png
 
-        - trigger-parameterized-builds:
-            - project: plone-5.0-python-2.7-at
-              no-parameters: true
-
     wrappers:
         - custom-workspace-cleanup
         - custom-timeout
@@ -364,10 +352,6 @@
             glob: 'parts/jenkins-test/testreports/*.xml'
 
         - custom-email-ext
-
-        - trigger-parameterized-builds:
-            - project: plone-5.0-python-2.7-results
-              no-parameters: true
 
     wrappers:
         - custom-workspace-cleanup
