@@ -4,3 +4,5 @@ jenkins_admins:
   - gforcada
 github_orgs:
   - plone
+node_names:
+  - Node1
