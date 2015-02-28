@@ -394,7 +394,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.0'
+            branch: '{branch}'
 
     builders:
         - shell: |
