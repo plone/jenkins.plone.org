@@ -35,8 +35,21 @@
 - project:
     name: PLIPs
     plip:
-        - edit-member-ttw:
+        - 10359:
+            buildout: plips/plip10359-security-controlpanel.cfg
+        - 13091:
+            buildout: plips/plip13091-multilingual.cfg
+        - 13260:
+            buildout: plips/plip13260-step-by-step.cfg
+        - 13350:
             buildout: plips/plip13350-edit-member-schema-ttw.cfg
+        - 13770:
+            buildout: plips/plip13770-portal-tools-removal.cfg
+        - 20144:
+            buildout: plips/plip20114-plone.api-integration.cfg
+        - 20256:
+            buildout: plips/plip20256-social-tags.cfg
+
     jobs:
         - 'plip-{plip}'
 
