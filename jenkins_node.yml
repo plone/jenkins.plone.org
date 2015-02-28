@@ -1,7 +1,7 @@
 ---
 # Playbook for Jenkins Slave on Ubuntu 14.04 LTS
 
-- hosts: all
+- hosts: jenkins_nodes
   remote_user: root
 
   tasks:
@@ -172,10 +172,14 @@
     # https://unix.stackexchange.com/questions/105265/install-pil-pillow-via-pip-in-debian-testing-jessie
     - name: freetype symlink
       file: src=/usr/include/freetype2 dest=/usr/include/freetype state=link
-    - name: fetch imaging source
-      get_url: url=http://effbot.org/downloads/Imaging-1.1.7.tar.gz dest=/tmp/
-    - name: unpack imaging tarball
-      command: tar zxf Imaging-1.1.7.tar.gz chdir=/tmp
-    - name: install imaging
-      command: python2.6 setup.py install chdir=/tmp/Imaging-1.1.7
+    - name: remove PIL for Python 2.7
+      shell: rm -rf /usr/local/lib/python2.7/dist-packages/PIL*
+    - name: remove PIL for Python 2.6
+      shell: rm -rf /usr/local/lib/python2.6/dist-packages/PIL*
+    #- name: fetch imaging source
+    #  get_url: url=http://effbot.org/downloads/Imaging-1.1.7.tar.gz dest=/tmp/
+    #- name: unpack imaging tarball
+    #  command: tar zxf Imaging-1.1.7.tar.gz chdir=/tmp
+    #- name: install imaging
+    #  command: python2.6 setup.py install chdir=/tmp/Imaging-1.1.7
 
