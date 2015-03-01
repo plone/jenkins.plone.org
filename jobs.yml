@@ -416,19 +416,19 @@
             bin/alltests --all
             bin/alltests-at
 
-    publishers:
-        - custom-junit
+#    publishers:
+#        - custom-junit
 
-        - robot:
-            output-path: parts/jenkins-test
-            report-html: robot_report.html
-            log-html: robot_log.html
-            output-xml: robot_output.xml
-            pass-threshold: 100.0
-            unstable-threshold: 80.0
-            only-critical: true
-            other-files:
-                - robot_*.png
+#        - robot:
+#            output-path: parts/jenkins-test
+#            report-html: robot_report.html
+#            log-html: robot_log.html
+#            output-xml: robot_output.xml
+#            pass-threshold: 100.0
+#            unstable-threshold: 80.0
+#            only-critical: true
+#            other-files:
+#                - robot_*.png
 
     wrappers:
         - custom-workspace-cleanup
