@@ -35,31 +35,31 @@
 - project:
     name: PLIPs
     plip:
-        - 5.0-10359-mail-controlpanel:
+        - 10359-mail-controlpanel:
             buildout: plips/plip10359-mail-controlpanel.cfg
             branch: 5.0
-        - 5.0-10359-security-controlpanel:
+        - 10359-security-controlpanel:
             buildout: plips/plip10359-security-controlpanel.cfg
             branch: 5.0
-        - 5.0-10359-z3cform-controlpanel:
+        - 10359-z3cform-controlpanel:
             buildout: plips/plip10359-z3cform-controlpanel.cfg
             branch: 5.0
-        - 5.0-13091-multilingual:
+        - 13091-multilingual:
             buildout: plips/plip13091-multilingual.cfg
             branch: 5.0
-        - 5.0-13260-step-by-step:
+        - 13260-step-by-step:
             buildout: plips/plip13260-step-by-step.cfg
             branch: 5.0
-        - 5.0-13350-edit-member-schema-ttw:
+        - 13350-edit-member-schema-ttw:
             buildout: plips/plip13350-edit-member-schema-ttw.cfg
             branch: 5.0
-        - 5.0-13770-portal-tools-removal:
+        - 13770-portal-tools-removal:
             buildout: plips/plip13770-portal-tools-removal.cfg
             branch: 5.0
-        - 5.0-20114-plone.api-integration:
+        - 20114-plone.api-integration:
             buildout: plips/plip20114-plone.api-integration.cfg
             branch: 5.0
-        - 5.0-20256-social-tags:
+        - 20256-social-tags:
             buildout: plips/plip20256-social-tags.cfg
             branch: 5.0
 
