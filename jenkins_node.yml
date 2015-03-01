@@ -47,6 +47,8 @@
       shell: curl -kLO https://bootstrap.pypa.io/get-pip.py
     - name: Install pip
       command: python2.7 get-pip.py
+    - name: Clean up pip install
+      shell: rm -rf /root/get-pip.py
     - pip: name=Pillow
     # make sure the PIL/Pillow system packages are not installed
     - apt: name=python-imaging state=absent
@@ -183,11 +185,3 @@
     #  command: tar zxf Imaging-1.1.7.tar.gz chdir=/tmp
     #- name: install imaging
     #  command: python2.6 setup.py install chdir=/tmp/Imaging-1.1.7
-
-  - name: Check if anything needs autoremoving
-    shell: apt-get -y --dry-run autoremove | grep -q "0 to remove"
-    register: check_autoremove
-    ignore_errors: True
-    changed_when: False
-    always_run: True
-
