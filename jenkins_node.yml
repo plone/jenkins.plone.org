@@ -19,8 +19,9 @@
     - apt: name=ntp state=present
     # Keep /tmp clean
     - apt: name=tmpreaper state=present
-    # for add-apt-repository
-    - apt: name=python-software-properties state=present
+    # for add-apt-repository (removed because python-apt is not pep440 compliant)
+    - apt: name=python-software-properties state=absent
+    - apt: name=python-apt state=absent
     # VCS
     - apt: name=git-core state=present
     - apt: name=subversion state=present
@@ -182,4 +183,11 @@
     #  command: tar zxf Imaging-1.1.7.tar.gz chdir=/tmp
     #- name: install imaging
     #  command: python2.6 setup.py install chdir=/tmp/Imaging-1.1.7
+
+  - name: Check if anything needs autoremoving
+    shell: apt-get -y --dry-run autoremove | grep -q "0 to remove"
+    register: check_autoremove
+    ignore_errors: True
+    changed_when: False
+    always_run: True
 
