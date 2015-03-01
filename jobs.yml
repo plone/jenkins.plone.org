@@ -35,14 +35,8 @@
 - project:
     name: PLIPs
     plip:
-        - 10359-mail-controlpanel:
-            buildout: plips/plip10359-mail-controlpanel.cfg
-            branch: 5.0
         - 10359-security-controlpanel:
             buildout: plips/plip10359-security-controlpanel.cfg
-            branch: 5.0
-        - 10359-z3cform-controlpanel:
-            buildout: plips/plip10359-z3cform-controlpanel.cfg
             branch: 5.0
         - 13091-multilingual:
             buildout: plips/plip13091-multilingual.cfg
@@ -413,22 +407,22 @@
         - shell: |
             $PYTHON27 bootstrap.py --setuptools-version=8.3 -c {buildout}
             bin/buildout -c {buildout}
-            bin/alltests --all
-            bin/alltests-at
+            bin/alltests --xml --all
+            bin/alltests-at --xml
 
-#    publishers:
-#        - custom-junit
+    publishers:
+        - custom-junit
 
-#        - robot:
-#            output-path: parts/jenkins-test
-#            report-html: robot_report.html
-#            log-html: robot_log.html
-#            output-xml: robot_output.xml
-#            pass-threshold: 100.0
-#            unstable-threshold: 80.0
-#            only-critical: true
-#            other-files:
-#                - robot_*.png
+        - robot:
+            output-path: parts/jenkins-test
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
 
     wrappers:
         - custom-workspace-cleanup
