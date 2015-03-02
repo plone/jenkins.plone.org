@@ -138,14 +138,6 @@
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
 
-    parameters:
-        - text:
-            name: plonechanges
-            default: http://jenkins.plone.org/roboto/static/changeset/noset
-        - string:
-            name: repo
-            default: 'no repo'
-
     properties:
         - custom-throttle:
             total: '0'
@@ -205,14 +197,6 @@
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
 
-    parameters:
-        - text:
-            name: plonechanges
-            default: http://jenkins.plone.org/roboto/static/changeset/noset
-        - string:
-            name: repo
-            default: 'no repo'
-
     properties:
         - custom-throttle:
             total: '7'
@@ -228,14 +212,14 @@
         - shell: |
             $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
             bin/buildout -c jenkins.cfg
-            bin/jenkins-alltests
+            bin/alltests --xml
 
     triggers:
         - github
 
     publishers:
 
-        - custom-junit
+        - custom-junit-new
 
         - custom-email-ext
 
@@ -277,7 +261,7 @@
             $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
             bin/buildout -c jenkins.cfg
             ROBOTSUITE_PREFIX=ONLYROBOT
-            bin/jenkins-alltests -t ONLYROBOT --all
+            bin/alltests -t ONLYROBOT --all --xml
 
     triggers:
         - github
@@ -287,7 +271,7 @@
         - custom-email-ext
 
         - robot:
-            output-path: parts/jenkins-test
+            output-path: parts/test
             report-html: robot_report.html
             log-html: robot_log.html
             output-xml: robot_output.xml
@@ -340,22 +324,22 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg 
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
             bin/buildout -c jenkins.cfg
-            bin/jenkins-alltests-at
+            bin/alltests-at --xml
 
         - copyartifact:
             project: plone-5.0-python-2.7
-            filter: 'parts/jenkins-test/testreports/*.xml'
+            filter: 'parts/test/testreports/*.xml'
             which-build: upstream-build
             optional: true
 
 
     publishers:
-        - custom-junit
+        - custom-junit-new
 
         - custom-archive:
-            glob: 'parts/jenkins-test/testreports/*.xml'
+            glob: 'parts/test/testreports/*.xml'
 
         - custom-email-ext
 
