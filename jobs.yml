@@ -411,10 +411,10 @@
             bin/alltests-at --xml
 
     publishers:
-        - custom-junit
+        - custom-junit-new
 
         - robot:
-            output-path: parts/jenkins-test
+            output-path: parts/test
             report-html: robot_report.html
             log-html: robot_log.html
             output-xml: robot_output.xml
@@ -683,6 +683,13 @@
     publishers:
         - junit:
             results: parts/jenkins-test/testreports/*.xml
+            keep-long-stdio: false
+
+- publisher:
+    name: custom-junit-new
+    publishers:
+        - junit:
+            results: parts/test/testreports/*.xml
             keep-long-stdio: false
 
 - publisher:
