@@ -237,13 +237,6 @@
 
         - custom-junit
 
-        - custom-archive:
-            glob: 'parts/jenkins-test/testreports/*.xml,src'
-
-        - fingerprint:
-            files: 'parts/jenkins-test/testreports/*.xml'
-            record-artifacts: true
-
         - custom-email-ext
 
     wrappers:
@@ -290,13 +283,6 @@
         - github
 
     publishers:
-
-        - custom-archive:
-            glob: 'parts/jenkins-test/testreports/*.xml,src'
-
-        - fingerprint:
-            files: 'parts/jenkins-test/testreports/*.xml'
-            record-artifacts: true
 
         - custom-email-ext
 
