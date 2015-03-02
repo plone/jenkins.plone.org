@@ -281,7 +281,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg -v 2.2.1
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
             bin/buildout -c jenkins.cfg
             ROBOTSUITE_PREFIX=ONLYROBOT
             bin/jenkins-alltests -t ONLYROBOT --all
@@ -354,7 +354,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg -v 2.2.1
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg 
             bin/buildout -c jenkins.cfg
             bin/jenkins-alltests-at
 
