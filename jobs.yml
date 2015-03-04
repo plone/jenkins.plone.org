@@ -35,6 +35,9 @@
 - project:
     name: PLIPs
     plip:
+        - 10359-filter-controlpanel:
+            buildout: plips/plip10359-filter-controlpanel.cfg
+            branch: 5.0
         - 10359-security-controlpanel:
             buildout: plips/plip10359-security-controlpanel.cfg
             branch: 5.0
@@ -57,7 +60,7 @@
             buildout: plips/plip20256-social-tags.cfg
             branch: 5.0
         - 14929-lxml-safehtml-transform:
-            buildout: plips/plip14929-safehtml-transform.cfg
+            buildout: plips/plip14929-lxml-safehtml-transform.cfg
             branch: 5.0
         - ptc:
             buildout: plips/plip-ptc.cfg
