@@ -26,6 +26,10 @@
     - secrets.yml
 
   tasks:
+
+    # Set Hostname
+    - hostname: name=jenkins.plone.org
+
     # Install mr.roboto
     - name: Install nginx-extras
       apt: name=nginx-extras state=present
@@ -38,6 +42,15 @@
     - name: Run mr.roboto buildout
       shell: bin/buildout chdir=/srv/mr.roboto/
       notify: Restart mr.roboto
+
+    # Install munin
+    - name: Install munin
+      apt: name=munin state=present
+    - lineinfile: dest=/etc/munin/munin.conf regexp=^#htmldir line=htmldir /var/cache/munin/www
+    - lineinfile: dest=/etc/munin/munin.conf regexp=^#tmpldir line=tmpldir /etc/munin/templates
+    - lineinfile: dest=/etc/munin/munin.conf regexp=^[localhost.localdomain] line=[jenkins.plone.org]
+    # XXX: not sure if we want to protect munin with pw yet.
+    #- htpasswd: path=/etc/nginx/passwdfile name=guest password=guest owner=root group=www-data mode=0640
 
   handlers:
 
