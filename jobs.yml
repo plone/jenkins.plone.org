@@ -56,6 +56,9 @@
         - 20256-social-tags:
             buildout: plips/plip20256-social-tags.cfg
             branch: 5.0
+        - ptc:
+            buildout: plips/plip-ptc.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
