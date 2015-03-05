@@ -675,7 +675,7 @@
     name: custom-email-ext
     publishers:
         - email-ext:
-            recipients: plone-cvs@lists.sourceforge.net
+            recipients: plone-testbot@lists.plone.org
             reply-to:
             content-type: default
             regression: true
