@@ -35,6 +35,9 @@
 - project:
     name: PLIPs
     plip:
+        - 10359-language-controlpanel:
+            buildout: plips/plip10359-language-controlpanel.cfg
+            branch: 5.0
         - 10359-filter-controlpanel:
             buildout: plips/plip10359-filter-controlpanel.cfg
             branch: 5.0
