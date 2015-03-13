@@ -12,6 +12,10 @@
     jobs:
         - 'workflow-5.0'
 
+- project:
+    name: pull-request
+    jobs:
+        - 'pull-request'
 
 - project:
     name: Plone 5.0
@@ -637,6 +641,71 @@
             branches:
                 - '*/master'
 
+
+- job:
+    name: 'pull-request'
+    project-type: freestyle
+    display-name: 'Pull Request'
+    concurrent: true
+    disabled: false
+    logrotate:
+        daysToKeep: 60
+        numToKeep: 100
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    parameters:
+#        - text:
+#            name: PULL_REQUEST_URL
+#            description: 'URL of the github pull request, e.g. "https://github.com/plone/Products.CMFPlone/pull/251".'
+#            default: https://github.com/plone/Products.CMFPlone/pull/251
+        - text:
+            name: PULL_REQUEST_PACKAGE_NAME
+            description: 'Name of the Package, e.g. "Products.CMFPlone".'
+            default: Products.CMFPlone
+        - text:
+            name: PULL_REQUEST_BRANCH
+            description: 'Name of the git branch, e.g. "z3cform-language-controlpanel".'
+            default: z3cform-language-controlpanel
+
+    properties:
+        - custom-throttle:
+            total: '7'
+            enable: 'true'
+
+        - disk-usage
+
+    scm:
+        - buildout-coredev:
+            branch: '5.0'
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
+            sed -ie "s/^$PULL_REQUEST_PACKAGE_NAME.*/$PULL_REQUEST_PACKAGE_NAME = git git:\/\/github.com\/plone\/$PULL_REQUEST_PACKAGE_NAME.git branch=$PULL_REQUEST_BRANCH/g" sources.cfg
+            bin/buildout -c jenkins.cfg
+            bin/alltests --xml --all
+            bin/alltests-at --xml
+
+    publishers:
+        - custom-junit-new
+
+        - robot:
+            output-path: parts/test
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
+        - custom-xvfb
 
 ###
 # MACROS
