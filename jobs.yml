@@ -684,6 +684,7 @@
             $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
             sed -ie "s/^$PULL_REQUEST_PACKAGE_NAME.*/$PULL_REQUEST_PACKAGE_NAME = git git:\/\/github.com\/plone\/$PULL_REQUEST_PACKAGE_NAME.git branch=$PULL_REQUEST_BRANCH/g" sources.cfg
             bin/buildout -c jenkins.cfg
+            bin/add-package-to-auto-checkout $PULL_REQUEST_PACKAGE_NAME
             bin/alltests --xml --all
             bin/alltests-at --xml
 
