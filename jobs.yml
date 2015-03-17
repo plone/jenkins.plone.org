@@ -488,20 +488,13 @@
 - job-template:
     # Plone 5.0 theme preview on browsers (using Sauce labs).
     name: 'plone-5.0-themetest-{browser}'
-    project-type: freestyle
     display-name: 'Plone 5.0 - Theme test - {browser}'
-    concurrent: true
     disabled: true
     logrotate:
         daysToKeep: 20
         numToKeep: 30
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
-
-    notifications:
-        - http:
-            url: http://localhost
-            format: JSON
 
     properties:
         - throttle:
@@ -512,10 +505,6 @@
                 - sauce-labs-concurrent-builds-limit
 
         - disk-usage
-
-    scm:
-        - buildout-coredev:
-            branch: '5.0'
 
     triggers:
         - timed: '@midnight'
@@ -566,6 +555,8 @@
         - port-allocator:
             names:
                 - ZSERVER_PORT
+
+    <<: *plone
 
 - job:
     name: 'workflow-5.0'
