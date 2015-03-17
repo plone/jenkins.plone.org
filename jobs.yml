@@ -634,11 +634,7 @@
             recipients: ${NOTIFICATION_EMAIL_ADDRESS}
             reply-to:
             content-type: default
-            regression: true
-            failure: false
-            improvement: true
-            still-failing: true
-            fixed: true
+            always: true
 
     <<: *plone-xvfb
 
