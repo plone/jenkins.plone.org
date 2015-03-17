@@ -7,6 +7,35 @@
 #
 # [1] http://jenkinsploneorg.readthedocs.org
 
+###
+# ANCHORS
+###
+
+- job-template: &plone
+    name: 'generic options shared across plone jobs'
+    project-type: freestyle
+    concurrent: true
+    disabled: false
+
+    logrotate:
+        daysToKeep: 60
+        numToKeep: 100
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    triggers:
+        - github
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
+
+
+###
+# PROJECTS
+###
+
 - project:
     name: workflow
     jobs:
@@ -144,15 +173,7 @@
     # TODO:
     # - email-ext quite a few things
     name: 'plone-4.3-python-{python-version}'
-    project-type: freestyle
     display-name: 'Plone 4.3 - Python {python-version}'
-    concurrent: true
-    disabled: false
-    logrotate:
-        daysToKeep: 60
-        numToKeep: 100
-        artifactDaysToKeep: 3
-        artifactNumToKeep: 10
 
     properties:
         - custom-throttle:
@@ -160,9 +181,6 @@
             enable: '' # false
 
         - disk-usage
-
-    triggers:
-        - github
 
     scm:
         - buildout-coredev:
@@ -196,22 +214,15 @@
         - custom-port-allocator
         - custom-xvfb
 
+    <<: *plone
+
 
 - job:
     # Plone 5.0 core tests job definition.
     # TODO:
     # - email-ext quite a few things
     name: plone-5.0-python-2.7
-    project-type: freestyle
     display-name: 'Plone 5.0 - Python 2.7'
-    concurrent: true
-    disabled: false
-
-    logrotate:
-        daysToKeep: 60
-        numToKeep: 100
-        artifactDaysToKeep: 3
-        artifactNumToKeep: 10
 
     properties:
         - custom-throttle:
@@ -230,19 +241,12 @@
             bin/buildout -c jenkins.cfg
             bin/alltests --xml
 
-    triggers:
-        - github
-
     publishers:
-
         - custom-junit-new
 
         - custom-email-ext
 
-    wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - custom-port-allocator
+    <<: *plone
 
 
 - job:
@@ -250,16 +254,7 @@
     # TODO:
     # - email-ext quite a few things
     name: plone-5.0-python-2.7-robot
-    project-type: freestyle
     display-name: 'Plone 5.0 - Python 2.7 - Robot Framework Tests'
-    concurrent: true
-    disabled: false
-
-    logrotate:
-        daysToKeep: 60
-        numToKeep: 100
-        artifactDaysToKeep: 3
-        artifactNumToKeep: 10
 
     properties:
         - custom-throttle:
@@ -279,11 +274,7 @@
             ROBOTSUITE_PREFIX=ONLYROBOT
             bin/alltests -t ONLYROBOT --all --xml
 
-    triggers:
-        - github
-
     publishers:
-
         - custom-email-ext
 
         - robot:
@@ -306,6 +297,8 @@
         - inject:
             properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
 
+    <<: *plone
+
 
 - job:
     # Plone 5.0 Archetypes tests job definition.
@@ -313,16 +306,7 @@
     # - copy artifact doNotFingerprintArtifacts
     # - email-ext quite a few things
     name: plone-5.0-python-2.7-at
-    project-type: freestyle
     display-name: 'Plone 5.0 - Python 2.7 - Archetypes'
-    concurrent: true
-    disabled: false
-
-    logrotate:
-        daysToKeep: 60
-        numToKeep: 100
-        artifactDaysToKeep: 3
-        artifactNumToKeep: 10
 
     properties:
         - custom-throttle:
@@ -334,9 +318,6 @@
     scm:
         - buildout-coredev:
             branch: '5.0'
-
-    triggers:
-        - github
 
     builders:
         - shell: |
@@ -359,24 +340,13 @@
 
         - custom-email-ext
 
-    wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - custom-port-allocator
+    <<: *plone
 
 
 - job-template:
     # PLIPs jobs definition
     name: 'plip-{plip}'
-    project-type: freestyle
     display-name: 'PLIP - {plip}'
-    concurrent: true
-    disabled: false
-    logrotate:
-        daysToKeep: 60
-        numToKeep: 100
-        artifactDaysToKeep: 3
-        artifactNumToKeep: 10
 
     properties:
         - custom-throttle:
@@ -419,16 +389,15 @@
         - custom-port-allocator
         - custom-xvfb
 
+    <<: *plone
+
 
 - job-template:
     # Plone theme preview.
     # TODO:
     # - email-ext quite a few things
     name: 'plone-{plone-version}-themetest'
-    project-type: freestyle
     display-name: 'Plone {plone-version} - Themetest'
-    concurrent: true
-    disabled: false
     logrotate:
         daysToKeep: 20
         numToKeep: 30
@@ -481,14 +450,13 @@
         - custom-port-allocator
         - custom-xvfb
 
+    <<: *plone
+
 
 - job:
     # Plone.org theme preview.
     name: 'ploneorg-themepreview'
-    project-type: freestyle
     display-name: 'Plone.org - theme preview'
-    concurrent: true
-    disabled: false
     logrotate:
         daysToKeep: 20
         numToKeep: 30
@@ -549,6 +517,8 @@
                 ROBOT_CONFIGURE_PACKAGES=plone.app.widgets,ploneorg.core
                 ROBOT_APPLY_PROFILES=ploneorg.core:default
                 ROBOT_INSTALL_PRODUCTS=Products.DateRecurringIndex
+
+    <<: *plone
 
 
 - job-template:
