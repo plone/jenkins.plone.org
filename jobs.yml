@@ -17,6 +17,17 @@
     concurrent: true
     disabled: false
 
+    properties:
+        - custom-throttle:
+            total: '7'
+            enable: 'true'
+
+        - disk-usage
+
+    scm:
+        - buildout-coredev:
+            branch: '5.0'
+
     logrotate:
         daysToKeep: 60
         numToKeep: 100
@@ -31,6 +42,17 @@
         - custom-timeout
         - custom-port-allocator
 
+
+- job-template: &plone-xvfb
+    name: 'generic plone plus xvfb on it'
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
+        - custom-xvfb
+
+    <<: *plone
 
 ###
 # PROJECTS
@@ -211,13 +233,7 @@
             other-files:
                 - robot_*.png
 
-    wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - custom-port-allocator
-        - custom-xvfb
-
-    <<: *plone
+    <<: *plone-xvfb
 
 
 - job:
@@ -226,17 +242,6 @@
     # - email-ext quite a few things
     name: plone-5.0-python-2.7
     display-name: 'Plone 5.0 - Python 2.7'
-
-    properties:
-        - custom-throttle:
-            total: '7'
-            enable: 'true'
-
-        - disk-usage
-
-    scm:
-        - buildout-coredev:
-            branch: '5.0'
 
     builders:
         - shell: |
@@ -258,17 +263,6 @@
     # - email-ext quite a few things
     name: plone-5.0-python-2.7-robot
     display-name: 'Plone 5.0 - Python 2.7 - Robot Framework Tests'
-
-    properties:
-        - custom-throttle:
-            total: '7'
-            enable: 'true'
-
-        - disk-usage
-
-    scm:
-        - buildout-coredev:
-            branch: '5.0'
 
     builders:
         - shell: |
@@ -318,10 +312,6 @@
 
         - disk-usage
 
-    scm:
-        - buildout-coredev:
-            branch: '5.0'
-
     builders:
         - shell: |
             $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
@@ -351,13 +341,6 @@
     name: 'plip-{plip}'
     display-name: 'PLIP - {plip}'
 
-    properties:
-        - custom-throttle:
-            total: '7'
-            enable: 'true'
-
-        - disk-usage
-
     scm:
         - buildout-coredev:
             branch: '{branch}'
@@ -386,13 +369,7 @@
             other-files:
                 - robot_*.png
 
-    wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - custom-port-allocator
-        - custom-xvfb
-
-    <<: *plone
+    <<: *plone-xvfb
 
 
 - job-template:
@@ -447,13 +424,7 @@
             still-failing: true
             fixed: true
 
-    wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - custom-port-allocator
-        - custom-xvfb
-
-    <<: *plone
+    <<: *plone-xvfb
 
 
 - job:
