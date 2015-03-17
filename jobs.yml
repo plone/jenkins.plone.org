@@ -11,7 +11,7 @@
 # ANCHORS
 ###
 
-- job-template: &plone
+- job-template: &plone-basic
     name: 'generic options shared across plone jobs'
     project-type: freestyle
     concurrent: true
@@ -34,14 +34,18 @@
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
 
-    triggers:
-        - github
-
     wrappers:
         - custom-workspace-cleanup
         - custom-timeout
         - custom-port-allocator
 
+- job-template: &plone
+    name: 'plone triggered by github'
+
+    triggers:
+        - github
+
+    <<: *plone-basic
 
 - job-template: &plone-xvfb
     name: 'generic plone plus xvfb on it'
@@ -52,7 +56,7 @@
         - custom-port-allocator
         - custom-xvfb
 
-    <<: *plone
+    <<: *plone-basic
 
 ###
 # PROJECTS
@@ -229,6 +233,9 @@
         - buildout-coredev:
             branch: '4.3'
 
+    triggers:
+        - github
+
     builders:
         - shell: |
             {pybinary} bootstrap.py -c jenkins.cfg
@@ -355,9 +362,6 @@
     scm:
         - buildout-coredev:
             branch: '{branch}'
-
-    triggers:
-        - timed: "@midnight"
 
     builders:
         - shell: |
@@ -612,9 +616,6 @@
             bin/buildout -c jenkins.cfg
             bin/alltests --xml --all
             bin/alltests-at --xml
-
-    triggers:
-        - timed: "@midnight"
 
     publishers:
         - custom-junit-new
