@@ -336,13 +336,6 @@
             bin/buildout -c jenkins.cfg
             bin/alltests-at --xml
 
-        - copyartifact:
-            project: plone-5.0-python-2.7
-            filter: 'parts/test/testreports/*.xml'
-            which-build: upstream-build
-            optional: true
-
-
     publishers:
         - custom-junit-new
 
