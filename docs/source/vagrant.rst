@@ -52,7 +52,7 @@ Finally,
 to run ``jenkins-job-builder`` on it,
 just run::
 
-  jenkins-job --conf jenkins.ini.in update jobs.yml
+  jenkins-jobs --conf jenkins.ini.in update jobs.yml
 
 
 *Enjoy!*
