@@ -31,3 +31,9 @@
       replace: dest=/var/lib/jenkins/config.xml regexp='<useSecurity>true</useSecurity>' replace='<useSecurity>false</useSecurity>'
       notify:
       - 'Restart Jenkins'
+      - 'restart nginx'
+
+- hosts: node
+  remote_user: vagrant
+  roles:
+    - plone.jenkins_node
