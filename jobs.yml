@@ -189,6 +189,24 @@
     jobs:
         - 'plone-5.0-themetest-{browser}'
 
+
+- project:
+    name: Dependencies
+    plone-version:
+        - 4.3
+        - 5.0
+    kind:
+        - cmf:
+            bin: bin/jenkins-package-dependencies-cmf
+        - formlib:
+            bin: bin/jenkins-package-dependencies-formlib
+        - pac:
+            bin: bin/jenkins-package-dependencies-pac
+    jobs:
+        - plone-{plone-version}-package-dependencies-{kind}
+
+
+
 ###
 # JOBS
 ###
@@ -630,6 +648,35 @@
             fixed: true
 
     <<: *plone-xvfb
+
+
+- job-template:
+    name: plone-{plone-version}-package-dependencies-{kind}
+    display-name: 'Plone {plone-version} - {kind} dependencies'
+
+    scm:
+        - buildout-coredev:
+            branch: "{plone-version}"
+
+    triggers:
+        - timed: "@daily"
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version 8.3 -c jenkins-package-dependencies.cfg
+            bin/buildout -c jenkins-package-dependencies.cfg
+            bin/jenkins-package-dependencies-{kind}
+            bin/jenkins-package-dependencies-{kind}-imports
+
+    publishers:
+        - archive:
+            artifacts: 'deps/*.???'
+            allow-empty: 'false'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
 
 
 ###
