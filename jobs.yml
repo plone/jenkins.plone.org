@@ -127,6 +127,9 @@
         - ptc:
             buildout: plips/plip-ptc.cfg
             branch: 5.0
+        - setuptools:
+            buildout: plips/plip-setuptools.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
