@@ -384,11 +384,6 @@
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
 
-    notifications:
-        - http:
-            url: http://localhost
-            format: JSON
-
     properties:
         - custom-throttle:
             total: '0'
@@ -436,11 +431,6 @@
         numToKeep: 30
         artifactDaysToKeep: 3
         artifactNumToKeep: 10
-
-    notifications:
-        - http:
-            url: http://localhost
-            format: JSON
 
     properties:
         - custom-throttle:
