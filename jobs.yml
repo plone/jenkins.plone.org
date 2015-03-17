@@ -662,11 +662,15 @@
         - text:
             name: PULL_REQUEST_PACKAGE_NAME
             description: 'Name of the Package, e.g. "Products.CMFPlone".'
-            default: Products.CMFPlone
+            default: plone.app.discussion
         - text:
             name: PULL_REQUEST_BRANCH
             description: 'Name of the git branch, e.g. "z3cform-language-controlpanel".'
-            default: z3cform-language-controlpanel
+            default: email-anon-bug
+        - text:
+            name: NOTIFICATION_EMAIL_ADDRESS
+            description: 'Jenkins will send an email notification to this email address when the job is done.'
+            default: tisto@plone.org
 
     properties:
         - custom-throttle:
@@ -702,6 +706,16 @@
             only-critical: true
             other-files:
                 - robot_*.png
+
+        - email-ext:
+            recipients: ${NOTIFICATION_EMAIL_ADDRESS}
+            reply-to:
+            content-type: default
+            regression: true
+            failure: false
+            improvement: true
+            still-failing: true
+            fixed: true
 
     wrappers:
         - custom-workspace-cleanup
