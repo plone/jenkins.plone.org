@@ -672,6 +672,30 @@
     <<: *plone
 
 
+- job:
+    name: plone-package-dependencies
+    display-name: 'Plone dependencies'
+
+    triggers:
+        - timed: "@daily"
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version 8.3 -c jenkins-package-dependencies.cfg
+            bin/buildout -c jenkins-package-dependencies.cfg
+            bin/jenkins-package-dependencies-text
+
+    publishers:
+        - archive:
+            artifacts: 'package-dependencies.txt'
+            allow-empty: 'false'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
 ###
 # MACROS
 ###
