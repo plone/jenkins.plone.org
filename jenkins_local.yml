@@ -1,7 +1,7 @@
 ---
 # Jenkins server to test jenkins.plone.org locally with vagrant
 
-- hosts: local
+- hosts: master
   remote_user: vagrant
   roles:
     - plone.jenkins_server
