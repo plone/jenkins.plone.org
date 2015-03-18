@@ -199,9 +199,6 @@
 
 - project:
     name: Dependencies
-    plone-version:
-        - 4.3
-        - 5.0
     kind:
         - cmf:
             bin: bin/jenkins-package-dependencies-cmf
@@ -210,7 +207,7 @@
         - pac:
             bin: bin/jenkins-package-dependencies-pac
     jobs:
-        - plone-{plone-version}-package-dependencies-{kind}
+        - plone-package-dependencies-{kind}
 
 
 
@@ -651,12 +648,8 @@
 
 
 - job-template:
-    name: plone-{plone-version}-package-dependencies-{kind}
-    display-name: 'Plone {plone-version} - {kind} dependencies'
-
-    scm:
-        - buildout-coredev:
-            branch: "{plone-version}"
+    name: plone-package-dependencies-{kind}
+    display-name: 'Plone {kind} dependencies'
 
     triggers:
         - timed: "@daily"
