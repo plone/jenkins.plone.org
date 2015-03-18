@@ -18,10 +18,7 @@
       - plone
       - collective
     node_names:
-      - Node1
-      - Node2
-      - Node3
-      - Node4
+      - node
   vars_files:
     - secrets.yml
 
