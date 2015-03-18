@@ -640,7 +640,7 @@
             body: |
                 The Jenkins pull request job you requested has been finished:
 
-                ${JOB_URL}
+                ${BUILD_URL}
 
                 Jenkins
 
