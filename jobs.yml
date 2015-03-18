@@ -639,7 +639,7 @@
             reply-to:
             content-type: default
             always: true
-            subject: "Jenkins Pull Request Job [${BUILD_STATUS}]: ${PULL_REQUEST_PACKAGE} ${PULL_REQUEST_BRANCH}"
+            subject: "Jenkins Pull Request Job [${BUILD_STATUS}]: ${PULL_REQUEST_PACKAGE_NAME} ${PULL_REQUEST_BRANCH}"
             body: |
                 The Jenkins pull request job you requested has been finished:
 
