@@ -38,6 +38,7 @@
         - custom-workspace-cleanup
         - custom-timeout
         - custom-port-allocator
+        - build-user-vars
 
 - job-template: &plone
     name: 'plone triggered by github'
@@ -55,6 +56,7 @@
         - custom-timeout
         - custom-port-allocator
         - custom-xvfb
+        - build-user-vars
 
     <<: *plone-basic
 
@@ -605,10 +607,6 @@
             name: PULL_REQUEST_BRANCH
             description: 'Name of the git branch, e.g. "z3cform-language-controlpanel".'
             default: email-anon-bug
-        - text:
-            name: NOTIFICATION_EMAIL_ADDRESS
-            description: 'Jenkins will send an email notification to this email address when the job is done.'
-            default: tisto@plone.org
 
     builders:
         - shell: |
@@ -635,16 +633,19 @@
                 - robot_*.png
 
         - email-ext:
-            recipients: ${NOTIFICATION_EMAIL_ADDRESS}
+            recipients: ${BUILD_USER_EMAIL}
             reply-to:
             content-type: default
             always: true
             subject: "Jenkins Pull Request Job [${BUILD_STATUS}]: ${PULL_REQUEST_PACKAGE_NAME} ${PULL_REQUEST_BRANCH}"
             body: |
-                The Jenkins pull request job you requested has been finished:
+                Dear ${BUILD_USER},
+
+                the Jenkins pull request job you requested has been finished:
 
                 ${BUILD_URL}
 
+                Yours truly,
                 Jenkins
 
     <<: *plone-xvfb
