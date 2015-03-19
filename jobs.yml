@@ -595,23 +595,39 @@
     display-name: 'Pull Request'
 
     parameters:
-#        - text:
-#            name: PULL_REQUEST_URL
-#            description: 'URL of the github pull request, e.g. "https://github.com/plone/Products.CMFPlone/pull/251".'
-#            default: https://github.com/plone/Products.CMFPlone/pull/251
         - text:
-            name: PULL_REQUEST_PACKAGE_NAME
-            description: 'Name of the Package, e.g. "Products.CMFPlone".'
-            default: plone.app.discussion
-        - text:
-            name: PULL_REQUEST_BRANCH
-            description: 'Name of the git branch, e.g. "z3cform-language-controlpanel".'
-            default: email-anon-bug
+            name: PULL_REQUEST_URL
+            description: 'URL of the github pull request, e.g. "https://github.com/plone/plone.app.discussion/pull/56".'
+            default: https://github.com/plone/plone.app.discussion/pull/56
 
     builders:
+        - python: |
+            import json
+            import os
+            import urllib2
+
+            pull_request_url = os.environ['PULL_REQUEST_URL']
+
+            github_api_call = pull_request_url.replace('github.com', 'api.github.com/repos')
+            github_api_call = github_api_call.replace('/pull/', '/pulls/')
+
+            response = urllib2.urlopen(github_api_call)
+            json_data = json.loads(response.read())
+
+            org, branch = json_data['head']['label'].split(':')
+            pkg = json_data['base']['repo']['name']
+
+            with open('vars.properties', 'w') as f:
+                f.write(u'PULL_REQUEST_PACKAGE_NAME = {0}\n'.format(pkg))
+                f.write(u'PULL_REQUEST_FORK = {0}\n'.format(org))
+                f.write(u'PULL_REQUEST_BRANCH = {0}\n'.format(branch))
+
+        - inject:
+            properties-file: vars.properties
+
         - shell: |
             $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
-            sed -ie "s/^$PULL_REQUEST_PACKAGE_NAME\s.*/$PULL_REQUEST_PACKAGE_NAME = git git:\/\/github.com\/plone\/$PULL_REQUEST_PACKAGE_NAME.git branch=$PULL_REQUEST_BRANCH/g" sources.cfg
+            sed -ie "s/^$PULL_REQUEST_PACKAGE_NAME\s.*/$PULL_REQUEST_PACKAGE_NAME = git git:\/\/github.com\/$PULL_REQUEST_FORK\/$PULL_REQUEST_PACKAGE_NAME.git branch=$PULL_REQUEST_BRANCH/g" sources.cfg
             bin/buildout -c jenkins.cfg install add-package-to-auto-checkout
             bin/add-package-to-auto-checkout $PULL_REQUEST_PACKAGE_NAME
             bin/buildout -c jenkins.cfg
@@ -644,6 +660,10 @@
                 the Jenkins pull request job you requested has been finished:
 
                 ${BUILD_URL}
+
+                Comment/merge the pull request:
+
+                ${PULL_REQUEST_URL}
 
                 Yours truly,
                 Jenkins
