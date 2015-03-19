@@ -200,6 +200,13 @@
         - plone-package-dependencies-{kind}
 
 
+- project:
+    name: per-package job
+    package:
+        - plone.app.discussion
+    jobs:
+        - 'package-{package}'
+
 
 ###
 # JOBS
@@ -708,6 +715,45 @@
         - archive:
             artifacts: 'package-dependencies.txt'
             allow-empty: 'false'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
+- job-template:
+    name: package-{package}
+    display-name: '{package}'
+
+    scm:
+        - git:
+            url: git://github.com/plone/{package}.git
+            wipe-workspace: false
+
+    builders:
+        - shell: |
+            wget https://raw.githubusercontent.com/plone/buildout.coredev/5.0/bootstrap.py -O bootstrap.py
+            cat > jenkins.cfg << EOF
+            [buildout]
+            develop = .
+            parts =
+                code-analysis
+
+            [code-analysis]
+            recipe = plone.recipe.codeanalysis
+            directory = .
+            pre-commit-hook = False
+            jenkins = True
+            EOF
+            $PYTHON27 bootstrap.py --setuptools-version 8.3 -c jenkins.cfg
+            bin/buildout -c jenkins.cfg
+            bin/code-analysis
+
+    publishers:
+        - violations:
+            pep8:
+                pattern: '**/parts/code-analysis/flake8.log'
 
     wrappers:
         - custom-workspace-cleanup
