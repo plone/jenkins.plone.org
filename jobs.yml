@@ -653,6 +653,7 @@
             reply-to:
             content-type: default
             always: true
+            failure: false
             subject: "Jenkins Pull Request Job [${BUILD_STATUS}]: ${PULL_REQUEST_PACKAGE_NAME} ${PULL_REQUEST_BRANCH}"
             body: |
                 Dear ${BUILD_USER},
