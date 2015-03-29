@@ -96,21 +96,6 @@
 - project:
     name: PLIPs
     plip:
-        - 10359-language-controlpanel:
-            buildout: plips/plip10359-language-controlpanel.cfg
-            branch: 5.0
-        - 10359-filter-controlpanel:
-            buildout: plips/plip10359-filter-controlpanel.cfg
-            branch: 5.0
-        - 10359-filter-controlpanel-autoform:
-            buildout: plips/plip10359-filter-controlpanel-autoform.cfg
-            branch: 5.0
-        - 10359-security-controlpanel:
-            buildout: plips/plip10359-security-controlpanel.cfg
-            branch: 5.0
-        - 13091-multilingual:
-            buildout: plips/plip13091-multilingual.cfg
-            branch: 5.0
         - 13260-step-by-step:
             buildout: plips/plip13260-step-by-step.cfg
             branch: 5.0
