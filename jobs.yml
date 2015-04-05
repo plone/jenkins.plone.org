@@ -652,7 +652,7 @@
             body: |
                 Dear ${BUILD_USER},
 
-                the Jenkins pull request job you requested has been finished:
+                the Jenkins pull request job you requested has finished:
 
                 ${BUILD_URL}
 
