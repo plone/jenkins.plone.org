@@ -374,6 +374,23 @@
             other-files:
                 - robot_*.png
 
+        - email-ext:
+            recipients: ${BUILD_USER_EMAIL}
+            reply-to:
+            content-type: default
+            always: true
+            failure: false
+            subject: "Jenkins PLIP {plip} [${BUILD_STATUS}]"
+            body: |
+                Dear ${BUILD_USER},
+
+                the Jenkins PLIP job for {plip} has finished:
+
+                ${BUILD_URL}
+
+                Yours truly,
+                Jenkins
+
     <<: *plone-xvfb
 
 
