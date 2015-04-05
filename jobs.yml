@@ -578,6 +578,10 @@
 - job:
     name: 'pull-request'
     display-name: 'Pull Request'
+    description: |
+        Manually test pull requests targeted at Plone 5 (i.e.those from packages on buildout.coredev sources.cfg).
+        To trigger a job, just login with your GitHub account and provide the pull request URL.
+        After the job is finished you will get an email about the result.
 
     parameters:
         - text:
