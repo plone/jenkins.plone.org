@@ -616,9 +616,14 @@
 
         - shell: |
             $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
-            sed -ie "s/^$PULL_REQUEST_PACKAGE_NAME\s.*/$PULL_REQUEST_PACKAGE_NAME = git git:\/\/github.com\/$PULL_REQUEST_FORK\/$PULL_REQUEST_PACKAGE_NAME.git branch=$PULL_REQUEST_BRANCH/g" sources.cfg
-            bin/buildout -c jenkins.cfg install add-package-to-auto-checkout
-            bin/add-package-to-auto-checkout $PULL_REQUEST_PACKAGE_NAME
+            if [ "$PULL_REQUEST_PACKAGE_NAME" != "buildout.coredev" ]; then
+                sed -ie "s/^$PULL_REQUEST_PACKAGE_NAME\s.*/$PULL_REQUEST_PACKAGE_NAME = git git:\/\/github.com\/$PULL_REQUEST_FORK\/$PULL_REQUEST_PACKAGE_NAME.git branch=$PULL_REQUEST_BRANCH/g" sources.cfg
+                bin/buildout -c jenkins.cfg install add-package-to-auto-checkout
+                bin/add-package-to-auto-checkout $PULL_REQUEST_PACKAGE_NAME
+            else
+                # TODO(gforcada): allow to test remote branches (i.e. branches not in github.com/plone/buildout.coredev)
+                git checkout $PULL_REQUEST_BRANCH
+            fi
             bin/buildout -c jenkins.cfg
             bin/alltests --xml --all
             bin/alltests-at --xml
