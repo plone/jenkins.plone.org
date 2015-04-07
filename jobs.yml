@@ -214,8 +214,6 @@
 
 - job-template:
     # Plone 4.3 job definition.
-    # TODO:
-    # - email-ext quite a few things
     name: 'plone-4.3-python-{python-version}'
     display-name: 'Plone 4.3 - Python {python-version}'
 
@@ -260,8 +258,6 @@
 
 - job:
     # Plone 5.0 core tests job definition.
-    # TODO:
-    # - email-ext quite a few things
     name: plone-5.0-python-2.7
     display-name: 'Plone 5.0 - Python 2.7'
 
@@ -281,8 +277,6 @@
 
 - job:
     # Plone 5.0 robot tests job definition.
-    # TODO:
-    # - email-ext quite a few things
     name: plone-5.0-python-2.7-robot
     display-name: 'Plone 5.0 - Python 2.7 - Robot Framework Tests'
 
@@ -321,9 +315,6 @@
 
 - job:
     # Plone 5.0 Archetypes tests job definition.
-    # TODO:
-    # - copy artifact doNotFingerprintArtifacts
-    # - email-ext quite a few things
     name: plone-5.0-python-2.7-at
     display-name: 'Plone 5.0 - Python 2.7 - Archetypes'
 
@@ -403,8 +394,6 @@
 
 - job-template:
     # Plone theme preview.
-    # TODO:
-    # - email-ext quite a few things
     name: 'plone-{plone-version}-themetest'
     display-name: 'Plone {plone-version} - Themetest'
     logrotate:
