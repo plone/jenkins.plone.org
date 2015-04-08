@@ -241,6 +241,17 @@
         - 'zodb-{pyversion}'
 
 
+- project:
+    name: CMF
+    pyversion:
+        - '27':
+            pybinary: '$PYTHON27'
+        - '34':
+            pybinary: 'python3.4'
+    jobs:
+        - 'cmf-{pyversion}'
+
+
 ###
 # JOBS
 ###
@@ -881,6 +892,45 @@
             extends = buildout.cfg
             parts +=
                 jenkins-test
+
+            [jenkins-test]
+            recipe = collective.xmltestreport
+            eggs = \${{test:eggs}}
+            defaults = ['--auto-color', '--auto-progress']
+            EOF
+            {pybinary} bootstrap.py -c jenkins.cfg
+            bin/buildout -c jenkins.cfg
+            bin/jenkins-test --xml
+
+    publishers:
+        - custom-junit
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
+- job-template:
+    name: cmf-{pyversion}
+    display-name: CMF py{pyversion}
+
+    scm:
+        - svn:
+            url: svn://svn.zope.org/repos/main/CMF/trunk
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            svn upgrade
+            cat > jenkins.cfg << EOF
+            [buildout]
+            extends = buildout-zope213.cfg
+            parts +=
+                jenkins-test
+            allow-picked-versions = true
 
             [jenkins-test]
             recipe = collective.xmltestreport
