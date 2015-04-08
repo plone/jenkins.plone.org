@@ -230,6 +230,17 @@
         - 'zope-{pyversion}'
 
 
+- project:
+    name: ZODB
+    pyversion:
+        - '27':
+            pybinary: '$PYTHON27'
+        - '34':
+            pybinary: 'python3.4'
+    jobs:
+        - 'zodb-{pyversion}'
+
+
 ###
 # JOBS
 ###
@@ -835,6 +846,47 @@
             recipe = collective.xmltestreport
             eggs =
                 \${{alltests:eggs}}
+            EOF
+            {pybinary} bootstrap.py -c jenkins.cfg
+            bin/buildout -c jenkins.cfg
+            bin/jenkins-test --xml
+
+    publishers:
+        - custom-junit
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
+- job-template:
+    # TODO: collective.xmltestreport does not spit out xml files for jenkins
+    name: zodb-{pyversion}
+    display-name: ZODB py{pyversion}
+
+    scm:
+        - git:
+            url: git://github.com/zopefoundation/ZODB.git
+            branches:
+                - 'master'
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+        - shell: |
+            cat > jenkins.cfg << EOF
+            [buildout]
+            extends = buildout.cfg
+            parts +=
+                jenkins-test
+
+            [jenkins-test]
+            recipe = collective.xmltestreport
+            eggs = \${{test:eggs}}
+            defaults = ['--auto-color', '--auto-progress']
             EOF
             {pybinary} bootstrap.py -c jenkins.cfg
             bin/buildout -c jenkins.cfg
