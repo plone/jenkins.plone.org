@@ -373,18 +373,18 @@
                 - robot_*.png
 
         - email-ext:
-            recipients: ${BUILD_USER_EMAIL}
+            recipients: "${{BUILD_USER_EMAIL}}"
             reply-to:
             content-type: default
             always: true
             failure: false
-            subject: "Jenkins PLIP {plip} [${BUILD_STATUS}]"
+            subject: "Jenkins PLIP {plip} [${{BUILD_STATUS}}]"
             body: |
-                Dear ${BUILD_USER},
+                Dear ${{BUILD_USER}},
 
                 the Jenkins PLIP job for {plip} has finished:
 
-                ${BUILD_URL}
+                ${{BUILD_URL}}
 
                 Yours truly,
                 Jenkins
@@ -656,22 +656,22 @@
                 - robot_*.png
 
         - email-ext:
-            recipients: ${BUILD_USER_EMAIL}
+            recipients: "${{BUILD_USER_EMAIL}}"
             reply-to:
             content-type: default
             always: true
             failure: false
-            subject: "Jenkins Pull Request Job [${BUILD_STATUS}]: ${PULL_REQUEST_PACKAGE_NAME} ${PULL_REQUEST_BRANCH}"
+            subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: ${{PULL_REQUEST_PACKAGE_NAME}} ${{PULL_REQUEST_BRANCH}}"
             body: |
-                Dear ${BUILD_USER},
+                Dear ${{BUILD_USER}},
 
                 the Jenkins pull request job you requested has finished:
 
-                ${BUILD_URL}
+                ${{BUILD_URL}}
 
                 Comment/merge the pull request:
 
-                ${PULL_REQUEST_URL}
+                ${{PULL_REQUEST_URL}}
 
                 Yours truly,
                 Jenkins
