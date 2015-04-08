@@ -876,7 +876,6 @@
 
     builders:
         - shell: |
-        - shell: |
             cat > jenkins.cfg << EOF
             [buildout]
             extends = buildout.cfg
