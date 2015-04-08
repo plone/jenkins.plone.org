@@ -208,6 +208,17 @@
         - 'package-{package}'
 
 
+- project:
+    name: ZTK (Zope Toolkit)
+    pyversion:
+        - '27':
+            pybinary: '$PYTHON27'
+        - '34':
+            pybinary: 'python3.4'
+    jobs:
+        - 'ztk-{pyversion}'
+
+
 ###
 # JOBS
 ###
@@ -758,6 +769,29 @@
         - violations:
             pep8:
                 pattern: '**/parts/code-analysis/flake8.log'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
+- job-template:
+    name: ztk-{pyversion}
+    display-name: Zope Toolkit
+
+    scm:
+        - git:
+            url: git://github.com/zopefoundation/zopetoolkit.git
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            {pybinary} bootstrap.py
+            bin/buildout
+            bin/test-ztk
 
     wrappers:
         - custom-workspace-cleanup
