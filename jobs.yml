@@ -219,6 +219,17 @@
         - 'ztk-{pyversion}'
 
 
+- project:
+    name: Zope2
+    pyversion:
+        - '27':
+            pybinary: '$PYTHON27'
+        - '34':
+            pybinary: 'python3.4'
+    jobs:
+        - 'zope-{pyversion}'
+
+
 ###
 # JOBS
 ###
@@ -792,6 +803,45 @@
             {pybinary} bootstrap.py
             bin/buildout
             bin/test-ztk
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
+- job-template:
+    name: zope-{pyversion}
+    display-name: Zope2 py{pyversion}
+
+    scm:
+        - git:
+            url: git://github.com/zopefoundation/Zope.git
+            branches:
+                - 'master'
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            cat > jenkins.cfg << EOF
+            [buildout]
+            extends = buildout.cfg
+            parts +=
+                jenkins-test
+
+            [jenkins-test]
+            recipe = collective.xmltestreport
+            eggs =
+                \${{alltests:eggs}}
+            EOF
+            {pybinary} bootstrap.py -c jenkins.cfg
+            bin/buildout -c jenkins.cfg
+            bin/jenkins-test --xml
+
+    publishers:
+        - custom-junit
 
     wrappers:
         - custom-workspace-cleanup
