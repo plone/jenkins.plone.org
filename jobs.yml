@@ -269,7 +269,6 @@
 
     publishers:
         - custom-junit-new
-
         - custom-email-ext
 
     <<: *plone
@@ -333,11 +332,10 @@
 
     publishers:
         - custom-junit-new
+        - custom-email-ext
 
         - custom-archive:
             glob: 'parts/test/testreports/*.xml'
-
-        - custom-email-ext
 
     <<: *plone
 
