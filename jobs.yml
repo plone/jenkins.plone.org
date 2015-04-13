@@ -120,6 +120,9 @@
         - setuptools:
             buildout: plips/plip-setuptools.cfg
             branch: 5.0
+        - noncmfdefault:
+            buildout: plips/plip-nocmfdefault.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
