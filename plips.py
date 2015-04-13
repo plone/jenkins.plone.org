@@ -17,30 +17,23 @@ BRANCHES = (
 )
 
 
-def get_plips():
-    """Find all PLIPs cfg files on buildout.coredev branches."""
+def get_plips(branch):
+    """Find all PLIPs cfg files on buildout.coredev."""
     regex = re.compile(r'plip(\d+)-*(.+).cfg')
     plips = []
 
-    for branch in BRANCHES:
-        p = subprocess.Popen(
-            ['git', 'checkout', branch, ],
-            cwd=GIT_FOLDER
-        )
-        p.wait()
-
-        for plip in sorted(os.listdir('{0}/plips'.format(GIT_FOLDER))):
-            data = regex.match(plip)
-            if data:
-                plip_number = data.groups()[0]
-                plip_name = data.groups()[1]
-                plips.append(
-                    {'branch': branch,
-                     'number': plip_number,
-                     'name': plip_name,
-                     'cfg': 'plips/{0}'.format(plip),
-                     }
-                )
+    for plip in sorted(os.listdir('{0}/plips'.format(GIT_FOLDER))):
+        data = regex.match(plip)
+        if data:
+            plip_number = data.groups()[0]
+            plip_name = data.groups()[1]
+            plips.append(
+                {'branch': branch,
+                 'number': plip_number,
+                 'name': plip_name,
+                 'cfg': 'plips/{0}'.format(plip),
+                 }
+            )
     return plips
 
 
@@ -89,11 +82,22 @@ def write_job_definition(plip, file_handler):
 
 
 def main():
-    # remove and download again buildout.coredev
-    subprocess.call(['rm', '-rf', GIT_FOLDER ])
-    subprocess.call(['git', 'clone', '-q', GIT_URL, GIT_FOLDER])
+    plips = []
 
-    plips = get_plips()
+    for branch in BRANCHES:
+        # get a shallow copy of buildout.coredev
+        subprocess.call(['rm', '-rf', GIT_FOLDER])
+        subprocess.call(
+            ['git',
+             'clone',
+             '--depth', '1',
+             '--branch', branch,
+             '-q',
+             GIT_URL,
+             GIT_FOLDER]
+        )
+        plips = get_plips(branch)
+
     update_jobs_yml(plips)
 
 
