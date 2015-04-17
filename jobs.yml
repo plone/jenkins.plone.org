@@ -123,6 +123,9 @@
         - noncmfdefault:
             buildout: plips/plip-nocmfdefault.cfg
             branch: 5.0
+        - pat-modal:
+            buildout: plips/plip-pat-modal.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
