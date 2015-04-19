@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<slave>
+  <name>node</name>
+  <description></description>
+  <remoteFS>/home/jenkins</remoteFS>
+  <numExecutors>3</numExecutors>
+  <mode>NORMAL</mode>
+  <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
+  <launcher class="hudson.plugins.sshslaves.SSHLauncher" plugin="ssh-slaves@1.9">
+    <host>192.168.50.10</host>
+    <port>22</port>
+    <credentialsId>7717765d-c1a6-4c32-ae92-8220e90aa1b2</credentialsId>
+    <maxNumRetries>0</maxNumRetries>
+    <retryWaitTime>0</retryWaitTime>
+  </launcher>
+  <label>rackspace Ubuntu14.04 Python27</label>
+  <nodeProperties>
+    <hudson.slaves.EnvironmentVariablesNodeProperty>
+      <envVars serialization="custom">
+        <unserializable-parents/>
+        <tree-map>
+          <default>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
+          </default>
+          <int>3</int>
+          <string>PYTHON</string>
+          <string>/usr/bin/python2.7</string>
+          <string>PYTHON26</string>
+          <string>/usr/bin/python2.6</string>
+          <string>PYTHON27</string>
+          <string>/usr/bin/python2.7</string>
+        </tree-map>
+      </envVars>
+    </hudson.slaves.EnvironmentVariablesNodeProperty>
+  </nodeProperties>
+  <userId>tisto</userId>
+</slave>

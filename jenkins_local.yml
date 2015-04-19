@@ -33,7 +33,39 @@
       - 'Restart Jenkins'
       - 'restart nginx'
 
+    - name: 'Override node configuration'
+      sudo: yes
+      copy:
+        src=etc/node.xml
+        dest=/var/lib/jenkins/nodes/node/config.xml
+        owner=jenkins
+        group=jenkins
+
+    - name: 'Add dummy private key'
+      sudo: yes
+      copy:
+        src=etc/vagrant.priv
+        dest=/var/lib/jenkins/private_key
+        owner=jenkins
+        group=jenkins
+
+    - name: 'Add credentials.xml'
+      sudo: yes
+      copy:
+        src=etc/jenkins_credentials.xml
+        dest=/var/lib/jenkins/credentials.xml
+        owner=jenkins
+        group=jenkins
+
 - hosts: node
   remote_user: vagrant
   roles:
     - plone.jenkins_node
+
+  tasks:
+    # copy testing public key
+    - name: 'Add dummy private key'
+      sudo: yes
+      authorized_key:
+        user=jenkins
+        key="{{ lookup('file', 'etc/vagrant.pub') }}"
