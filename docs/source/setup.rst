@@ -51,7 +51,7 @@ Set Up Jenkins Nodes
 
 ::
 
-  $ ansible-playbook -i inventory.txt jenkins_nodes.yml
+  $ ansible-playbook -i inventory.txt jenkins_node.yml
 
 
 Set Up Jenkins Jobs
