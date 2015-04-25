@@ -10,7 +10,7 @@ or if others are *already* testing on it while you also want to test...
 So to make it short and easy:
 having a local environment
 (i.e. virtual image)
-to test changes before sending a pull request is extremly helpful.
+to test changes before sending a pull request is extremely helpful.
 
 For this `vagrant <http://vagrantup.com/>`_ is a perfect fit.
 
