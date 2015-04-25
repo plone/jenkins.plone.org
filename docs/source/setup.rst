@@ -110,10 +110,6 @@ Manage Jenkins -> Configure System:
     * User Name: jenkins@plone.org
     * Password: ...
 
-* Theme:
-
-  * URL of theme CSS: https://rawgit.com/plone/jenkins.plone.org/master/jenkins.plone.org.css
-
 Manage Jenkins -> Manage Credentials -> Add Credentials: SSH Username with private key:
 
 * Scope: System
@@ -123,18 +119,3 @@ Manage Jenkins -> Manage Credentials -> Add Credentials: SSH Username with priva
 
 => Upload jenkins.plone.org private ssh key manually to /var/lib/jenkins
 => chown jenkins:jenkins jenkins.plone.org
-
-Manage Jenkins -> Manage Nodes -> New Node (Dumb node):
-
-* # of executors: 1 (later 3)
-* Remote root directory: /home/jenkins
-* Labels: rackspace Ubuntu14.04 Python27
-* Host: node1.jenkins.plone.org
-* Credentials: jenkins (jenkins.plone.org private ssh key)
-* Node Properties -> Environment variables:
-
-::
-
-  PYTHON:/usr/bin/python2.7
-  PYTHON27:/usr/bin/python2.7
-  PYTHON26:/usr/bin/python2.6
