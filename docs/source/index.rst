@@ -10,7 +10,6 @@ Contents:
 
    setup
    vagrant
-   future-pipeline
 
 .. include:: ../../README.rst
 
