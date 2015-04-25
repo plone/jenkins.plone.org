@@ -6,7 +6,7 @@ This document describes how to set up the entire Jenkins infrastructure for jenk
 Those are the main steps:
 
   * Set up Jenkins server (jenkins.plone.org, with Ansible)
-  * Set up Jenkins node (node[1-x].jenkins.plone.org, with Ansible)
+  * Set up Jenkins nodes (node[1-x].jenkins.plone.org, with Ansible)
   * Set up the Jenkins jobs on the Jenkins server (with Jenkins Job Builder)
 
 
