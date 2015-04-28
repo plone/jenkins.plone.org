@@ -70,9 +70,12 @@
         - 'workflow-5.0'
 
 - project:
-    name: pull-request
+    name: Pull requests
+    plone-version:
+        - '5.0'
+        - '4.3'
     jobs:
-        - 'pull-request'
+        - 'pull-request-{plone-version}'
 
 - project:
     name: Plone 5.0
@@ -638,9 +641,8 @@
                 - '*/master'
 
 
-- job:
-    name: 'pull-request'
-    display-name: 'Pull Request'
+- job-template:
+    name: 'pull-request-{plone-version}'
     description: |
         Manually test pull requests targeted at Plone 5 (i.e.those from packages on buildout.coredev sources.cfg).
         To trigger a job, just login with your GitHub account and provide the pull request URL.
@@ -651,6 +653,10 @@
             name: PULL_REQUEST_URL
             description: 'URL of the github pull request, e.g. "https://github.com/plone/plone.app.discussion/pull/56".'
             default: https://github.com/plone/plone.app.discussion/pull/56
+
+    scm:
+        - buildout-coredev:
+            branch: '{plone-version}'
 
     builders:
         - python: |
@@ -670,9 +676,9 @@
             pkg = json_data['base']['repo']['name']
 
             with open('vars.properties', 'w') as f:
-                f.write(u'PULL_REQUEST_PACKAGE_NAME = {0}\n'.format(pkg))
-                f.write(u'PULL_REQUEST_FORK = {0}\n'.format(org))
-                f.write(u'PULL_REQUEST_BRANCH = {0}\n'.format(branch))
+                f.write(u'PULL_REQUEST_PACKAGE_NAME = {{0}}\n'.format(pkg))
+                f.write(u'PULL_REQUEST_FORK = {{0}}\n'.format(org))
+                f.write(u'PULL_REQUEST_BRANCH = {{0}}\n'.format(branch))
 
         - inject:
             properties-file: vars.properties
