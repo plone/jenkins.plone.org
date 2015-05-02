@@ -7,3 +7,6 @@
 [submodule "src/jenkins-job-builder"]
 	path = src/jenkins-job-builder
 	url = git@github.com:gforcada/jenkins-job-builder.git
+[submodule "roles/plone.jenkins_node"]
+	path = roles/plone.jenkins_node
+	url = git@github.com:plone/plone.jenkins_node.git

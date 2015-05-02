@@ -21,18 +21,18 @@ Set up
 * install vagrant and its dependencies and everything said on :doc:`setup`
 * from within a clone of jenkins.plone.org repository checkout run::
 
-    vagrant up
+    vagrant up master
+    vagrant up node
 
-Yes,
-that's it,
-``vagrant`` will automatically run the ansible playbook.
+``vagrant`` will automatically run the ansible playbook for them.
 
 If,
 for whichever reason,
 the playbook fails,
 just run::
 
-  vagrant provision
+  vagrant provision master
+  vagrant provision node
 
 And that will re-run the ansible playbook once again,
 and hopefully fixing the previous problem.
@@ -44,9 +44,8 @@ You can enjoy your newly jenkins.plone.org master server locally at:
 .. note::
    There seems to be some problems with nginx.
 
-   POST requests get the port (8080) removed on the response,
-   but fear not,
-   adding the port back on the wrong URL makes it work again.
+   POST requests get the port (8080) removed on the response.
+   Adding the port back on the wrong URL makes it work again.
 
 Finally,
 to run ``jenkins-job-builder`` on it,
