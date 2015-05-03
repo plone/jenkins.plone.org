@@ -88,6 +88,7 @@
         - 'plone-5.0-python-2.7'
         - 'plone-5.0-python-2.7-robot'
         - 'plone-5.0-python-2.7-at'
+        - 'plone-5.0-js'
 
 
 - project:
@@ -405,6 +406,40 @@
 
         - custom-archive:
             glob: 'parts/test/testreports/*.xml'
+
+    <<: *plone
+
+
+
+- job:
+    # Plone 5.0 JavaScript mockup unittests.
+    name: plone-5.0-js
+    display-name: 'Plone 5.0 - JavaScript'
+
+    scm:
+        - git:
+            url: git://github.com/plone/mockup.git
+            branches:
+                - 'master'
+            wipe-workspace: false
+            tag-builds: true
+            shallow-clone: true
+
+    builders:
+        - shell: |
+            echo $PATH
+            node --version
+            npm --version
+            make bootstrap
+            make test-jenkins
+
+    publishers:
+        - junit:
+            results: mockup/test-results.xml
+            keep-long-stdio: false
+
+    wrappers:
+        - custom-workspace-cleanup
 
     <<: *plone
 
