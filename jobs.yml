@@ -129,6 +129,9 @@
         - pat-modal:
             buildout: plips/plip-pat-modal.cfg
             branch: 5.0
+        - imaging-controlpanel:
+            buildout: plips/plip-imaging-configlet.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
