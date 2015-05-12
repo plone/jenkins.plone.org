@@ -65,6 +65,11 @@
 ###
 
 - project:
+    name: Release stuff
+    jobs:
+        - 'pending-releases'
+
+- project:
     name: workflow
     jobs:
         - 'workflow-5.0'
@@ -964,6 +969,50 @@
 
     publishers:
         - custom-junit
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
+- job:
+    name: pending-releases
+    display-name: Pending releases
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c release.cfg
+            bin/buildout -c release.cfg install release
+            bin/manage jenkins > changelog.txt
+
+    publishers:
+        - archive:
+            artifacts: 'changelog.txt'
+            allow-empty: 'false'
+
+        - email-ext:
+            recipients: 'eric@esteele.net'
+            reply-to:
+            content-type: default
+            always: true
+            failure: false
+            subject: "Plone changelog"
+            attachments: 'changelog.txt'
+            body: |
+                Dear Eric,
+
+                see attached the changelog reported by ``bin/manage jenkins``.
+
+                You can also see it online at:
+
+                ${{BUILD_URL}}artifact/changelog.txt
+
+                Yours truly,
+                Jenkins
 
     wrappers:
         - custom-workspace-cleanup
