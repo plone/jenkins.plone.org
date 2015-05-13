@@ -131,11 +131,8 @@
         - noncmfdefault:
             buildout: plips/plip-nocmfdefault.cfg
             branch: 5.0
-        - pat-modal:
-            buildout: plips/plip-pat-modal.cfg
-            branch: 5.0
-        - imaging-controlpanel:
-            buildout: plips/plip-imaging-configlet.cfg
+        - plip-portlet-manager:
+            buildout: plips/plip-portlet-manager.cfg
             branch: 5.0
 
     jobs:
