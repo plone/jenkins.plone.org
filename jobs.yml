@@ -268,6 +268,11 @@
         - 'cmf-{pyversion}'
 
 
+- project:
+    name: QA scripts
+    jobs:
+        - docs-package-styleguide
+
 ###
 # JOBS
 ###
@@ -1010,6 +1015,56 @@
 
                 Yours truly,
                 Jenkins
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
+- job:
+    name: docs-package-styleguide
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            cat > docs.cfg << EOF
+            [buildout]
+            extends = core.cfg
+            auto-checkout = *
+            EOF
+            sed -i 's/^Zope2/#Zope2/' sources.cfg
+            sed -i 's/^ZODB/#ZODB/' sources.cfg
+            sed -i 's/^five./#five./' sources.cfg
+            sed -i 's/^z3c./#z3c./' sources.cfg
+            sed -i 's/^Products.CMF/#Products.CMF/' sources.cfg
+            sed -i 's/^Products.MailHost/#Products.MailHost/' sources.cfg
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c docs.cfg
+            bin/buildout -c docs.cfg install test
+
+        - python: |
+            import os
+
+            README_MESSAGE = '{0} missing top level README file\n'
+            DOCS_MESSAGE = '{0} missing top level docs folder\n'
+
+            with open('report.txt', 'w') as report_file:
+                for pkg in os.listdir('src'):
+                    path = 'src/{0}'.format(pkg)
+
+                    if not os.path.isfile('{0}/README.rst'.format(path)) and \
+                            not os.path.isfile('{0}/README.txt'.format(path)):
+                        report_file.write(README_MESSAGE.format(pkg))
+
+                    if not os.path.isdir('{0}/docs'.format(path)):
+                        report_file.write(DOCS_MESSAGE.format(pkg))
+
+    publishers:
+        - archive:
+            artifacts: 'report.txt'
+            allow-empty: 'true'
 
     wrappers:
         - custom-workspace-cleanup
