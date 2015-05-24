@@ -275,6 +275,7 @@
     name: QA scripts
     jobs:
         - docs-package-styleguide
+        - docs-age
 
 ###
 # JOBS
@@ -1073,6 +1074,39 @@
         - custom-workspace-cleanup
 
     <<: *plone
+
+
+- job:
+    name: docs-age
+    display-name: 'Documentation (age of files)'
+
+    scm:
+        - git:
+            url: git://github.com/plone/documentation.git
+            branches:
+                - '5.0'
+            wipe-workspace: false
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            echo "" > report.tmp
+            git ls-tree -r --name-only HEAD | while read filename; do
+                echo "$(git log -1 --format="%ai" -- $filename) $filename" >> report.tmp
+            done
+            sort -M -k 2 report.tmp > report.txt
+
+    publishers:
+        - archive:
+            artifacts: 'report.txt'
+            allow-empty: 'true'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone-basic
 
 
 ###
