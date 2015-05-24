@@ -134,6 +134,9 @@
         - plip-portlet-manager:
             buildout: plips/plip-portlet-manager.cfg
             branch: 5.0
+        - mosaic:
+            buildout: plips/plip-mosaic.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
