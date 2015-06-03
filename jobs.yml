@@ -702,7 +702,6 @@
         - text:
             name: PULL_REQUEST_URL
             description: 'URL of the github pull request, e.g. "https://github.com/plone/plone.app.discussion/pull/56".'
-            default: https://github.com/plone/plone.app.discussion/pull/56
 
     scm:
         - buildout-coredev:
