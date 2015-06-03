@@ -692,6 +692,7 @@
 
 - job-template:
     name: 'pull-request-{plone-version}'
+    display-name: 'Pull Request {plone-version}'
     description: |
         Manually test pull requests targeted at Plone {plone-version} (i.e.those from packages on buildout.coredev sources.cfg).
         To trigger a job, just login with your GitHub account and provide the pull request URL.
