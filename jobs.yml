@@ -693,7 +693,7 @@
 - job-template:
     name: 'pull-request-{plone-version}'
     description: |
-        Manually test pull requests targeted at Plone 5 (i.e.those from packages on buildout.coredev sources.cfg).
+            Manually test pull requests targeted at Plone {plone-version} (i.e.those from packages on buildout.coredev sources.cfg).
         To trigger a job, just login with your GitHub account and provide the pull request URL.
         After the job is finished you will get an email about the result.
 
@@ -748,7 +748,9 @@
             fi
             bin/buildout -c jenkins.cfg
             bin/alltests --xml --all
-            bin/alltests-at --xml
+            if [ "{plone-version}" = "5.0" ]; then
+                bin/alltests-at --xml
+            fi
 
     publishers:
         - custom-junit-new
