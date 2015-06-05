@@ -1029,7 +1029,7 @@
     builders:
         - shell: |
             $PYTHON27 bootstrap.py --setuptools-version=8.3 -c release.cfg
-            bin/buildout -c release.cfg install release
+            bin/buildout -c release.cfg install releaser
             bin/manage jenkins > changelog.txt
 
     publishers:
