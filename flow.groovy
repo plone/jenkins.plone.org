@@ -19,10 +19,10 @@ parallel(
     node {
       prepareBuildout()
       try {
-        sh "bin/jenkins-alltests"
-        step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
+        sh "bin/alltests"
+        step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
       } catch (e) {
-        mail subject: "jenkins-alltests failed with #{e.message}", recipients: 'tisto@plone.org'
+        mail subject: "alltests failed with #{e.message}", recipients: 'tisto@plone.org'
         throw e
       }
     }
@@ -31,10 +31,10 @@ parallel(
     node {
       prepareBuildout()
       try {
-        sh "bin/jenkins-alltests-at"
-        step([$class: 'JUnitResultArchiver', testResults: 'parts/jenkins-test/testreports/*.xml'])
+        sh "bin/alltests-at"
+        step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
       } catch (e) {
-        mail subject: "jenkins-alltests-at failed with #{e.message}", recipients: 'tisto@plone.org'
+        mail subject: "alltests-at failed with #{e.message}", recipients: 'tisto@plone.org'
         throw e
       }
     }
