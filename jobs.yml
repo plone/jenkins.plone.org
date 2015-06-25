@@ -345,6 +345,15 @@
 
 
 - job:
+    # Plone 5.0 core tests job definition.
+    name: plone-5.0-build-docker
+    display-name: 'Plone 5.0 - Docker Image'
+
+    builders:
+        - shell: |
+            curl -H "Content-Type: application/json" --data '{"docker_tag_name": "5.0"}' -X POST https://registry.hub.docker.com/u/ramonnb/docker-base-plone/trigger/bc86c734-4a33-497d-91d0-8eb1f689cf5b/
+
+- job:
     # Plone 5.0 robot tests job definition.
     name: plone-5.0-python-2.7-robot
     display-name: 'Plone 5.0 - Python 2.7 - Robot Framework Tests'
@@ -369,6 +378,10 @@
             only-critical: true
             other-files:
                 - robot_*.png
+
+        - trigger:
+            project: plone-5.0-build-docker
+            threshold: SUCCESS
 
     wrappers:
         - custom-workspace-cleanup
