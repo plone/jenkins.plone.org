@@ -138,6 +138,9 @@
         - mosaic:
             buildout: plips/plip-mosaic.cfg
             branch: 5.0
+        - extensible-fc:
+            buildout: plips/plip-extensible-fc.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
