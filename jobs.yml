@@ -105,6 +105,9 @@
 - project:
     name: PLIPs
     plip:
+        - 680-restapi:
+            buildout: plips/plip-680-restapi.cfg
+            branch: 5.0
         - 13260-step-by-step:
             buildout: plips/plip13260-step-by-step.cfg
             branch: 5.0
@@ -143,6 +146,9 @@
             branch: 5.0
         - plip-toolbar:
             buildout: plips/plip-toolbar.cfg
+            branch: 5.0
+        - plip-iterate:
+            buildout: plips/plip-iterate.cfg
             branch: 5.0
     jobs:
         - 'plip-{plip}'
