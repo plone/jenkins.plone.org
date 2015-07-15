@@ -141,7 +141,9 @@
         - extensible-fc:
             buildout: plips/plip-extensible-fc.cfg
             branch: 5.0
-
+        - plip-toolbar:
+            buildout: plips/plip-toolbar.cfg
+            branch: 5.0
     jobs:
         - 'plip-{plip}'
 
