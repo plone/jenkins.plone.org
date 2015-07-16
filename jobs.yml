@@ -150,6 +150,9 @@
         - plip-iterate:
             buildout: plips/plip-iterate.cfg
             branch: 5.0
+        - plip-querystring:
+            buildout: plips/plip-querystring.cfg
+            branch: 5.0
     jobs:
         - 'plip-{plip}'
 
