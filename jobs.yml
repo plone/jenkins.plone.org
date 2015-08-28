@@ -150,6 +150,9 @@
         - plip-iterate:
             buildout: plips/plip-iterate.cfg
             branch: 5.0
+        - email-registration:
+            buildout: plips/email-registration.cfg
+            branch: 5.0
     jobs:
         - 'plip-{plip}'
 
