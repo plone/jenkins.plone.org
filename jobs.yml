@@ -347,7 +347,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py -c jenkins.cfg
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
             bin/buildout -c jenkins.cfg
             bin/alltests --xml
 
@@ -374,7 +374,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py -c jenkins.cfg
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
             bin/buildout -c jenkins.cfg
             ROBOTSUITE_PREFIX=ONLYROBOT
             bin/alltests -t ONLYROBOT --all --xml
@@ -423,7 +423,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py -c jenkins.cfg
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
             bin/buildout -c jenkins.cfg
             bin/alltests-at --xml
 
@@ -482,7 +482,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py -c {buildout}
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c {buildout}
             bin/buildout -c {buildout}
             bin/alltests --xml --all
             bin/alltests-at --xml
@@ -551,7 +551,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py -c buildout.cfg
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c buildout.cfg
             bin/buildout -c buildout.cfg
             bin/sphinx-build source build
 
@@ -760,7 +760,11 @@
             properties-file: vars.properties
 
         - shell: |
-            $PYTHON27 bootstrap.py -c jenkins.cfg
+            if [ "{plone-version}" = "4.3" ]; then
+                $PYTHON27 bootstrap.py -c jenkins.cfg
+            else
+                $PYTHON27 bootstrap.py --setuptools-version=8.3 -c jenkins.cfg
+            fi
             if [ "$PULL_REQUEST_PACKAGE_NAME" != "buildout.coredev" ]; then
                 sed -ie "s/^$PULL_REQUEST_PACKAGE_NAME\s.*/$PULL_REQUEST_PACKAGE_NAME = git git:\/\/github.com\/$PULL_REQUEST_FORK\/$PULL_REQUEST_PACKAGE_NAME.git branch=$PULL_REQUEST_BRANCH/g" sources.cfg
                 bin/buildout -c jenkins.cfg install add-package-to-auto-checkout
@@ -822,7 +826,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py -c jenkins-package-dependencies.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 8.3 -c jenkins-package-dependencies.cfg
             bin/buildout -c jenkins-package-dependencies.cfg
             bin/jenkins-package-dependencies-{kind}
             bin/jenkins-package-dependencies-{kind}-imports
@@ -847,7 +851,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py -c jenkins-package-dependencies.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 8.3 -c jenkins-package-dependencies.cfg
             bin/buildout -c jenkins-package-dependencies.cfg
             bin/jenkins-package-dependencies-text
 
@@ -886,7 +890,7 @@
             pre-commit-hook = False
             jenkins = True
             EOF
-            $PYTHON27 bootstrap.py -c jenkins.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 8.3 -c jenkins.cfg
             bin/buildout -c jenkins.cfg
             bin/code-analysis
 
@@ -1051,7 +1055,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py -c release.cfg
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c release.cfg
             bin/buildout -c release.cfg install releaser
             bin/manage jenkins > changelog.txt
 
@@ -1105,7 +1109,7 @@
             sed -i 's/^z3c./#z3c./' sources.cfg
             sed -i 's/^Products.CMF/#Products.CMF/' sources.cfg
             sed -i 's/^Products.MailHost/#Products.MailHost/' sources.cfg
-            $PYTHON27 bootstrap.py -c docs.cfg
+            $PYTHON27 bootstrap.py --setuptools-version=8.3 -c docs.cfg
             bin/buildout -c docs.cfg install test
 
         - python: |
