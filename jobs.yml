@@ -153,6 +153,10 @@
         - email-registration:
             buildout: plips/email-registration.cfg
             branch: 5.0
+        - portal-properties-cleanup:
+            buildout: plips/portal-properties-cleanup.cfg
+            branch: 5.0
+
     jobs:
         - 'plip-{plip}'
 
