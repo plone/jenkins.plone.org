@@ -242,6 +242,25 @@
     name: per-package job
     package:
         - plone.app.discussion
+        - plone.autoform
+        - plone.batching
+        - plone.behavior
+        - plone.browserlayer
+        - plone.cachepurging
+        - plone.caching
+        - plone.contentrules
+        - plone.dexterity
+        - plone.directives.form
+        - plone.directives.tiles
+        - plone.event
+        - plone.folder
+        - plone.formwidget.autocomplete
+        - plone.formwidget.contenttree
+        - plone.formwidget.datetime
+        - plone.formwidget.namedfile
+        - plone.formwidget.querystring
+        - plone.formwidget.recurrence
+        - plone.i18n
     jobs:
         - 'package-{package}'
 
