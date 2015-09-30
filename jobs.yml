@@ -314,6 +314,7 @@
     jobs:
         - docs-package-styleguide
         - docs-age
+        - undeclared-dependencies
 
 ###
 # JOBS
@@ -1194,6 +1195,61 @@
         - custom-workspace-cleanup
 
     <<: *plone-basic
+
+
+- job:
+    name: undeclared-dependencies
+    display-name: 'Undeclared dependencies'
+
+    triggers:
+        - timed: '@daily'
+
+    builders:
+        - shell: |
+            # checkout all packages
+            sed -i 's/mr.developer = 1.33/mr.developer = 1.34/' versions.cfg
+            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
+            $PYTHON27 bootstrap.py -c jenkins-package-dependencies.cfg
+            bin/buildout -c jenkins-package-dependencies.cfg
+
+            echo "" > deps.txt
+
+            # create the shim buildout
+            echo "[buildout]" > b.cfg
+            echo "extends = http://dist.plone.org/release/5.0/versions.cfg" >> b.cfg
+            echo "parts = deps" >> b.cfg
+            echo "[deps]" >> b.cfg
+            echo "recipe = zc.recipe.egg" >> b.cfg
+            echo "eggs =" >> b.cfg
+
+            blacklist="Plone plone.themepreview ZODB3 diazo jquery.recurrenceinput.js mockup txtfilter"
+            cd src
+            for pkg in *;
+            do
+                if [ `echo $blacklist | grep -c $pkg` -eq 0 ];
+                then
+                    echo $pkg >> ../deps.txt
+                    cp ../b.cfg $pkg/b.cfg
+                    cp ../bootstrap.py $pkg/bootstrap.py
+                    cd $pkg
+                    echo "    $pkg" >> b.cfg
+                    echo "    z3c.dependencychecker" >> b.cfg
+                    $PYTHON27 bootstrap.py -c b.cfg
+                    bin/buildout -c b.cfg
+                    ./bin/dependencychecker >> ../../deps.txt
+                    cd ..
+                fi
+            done
+
+    publishers:
+        - archive:
+            artifacts: 'deps.txt'
+            allow-empty: 'true'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
 
 
 ###
