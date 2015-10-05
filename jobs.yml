@@ -108,53 +108,14 @@
         - 680-restapi:
             buildout: plips/plip-680-restapi.cfg
             branch: 5.0
-        - 13260-step-by-step:
-            buildout: plips/plip13260-step-by-step.cfg
-            branch: 5.0
-        - 13350-edit-member-schema-ttw:
-            buildout: plips/plip13350-edit-member-schema-ttw.cfg
-            branch: 5.0
         - 13770-portal-tools-removal:
             buildout: plips/plip13770-portal-tools-removal.cfg
-            branch: 5.0
-        - 20114-plone.api-integration:
-            buildout: plips/plip20114-plone.api-integration.cfg
-            branch: 5.0
-        - 20256-social-tags:
-            buildout: plips/plip20256-social-tags.cfg
             branch: 5.0
         - 14929-lxml-safehtml-transform:
             buildout: plips/plip14929-lxml-safehtml-transform.cfg
             branch: 5.0
-        - ptc:
-            buildout: plips/plip-ptc.cfg
-            branch: 5.0
-        - setuptools:
-            buildout: plips/plip-setuptools.cfg
-            branch: 5.0
-        - noncmfdefault:
-            buildout: plips/plip-nocmfdefault.cfg
-            branch: 5.0
-        - plip-portlet-manager:
-            buildout: plips/plip-portlet-manager.cfg
-            branch: 5.0
         - mosaic:
             buildout: plips/plip-mosaic.cfg
-            branch: 5.0
-        - extensible-fc:
-            buildout: plips/plip-extensible-fc.cfg
-            branch: 5.0
-        - plip-toolbar:
-            buildout: plips/plip-toolbar.cfg
-            branch: 5.0
-        - plip-iterate:
-            buildout: plips/plip-iterate.cfg
-            branch: 5.0
-        - email-registration:
-            buildout: plips/email-registration.cfg
-            branch: 5.0
-        - portal-properties-cleanup:
-            buildout: plips/portal-properties-cleanup.cfg
             branch: 5.0
 
     jobs:
