@@ -714,7 +714,7 @@
     parameters:
         - text:
             name: PULL_REQUEST_URL
-            description: 'URL of the github pull request, e.g. "https://github.com/plone/plone.app.discussion/pull/56".'
+            description: 'URLs of the github pull requests, e.g. "https://github.com/plone/plone.app.discussion/pull/56", when testing multiple pull requests put one on each line.'
 
     scm:
         - buildout-coredev:
@@ -722,42 +722,61 @@
 
     builders:
         - python: |
+            import fileinput
             import json
             import os
+            import re
+            import sys
             import urllib2
 
-            pull_request_url = os.environ['PULL_REQUEST_URL']
+            pull_request_urls = os.environ['PULL_REQUEST_URL']
 
-            github_api_call = pull_request_url.replace('github.com', 'api.github.com/repos')
-            github_api_call = github_api_call.replace('/pull/', '/pulls/')
+            PKG_RE = r'^{{0}}\s.*'
+            SOURCE_RE = r'{{0}} = git git://github.com/{{1}}/{{0}}.git branch={{2}}'
 
-            response = urllib2.urlopen(github_api_call)
-            json_data = json.loads(response.read())
+            PKGS = []
+            COREDEV = 0
 
-            org, branch = json_data['head']['label'].split(':')
-            pkg = json_data['base']['repo']['name']
+            for i, pr in enumerate(pull_request_urls.split()):
+                github_api_call = pr.replace('github.com', 'api.github.com/repos')
+                github_api_call = github_api_call.replace('/pull/', '/pulls/')
+
+                response = urllib2.urlopen(github_api_call)
+                json_data = json.loads(response.read())
+
+                org, branch = json_data['head']['label'].split(':')
+                pkg = json_data['base']['repo']['name']
+
+                if pkg != 'buildout.coredev':
+                    PKGS.append(pkg)
+                    for line in fileinput.input('sources.cfg', inplace=True):
+                        if line.find(pkg) != -1:
+                            line = re.sub(
+                                PKG_RE.format(pkg),
+                                SOURCE_RE.format(pkg, org, branch),
+                                line
+                            )
+                        sys.stdout.write(line)
+                else:
+                    COREDEV = 1
 
             with open('vars.properties', 'w') as f:
-                f.write(u'PULL_REQUEST_PACKAGE_NAME = {{0}}\n'.format(pkg))
-                f.write(u'PULL_REQUEST_FORK = {{0}}\n'.format(org))
-                f.write(u'PULL_REQUEST_BRANCH = {{0}}\n'.format(branch))
+                f.write(u'PKGS = {{0}}\n'.format(' '.join(PKGS)))
+                f.write(u'COREDEV = {{0}}\n'.format(COREDEV))
 
         - inject:
             properties-file: vars.properties
 
         - shell: |
-            if [ "{plone-version}" = "4.3" ]; then
-                $PYTHON27 bootstrap.py -c jenkins.cfg
-            else
-                $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
-            fi
-            if [ "$PULL_REQUEST_PACKAGE_NAME" != "buildout.coredev" ]; then
-                sed -ie "s/^$PULL_REQUEST_PACKAGE_NAME\s.*/$PULL_REQUEST_PACKAGE_NAME = git git:\/\/github.com\/$PULL_REQUEST_FORK\/$PULL_REQUEST_PACKAGE_NAME.git branch=$PULL_REQUEST_BRANCH/g" sources.cfg
-                bin/buildout -c jenkins.cfg install add-package-to-auto-checkout
-                bin/add-package-to-auto-checkout $PULL_REQUEST_PACKAGE_NAME
-            else
+            $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
+            if [ "$COREDEV" = "1" ]; then
                 # TODO(gforcada): allow to test remote branches (i.e. branches not in github.com/plone/buildout.coredev)
                 git checkout $PULL_REQUEST_BRANCH
+            else
+                bin/buildout -c jenkins.cfg install add-package-to-auto-checkout
+                for pkg in $PKGS; do
+                    bin/add-package-to-auto-checkout $pkg
+                done
             fi
             bin/buildout -c jenkins.cfg
             bin/alltests --xml --all
@@ -785,7 +804,7 @@
             content-type: default
             always: true
             failure: false
-            subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: ${{PULL_REQUEST_PACKAGE_NAME}} ${{PULL_REQUEST_BRANCH}}"
+            subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: packages ${{PKGS}}"
             body: |
                 Dear ${{BUILD_USER}},
 
@@ -793,7 +812,7 @@
 
                 ${{BUILD_URL}}
 
-                Comment/merge the pull request:
+                Comment/merge the pull request(s):
 
                 ${{PULL_REQUEST_URL}}
 
