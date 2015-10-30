@@ -821,6 +821,48 @@
 
     <<: *plone-xvfb
 
+- job:
+    name: 'all-checkouts'
+    display-name: 'Plone 5.0 all checkouts'
+
+    triggers:
+        - timed: "@daily"
+
+    scm:
+        - buildout-coredev:
+            branch: '5.0'
+
+    builders:
+        - shell: |
+            cat > checkouts.cfg << EOF
+            [buildout]
+            always-checkout = force
+            auto-checkout = *
+            git-clone-depth = 1
+            EOF
+
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
+            bin/buildout -c jenkins.cfg
+            bin/alltests --xml --all
+            bin/alltests-at --xml
+
+    publishers:
+        - custom-junit-new
+
+        - robot:
+            output-path: parts/test
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
+    <<: *plone-xvfb
+
 
 - job-template:
     name: plone-package-dependencies-{kind}
