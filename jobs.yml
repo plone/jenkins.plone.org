@@ -834,7 +834,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.0'
+            branch: 'all-sources'
 
     builders:
         - shell: |
@@ -846,8 +846,10 @@
             EOF
 
         - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
-            bin/buildout -c jenkins.cfg
+            mv jenkins.cfg buildout.cfg
+            $PYTHON27 bootstrap.py --setuptools-version=18.4 -c buildout.cfg
+            bin/buildout annotate
+            bin/buildout -c buildout.cfg
             bin/alltests --xml --all
             bin/alltests-at --xml
 
