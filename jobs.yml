@@ -768,7 +768,11 @@
             properties-file: vars.properties
 
         - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
+            if [ "{plone-version}" = "4.3" ]; then
+                $PYTHON27 bootstrap.py -c jenkins.cfg
+            else
+                $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
+            fi
             if [ "$COREDEV" = "1" ]; then
                 # TODO(gforcada): allow to test remote branches (i.e. branches not in github.com/plone/buildout.coredev)
                 git checkout $PULL_REQUEST_BRANCH
