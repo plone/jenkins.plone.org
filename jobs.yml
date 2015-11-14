@@ -273,6 +273,7 @@
         - qa-undeclared-dependencies
         - qa-code-analysis
         - qa-pending-releases
+        - qa-i18n-find-untranslated
 
 ###
 # JOBS
@@ -1138,6 +1139,48 @@
 
     <<: *plone
 
+- job:
+    name: qa-i18n-find-untranslated
+    display-name: i18n find untranslated
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=18.2 -c experimental/i18n.cfg
+            bin/buildout -c experimental/i18n.cfg install i18n-find-untranslated i18ndude
+            bin/i18n-find-untranslated details > missing.txt
+
+    publishers:
+        - archive:
+            artifacts: 'missing.txt'
+            allow-empty: 'false'
+
+        - email-ext:
+            recipients: 'plone-i18n@lists.sourceforge.net'
+            reply-to:
+            content-type: default
+            always: true
+            failure: false
+            subject: "Jenkins: untranslated messages on Plone core"
+            attachments: 'missing.txt'
+            body: |
+                Dear translators,
+
+                see attached the log of files which have potential strings not marked for translation.
+
+                You can also see it online at:
+
+                ${{BUILD_URL}}artifact/missing.txt
+
+                Yours truly,
+                Jenkins
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
 
 - job:
     name: qa-docs-package-styleguide
