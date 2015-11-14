@@ -274,6 +274,7 @@
         - qa-code-analysis
         - qa-pending-releases
         - qa-i18n-find-untranslated
+        - qa-i18n-statistics
 
 ###
 # JOBS
@@ -1176,6 +1177,40 @@
 
                 Yours truly,
                 Jenkins
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+- job:
+    name: qa-i18n-statistics
+    display-name: i18n statistics
+
+    scm:
+        - git:
+            url: git://github.com/collective/plone.app.locales.git
+            branches:
+                - 'master'
+            wipe-workspace: false
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            for po in `find . -name "*.po"` ;
+            do
+              echo -n "$po:"  > raw_numbers.txt
+              msgfmt -o /dev/null --statistics $po 2>&1 |tail -n1  >> raw_numbers.txt
+            done
+            cd utils
+            python statistics.py ../raw_numbers.txt > ../results.txt
+
+    publishers:
+        - archive:
+            artifacts: '*.txt'
+            allow-empty: 'false'
 
     wrappers:
         - custom-workspace-cleanup
