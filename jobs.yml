@@ -65,11 +65,6 @@
 ###
 
 - project:
-    name: Release stuff
-    jobs:
-        - 'pending-releases'
-
-- project:
     name: workflow
     jobs:
         - 'workflow-5.0'
@@ -273,10 +268,11 @@
 - project:
     name: QA scripts
     jobs:
-        - docs-package-styleguide
-        - docs-age
-        - undeclared-dependencies
-        - code-analysis
+        - qa-docs-package-styleguide
+        - qa-docs-age
+        - qa-undeclared-dependencies
+        - qa-code-analysis
+        - qa-pending-releases
 
 ###
 # JOBS
@@ -1100,7 +1096,7 @@
 
 
 - job:
-    name: pending-releases
+    name: qa-pending-releases
     display-name: Pending releases
 
     triggers:
@@ -1144,7 +1140,7 @@
 
 
 - job:
-    name: docs-package-styleguide
+    name: qa-docs-package-styleguide
 
     triggers:
         - timed: '@weekly'
@@ -1194,7 +1190,7 @@
 
 
 - job:
-    name: docs-age
+    name: qa-docs-age
     display-name: 'Documentation (age of files)'
 
     scm:
@@ -1227,7 +1223,7 @@
 
 
 - job:
-    name: undeclared-dependencies
+    name: qa-undeclared-dependencies
     display-name: 'Undeclared dependencies'
 
     triggers:
@@ -1282,7 +1278,7 @@
 
 
 - job:
-    name: code-analysis
+    name: qa-code-analysis
     display-name: 'Code analysis'
 
     triggers:
