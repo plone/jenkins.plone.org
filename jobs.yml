@@ -1199,11 +1199,11 @@
 
     builders:
         - shell: |
-            for po in `find . -name "*.po"` ;
+            (for po in `find . -name "*.po"` ;
             do
-              echo -n "$po:"  > raw_numbers.txt
-              msgfmt -o /dev/null --statistics $po 2>&1 |tail -n1  >> raw_numbers.txt
-            done
+              echo -n "$po:"
+              LANG=en msgfmt -o /dev/null --statistics $po 2>&1 |tail -n1
+            done) > raw_numbers.txt
             cd utils
             python statistics.py ../raw_numbers.txt > ../results.txt
 
