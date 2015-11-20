@@ -1,0 +1,12 @@
+Dear ${{BUILD_USER}},
+
+the Jenkins pull request job you requested has finished:
+
+${{BUILD_URL}}
+
+Comment/merge the pull request(s):
+
+${{PULL_REQUEST_URL}}
+
+Yours truly,
+Jenkins

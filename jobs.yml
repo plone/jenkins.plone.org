@@ -300,10 +300,8 @@
         - github
 
     builders:
-        - shell: |
-            {pybinary} bootstrap.py -c jenkins.cfg
-            bin/buildout -c jenkins.cfg
-            bin/jenkins-alltests -1
+        - shell:
+            !include-raw: scripts/4.3-tests.sh
 
     publishers:
         - custom-junit
@@ -330,10 +328,8 @@
     display-name: 'Plone 5.0 - Python 2.7'
 
     builders:
-        - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
-            bin/buildout -c jenkins.cfg
-            bin/alltests --xml
+        - shell:
+            !include-raw: scripts/5.0-tests.sh
 
     publishers:
         - custom-junit-new
@@ -357,11 +353,8 @@
     display-name: 'Plone 5.0 - Python 2.7 - Robot Framework Tests'
 
     builders:
-        - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
-            bin/buildout -c jenkins.cfg
-            ROBOTSUITE_PREFIX=ONLYROBOT
-            bin/alltests -t ONLYROBOT --all --xml
+        - shell:
+            !include-raw: scripts/5.0-robot.sh
 
     publishers:
         - custom-email-ext
@@ -406,10 +399,8 @@
         - disk-usage
 
     builders:
-        - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
-            bin/buildout -c jenkins.cfg
-            bin/alltests-at --xml
+        - shell:
+            !include-raw: scripts/5.0-at.sh
 
     publishers:
         - custom-junit-new
@@ -437,12 +428,8 @@
             shallow-clone: true
 
     builders:
-        - shell: |
-            echo $PATH
-            node --version
-            npm --version
-            make bootstrap
-            make test-jenkins
+        - shell:
+            !include-raw: scripts/5.0-js.sh
 
     publishers:
         - junit:
@@ -465,11 +452,8 @@
             branch: '{branch}'
 
     builders:
-        - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version=18.2 -c {buildout}
-            bin/buildout -c {buildout}
-            bin/alltests --xml --all
-            bin/alltests-at --xml
+        - shell:
+            !include-raw: scripts/plips.sh
 
     publishers:
         - custom-junit-new
@@ -492,15 +476,8 @@
             always: true
             failure: false
             subject: "Jenkins PLIP {plip} [${{BUILD_STATUS}}]"
-            body: |
-                Dear ${{BUILD_USER}},
-
-                the Jenkins PLIP job for {plip} has finished:
-
-                ${{BUILD_URL}}
-
-                Yours truly,
-                Jenkins
+            body:
+                !include-raw: scripts/plips.email
 
     <<: *plone-xvfb
 
@@ -719,72 +696,14 @@
             branch: '{plone-version}'
 
     builders:
-        - python: |
-            import fileinput
-            import json
-            import os
-            import re
-            import sys
-            import urllib2
-
-            pull_request_urls = os.environ['PULL_REQUEST_URL']
-
-            PKG_RE = r'^{{0}}\s.*'
-            SOURCE_RE = r'{{0}} = git git://github.com/{{1}}/{{0}}.git branch={{2}}'
-
-            PKGS = []
-            COREDEV = 0
-
-            for i, pr in enumerate(pull_request_urls.split()):
-                github_api_call = pr.replace('github.com', 'api.github.com/repos')
-                github_api_call = github_api_call.replace('/pull/', '/pulls/')
-
-                response = urllib2.urlopen(github_api_call)
-                json_data = json.loads(response.read())
-
-                org, branch = json_data['head']['label'].split(':')
-                pkg = json_data['base']['repo']['name']
-
-                if pkg != 'buildout.coredev':
-                    PKGS.append(pkg)
-                    for line in fileinput.input('sources.cfg', inplace=True):
-                        if line.find(pkg) != -1:
-                            line = re.sub(
-                                PKG_RE.format(pkg),
-                                SOURCE_RE.format(pkg, org, branch),
-                                line
-                            )
-                        sys.stdout.write(line)
-                else:
-                    COREDEV = 1
-
-            with open('vars.properties', 'w') as f:
-                f.write(u'PKGS = {{0}}\n'.format(' '.join(PKGS)))
-                f.write(u'COREDEV = {{0}}\n'.format(COREDEV))
+        - python:
+            !include-raw-escape: scripts/pr-get-info.py
 
         - inject:
             properties-file: vars.properties
 
-        - shell: |
-            if [ "{plone-version}" = "4.3" ]; then
-                $PYTHON27 bootstrap.py -c jenkins.cfg
-            else
-                $PYTHON27 bootstrap.py --setuptools-version=18.2 -c jenkins.cfg
-            fi
-            if [ "$COREDEV" = "1" ]; then
-                # TODO(gforcada): allow to test remote branches (i.e. branches not in github.com/plone/buildout.coredev)
-                git checkout $PULL_REQUEST_BRANCH
-            else
-                bin/buildout -c jenkins.cfg install add-package-to-auto-checkout
-                for pkg in $PKGS; do
-                    bin/add-package-to-auto-checkout $pkg
-                done
-            fi
-            bin/buildout -c jenkins.cfg
-            bin/alltests --xml --all
-            if [ "{plone-version}" = "5.0" ]; then
-                bin/alltests-at --xml
-            fi
+        - shell:
+            !include-raw: scripts/pr-tests.sh
 
     publishers:
         - custom-junit-new
@@ -807,19 +726,8 @@
             always: true
             failure: false
             subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: packages ${{PKGS}}"
-            body: |
-                Dear ${{BUILD_USER}},
-
-                the Jenkins pull request job you requested has finished:
-
-                ${{BUILD_URL}}
-
-                Comment/merge the pull request(s):
-
-                ${{PULL_REQUEST_URL}}
-
-                Yours truly,
-                Jenkins
+            body:
+                !include-raw: scripts/pr.email
 
     <<: *plone-xvfb
 

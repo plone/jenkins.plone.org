@@ -1,0 +1,8 @@
+Dear ${{BUILD_USER}},
+
+the Jenkins PLIP job for {plip} has finished:
+
+${{BUILD_URL}}
+
+Yours truly,
+Jenkins
