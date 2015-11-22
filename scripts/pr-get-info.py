@@ -121,6 +121,15 @@ for pr in pull_request_urls.split():
     # get the branch
     branch = g_pr.head.ref
 
+    # add a 'pending' status
+    last_commit = g_pr.get_commits().reversed[0]
+    last_commit.create_status(
+        u'pending',
+        target_url=build_url,
+        description='Job started, wait until it finishes',
+        context='Plone Jenkins CI',
+    )
+
     if repo != 'buildout.coredev':
         PKGS.append(repo)
         for line in fileinput.input('sources.cfg', inplace=True):
