@@ -705,6 +705,9 @@
         - shell:
             !include-raw: scripts/pr-tests.sh
 
+        - python:
+            !include-raw-escape: scripts/pr-update-status.py
+
     publishers:
         - custom-junit-new
 
