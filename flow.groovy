@@ -22,7 +22,9 @@ parallel(
         sh "bin/alltests"
         step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
       } catch (e) {
-        mail subject: "alltests failed with #{e.message}", recipients: 'tisto@plone.org'
+        def w = new StringWriter()
+        e.printStackTrace(new PrintWriter(w))
+        mail subject: "alltests failed with ${e.message}", to: 'tisto@plone.org', body: "Failed: ${w}"
         throw e
       }
     }
@@ -34,7 +36,9 @@ parallel(
         sh "bin/alltests-at"
         step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
       } catch (e) {
-        mail subject: "alltests-at failed with #{e.message}", recipients: 'tisto@plone.org'
+        def w = new StringWriter()
+        e.printStackTrace(new PrintWriter(w))
+        mail subject: "alltests-at failed with ${e.message}", to: 'tisto@plone.org', body: "Failed: ${w}"
         throw e
       }
     }
