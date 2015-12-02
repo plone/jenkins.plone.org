@@ -19,7 +19,7 @@ parallel(
     node {
       prepareBuildout()
       try {
-        sh "bin/alltests"
+        sh "bin/alltests --xml"
         step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
       } catch (e) {
         def w = new StringWriter()
@@ -33,13 +33,21 @@ parallel(
     node {
       prepareBuildout()
       try {
-        sh "bin/alltests-at"
+        sh "bin/alltests-at --xml"
         step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
       } catch (e) {
         def w = new StringWriter()
         e.printStackTrace(new PrintWriter(w))
         mail subject: "alltests-at failed with ${e.message}", to: 'tisto@plone.org', body: "Failed: ${w}"
         throw e
+      }
+    }
+  },
+  robot: {
+    node {
+      prepareBuildout()
+      wrap([$class: 'Xvfb']) {
+        sh "bin/alltests -t ONLYROBOT --all --xml"
       }
     }
   }
