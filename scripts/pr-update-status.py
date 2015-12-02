@@ -3,25 +3,35 @@ from github import Github
 from github.GithubException import BadCredentialsException
 from github.GithubException import UnknownObjectException
 
-import fileinput
 import os
 import re
 import sys
 
-
-PKG_RE = r'^{0}\s.*'
-SOURCE_RE = r'{0} = git git://github.com/{1}/{0}.git branch={2}'
 PR_RE = r'https://github.com/(.*)/(.*)/pull/(.*)'
+job_run_successfully = True
 
-PKGS = []
-COREDEV = 0
+# bare basic way to know if there was any test failure
+files = [f for f in os.listdir('parts/test/testreports/')]
+for f in files:
+    with open('parts/test/testreports/{0}'.format(f)) as xml_file:
+        first_line = xml_file.read().split('\n')[0]
+        failures = True
+        if first_line.find('failures="0"') != -1:
+            failures = False
+        errors = True
+        if first_line.find('errors="0"') != -1:
+            errors = False
+
+        if failures or errors:
+            job_run_successfully = False
+            break
 
 try:
     github_api_key = os.environ['GITHUB_API_KEY']
 except KeyError:
     print(
         '\n\n\n'
-        'GITHUB_API_KEY does not exist, pull request job can not run. '
+        'GITHUB_API_KEY does not exist, pull requests can not be updated. '
         '\n'
         'Please contact the testing team: '
         'https://github.com/orgs/plone/teams/testing-team'
@@ -30,38 +40,16 @@ except KeyError:
         'https://github.com/plone/jenkins.plone.org/issues/new'
         '\n\n\n'
     )
-    sys.exit(1)
+    sys.exit(0)
 
-try:
-    pull_request_urls = os.environ['PULL_REQUEST_URL']
-except KeyError:
-    print(
-        '\n\n\n'
-        'You seem to forgot to add a pull request URL on the '
-        '"Build with parameters" form!'
-        '\n\n\n'
-    )
-    sys.exit(1)
-
+pull_request_urls = os.environ['PULL_REQUEST_URL']
 build_url = os.environ['BUILD_URL']
-
 g = Github(github_api_key)
 
 for pr in pull_request_urls.split():
     org, repo, pr_number = re.search(PR_RE, pr).groups()
 
-    try:
-        pr_number = int(pr_number)
-    except ValueError:
-        msg = (
-            '\n\n\n'
-            'Error on trying to get info from Pull Request %s'
-            '\n'
-            'The pull request number "%s" is not a number!'
-            '\n\n\n'
-        )
-        print(msg % (pr, pr_number))
-        sys.exit(1)
+    pr_number = int(pr_number)
 
     # get the pull request organization it belongs to
     try:
@@ -78,7 +66,7 @@ for pr in pull_request_urls.split():
             'https://github.com/plone/jenkins.plone.org/issues/new'
             '\n\n\n'
         )
-        sys.exit(1)
+        sys.exit(0)
     except UnknownObjectException:
         msg = (
             '\n\n\n'
@@ -88,7 +76,7 @@ for pr in pull_request_urls.split():
             '\n\n\n'
         )
         print(msg % (pr, org))
-        sys.exit(1)
+        sys.exit(0)
 
     # the repo where the pull request is from
     try:
@@ -102,7 +90,7 @@ for pr in pull_request_urls.split():
             '\n\n\n'
         )
         print(msg % (pr, repo))
-        sys.exit(1)
+        sys.exit(0)
 
     # the pull request itself
     try:
@@ -116,33 +104,20 @@ for pr in pull_request_urls.split():
             '\n\n\n'
         )
         print(msg % (pr, pr_number))
-        sys.exit(1)
+        sys.exit(0)
 
     # get the branch
     branch = g_pr.head.ref
 
-    # add a 'pending' status
+    # report back to github about how the job finished
     last_commit = g_pr.get_commits().reversed[0]
+    status = u'success'
+    if not job_run_successfully:
+        status = u'error'
+
     last_commit.create_status(
-        u'pending',
+        status,
         target_url=build_url,
-        description='Job started, wait until it finishes',
+        description=u'Job finished with %s status' % status,
         context='Plone Jenkins CI',
     )
-
-    if repo != 'buildout.coredev':
-        PKGS.append(repo)
-        for line in fileinput.input('sources.cfg', inplace=True):
-            if line.find(repo) != -1:
-                line = re.sub(
-                    PKG_RE.format(repo),
-                    SOURCE_RE.format(repo, org, branch),
-                    line
-                )
-            sys.stdout.write(line)
-    else:
-        COREDEV = 1
-
-with open('vars.properties', 'w') as f:
-    f.write(u'PKGS = {0}\n'.format(' '.join(PKGS)))
-    f.write(u'COREDEV = {0}\n'.format(COREDEV))
