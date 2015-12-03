@@ -47,7 +47,25 @@ parallel(
     node {
       prepareBuildout()
       wrap([$class: 'Xvfb']) {
-        sh "bin/alltests -t ONLYROBOT --all --xml"
+        try {
+          sh "bin/alltests -t ONLYROBOT --all --xml"
+            step([$class: 'RobotPublisher',
+              disableArchiveOutput: false,
+              logFileName: 'log.html',
+              onlyCritical: true,
+              otherFiles: '',
+              outputFileName: 'output.xml',
+              outputPath: '.',
+              passThreshold: 90,
+              reportFileName: 'report.html',
+              unstableThreshold: 100]);
+        } catch (e) {
+          def w = new StringWriter()
+          e.printStackTrace(new PrintWriter(w))
+          mail subject: "alltests-robot failed with ${e.message}", to: 'tisto@plone.org', body: "Failed: ${w}"
+          throw e
+        }
+
       }
     }
   }
