@@ -22,9 +22,7 @@ parallel(
         sh "bin/alltests --xml"
         step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
       } catch (e) {
-        def w = new StringWriter()
-        e.printStackTrace(new PrintWriter(w))
-        mail subject: "Jenkins Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed in the alltests stage with ${e.message}", to: 'tisto@plone.org', body: "Please go to ${env.BUILD_URL}. Failed: ${w}"
+        mail subject: "Jenkins Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed in the alltests stage with ${e.message}", to: 'tisto@plone.org', body: "Please go to ${env.BUILD_URL}."
         throw e
       }
     }
@@ -35,10 +33,7 @@ parallel(
       try {
         sh "bin/alltests-at --xml"
         step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
-      } catch (e) {
-        def w = new StringWriter()
-        e.printStackTrace(new PrintWriter(w))
-        mail subject: "alltests-at failed with ${e.message}", to: 'tisto@plone.org', body: "Failed: ${w}"
+      } catch (e) {mail subject: "Jenkins Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed in the alltests-at stage with ${e.message}", to: 'tisto@plone.org', body: "Please go to ${env.BUILD_URL}."
         throw e
       }
     }
@@ -63,9 +58,7 @@ parallel(
             unstableThreshold: 100]);
           */
         } catch (e) {
-          def w = new StringWriter()
-          e.printStackTrace(new PrintWriter(w))
-          mail subject: "alltests-robot failed with ${e.message}", to: 'tisto@plone.org', body: "Failed: ${w}"
+          mail subject: "Jenkins Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed in the alltests-robot stage with ${e.message}", to: 'tisto@plone.org', body: "Please go to ${env.BUILD_URL}."
           throw e
         }
 
@@ -77,9 +70,11 @@ parallel(
 stage 'Notification'
 node {
   step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'tisto@plone.org', sendToIndividuals: true])
-  mail (to: 'tisto@plone.org',
-         subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) is ready.",
-         body: "Please go to ${env.BUILD_URL}.");
+  mail (
+    to: 'tisto@plone.org',
+    subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) is ready.",
+    body: "Please go to ${env.BUILD_URL}."
+  );
 }
 
 
