@@ -24,7 +24,7 @@ parallel(
       } catch (e) {
         def w = new StringWriter()
         e.printStackTrace(new PrintWriter(w))
-        mail subject: "alltests failed with ${e.message}", to: 'tisto@plone.org', body: "Failed: ${w}"
+        mail subject: "Jenkins Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed in the alltests stage with ${e.message}", to: 'tisto@plone.org', body: "Please go to ${env.BUILD_URL}. Failed: ${w}"
         throw e
       }
     }
@@ -49,16 +49,19 @@ parallel(
       wrap([$class: 'Xvfb']) {
         try {
           sh "bin/alltests -t ONLYROBOT --all --xml"
-            step([$class: 'RobotPublisher',
-              disableArchiveOutput: false,
-              logFileName: 'log.html',
-              onlyCritical: true,
-              otherFiles: '',
-              outputFileName: 'output.xml',
-              outputPath: '.',
-              passThreshold: 90,
-              reportFileName: 'report.html',
-              unstableThreshold: 100]);
+          step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
+          /*
+          step([$class: 'RobotPublisher',
+            disableArchiveOutput: false,
+            logFileName: 'log.html',
+            onlyCritical: true,
+            otherFiles: '',
+            outputFileName: 'output.xml',
+            outputPath: '.',
+            passThreshold: 90,
+            reportFileName: 'report.html',
+            unstableThreshold: 100]);
+          */
         } catch (e) {
           def w = new StringWriter()
           e.printStackTrace(new PrintWriter(w))
