@@ -44,6 +44,7 @@ except KeyError:
 
 pull_request_urls = os.environ['PULL_REQUEST_URL']
 build_url = os.environ['BUILD_URL']
+job_name = os.environ['JOB_NAME']
 g = Github(github_api_key)
 
 for pr in pull_request_urls.split():
@@ -119,5 +120,5 @@ for pr in pull_request_urls.split():
         status,
         target_url=build_url,
         description=u'Job finished with %s status' % status,
-        context='Plone Jenkins CI',
+        context='Plone Jenkins CI - {0}'.format(job_name),
     )

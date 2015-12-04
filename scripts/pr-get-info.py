@@ -44,6 +44,7 @@ except KeyError:
     sys.exit(1)
 
 build_url = os.environ['BUILD_URL']
+job_name = os.environ['JOB_NAME']
 
 g = Github(github_api_key)
 
@@ -127,7 +128,7 @@ for pr in pull_request_urls.split():
         u'pending',
         target_url=build_url,
         description='Job started, wait until it finishes',
-        context='Plone Jenkins CI',
+        context='Plone Jenkins CI - {0}'.format(job_name),
     )
 
     if repo != 'buildout.coredev':
