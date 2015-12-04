@@ -67,7 +67,7 @@
 - project:
     name: workflow
     jobs:
-        - 'workflow-5.0'
+        - 'workflow-plone-5.0'
 
 - project:
     name: Pull requests
@@ -667,7 +667,7 @@
     <<: *plone
 
 - job:
-    name: 'workflow-5.0'
+    name: 'workflow-plone-5.0'
     project-type: workflow
     definitions:
         - script:

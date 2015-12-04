@@ -15,7 +15,7 @@ node {
 
 stage 'Test'
 parallel(
-  alltests: {
+  tests: {
     node {
       prepareBuildout()
       try {
@@ -29,7 +29,7 @@ parallel(
       }
     }
   },
-  alltestsat: {
+  archetypes: {
     node {
       prepareBuildout()
       try {
