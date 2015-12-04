@@ -44,7 +44,7 @@ parallel(
       wrap([$class: 'Xvfb']) {
         try {
           sh "bin/alltests -t ONLYROBOT --all --xml"
-          step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
+          //step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
           /*
           step([$class: 'RobotPublisher',
             disableArchiveOutput: false,
