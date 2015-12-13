@@ -12,8 +12,12 @@ else
         bin/add-package-to-auto-checkout $pkg
     done
 fi
+
 bin/buildout -c jenkins.cfg
-bin/alltests --xml --all
+
 if [ "{plone-version}" = "5.0" ]; then
+    bin/alltests --xml --all
     bin/alltests-at --xml
+else
+    bin/jenkins-alltests -1
 fi
