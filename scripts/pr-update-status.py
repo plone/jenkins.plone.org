@@ -7,13 +7,18 @@ import os
 import re
 import sys
 
+job_name = os.environ['JOB_NAME']
+tests_folder = 'parts/test/testreports'
+if '4.3' in job_name:
+    tests_folder = 'parts/jenkins-test/testreports'
+
 PR_RE = r'https://github.com/(.*)/(.*)/pull/(.*)'
 job_run_successfully = True
 
 # bare basic way to know if there was any test failure
-files = [f for f in os.listdir('parts/test/testreports/')]
+files = [f for f in os.listdir(tests_folder)]
 for f in files:
-    with open('parts/test/testreports/{0}'.format(f)) as xml_file:
+    with open('{0}/{1}'.format(tests_folder, f)) as xml_file:
         first_line = xml_file.read().split('\n')[0]
         failures = True
         if first_line.find('failures="0"') != -1:
@@ -44,7 +49,6 @@ except KeyError:
 
 pull_request_urls = os.environ['PULL_REQUEST_URL']
 build_url = os.environ['BUILD_URL']
-job_name = os.environ['JOB_NAME']
 g = Github(github_api_key)
 
 for pr in pull_request_urls.split():
