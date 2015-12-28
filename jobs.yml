@@ -72,8 +72,10 @@
 - project:
     name: Pull requests
     plone-version:
-        - '5.0'
-        - '4.3'
+        - '5.0':
+            report-path: 'parts/test'
+        - '4.3':
+            report-path: 'parts/jenkins-test'
     jobs:
         - 'pull-request-{plone-version}'
 
@@ -712,7 +714,7 @@
         - custom-junit-new
 
         - robot:
-            output-path: parts/test
+            output-path: '{report-path}'
             report-html: robot_report.html
             log-html: robot_log.html
             output-xml: robot_output.xml
