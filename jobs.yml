@@ -711,7 +711,9 @@
             !include-raw-escape: scripts/pr-update-status.py
 
     publishers:
-        - custom-junit-new
+        - junit:
+            results: '{report-path}/testreports/*.xml'
+            keep-long-stdio: false
 
         - robot:
             output-path: '{report-path}'
