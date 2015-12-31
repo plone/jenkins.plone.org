@@ -1225,17 +1225,9 @@
             # checkout all packages
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
             $PYTHON27 bootstrap.py -c jenkins-package-dependencies.cfg
-            bin/buildout -c jenkins-package-dependencies.cfg
+            bin/buildout -c jenkins-package-dependencies.cfg install dependencies
 
             echo "" > deps.txt
-
-            # create the shim buildout
-            echo "[buildout]" > b.cfg
-            echo "extends = http://dist.plone.org/release/5.0/versions.cfg" >> b.cfg
-            echo "parts = deps" >> b.cfg
-            echo "[deps]" >> b.cfg
-            echo "recipe = zc.recipe.egg" >> b.cfg
-            echo "eggs =" >> b.cfg
 
             blacklist="Plone plone.themepreview ZODB3 diazo jquery.recurrenceinput.js mockup txtfilter"
             cd src
@@ -1243,15 +1235,9 @@
             do
                 if [ `echo $blacklist | grep -c $pkg` -eq 0 ];
                 then
-                    echo $pkg >> ../deps.txt
-                    cp ../b.cfg $pkg/b.cfg
-                    cp ../bootstrap.py $pkg/bootstrap.py
                     cd $pkg
-                    echo "    $pkg" >> b.cfg
-                    echo "    z3c.dependencychecker" >> b.cfg
-                    $PYTHON27 bootstrap.py -c b.cfg
-                    bin/buildout -c b.cfg
-                    ./bin/dependencychecker >> ../../deps.txt
+                    echo $pkg >> ../deps.txt
+                    ../../bin/dependencychecker >> ../../deps.txt
                     cd ..
                 fi
             done
