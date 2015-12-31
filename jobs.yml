@@ -1223,7 +1223,6 @@
     builders:
         - shell: |
             # checkout all packages
-            sed -i 's/mr.developer = 1.33/mr.developer = 1.34/' versions.cfg
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
             $PYTHON27 bootstrap.py -c jenkins-package-dependencies.cfg
             bin/buildout -c jenkins-package-dependencies.cfg
@@ -1278,7 +1277,6 @@
     builders:
         - shell: |
             # checkout all packages
-            sed -i 's/mr.developer = 1.33/mr.developer = 1.34/' versions.cfg
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
             $PYTHON27 bootstrap.py -c jenkins-package-dependencies.cfg
             bin/buildout -c jenkins-package-dependencies.cfg
