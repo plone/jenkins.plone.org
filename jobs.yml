@@ -1236,7 +1236,7 @@
                 if [ `echo $blacklist | grep -c $pkg` -eq 0 ];
                 then
                     cd $pkg
-                    echo $pkg >> ../deps.txt
+                    echo $pkg >> ../../deps.txt
                     ../../bin/dependencychecker >> ../../deps.txt
                     cd ..
                 fi
