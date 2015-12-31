@@ -21,3 +21,11 @@ if [ "{plone-version}" = "5.0" ]; then
 else
     bin/jenkins-alltests -1
 fi
+
+return_code=$?
+
+# Update GitHub pull request status
+$PYTHON27 templates/pr-update-status.py
+
+# Keep the return code of the tests
+exit $return_code

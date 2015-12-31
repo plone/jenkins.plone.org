@@ -707,9 +707,6 @@
         - shell:
             !include-raw: scripts/pr-tests.sh
 
-        - python:
-            !include-raw-escape: scripts/pr-update-status.py
-
     publishers:
         - junit:
             results: '{report-path}/testreports/*.xml'
