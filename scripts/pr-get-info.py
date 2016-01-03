@@ -49,7 +49,7 @@ job_name = os.environ['JOB_NAME']
 g = Github(github_api_key)
 
 for pr in pull_request_urls.split():
-    org, repo, pr_number = re.search(PR_RE, pr).groups()
+    org, plone_repo, pr_number = re.search(PR_RE, pr).groups()
 
     try:
         pr_number = int(pr_number)
@@ -93,7 +93,7 @@ for pr in pull_request_urls.split():
 
     # the repo where the pull request is from
     try:
-        g_repo = g_org.get_repo(repo)
+        g_repo = g_org.get_repo(plone_repo)
     except UnknownObjectException:
         msg = (
             '\n\n\n'
@@ -102,7 +102,7 @@ for pr in pull_request_urls.split():
             'The repository "%s" does not seem to exist.'
             '\n\n\n'
         )
-        print(msg % (pr, repo))
+        print(msg % (pr, plone_repo))
         sys.exit(1)
 
     # the pull request itself
@@ -122,6 +122,9 @@ for pr in pull_request_urls.split():
     # get the branch
     branch = g_pr.head.ref
 
+    # get the repo
+    repo = g_pr.head.repo.owner.login
+
     # add a 'pending' status
     last_commit = g_pr.get_commits().reversed[0]
     last_commit.create_status(
@@ -132,7 +135,7 @@ for pr in pull_request_urls.split():
     )
 
     if repo != 'buildout.coredev':
-        PKGS.append(repo)
+        PKGS.append(plone_repo)
         for line in fileinput.input('sources.cfg', inplace=True):
             if line.find(repo) != -1:
                 line = re.sub(
