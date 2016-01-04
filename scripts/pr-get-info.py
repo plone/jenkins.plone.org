@@ -150,3 +150,5 @@ for pr in pull_request_urls.split():
 with open('vars.properties', 'w') as f:
     f.write(u'PKGS = {0}\n'.format(' '.join(PKGS)))
     f.write(u'COREDEV = {0}\n'.format(COREDEV))
+    if COREDEV == 1:
+        f.write(u'BRANCH = {0}\n'.format(branch))
