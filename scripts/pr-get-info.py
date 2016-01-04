@@ -137,10 +137,10 @@ for pr in pull_request_urls.split():
     if plone_repo != 'buildout.coredev':
         PKGS.append(plone_repo)
         for line in fileinput.input('sources.cfg', inplace=True):
-            if line.find(repo) != -1:
+            if line.find(plone_repo) != -1:
                 line = re.sub(
-                    PKG_RE.format(repo),
-                    SOURCE_RE.format(repo, org, branch),
+                    PKG_RE.format(plone_repo),
+                    SOURCE_RE.format(plone_repo, org, branch),
                     line
                 )
             sys.stdout.write(line)
