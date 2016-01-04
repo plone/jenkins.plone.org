@@ -134,7 +134,7 @@ for pr in pull_request_urls.split():
         context='Plone Jenkins CI - {0}'.format(job_name),
     )
 
-    if repo != 'buildout.coredev':
+    if plone_repo != 'buildout.coredev':
         PKGS.append(plone_repo)
         for line in fileinput.input('sources.cfg', inplace=True):
             if line.find(repo) != -1:
