@@ -15,17 +15,21 @@ fi
 
 bin/buildout -c jenkins.cfg
 
+return_code="all_right"
+
 if [ "{plone-version}" = "5.0" ]; then
-    bin/alltests --xml --all
-    bin/alltests-at --xml
+    bin/alltests --xml --all || return_code=$?
+    bin/alltests-at --xml || return_code=$?
 else
-    bin/jenkins-alltests -1
+    bin/jenkins-alltests -1 || return_code=$?
 fi
 
-return_code=$?
+if [ $return_code = "all_right" ]; then
+    return_code=$?
+fi
 
 # Update GitHub pull request status
 $PYTHON27 templates/pr-update-status.py
 
-# Keep the return code of the tests
+# Keep tests return code
 exit $return_code
