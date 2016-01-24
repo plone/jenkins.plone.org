@@ -277,6 +277,7 @@
         - qa-pending-releases
         - qa-i18n-find-untranslated
         - qa-i18n-statistics
+        - qa-monkey-patches
 
 ###
 # JOBS
@@ -1118,6 +1119,30 @@
             done) > raw_numbers.txt
             cd utils
             python statistics.py ../raw_numbers.txt > ../results.txt
+
+    publishers:
+        - archive:
+            artifacts: '*.txt'
+            allow-empty: 'false'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+- job:
+    name: qa-monkey-patches
+    display-name: Monkey patches
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            $PYTHON27 bootstrap.py --setuptools-version=19.4
+            bin/buildout
+            cd src
+            grep -R collective.monkeypatcher * > ../results.txt
 
     publishers:
         - archive:
