@@ -114,6 +114,9 @@
         - mosaic:
             buildout: plips/plip-mosaic.cfg
             branch: 5.0
+        - collective-indexing:
+            buildout: plips/merge-collective-indexing.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
