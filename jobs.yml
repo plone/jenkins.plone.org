@@ -923,6 +923,9 @@
             recipe = collective.xmltestreport
             eggs =
                 \${{alltests:eggs}}
+
+            [versions]
+            collective.xmltestreport = 1.3.3
             EOF
             {pybinary} bootstrap.py -c jenkins.cfg
             bin/buildout -c jenkins.cfg
