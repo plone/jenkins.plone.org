@@ -117,6 +117,9 @@
         - collective-indexing:
             buildout: plips/merge-collective-indexing.cfg
             branch: 5.0
+        - zope4:
+            buildout: plips/plip-zope4.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
