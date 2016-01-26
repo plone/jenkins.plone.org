@@ -234,7 +234,7 @@
         - '34':
             pybinary: 'python3.4'
     jobs:
-        - 'ztk-{pyversion}'
+        - 'zope-ztk-{pyversion}'
 
 
 - project:
@@ -256,7 +256,7 @@
         - '34':
             pybinary: 'python3.4'
     jobs:
-        - 'zodb-{pyversion}'
+        - 'zope-zodb-{pyversion}'
 
 
 - project:
@@ -267,7 +267,7 @@
         - '34':
             pybinary: 'python3.4'
     jobs:
-        - 'cmf-{pyversion}'
+        - 'zope-cmf-{pyversion}'
 
 
 - project:
@@ -873,7 +873,7 @@
 
 
 - job-template:
-    name: ztk-{pyversion}
+    name: zope-ztk-{pyversion}
     display-name: Zope Toolkit py{pyversion}
 
     scm:
@@ -936,7 +936,7 @@
 
 - job-template:
     # TODO: collective.xmltestreport does not spit out xml files for jenkins
-    name: zodb-{pyversion}
+    name: zope-zodb-{pyversion}
     display-name: ZODB py{pyversion}
 
     scm:
@@ -975,7 +975,7 @@
 
 
 - job-template:
-    name: cmf-{pyversion}
+    name: zope-cmf-{pyversion}
     display-name: CMF py{pyversion}
 
     scm:
