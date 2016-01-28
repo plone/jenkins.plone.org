@@ -120,6 +120,9 @@
         - zope4:
             buildout: plips/plip-zope4.cfg
             branch: 5.0
+        - 1334-PlonePAS:
+            buildout: plips/plip-1334-PlonePAS.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
