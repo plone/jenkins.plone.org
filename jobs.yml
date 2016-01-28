@@ -208,26 +208,8 @@
 - project:
     name: per-package job
     package:
-        - plone.app.discussion
-        - plone.autoform
-        - plone.batching
-        - plone.behavior
-        - plone.browserlayer
-        - plone.cachepurging
-        - plone.caching
-        - plone.contentrules
-        - plone.dexterity
-        - plone.directives.form
-        - plone.directives.tiles
-        - plone.event
-        - plone.folder
-        - plone.formwidget.autocomplete
-        - plone.formwidget.contenttree
-        - plone.formwidget.datetime
-        - plone.formwidget.namedfile
-        - plone.formwidget.querystring
-        - plone.formwidget.recurrence
-        - plone.i18n
+        - plone.app.discussion:
+            top-level: 'plone'
     jobs:
         - 'package-{package}'
 
@@ -849,23 +831,10 @@
             wipe-workspace: false
 
     builders:
-        - shell: |
-            wget https://raw.githubusercontent.com/plone/buildout.coredev/5.0/bootstrap.py -O bootstrap.py
-            cat > jenkins.cfg << EOF
-            [buildout]
-            develop = .
-            parts =
-                code-analysis
-
-            [code-analysis]
-            recipe = plone.recipe.codeanalysis
-            directory = .
-            pre-commit-hook = False
-            jenkins = True
-            EOF
-            $PYTHON27 bootstrap.py --setuptools-version 19.4 -c jenkins.cfg
-            bin/buildout -c jenkins.cfg
-            bin/code-analysis
+        - shell:
+            !include-raw: scripts/pkg-qa.sh
+        - python:
+            !include-raw: scripts/pkg-qa-report.py
 
     publishers:
         - violations:
