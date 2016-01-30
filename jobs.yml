@@ -210,6 +210,18 @@
     package:
         - plone.app.discussion:
             top-level: 'plone'
+        - plone.app.contentlisting:
+            top-level: 'plone'
+        - plone.autoform:
+            top-level: 'plone'
+        - plone.browserlayer:
+            top-level: 'plone'
+        - plone.intelligenttext:
+            top-level: 'plone'
+        - plone.resourceeditor:
+            top-level: 'plone'
+        - plone.subrequest:
+            top-level: 'plone'
     jobs:
         - 'package-{package}'
 
