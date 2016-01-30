@@ -211,8 +211,6 @@
 - project:
     name: per-package job
     package:
-        - plone.app.discussion:
-            top-level: 'plone'
         - plone.app.contentlisting:
             top-level: 'plone'
         - plone.autoform:
