@@ -103,10 +103,12 @@ except UnknownObjectException:
 
 author = g_commit.author.login
 
-header = '@%s Jenkins CI reporting about code analysis\n' % author
+header = '@%s Jenkins CI reporting about code analysis' % author
+first_line = 'See the full report here: %s/violations' % build_url
 footer = 'You can run that yourself using buildout.coredev ``experimental/qa.cfg`` config file.'
-comment = '%s```\n%s```\n%s' % (
+comment = '%s\n%s\n```\n%s```\n%s' % (
     header,
+    first_line,
     flake8_errors,
     footer
 )
