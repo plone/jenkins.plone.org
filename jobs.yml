@@ -123,6 +123,9 @@
         - 1334-PlonePAS:
             buildout: plips/plip-1334-PlonePAS.cfg
             branch: 5.0
+        - 1340-QuickInstaller:
+            buildout: plip1340-get-rid-of-qi.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
