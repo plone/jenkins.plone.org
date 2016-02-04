@@ -105,7 +105,7 @@ author = g_commit.author.login
 
 header = '@%s Jenkins CI reporting about code analysis' % author
 first_line = 'See the full report here: %s/violations' % build_url
-footer = 'You can run that yourself using buildout.coredev ``experimental/qa.cfg`` config file.'
+footer = 'Follow [these instructions](https://github.com/plone/jenkins.plone.org/blob/master/docs/source/run-qa-on-package.rst) to reproduce it locally.'
 comment = '%s\n%s\n```\n%s```\n%s' % (
     header,
     first_line,
