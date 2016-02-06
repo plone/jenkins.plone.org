@@ -48,7 +48,19 @@ The first easy fixes can be easily solved with ``autopep8`` and ``isort``::
     pip install autopep8 isort
 
     isort plone/app/discussion/*.py
-    autopep8 --in-place plone/app/discusison/*.py
+    autopep8 --in-place -r plone/app/discussion
+
+By default autopep8 does white space only changes which are basically guaranteed safe.
+
+**Important** exception: undo any changes made by autopep8 to Python **skin** scripts.
+For instance, it will change the double comment hashes at the top to single hashes,
+which completely break those Python scripts.
+
+After committing the initial autopep8 run,
+you can run autopep8 in more aggressive mode,
+but you have to check these changes more carefully::
+
+   autopep8 --in-place --ignore W690,E711,E721 --aggressive
 
 Keep running ``bin/code-analysis`` to see how much errors are still left to be fixed.
 
