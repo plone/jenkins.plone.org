@@ -6,6 +6,7 @@ bin/buildout -c jenkins-package-dependencies.cfg
 echo "" > qa.txt
 
 sed -i 's#jenkins = True#jenkins = False#' experimental/qa.cfg
+wget https://raw.githubusercontent.com/plone/plone.recipe.codeanalysis/master/.isort.cfg -O .isort.cfg
 
 blacklist="Plone plone.themepreview diazo jquery.recurrenceinput.js mockup mockup-core"
 cd src
