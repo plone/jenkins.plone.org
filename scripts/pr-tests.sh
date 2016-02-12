@@ -1,6 +1,7 @@
 if [ "{plone-version}" = "4.3" ]; then
     $PYTHON27 bootstrap.py -c jenkins.cfg
 else
+    sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
     $PYTHON27 bootstrap.py --setuptools-version=19.4 -c jenkins.cfg
 fi
 if [ "$COREDEV" = "1" ]; then
