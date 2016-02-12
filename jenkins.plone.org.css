@@ -19,7 +19,7 @@ body {
   text-indent: -999px;
 }
 
-// Make "Build" or "Build with Parameters" links really prominent
+/* Make "Build" or "Build with Parameters" links really prominent*/
 a.task-link[href$="0sec"] {
   font-size: 20px;
   font-weight: bold;
