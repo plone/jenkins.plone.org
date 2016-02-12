@@ -1292,43 +1292,8 @@
         - timed: '@daily'
 
     builders:
-        - shell: |
-            # checkout all packages
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
-            $PYTHON27 bootstrap.py -c jenkins-package-dependencies.cfg
-            bin/buildout -c jenkins-package-dependencies.cfg
-
-            echo "" > qa.txt
-
-            # create the shim buildout
-            cat > b.cfg << EOF
-            [buildout]
-            extends = http://dist.plone.org/release/5.0/versions.cfg
-            parts =
-                code-analysis
-
-            [code-analysis]
-            recipe = plone.recipe.codeanalysis[recommended]
-            directory = .
-            pre-commit-hook = False
-            EOF
-
-            blacklist="Plone plone.themepreview diazo jquery.recurrenceinput.js mockup"
-            cd src
-            for pkg in *;
-            do
-                if [ `echo $blacklist | grep -c $pkg` -eq 0 ];
-                then
-                    echo $pkg >> ../qa.txt
-                    cp ../b.cfg $pkg/b.cfg
-                    cp ../bootstrap.py $pkg/bootstrap.py
-                    cd $pkg
-                    $PYTHON27 bootstrap.py -c b.cfg
-                    bin/buildout -c b.cfg
-                    ./bin/code-analysis >> ../../qa.txt
-                    cd ..
-                fi
-            done
+        - shell:
+            !include-raw: scripts/qa-global-code-analysis.sh
 
     publishers:
         - archive:
