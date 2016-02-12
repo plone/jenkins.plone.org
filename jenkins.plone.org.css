@@ -19,6 +19,12 @@ body {
   text-indent: -999px;
 }
 
+// Make "Build" or "Build with Parameters" links really prominent
+a.task-link[href$="0sec"] {
+  font-size: 20px;
+  font-weight: bold;
+}
+
 /* Dooney Jenkins Theme: https://github.com/kevinburke/doony
  * Code copied from https://cdnjs.cloudflare.com/ajax/libs/doony/2.1/css/doony.min.css
  */
