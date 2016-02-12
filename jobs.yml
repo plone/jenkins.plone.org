@@ -944,6 +944,16 @@
     publishers:
         - custom-junit
 
+        - email-ext:
+            recipients: zope-cmf@zope.org
+            reply-to:
+            content-type: default
+            regression: true
+            failure: true
+            improvement: true
+            still-failing: true
+            fixed: true
+
     wrappers:
         - custom-workspace-cleanup
 
