@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 wget https://raw.githubusercontent.com/plone/buildout.coredev/5.0/bootstrap.py -O bootstrap.py
 wget https://raw.githubusercontent.com/plone/buildout.coredev/5.0/experimental/qa.cfg -O qa.cfg
 wget https://raw.githubusercontent.com/plone/plone.recipe.codeanalysis/master/.isort.cfg -O .isort.cfg
