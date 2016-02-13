@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ "{plone-version}" = "4.3" ]; then
     $PYTHON27 bootstrap.py -c jenkins.cfg
 else
