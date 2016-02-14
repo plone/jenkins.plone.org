@@ -126,6 +126,9 @@
         - 1340-QuickInstaller:
             buildout: plips/plip1340-get-rid-of-qi.cfg
             branch: 5.0
+        - 1342-portal-actions:
+            buildout: plips/plip-1342-portal-actions.cfg
+            branch: 5.0
 
     jobs:
         - 'plip-{plip}'
