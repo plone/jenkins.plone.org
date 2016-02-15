@@ -878,6 +878,10 @@
             pep8:
                 pattern: '**/parts/code-analysis/flake8.log'
 
+        - archive:
+            artifacts: '**/parts/code-analysis/flake8.log'
+            allow-empty: 'true'
+
     wrappers:
         - custom-workspace-cleanup
 
