@@ -36,7 +36,7 @@ Get the QA configuration and bootstrap::
 Adjust ``qa.cfg`` to the package:
 
 - check that the ``directory`` option on ``code-analysis`` part matches the top-level folder of the distribution
-- remove the ``jenkins = True`` line (so that ``bin/code-analysis`` shows its report on the terminal
+- remove the ``jenkins = True`` line (so that ``bin/code-analysis`` shows its report on the terminal)
 
 Finally run buildout and code analysis::
 
