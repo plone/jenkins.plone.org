@@ -104,7 +104,7 @@ except UnknownObjectException:
 author = g_commit.author.login
 
 header = '@%s Jenkins CI reporting about code analysis' % author
-first_line = 'See the full report here: %s/violations' % build_url
+first_line = 'See the full report here: %sviolations' % build_url
 footer = 'Follow [these instructions](https://github.com/plone/jenkins.plone.org/blob/master/docs/source/run-qa-on-package.rst) to reproduce it locally.'
 comment = '%s\n%s\n```\n%s```\n%s' % (
     header,
