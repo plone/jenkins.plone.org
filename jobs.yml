@@ -1315,6 +1315,10 @@
             !include-raw: scripts/qa-global-code-analysis.sh
 
     publishers:
+        - violations:
+            pep8:
+                pattern: 'qa.txt'
+
         - archive:
             artifacts: 'qa.txt'
             allow-empty: 'true'

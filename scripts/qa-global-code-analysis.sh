@@ -62,7 +62,9 @@ do
 
         $PYTHON27 bootstrap.py -c qa.cfg
         bin/buildout -c qa.cfg
-        ./bin/code-analysis >> ../../qa.txt
+        ./bin/code-analysis > qa.txt
+        sed -i 's#^#src/'"$pkg"'/#' qa.txt  # fix path for jenkins violations plugin
+        cat qa.txt >> ../../qa.txt
         cd ..
 
     fi
