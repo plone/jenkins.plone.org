@@ -135,7 +135,9 @@ for pr in pull_request_urls.split():
     )
 
     if plone_repo != 'buildout.coredev':
+        # export the pacakges so it can be reported by mail
         PKGS.append(plone_repo)
+        # change the package source
         for line in fileinput.input('sources.cfg', inplace=True):
             if line.find(plone_repo) != -1:
                 line = re.sub(
@@ -144,6 +146,10 @@ for pr in pull_request_urls.split():
                     line
                 )
             sys.stdout.write(line)
+
+        # add the package on the checkouts
+        with open('checkouts.cfg', 'a') as myfile:
+            myfile.write('    {0}'.format(plone_repo))
     else:
         COREDEV = 1
 
