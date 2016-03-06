@@ -122,8 +122,8 @@ for pr in pull_request_urls.split():
     # get the branch
     branch = g_pr.head.ref
 
-    # get the repo
-    repo = g_pr.head.repo.owner.login
+    # get the user where the pull request comes from
+    user = g_pr.head.repo.owner.login
 
     # add a 'pending' status
     last_commit = g_pr.get_commits().reversed[0]
@@ -140,7 +140,7 @@ for pr in pull_request_urls.split():
             if line.find(plone_repo) != -1:
                 line = re.sub(
                     PKG_RE.format(plone_repo),
-                    SOURCE_RE.format(plone_repo, org, branch),
+                    SOURCE_RE.format(plone_repo, user, branch),
                     line
                 )
             sys.stdout.write(line)
