@@ -244,6 +244,12 @@
             top-level: 'plone'
         - plone.namedfile:
             top-level: 'plone'
+        - plonetheme.barceloneta:
+            top-level: 'plone'
+        - plone.behavior:
+            top-level: 'plone'
+        - plone.app.intid:
+            top-level: 'plone'
     # Note: when adding a new package on the list above be sure to also add
     # a commit hook on github! Look at the one in p.a.contentlisting:
     # https://github.com/plone/plone.app.contentlisting/settings/hooks/7120958
