@@ -214,9 +214,9 @@
 - project:
     name: per-package job
     package:
-        - borg.localrole: borg
+        - borg.localrole:
             top-level: 'borg'
-        - plone.api: src
+        - plone.api:
             top-level: 'src'
         - plone.app.contentlisting:
             top-level: 'plone'
