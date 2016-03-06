@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Plone Jenkins/CI Team'
-copyright = u'2011, Plone Jenkins/CI Team'
+copyright = u'2016, Plone Jenkins/CI Team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
