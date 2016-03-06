@@ -29,6 +29,8 @@ To test a pull request with this jenkins job one only needs to do the following:
   like for example https://github.com/plone/plone.outputfilters/pull/16
 - click on the ``Build`` button
 
+If a video suits you best: https://youtu.be/mXs_OcJhjnU
+
 GitHub integration
 ==================
 As soon as the job starts the pull request on GitHub will be notified,
