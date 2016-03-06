@@ -10,6 +10,7 @@ Contents:
 
    setup
    vagrant
+   run-qa-on-package
 
 .. include:: ../../README.rst
 
