@@ -12,6 +12,7 @@ Contents
 
    setup
    vagrant
+   run-pull-request-jobs
    run-qa-on-package
 
 .. include:: ../../README.rst
