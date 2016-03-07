@@ -18,11 +18,11 @@ bin/buildout -c jenkins.cfg
 
 return_code="all_right"
 
-if [ "{plone-version}" = "5.0" ]; then
+if [ "{plone-version}" = "4.3" ]; then
+    bin/jenkins-alltests -1 || return_code=$?
+else
     bin/alltests --xml --all || return_code=$?
     bin/alltests-at --xml || return_code=$?
-else
-    bin/jenkins-alltests -1 || return_code=$?
 fi
 
 if [ $return_code = "all_right" ]; then

@@ -27,8 +27,8 @@ although not mandatory it's always a good idea::
 
 Get the QA configuration and bootstrap::
 
-    wget https://raw.githubusercontent.com/plone/buildout.coredev/5.0/bootstrap.py -O bootstrap.py
-    wget https://raw.githubusercontent.com/plone/buildout.coredev/5.0/experimental/qa.cfg -O qa.cfg
+    wget https://raw.githubusercontent.com/plone/buildout.coredev/5.1/bootstrap.py -O bootstrap.py
+    wget https://raw.githubusercontent.com/plone/buildout.coredev/5.1/experimental/qa.cfg -O qa.cfg
     wget https://raw.githubusercontent.com/plone/plone.recipe.codeanalysis/master/.isort.cfg -O .isort.cfg
 
     python bootstrap.py --setuptools-version 19.4 -c qa.cfg
@@ -78,7 +78,7 @@ Push the branch::
 Create a pull request on github and start a jenkins job to verify that your changes did not break anything.
 For that, paste the pull request URL on this form (once authenticated via github)::
 
-    http://jenkins.plone.org/job/pull-request-5.0/build?delay=0sec
+    http://jenkins.plone.org/job/pull-request-5.1/build?delay=0sec
 
 Lastly `file an issue on jenkins.plone.org issue tracker`_ so that Jenkins start monitoring the package.
 

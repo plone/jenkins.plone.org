@@ -26,7 +26,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.0'
+            branch: '5.1'
 
     logrotate:
         daysToKeep: 60
@@ -72,6 +72,8 @@
 - project:
     name: Pull requests
     plone-version:
+        - '5.1':
+            report-path: 'parts/test'
         - '5.0':
             report-path: 'parts/test'
         - '4.3':
@@ -80,13 +82,15 @@
         - 'pull-request-{plone-version}'
 
 - project:
-    name: Plone 5.0
+    name: Plone 5.x
+    plone-version:
+        - '5.1'
+        - '5.0'
     jobs:
-        - 'plone-5.0-python-2.7'
-        - 'plone-5.0-python-2.7-robot'
-        - 'plone-5.0-python-2.7-at'
-        - 'plone-5.0-js'
-
+        - 'plone-{plone-version}-python-2.7'
+        - 'plone-{plone-version}-python-2.7-robot'
+        - 'plone-{plone-version}-python-2.7-at'
+        - 'plone-{plone-version}-js'
 
 - project:
     name: Plone 4.3
@@ -104,31 +108,31 @@
     plip:
         - 680-restapi:
             buildout: plips/plip-680-restapi.cfg
-            branch: 5.0
+            branch: 5.1
         - 13770-portal-tools-removal:
             buildout: plips/plip13770-portal-tools-removal.cfg
-            branch: 5.0
+            branch: 5.1
         - 14929-lxml-safehtml-transform:
             buildout: plips/plip14929-lxml-safehtml-transform.cfg
-            branch: 5.0
+            branch: 5.1
         - mosaic:
             buildout: plips/plip-mosaic.cfg
-            branch: 5.0
+            branch: 5.1
         - collective-indexing:
             buildout: plips/merge-collective-indexing.cfg
-            branch: 5.0
+            branch: 5.1
         - zope4:
             buildout: plips/plip-zope4.cfg
-            branch: 5.0
+            branch: 5.1
         - 1334-PlonePAS:
             buildout: plips/plip-1334-PlonePAS.cfg
-            branch: 5.0
+            branch: 5.1
         - 1340-QuickInstaller:
             buildout: plips/plip1340-get-rid-of-qi.cfg
-            branch: 5.0
+            branch: 5.1
         - 1342-portal-actions:
             buildout: plips/plip-1342-portal-actions.cfg
-            branch: 5.0
+            branch: 5.1
 
     jobs:
         - 'plip-{plip}'
@@ -137,6 +141,7 @@
 - project:
     name: Theme preview
     plone-version:
+        - '5.1'
         - '5.0'
         - '4.3'
     jobs:
@@ -363,14 +368,14 @@
     <<: *plone-xvfb
 
 
-- job:
-    # Plone 5.0 core tests job definition.
-    name: plone-5.0-python-2.7
-    display-name: 'Plone 5.0 - Python 2.7'
+- job-template:
+    # Plone 5.x core tests job definition.
+    name: plone-{plone-version}-python-2.7
+    display-name: 'Plone {plone-version} - Python 2.7'
 
     builders:
         - shell:
-            !include-raw: scripts/5.0-tests.sh
+            !include-raw: scripts/5.x-tests.sh
 
     publishers:
         - custom-junit-new
@@ -388,14 +393,14 @@
         - shell: |
             curl -H "Content-Type: application/json" --data '{"docker_tag_name": "5.0"}' -X POST https://registry.hub.docker.com/u/ramonnb/docker-base-plone/trigger/bc86c734-4a33-497d-91d0-8eb1f689cf5b/
 
-- job:
-    # Plone 5.0 robot tests job definition.
-    name: plone-5.0-python-2.7-robot
-    display-name: 'Plone 5.0 - Python 2.7 - Robot Framework Tests'
+- job-template:
+    # Plone 5.x robot tests job definition.
+    name: plone-{plone-version}-python-2.7-robot
+    display-name: 'Plone {plone-version} - Python 2.7 - Robot Framework Tests'
 
     builders:
         - shell:
-            !include-raw: scripts/5.0-robot.sh
+            !include-raw: scripts/5.x-robot.sh
 
     publishers:
         - custom-email-ext
@@ -427,10 +432,10 @@
     <<: *plone
 
 
-- job:
-    # Plone 5.0 Archetypes tests job definition.
-    name: plone-5.0-python-2.7-at
-    display-name: 'Plone 5.0 - Python 2.7 - Archetypes'
+- job-template:
+    # Plone 5.x Archetypes tests job definition.
+    name: plone-{plone-version}-python-2.7-at
+    display-name: 'Plone {plone-version} - Python 2.7 - Archetypes'
 
     properties:
         - custom-throttle:
@@ -441,7 +446,7 @@
 
     builders:
         - shell:
-            !include-raw: scripts/5.0-at.sh
+            !include-raw: scripts/5.x-at.sh
 
     publishers:
         - custom-junit-new
@@ -454,10 +459,10 @@
 
 
 
-- job:
-    # Plone 5.0 JavaScript mockup unittests.
-    name: plone-5.0-js
-    display-name: 'Plone 5.0 - JavaScript'
+- job-template:
+    # Plone 5.x JavaScript mockup unittests.
+    name: plone-{plone-version}-js
+    display-name: 'Plone {plone-version} - JavaScript'
 
     scm:
         - git:
@@ -470,7 +475,7 @@
 
     builders:
         - shell:
-            !include-raw: scripts/5.0-js.sh
+            !include-raw: scripts/5.x-js.sh
 
     publishers:
         - junit:
@@ -776,7 +781,7 @@
 
 - job:
     name: 'all-checkouts'
-    display-name: 'Plone 5.0 all checkouts'
+    display-name: 'Plone 5.1 all checkouts'
 
     triggers:
         - timed: "@daily"
