@@ -22,8 +22,8 @@ To test a pull request with this jenkins job one only needs to do the following:
 - click on the `Pull Request 5.0 job <http://jenkins.plone.org/job/pull-request-5.0>`_
   or `Pull Request 4.3 job <http://jenkins.plone.org/job/pull-request-4.3>`_ if you are targeting that Plone version
 - click on the huge button **Build with Parameters**
-  `Plone 5.0<http://jenkins.plone.org/job/pull-request-5.0/build?delay=0sec>`_ or
-  `Plone 4.3<http://jenkins.plone.org/job/pull-request-4.3/build?delay=0sec>`_
+  `Plone 5.0 <http://jenkins.plone.org/job/pull-request-5.0/build?delay=0sec>`_ or
+  `Plone 4.3 <http://jenkins.plone.org/job/pull-request-4.3/build?delay=0sec>`_
 - paste the pull request URL on the text field
   (or multiple pull requests if they have to be combined, then one per line),
   like for example https://github.com/plone/plone.outputfilters/pull/16
