@@ -64,10 +64,10 @@
 # PROJECTS
 ###
 
-- project:
-    name: workflow
-    jobs:
-        - 'workflow-plone-5.0'
+#- project:
+#    name: workflow
+#    jobs:
+#        - 'workflow-plone-5.0'
 
 - project:
     name: Pull requests
@@ -592,16 +592,16 @@
     <<: *plone
 
 
-- job:
-    name: 'workflow-plone-5.0'
-    project-type: workflow
-    definitions:
-        - script:
-            filename: 'flow.groovy'
-        - scm:
-            url: https://github.com/plone/jenkins.plone.org.git
-            branches:
-                - '*/master'
+#- job:
+#    name: 'workflow-plone-5.0'
+#    project-type: workflow
+#    definitions:
+#        - script:
+#            filename: 'flow.groovy'
+#        - scm:
+#            url: https://github.com/plone/jenkins.plone.org.git
+#            branches:
+#                - '*/master'
 
 
 - job-template:
