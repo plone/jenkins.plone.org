@@ -224,7 +224,11 @@
             top-level: 'plone'
         - plone.app.intid:
             top-level: 'plone'
+        - plone.app.relationfield:
+            top-level: 'plone'
         - plone.app.testing:
+            top-level: 'plone'
+        - plone.app.z3cform:
             top-level: 'plone'
         - plone.autoform:
             top-level: 'plone'
