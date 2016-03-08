@@ -101,7 +101,12 @@ except UnknownObjectException:
     sys.exit(1)
 
 
-author = g_commit.author.login
+try:
+    author = g_commit.author.login
+except AttributeError:
+    # If the user does not exist on github,
+    # get the username of the commit
+    author = g_commit.commit.author.name
 
 header = '@%s Jenkins CI reporting about code analysis' % author
 first_line = 'See the full report here: %sviolations' % build_url
