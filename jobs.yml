@@ -274,6 +274,7 @@
         - qa-i18n-find-untranslated
         - qa-i18n-statistics
         - qa-monkey-patches
+        - qa-setuptools
 
 ###
 # JOBS
@@ -1082,6 +1083,26 @@
         - archive:
             artifacts: '*.txt'
             allow-empty: 'false'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+- job:
+    name: qa-setuptools
+    display-name: Latest Setuptools
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shell: |
+            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+            sed -i 's/setuptools==.*/setuptools/' requirements.txt
+            sed -i 's/setuptools =.*/setuptools =/' versions.cfg
+            $PYTHON27 bootstrap.py
+            bin/buildout
 
     wrappers:
         - custom-workspace-cleanup
