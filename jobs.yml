@@ -326,6 +326,10 @@
     name: plone-{plone-version}-python-2.7
     display-name: 'Plone {plone-version} - Python 2.7'
 
+    scm:
+        - buildout-coredev:
+            branch: '{plone-version}'
+
     builders:
         - shell:
             !include-raw: scripts/5.x-tests.sh
@@ -350,6 +354,10 @@
     # Plone 5.x robot tests job definition.
     name: plone-{plone-version}-python-2.7-robot
     display-name: 'Plone {plone-version} - Python 2.7 - Robot Framework Tests'
+
+    scm:
+        - buildout-coredev:
+            branch: '{plone-version}'
 
     builders:
         - shell:
@@ -396,6 +404,10 @@
             enable: '' # false
 
         - disk-usage
+
+    scm:
+        - buildout-coredev:
+            branch: '{plone-version}'
 
     builders:
         - shell:
