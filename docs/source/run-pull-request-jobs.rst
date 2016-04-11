@@ -21,7 +21,7 @@ To test a pull request with this jenkins job one only needs to do the following:
 - go to http://jenkins.plone.org
 - log in with your github user
 - click on the `Pull Request 5.1 job <http://jenkins.plone.org/job/pull-request-5.1>`_
-  or `Pull Request 4.3 job <http://jenkins.plone.org/job/pull-request-5.0>`_ if you are targeting that Plone version
+  or `Pull Request 4.3 job <http://jenkins.plone.org/job/pull-request-4.3>`_ if you are targeting that Plone version
 - click on the huge button **Build with Parameters**
   `Plone 5.1 <http://jenkins.plone.org/job/pull-request-5.0/build?delay=0sec>`_ or
   `Plone 4.3 <http://jenkins.plone.org/job/pull-request-4.3/build?delay=0sec>`_
