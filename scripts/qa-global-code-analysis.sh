@@ -2,7 +2,9 @@
 # checkout all packages
 sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
 $PYTHON27 bootstrap.py -c jenkins-package-dependencies.cfg
+./marker.sh set $$
 bin/buildout -c jenkins-package-dependencies.cfg
+./marker.sh release
 
 echo "" > qa.txt
 
@@ -11,7 +13,9 @@ sed -i 's#\[buildout\]#\[buildout\]\nbin-directory = ../bin#' experimental/qa.cf
 sed -i 's#\[buildout\]#\[buildout\]\nparts-directory = ../parts#' experimental/qa.cfg
 wget https://raw.githubusercontent.com/plone/plone.recipe.codeanalysis/master/.isort.cfg -O .isort.cfg
 
+./marker.sh set $$
 bin/buildout -c experimental/qa.cfg
+./marker.sh release
 
 blacklist="Plone plone.themepreview diazo jquery.recurrenceinput.js mockup mockup-core"
 for pkg in src/*;

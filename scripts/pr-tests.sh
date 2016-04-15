@@ -14,7 +14,9 @@ else
     done
 fi
 
+./marker.sh set $$
 bin/buildout -c jenkins.cfg
+./marker.sh release
 
 return_code="all_right"
 
