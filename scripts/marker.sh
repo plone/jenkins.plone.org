@@ -1,5 +1,7 @@
 #!/bin/bash
 MARKER_FILE=~/BUILDOUT-RUNNING
+MAX_TRIES=20
+SEC=10
 USAGE="
 Goal: claim a marker file, run buildout, then unclaim the file.
 This avoids issues building new packages when starting two Jenkins
@@ -29,29 +31,46 @@ if test $# -eq 2 && test "$1" == "set"; then
     # restarted, this file is still lying around, and it contains a
     # pid that belongs to a completely different process that will
     # remain active a long time.
-    MAX_TRIES=3
-    SEC=5
-    for try in $(seq $MAX_TRIES); do
-        echo "Try $try"
-        if test -e $MARKER_FILE; then
-            OTHER_PID=$(cat $MARKER_FILE)
-            echo "Marker file $MARKER_FILE exists for PID $OTHER_PID."
-            if ! test $(pgrep -F $MARKER_FILE); then
-                echo "PID $OTHER_PID is no longer running. We will take over."
-                rm $MARKER_FILE
+    PREV_PID="UNKNOWN"
+    while true; do
+        PID_CHANGED=0
+        for try in $(seq $MAX_TRIES); do
+            echo "Try $try"
+            if test -e $MARKER_FILE; then
+                CURRENT_PID=$(cat $MARKER_FILE)
+                echo "Marker file $MARKER_FILE exists for PID $CURRENT_PID."
+                # If this is not the first try and the pid has changed,
+                # then another script was lucky and sneaked in.  So we
+                # start looping fresh.
+                if test "$PREV_PID" != "UNKNOWN" && test "$PREV_PID" != "$CURRENT_PID"; then
+                    echo "PID has changed from $PREV_PID to $CURRENT_PID, starting over."
+                    PREV_PID="$CURRENT_PID"
+                    PID_CHANGED=1
+                    break
+                fi
+                PREV_PID="$CURRENT_PID"
+                if ! test $(pgrep -F $MARKER_FILE); then
+                    echo "PID $CURRENT_PID is no longer running. We will take over."
+                    rm $MARKER_FILE
+                    break
+                else
+                    echo "Waiting $SEC seconds..."
+                    sleep $SEC
+                fi
             else
-                echo "Waiting $SEC seconds..."
-                sleep 5
+                echo "Marker file $MARKER_FILE not found."
+                break
             fi
-        else
-            echo "breaking"
-            break
+        done
+        if test $PID_CHANGED -eq 1; then
+            # start over
+            continue
         fi
+        if test $try -eq $MAX_TRIES; then
+            echo "Waited $MAX_TRIES times, lost patience, we take over."
+        fi
+        break
     done
-    echo "Try after for loop: $try"
-    if test $try -eq $MAX_TRIES; then
-        echo "Waited $MAX_TRIES times, lost patience, we take over."
-    fi
     echo $PID > $MARKER_FILE
     echo "Created marker file $MARKER_FILE with our PID $PID."
     exit 0
