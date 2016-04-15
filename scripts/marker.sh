@@ -23,17 +23,35 @@ if test $# -eq 2 && test "$1" == "set"; then
     # it is bogus, the marker will be stolen by the next calling
     # script, which is fine.
     PID="$2"
-    while test -e $MARKER_FILE; do
-        OTHER_PID=$(cat $MARKER_FILE)
-        echo "Marker file $MARKER_FILE exists for PID $OTHER_PID."
-        if ! test $(pgrep -F $MARKER_FILE); then
-            echo "PID $OTHER_PID is no longer running. We will take over."
-            rm $MARKER_FILE
+    # Check if the marker file exists and if the stored pid belongs to
+    # an active process.  If so, wait and try again.  For safety, if
+    # this takes too long, we take over: maybe the server has
+    # restarted, this file is still lying around, and it contains a
+    # pid that belongs to a completely different process that will
+    # remain active a long time.
+    MAX_TRIES=3
+    SEC=5
+    for try in $(seq $MAX_TRIES); do
+        echo "Try $try"
+        if test -e $MARKER_FILE; then
+            OTHER_PID=$(cat $MARKER_FILE)
+            echo "Marker file $MARKER_FILE exists for PID $OTHER_PID."
+            if ! test $(pgrep -F $MARKER_FILE); then
+                echo "PID $OTHER_PID is no longer running. We will take over."
+                rm $MARKER_FILE
+            else
+                echo "Waiting $SEC seconds..."
+                sleep 5
+            fi
         else
-            echo "Waiting..."
-            sleep 5
+            echo "breaking"
+            break
         fi
     done
+    echo "Try after for loop: $try"
+    if test $try -eq $MAX_TRIES; then
+        echo "Waited $MAX_TRIES times, lost patience, we take over."
+    fi
     echo $PID > $MARKER_FILE
     echo "Created marker file $MARKER_FILE with our PID $PID."
     exit 0
