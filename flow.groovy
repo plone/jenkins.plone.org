@@ -45,7 +45,6 @@ parallel(
         try {
           sh "bin/alltests -t ONLYROBOT --all --xml"
           //step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
-          /*
           step([$class: 'RobotPublisher',
             disableArchiveOutput: false,
             logFileName: 'log.html',
@@ -56,7 +55,6 @@ parallel(
             passThreshold: 90,
             reportFileName: 'report.html',
             unstableThreshold: 100]);
-          */
         } catch (e) {
           mail subject: "Jenkins Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) failed in the alltests-robot stage with ${e.message}", to: 'tisto@plone.org', body: "Please go to ${env.BUILD_URL}."
           throw e
