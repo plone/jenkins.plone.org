@@ -50,8 +50,8 @@ parallel(
             logFileName: 'log.html',
             onlyCritical: true,
             otherFiles: '',
-            outputFileName: 'output.xml',
-            outputPath: '.',
+            outputFileName: 'robot_output.xml',
+            outputPath: 'parts/jenkins-test',
             passThreshold: 90,
             reportFileName: 'report.html',
             unstableThreshold: 100]);
