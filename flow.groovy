@@ -44,14 +44,13 @@ parallel(
       wrap([$class: 'Xvfb']) {
         try {
           sh "bin/alltests -t ONLYROBOT --all --xml"
-          //step([$class: 'JUnitResultArchiver', testResults: 'parts/test/testreports/*.xml'])
           step([$class: 'RobotPublisher',
             disableArchiveOutput: false,
             logFileName: 'log.html',
             onlyCritical: true,
             otherFiles: '',
             outputFileName: 'robot_output.xml',
-            outputPath: 'parts/jenkins-test',
+            outputPath: 'parts/test',
             passThreshold: 90,
             reportFileName: 'report.html',
             unstableThreshold: 100]);
