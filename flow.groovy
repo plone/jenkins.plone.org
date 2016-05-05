@@ -11,9 +11,9 @@ node {
   sh "bin/buildout -c jenkins.cfg"
   sh "tar -c -f buildout.tar bin parts src *.cfg"
   // get git commit message (https://github.com/jenkinsci/pipeline-examples/blob/master/pipeline-examples/gitcommit/gitcommit.groovy)
-  sh('git rev-parse HEAD > GIT_COMMIT')
-  git_commit=readFile('GIT_COMMIT')
-  short_commit=git_commit.take(6)
+  // sh('git rev-parse HEAD > GIT_COMMIT')
+  // git_commit=readFile('GIT_COMMIT')
+  // short_commit=git_commit.take(6)
   // get build cause (https://github.com/jenkinsci/pipeline-examples/blob/master/pipeline-examples/get-build-cause/getBuildCause.groovy)
   def causes = currentBuild.rawBuild.getCauses()
   def specificCause = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause)
