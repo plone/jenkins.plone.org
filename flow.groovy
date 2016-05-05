@@ -43,8 +43,7 @@ parallel(
       prepareBuildout()
       wrap([$class: 'Xvfb']) {
         try {
-          sh "export ROBOTSUITE_PREFIX=ONLYROBOT"
-          sh "bin/alltests -t ONLYROBOT --all --xml"
+          sh "export ROBOTSUITE_PREFIX=ONLYROBOT && bin/alltests -t ONLYROBOT --all --xml"
           step([$class: 'RobotPublisher',
             disableArchiveOutput: false,
             logFileName: 'log.html',
