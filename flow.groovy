@@ -10,7 +10,6 @@ node {
   sh "python2.7 bootstrap.py -c jenkins.cfg"
   sh "bin/buildout -c jenkins.cfg"
   sh "tar -c -f buildout.tar bin parts src *.cfg"
-  println "CAUSE ${currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).properties}"
   // get git commit message (https://github.com/jenkinsci/pipeline-examples/blob/master/pipeline-examples/gitcommit/gitcommit.groovy)
   // sh('git rev-parse HEAD > GIT_COMMIT')
   // git_commit=readFile('GIT_COMMIT')
