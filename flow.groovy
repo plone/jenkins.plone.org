@@ -10,6 +10,13 @@ node {
   sh "python2.7 bootstrap.py -c jenkins.cfg"
   sh "bin/buildout -c jenkins.cfg"
   sh "tar -c -f buildout.tar bin parts src *.cfg"
+  // get git commit message (https://github.com/jenkinsci/pipeline-examples/blob/master/pipeline-examples/gitcommit/gitcommit.groovy)
+  sh('git rev-parse HEAD > GIT_COMMIT')
+  git_commit=readFile('GIT_COMMIT')
+  short_commit=git_commit.take(6)
+  // get build cause (https://github.com/jenkinsci/pipeline-examples/blob/master/pipeline-examples/get-build-cause/getBuildCause.groovy)
+  def causes = currentBuild.rawBuild.getCauses()
+  def specificCause = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause)
   archive 'buildout.tar'
 }
 
@@ -70,7 +77,7 @@ node {
   mail (
     to: 'tisto@plone.org',
     subject: "Job '${env.JOB_NAME}' (${env.BUILD_NUMBER}) is ready.",
-    body: "Please go to ${env.BUILD_URL}."
+    body: "Please go to ${env.BUILD_URL}. ${env.git_commit} ${env.short_commit} ${env.causes} ${env.specificCause}"
   );
 }
 
