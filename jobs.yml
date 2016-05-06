@@ -524,7 +524,7 @@
 
     builders:
         - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version 19.4 -c buildout.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 21.0.0 -c buildout.cfg
             bin/buildout -c buildout.cfg
             bin/sphinx-build source build
 
@@ -694,7 +694,7 @@
 
         - shell: |
             mv jenkins.cfg buildout.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 19.4 -c buildout.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 21.0.0 -c buildout.cfg
             bin/buildout annotate
             bin/buildout -c buildout.cfg
             bin/alltests --xml --all
@@ -727,7 +727,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 19.4 -c jenkins-package-dependencies.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 21.0.0 -c jenkins-package-dependencies.cfg
             bin/buildout -c jenkins-package-dependencies.cfg
             bin/jenkins-package-dependencies-{kind}
             bin/jenkins-package-dependencies-{kind}-imports
@@ -753,7 +753,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 19.4 -c jenkins-package-dependencies.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 21.0.0 -c jenkins-package-dependencies.cfg
             bin/buildout -c jenkins-package-dependencies.cfg
             bin/jenkins-package-dependencies-text
 
@@ -952,7 +952,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 19.4 -c release.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 21.0.0 -c release.cfg
             bin/buildout -c release.cfg install releaser
             bin/manage jenkins > changelog.txt
 
@@ -996,7 +996,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 19.4 -c experimental/i18n.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 21.0.0 -c experimental/i18n.cfg
             bin/buildout -c experimental/i18n.cfg install i18n-find-untranslated i18ndude
             bin/i18n-find-untranslated details > missing.txt
 
@@ -1074,7 +1074,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 19.4
+            $PYTHON27 bootstrap.py --setuptools-version 21.0.0
             bin/buildout
             cd src
             grep -R collective.monkeypatcher * > ../results.txt
@@ -1129,7 +1129,7 @@
             sed -i 's/^z3c./#z3c./' sources.cfg
             sed -i 's/^Products.CMF/#Products.CMF/' sources.cfg
             sed -i 's/^Products.MailHost/#Products.MailHost/' sources.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 19.4 -c docs.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 21.0.0 -c docs.cfg
             bin/buildout -c docs.cfg install test
 
         - python: |
