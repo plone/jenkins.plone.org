@@ -57,6 +57,12 @@
   handlers:
 
     - name: Start mr.roboto
-      supervisorctl: name=all state=started config=/srv/mr.roboto/supervisord.conf
+      supervisorctl:
+        name="roboto:"
+        state=started
+        config=/srv/mr.roboto/supervisord.conf
     - name: Restart mr.roboto
-      supervisorctl: name=all state=restarted config=/srv/mr.roboto/supervisord.conf
+      supervisorctl:
+        name="roboto:"
+        state=restarted
+        config=/srv/mr.roboto/supervisord.conf
