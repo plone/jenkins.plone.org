@@ -133,6 +133,9 @@
         - 1342-portal-actions:
             buildout: plips/plip-1342-portal-actions.cfg
             branch: 5.1
+        - 1483-retina-image-scales:
+            buildout: plips/plip-1483-retina-image-scales.cfg
+            branch: 5.1
 
     jobs:
         - 'plip-{plip}'
