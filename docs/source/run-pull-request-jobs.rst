@@ -16,8 +16,13 @@ If the pull request targets **both** 5.1 *and* 5.0 you need to run a job on each
 
 Test a pull request
 ===================
-To test a pull request with this jenkins job one only needs to do the following:
+To test a pull request with this jenkins job, either:
 
+- watch this video: https://youtu.be/mXs_OcJhjnU
+- follow the detailed steps below
+
+Run a pull request job
+----------------------
 - go to http://jenkins.plone.org
 - log in with your github user
 - click on the `Pull Request 5.1 job <http://jenkins.plone.org/job/pull-request-5.1>`_
@@ -30,7 +35,6 @@ To test a pull request with this jenkins job one only needs to do the following:
   like for example https://github.com/plone/plone.outputfilters/pull/16
 - click on the ``Build`` button
 
-If a video suits you best: https://youtu.be/mXs_OcJhjnU
 
 GitHub integration
 ==================

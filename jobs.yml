@@ -631,7 +631,7 @@
     parameters:
         - text:
             name: PULL_REQUEST_URL
-            description: 'URLs of the github pull requests, e.g. "https://github.com/plone/plone.app.discussion/pull/56", when testing multiple pull requests put one on each line.'
+            description: 'URLs of the github pull requests, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-pull-request-jobs.html'
 
     scm:
         - buildout-coredev:
