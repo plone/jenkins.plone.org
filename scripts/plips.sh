@@ -13,8 +13,5 @@ if [ $return_code = "all_right" ]; then
     return_code=$?
 fi
 
-# Update GitHub pull request status
-$PYTHON27 templates/pr-update-status.py
-
 # Keep tests return code
 exit $return_code
