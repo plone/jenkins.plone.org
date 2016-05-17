@@ -279,6 +279,19 @@
         - qa-monkey-patches
         - qa-setuptools
 
+
+- project:
+    name: 'Performance jobs'
+    id:
+        - 'check-rest-endpoints':
+            repo: 'git://github.com/plone/buildout.coredev.git'
+            visible-name: 'Run this and that'
+            jmeter_file: 'some/where.jmx'
+            timer: '0 4 * * *'
+
+    jobs:
+        - 'perf-{id}'
+
 ###
 # JOBS
 ###
@@ -943,6 +956,39 @@
         - custom-workspace-cleanup
 
     <<: *plone
+
+
+- job-template:
+    name: 'perf-{id}'
+    display-name: 'Performance - {visible-name}'
+
+    scm:
+        - git:
+            url: {repo}
+            branches:
+                - '{master}'
+            wipe-workspace: false
+            tag-builds: false
+
+    triggers:
+        - timed: '{timer}'
+
+    builders:
+        - shell: |
+            jmeter -n -t {jmeter_file} -l results.jtl
+
+    publishers:
+        - archive:
+            artifacts: 'results.jtl'
+            allow-empty: 'false'
+
+        - performance:
+            failed-threshold: 30
+            unstable-threshold: 10
+            report:
+                - jmeter: 'results.jtl'
+
+    <<: *plone-basic
 
 
 - job:
