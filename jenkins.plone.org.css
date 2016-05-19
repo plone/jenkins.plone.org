@@ -5,7 +5,8 @@ body {
 }
 
 #jenkins-head-icon,
-#jenkins-name-icon {
+#jenkins-name-icon,
+body[data-model-type="hudson.model.ParametersDefinitionProperty"] .doony-build {
   display: none;
 }
 
