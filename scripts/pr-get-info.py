@@ -127,12 +127,20 @@ for pr in pull_request_urls.split():
 
     # add a 'pending' status
     last_commit = g_pr.get_commits().reversed[0]
-    last_commit.create_status(
-        u'pending',
-        target_url=build_url,
-        description='Job started, wait until it finishes',
-        context='Plone Jenkins CI - {0}'.format(job_name),
-    )
+    try:
+        last_commit.create_status(
+            u'pending',
+            target_url=build_url,
+            description='Job started, wait until it finishes',
+            context='Plone Jenkins CI - {0}'.format(job_name),
+        )
+    except UnknownObjectException:
+        msg = (
+            '\n\n\n'
+            'Could not update Pull Request %s'
+            '\n\n\n'
+        )
+        print(msg % pr)
 
     if plone_repo != 'buildout.coredev':
         PKGS.append(plone_repo)
