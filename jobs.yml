@@ -279,6 +279,13 @@
         - qa-monkey-patches
         - qa-setuptools
 
+
+- project:
+    name: Release scripts
+    jobs:
+        - release-upload-to-dist
+
+
 ###
 # JOBS
 ###
@@ -1260,6 +1267,44 @@
         - custom-workspace-cleanup
 
     <<: *plone
+
+
+- job:
+    name: release-upload-to-dist
+    display-name: 'Upload to dist.plone.org'
+    project-type: freestyle
+    concurrent: true
+    disabled: false
+
+    logrotate:
+        daysToKeep: 60
+        numToKeep: 100
+        artifactDaysToKeep: 3
+        artifactNumToKeep: 10
+
+    properties:
+        - custom-throttle:
+            total: '7'
+            enable: 'true'
+
+        - disk-usage
+
+    parameters:
+        - text:
+            name: VERSION
+            description: 'Which buildout.coredev branch should be used?'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.1'
+
+    builders:
+        - shell:
+            !include-raw: scripts/release-upload-to-dist_plone_org.sh
+
+    wrappers:
+        - custom-workspace-cleanup
+        - build-user-vars
 
 
 ###
