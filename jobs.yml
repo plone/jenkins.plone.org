@@ -185,6 +185,8 @@
             top-level: 'plone'
         - plone.app.intid:
             top-level: 'plone'
+        - plone.app.openid:
+            top-level: 'plone'
         - plone.app.relationfield:
             top-level: 'plone'
         - plone.app.testing:
