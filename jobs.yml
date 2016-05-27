@@ -810,15 +810,29 @@
     scm:
         - git:
             url: git://github.com/zopefoundation/zopetoolkit.git
+            branches:
+                - 'master'
 
     triggers:
         - timed: '@weekly'
 
     builders:
         - shell: |
-            {pybinary} bootstrap.py
-            bin/buildout
+            {pybinary} bootstrap.py -c development-python2.cfg
+            bin/buildout -t 3 -v -c development-python2.cfg
+            rm src/zope.component/src/zope/component/tests/test_standalone.py
             bin/test-ztk
+
+    publishers:
+        - email-ext:
+            recipients: zope-tests@zope.org, gerken@patrick-gerken.de
+            reply-to:
+            content-type: default
+            regression: true
+            failure: true
+            improvement: false
+            still-failing: false
+            fixed: false
 
     wrappers:
         - custom-workspace-cleanup
@@ -929,6 +943,16 @@
 
     publishers:
         - custom-junit
+
+        - email-ext:
+            recipients: zope-cmf@zope.org
+            reply-to:
+            content-type: default
+            regression: true
+            failure: true
+            improvement: true
+            still-failing: true
+            fixed: true
 
     wrappers:
         - custom-workspace-cleanup
