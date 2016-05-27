@@ -24,15 +24,15 @@
 
         - disk-usage
 
+        - build-discarder:
+            days-to-keep: 60
+            num-to-keep: 100
+            artifact-days-to-keep: 3
+            artifact-num-to-keep: 10
+
     scm:
         - buildout-coredev:
             branch: '5.1'
-
-    logrotate:
-        daysToKeep: 60
-        numToKeep: 100
-        artifactDaysToKeep: 3
-        artifactNumToKeep: 10
 
     wrappers:
         - custom-workspace-cleanup
@@ -503,11 +503,6 @@
     # Plone theme preview.
     name: 'plone-{plone-version}-themetest'
     display-name: 'Plone {plone-version} - Themetest'
-    logrotate:
-        daysToKeep: 20
-        numToKeep: 30
-        artifactDaysToKeep: 3
-        artifactNumToKeep: 10
 
     properties:
         - custom-throttle:
@@ -515,6 +510,12 @@
             enable: '' # false
 
         - disk-usage
+
+        - build-discarder:
+            days-to-keep: 20
+            num-to-keep: 30
+            artifact-days-to-keep: 3
+            artifact-num-to-keep: 10
 
     scm:
         - git:
@@ -551,11 +552,6 @@
     # Plone.org theme preview.
     name: 'ploneorg-themepreview'
     display-name: 'Plone.org - theme preview'
-    logrotate:
-        daysToKeep: 20
-        numToKeep: 30
-        artifactDaysToKeep: 3
-        artifactNumToKeep: 10
 
     properties:
         - custom-throttle:
@@ -563,6 +559,12 @@
             enable: '' # false
 
         - disk-usage
+
+        - build-discarder:
+            days-to-keep: 20
+            num-to-keep: 30
+            artifact-days-to-keep: 3
+            artifact-num-to-keep: 10
 
     scm:
         - git:
