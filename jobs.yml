@@ -913,29 +913,18 @@
     display-name: CMF py{pyversion}
 
     scm:
-        - svn:
-            url: svn://svn.zope.org/repos/main/CMF/trunk
+        - git:
+            url: git://github.com/plone/buildout.coredev.git
+            branches:
+                - '5.1'
 
     triggers:
         - timed: '@weekly'
 
     builders:
         - shell: |
-            svn upgrade
-            cat > jenkins.cfg << EOF
-            [buildout]
-            extends = buildout-zope213.cfg
-            parts +=
-                jenkins-test
-            allow-picked-versions = true
-
-            [jenkins-test]
-            recipe = collective.xmltestreport
-            eggs = \${{test:eggs}}
-            defaults = ['--auto-color', '--auto-progress']
-            EOF
-            {pybinary} bootstrap.py -c jenkins.cfg
-            bin/buildout -c jenkins.cfg
+            {pybinary} bootstrap.py -c experimental/cmf.cfg
+            bin/buildout -c experimental/cmf.cfg
             bin/jenkins-test --xml
 
     publishers:
