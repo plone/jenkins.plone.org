@@ -7,11 +7,6 @@ fi
 if [ "$COREDEV" = "1" ]; then
     # TODO(gforcada): allow to test remote branches (i.e. branches not in github.com/plone/buildout.coredev)
     git checkout $BRANCH
-else
-    bin/buildout -c jenkins.cfg install add-package-to-auto-checkout
-    for pkg in $PKGS; do
-        bin/add-package-to-auto-checkout $pkg
-    done
 fi
 
 bin/buildout -c jenkins.cfg
