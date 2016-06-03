@@ -41,11 +41,18 @@
       pip: name=supervisor
     - name: Checkout mr.roboto
       git: repo=https://github.com/plone/mr.roboto.git dest=/srv/mr.roboto
-    # keep setuptools version in sync with what's on mr.roboto's buildout.cfg
+    - name: Create a virtualenv for mr.roboto
+      pip:
+        requirements=/srv/mr.roboto/requirements.txt
+        virtualenv=/srv/mr.roboto
+        virtualenv_command=/srv/python2.7.11/bin/virtualenv
     - name: Run mr.roboto bootstrap
-      shell: python2.7 bootstrap.py --setuptools-version 20.10.1 chdir=/srv/mr.roboto/
+      shell: bin/python2.7 bootstrap.py
+        chdir=/srv/mr.roboto/
+        creates=/srv/mr.roboto/bin/buildout
     - name: Run mr.roboto buildout
-      shell: bin/buildout chdir=/srv/mr.roboto/
+      shell: bin/buildout
+        chdir=/srv/mr.roboto/
       notify: Restart mr.roboto
     - lineinfile: dest=/usr/lib/python2.7/sitecustomize.py line="import sys; sys.setdefaultencoding('utf-8');"
 
