@@ -5,6 +5,7 @@
   remote_user: root
   roles:
     - plone.jenkins_server
+    - gforcada.compile-python
   vars:
     admin_email: tisto@plone.org
     simple_theme_css_url: https://rawgit.com/plone/jenkins.plone.org/master/jenkins.plone.org.css
@@ -22,6 +23,9 @@
       - Node2
       - Node3
       - Node4
+    python_26: true
+    pillow: true
+    lxml: true
   vars_files:
     - secrets.yml
 
