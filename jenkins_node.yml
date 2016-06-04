@@ -5,3 +5,8 @@
   remote_user: root
   roles:
     - plone.jenkins_node
+    - gforcada.compile-python
+  vars:
+    python_26: true
+    pillow: true
+    lxml: true
