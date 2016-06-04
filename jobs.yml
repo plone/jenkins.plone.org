@@ -225,6 +225,14 @@
 
 
 - project:
+    name: python 3.x support
+    package:
+        - plone.uuid
+    jobs:
+        - 'py3-{package}'
+
+
+- project:
     name: ZTK (Zope Toolkit)
     pyversion:
         - '27':
@@ -798,6 +806,28 @@
         - archive:
             artifacts: '**/parts/code-analysis/flake8.log'
             allow-empty: 'true'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
+- job-template:
+    name: py3-{package}
+    display-name: '{package} (py3 support)'
+
+    scm:
+        - git:
+            url: git://github.com/plone/{package}.git
+            wipe-workspace: false
+
+    builders:
+        - shell:
+            !include-raw: scripts/pkg-py3.sh
+
+    publishers:
+        - custom-junit-new
 
     wrappers:
         - custom-workspace-cleanup
