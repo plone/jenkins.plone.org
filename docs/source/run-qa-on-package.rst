@@ -76,9 +76,7 @@ Push the branch::
     git push -u
 
 Create a pull request on github and start a jenkins job to verify that your changes did not break anything.
-For that, paste the pull request URL on this form (once authenticated via github)::
-
-    http://jenkins.plone.org/job/pull-request-5.1/build?delay=0sec
+For that, see the :doc:`docs about testing pull requests<run-pull-request-jobs>`.
 
 Lastly `file an issue on jenkins.plone.org issue tracker`_ so that Jenkins start monitoring the package.
 
