@@ -217,9 +217,6 @@
             top-level: 'plone'
         - plonetheme.barceloneta:
             top-level: 'plonetheme'
-    # Note: when adding a new package on the list above be sure to also add
-    # a commit hook on github! Look at the one in p.a.contentlisting:
-    # https://github.com/plone/plone.app.contentlisting/settings/hooks/7120958
     jobs:
         - 'package-{package}'
 
@@ -227,6 +224,15 @@
 - project:
     name: python 3.x support
     package:
+        - plone.alterego
+        - plone.behavior
+        - plone.dexterity
+        - plone.namedfile
+        - plone.registry
+        - plone.rfc822
+        - plone.scale
+        - plone.supermodel
+        - plone.synchronize
         - plone.uuid
     jobs:
         - 'py3-{package}'
