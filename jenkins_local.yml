@@ -5,6 +5,7 @@
   remote_user: vagrant
   roles:
     - plone.jenkins_server
+    - gforcada.compile-python
   vars:
     admin_email: tisto@plone.org
     simple_theme_css_url: https://rawgit.com/plone/jenkins.plone.org/master/jenkins.plone.org.css
@@ -19,6 +20,9 @@
       - collective
     node_names:
       - node
+    python_26: true
+    pillow: true
+    lxml: true
   vars_files:
     - secrets.yml
 
@@ -27,14 +31,14 @@
     # so it makes sense to disable security completely so you can play
     # without any problem
     - name: Disable login on jenkins
-      sudo: yes
+      become: yes
       replace: dest=/var/lib/jenkins/config.xml regexp='<useSecurity>true</useSecurity>' replace='<useSecurity>false</useSecurity>'
       notify:
       - 'Restart Jenkins'
       - 'restart nginx'
 
     - name: 'Override node configuration'
-      sudo: yes
+      become: yes
       copy:
         src=etc/node.xml
         dest=/var/lib/jenkins/nodes/node/config.xml
@@ -42,7 +46,7 @@
         group=jenkins
 
     - name: 'Add dummy private key'
-      sudo: yes
+      become: yes
       copy:
         src=etc/vagrant.priv
         dest=/var/lib/jenkins/private_key
@@ -50,7 +54,7 @@
         group=jenkins
 
     - name: 'Add credentials.xml'
-      sudo: yes
+      become: yes
       copy:
         src=etc/jenkins_credentials.xml
         dest=/var/lib/jenkins/credentials.xml
@@ -61,11 +65,16 @@
   remote_user: vagrant
   roles:
     - plone.jenkins_node
+    - gforcada.compile-python
+  vars:
+    python_26: true
+    pillow: true
+    lxml: true
 
   tasks:
     # copy testing public key
     - name: 'Add dummy private key'
-      sudo: yes
+      become: yes
       authorized_key:
         user=jenkins
         key="{{ lookup('file', 'etc/vagrant.pub') }}"
