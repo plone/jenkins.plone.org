@@ -20,7 +20,7 @@ except OSError:
 
 
 for f in files:
-    with open('{0}/{1}'.format(tests_folder, f)) as xml_file:
+    with open('{{0}}/{{1}}'.format(tests_folder, f)) as xml_file:
         first_line = xml_file.read().split('\n')[0]
 
         failures = True
