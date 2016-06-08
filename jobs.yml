@@ -207,6 +207,8 @@
             top-level: 'plone'
         - plone.recipe.codeanalysis:
             top-level: 'plone'
+        - plone.registry:
+            top-level: 'plone'
         - plone.resourceeditor:
             top-level: 'plone'
         - plone.subrequest:
