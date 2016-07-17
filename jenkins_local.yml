@@ -3,9 +3,9 @@
 
 - hosts: master
   remote_user: vagrant
+  become: yes
   roles:
     - plone.jenkins_server
-    - gforcada.compile-python
   vars:
     admin_email: tisto@plone.org
     simple_theme_css_url: https://rawgit.com/plone/jenkins.plone.org/master/jenkins.plone.org.css
