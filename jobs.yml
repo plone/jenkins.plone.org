@@ -242,8 +242,8 @@
     pyversion:
         - '27':
             pybinary: '$PYTHON27'
-        - '34':
-            pybinary: 'python3.4'
+        - '35':
+            pybinary: '$PYTHON35'
     jobs:
         - 'zope-ztk-{pyversion}'
 
@@ -253,8 +253,8 @@
     pyversion:
         - '27':
             pybinary: '$PYTHON27'
-        - '34':
-            pybinary: 'python3.4'
+        - '35':
+            pybinary: '$PYTHON35'
     jobs:
         - 'zope-{pyversion}'
 
@@ -264,8 +264,8 @@
     pyversion:
         - '27':
             pybinary: '$PYTHON27'
-        - '34':
-            pybinary: 'python3.4'
+        - '35':
+            pybinary: '$PYTHON35'
     jobs:
         - 'zope-zodb-{pyversion}'
 
@@ -275,8 +275,8 @@
     pyversion:
         - '27':
             pybinary: '$PYTHON27'
-        - '34':
-            pybinary: 'python3.4'
+        - '35':
+            pybinary: '$PYTHON35'
     jobs:
         - 'zope-cmf-{pyversion}'
 
