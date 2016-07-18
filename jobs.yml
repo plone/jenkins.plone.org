@@ -801,11 +801,8 @@
         - timed: '@weekly'
 
     builders:
-        - shell: |
-            {pybinary} bootstrap.py -c development-python2.cfg
-            bin/buildout -t 3 -v -c development-python2.cfg
-            rm src/zope.component/src/zope/component/tests/test_standalone.py
-            bin/test-ztk
+        - shell:
+            !include-raw: scripts/ztk.sh
 
     publishers:
         - email-ext:
@@ -838,24 +835,8 @@
         - timed: '@weekly'
 
     builders:
-        - shell: |
-            cat > jenkins.cfg << EOF
-            [buildout]
-            extends = buildout.cfg
-            parts +=
-                jenkins-test
-
-            [jenkins-test]
-            recipe = collective.xmltestreport
-            eggs =
-                \${{alltests:eggs}}
-
-            [versions]
-            collective.xmltestreport = 1.3.3
-            EOF
-            {pybinary} bootstrap.py -c jenkins.cfg
-            bin/buildout -c jenkins.cfg
-            bin/jenkins-test --xml
+        - shell:
+            !include-raw: scripts/zope.sh
 
     publishers:
         - custom-junit
@@ -880,10 +861,8 @@
         - timed: '@weekly'
 
     builders:
-        - shell: |
-            {pybinary} bootstrap.py -c experimental/cmf.cfg
-            bin/buildout -c experimental/cmf.cfg
-            bin/jenkins-test --xml
+        - shell:
+            !include-raw: scripts/zope-cmf.sh
 
     publishers:
         - custom-junit
@@ -1078,21 +1057,8 @@
         - timed: '@weekly'
 
     builders:
-        - shell: |
-            cat > docs.cfg << EOF
-            [buildout]
-            extends = core.cfg
-            auto-checkout = *
-            git-clone-depth = 100
-            EOF
-            sed -i 's/^Zope2/#Zope2/' sources.cfg
-            sed -i 's/^ZODB/#ZODB/' sources.cfg
-            sed -i 's/^five./#five./' sources.cfg
-            sed -i 's/^z3c./#z3c./' sources.cfg
-            sed -i 's/^Products.CMF/#Products.CMF/' sources.cfg
-            sed -i 's/^Products.MailHost/#Products.MailHost/' sources.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 21.0.0 -c docs.cfg
-            bin/buildout -c docs.cfg install test
+        - shell:
+            !include-raw: scripts/docs-styleguide.sh
 
         - python: |
             import os
