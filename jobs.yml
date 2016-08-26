@@ -454,7 +454,7 @@
 
     publishers:
         - junit:
-            results: mockup/test-results.xml
+            results: mockup/PhantomJS*/test-results.xml
             keep-long-stdio: false
 
     wrappers:
