@@ -180,6 +180,8 @@
             top-level: 'plone'
         - plone.app.discussion:
             top-level: 'plone'
+        - plone.app.drafts:
+            top-level: 'plone'
         - plone.app.intid:
             top-level: 'plone'
         - plone.app.openid:
