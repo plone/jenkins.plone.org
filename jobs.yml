@@ -198,6 +198,8 @@
             top-level: 'plone'
         - plone.browserlayer:
             top-level: 'plone'
+        - plone.caching:
+            top-level: 'plone'
         - plone.indexer:
             top-level: 'plone'
         - plone.intelligenttext:
