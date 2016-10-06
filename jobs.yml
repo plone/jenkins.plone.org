@@ -178,6 +178,8 @@
             top-level: 'src'
         - plone.app.contentlisting:
             top-level: 'plone'
+        - plone.app.contentmenu:
+            top-level: 'plone'
         - plone.app.discussion:
             top-level: 'plone'
         - plone.app.drafts:
