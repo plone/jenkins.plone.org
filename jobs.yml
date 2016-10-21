@@ -159,12 +159,6 @@
     kind:
         - cmf:
             bin: bin/jenkins-package-dependencies-cmf
-        - formlib:
-            bin: bin/jenkins-package-dependencies-formlib
-        - pac:
-            bin: bin/jenkins-package-dependencies-pac
-        - grok:
-            bin: bin/jenkins-package-dependencies-grok
     jobs:
         - plone-package-dependencies-{kind}
 
