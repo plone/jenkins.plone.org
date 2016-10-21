@@ -159,6 +159,8 @@
     kind:
         - cmf:
             bin: bin/jenkins-package-dependencies-cmf
+        - ztc:
+            bin: bin/jenkins-package-dependencies-ztc
     jobs:
         - plone-package-dependencies-{kind}
 
