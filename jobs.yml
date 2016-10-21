@@ -159,8 +159,6 @@
     kind:
         - cmf:
             bin: bin/jenkins-package-dependencies-cmf
-        - ztc:
-            bin: bin/jenkins-package-dependencies-ztc
     jobs:
         - plone-package-dependencies-{kind}
 
@@ -704,6 +702,34 @@
     publishers:
         - archive:
             artifacts: 'deps/*.???'
+            allow-empty: 'false'
+
+    wrappers:
+        - custom-workspace-cleanup
+
+    <<: *plone
+
+
+- job:
+    name: plone-package-dependencies-ztc
+    display-name: 'Plone ZopeTestCase dependencies'
+
+    triggers:
+        - timed: "@daily"
+
+    builders:
+        - shell: |
+            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 -c jenkins-package-dependencies.cfg
+            bin/buildout -c core.cfg
+            grep -R ZopeTestCase parts/packages > deps.txt || echo 0
+            grep -v 'Binary file ' deps.txt > deps.txt.tmp
+            sed -i 's|parts/packages||' deps.txt.tmp
+            grep -Ev '/(Testing|OFS|PloneTestCase|Zope2|ZPublisher)/' deps.txt.tmp > deps.txt
+
+    publishers:
+        - archive:
+            artifacts: 'deps.txt'
             allow-empty: 'false'
 
     wrappers:
