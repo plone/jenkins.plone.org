@@ -192,6 +192,8 @@
             top-level: 'plone'
         - plone.app.testing:
             top-level: 'plone'
+        - plone.app.vocabularies:
+            top-level: 'plone'
         - plone.app.z3cform:
             top-level: 'plone'
         - plone.autoform:
