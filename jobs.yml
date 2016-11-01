@@ -171,11 +171,19 @@
     package:
         - borg.localrole:
             top-level: 'borg'
+        - plone.alterego:
+            top-level: 'plone'
         - plone.api:
             top-level: 'src'
+        - plone.app.blob:
+            top-level: 'src'
+        - plone.app.caching:
+            top-level: 'plone'
         - plone.app.contentlisting:
             top-level: 'plone'
         - plone.app.contentmenu:
+            top-level: 'plone'
+        - plone.app.customerize:
             top-level: 'plone'
         - plone.app.discussion:
             top-level: 'plone'
@@ -212,6 +220,8 @@
         - plone.registry:
             top-level: 'plone'
         - plone.resourceeditor:
+            top-level: 'plone'
+        - plone.schemaeditor:
             top-level: 'plone'
         - plone.subrequest:
             top-level: 'plone'
