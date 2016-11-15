@@ -1,95 +1,103 @@
+.. -*- coding: utf-8 -*-
+
 ==============================
 jenkins.plone.org Set Up Howto
 ==============================
-
 This document describes how to set up the entire Jenkins infrastructure for jenkins.plone.org.
 Those are the main steps:
 
-  * Set up Jenkins server (jenkins.plone.org, with Ansible)
-  * Set up Jenkins nodes (node[1-x].jenkins.plone.org, with Ansible)
-  * Set up the Jenkins jobs on the Jenkins server (with Jenkins Job Builder)
-
+- Set up Jenkins server (jenkins.plone.org, with Ansible)
+- Set up Jenkins nodes (node[1-x].jenkins.plone.org, with Ansible)
+- Set up the Jenkins jobs on the Jenkins server (with Jenkins Job Builder)
 
 Prerequisites
 =============
+Checkout this repository:
 
-Checkout this repository::
+.. code-block:: shell
 
-  $ git clone git@github.com:plone/jenkins.plone.org.git
-  $ cd jenkins.plone.org
+    $ git clone git@github.com:plone/jenkins.plone.org.git
+    $ cd jenkins.plone.org
 
-Create and activate virtualenv::
+Create and activate virtualenv:
 
-  $ virtualenv .env
-  $ source .env/bin/activate
+.. code-block:: shell
 
-Install Ansible::
+    $ virtualenv .env
+    $ source .env/bin/activate
 
-  $ pip install ansible
+Install Ansible:
 
-Fetch Ansible Galaxy Dependencies as Git Submodules::
+.. code-block:: shell
 
-  $ git submodule update --init
+    $ pip install ansible
+
+Fetch Ansible Galaxy Dependencies as Git Submodules:
+
+.. code-block:: shell
+
+    $ git submodule update --init
 
 Change inventory.txt and make sure that you can connect to the machines listed there.
 
-Copy your public ssh key to the machine::
+Copy your public ssh key to the machine:
 
-  $ ssh-copy-id -i ~/.ssh/<SSH-KEY>.pub root@<SERVER_IP>
+.. code-block:: shell
 
+    $ ssh-copy-id -i ~/.ssh/<SSH-KEY>.pub root@<SERVER_IP>
 
 Set Up Jenkins Server
 ---------------------
+.. code-block:: shell
 
-::
-
-  $ ansible-playbook -i inventory.txt jenkins_server.yml
-
+    $ ansible-playbook -i inventory.txt jenkins_server.yml
 
 Set Up Jenkins Nodes
 --------------------
+.. code-block:: shell
 
-::
-
-  $ ansible-playbook -i inventory.txt jenkins_node.yml
-
+    $ ansible-playbook -i inventory.txt jenkins_node.yml
 
 Set Up Jenkins Jobs
 -------------------
-
 *Do the steps described above to clone,
 activate virtualenv and fetch submodules*.
 
-Put jenkins-job-builder in development mode::
+Put jenkins-job-builder in development mode:
 
-  $ cd src/jenkins-job-builder
-  $ python setup.py develop
+.. code-block:: shell
 
-Test the jobs are properly setup::
+    $ cd src/jenkins-job-builder
+    $ python setup.py develop
 
-  $ jenkins-jobs --conf jenkins.ini.in test jobs.yml -o output
+Test the jobs are properly setup:
+
+.. code-block:: shell
+
+    $ jenkins-jobs --conf jenkins.ini.in test jobs.yml -o output
 
 .. note::
    A folder named ``output`` should contain one file per each jenkins job
    configured on jobs.yml
 
-Create your own ``jenkins.ini`` by copying it from ``jenkins.ini.in``::
+Create your own ``jenkins.ini`` by copying it from ``jenkins.ini.in``:
 
-  $ cp jenkins.ini.in jenkins.ini
+.. code-block:: shell
+
+    $ cp jenkins.ini.in jenkins.ini
 
 Add your own credentials to jenkins.ini.
 You can find them when you log into Jenkins and copy your API token
 (e.g. http://jenkins.plone.org/user/tisto/configure).
 
-Now finally install the jobs on the server::
+Now finally install the jobs on the server:
 
-  $ jenkins-jobs --conf jenkins.ini update jobs.yml
+.. code-block:: shell
 
-
+    $ jenkins-jobs --conf jenkins.ini update jobs.yml
 
 Manual Jenkins Configuration
 ----------------------------
-
 There are currently a few steps that we need to carry out manually.
 We will automate them later.
 
