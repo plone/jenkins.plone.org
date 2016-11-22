@@ -1,4 +1,7 @@
 [jenkins_nodes]
+node5.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8081
+
+[jenkins_old_nodes]
 node1.jenkins.plone.org
 node2.jenkins.plone.org
 node3.jenkins.plone.org
