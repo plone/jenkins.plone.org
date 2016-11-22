@@ -117,6 +117,16 @@ Install python 2.7 (as ansible still needs it):
     ssh node3-jenkins-plone-org "apt-get install -y python2.7"
     ssh node4-jenkins-plone-org "apt-get install -y python2.7"
 
+Add iptables rules to let jenkins master connect to the nodes:
+
+.. code-block:: shell
+
+    iptables -t nat -A PREROUTING -p tcp --dport ${PORT} -j DNAT --to-destination ${NODE_IP}:22
+    iptables -t nat -A POSTROUTING -p tcp -d ${NODE_IP} --dport ${PORT} -j SNAT --to-source ${PHYSICAL_SERVER_IP}
+
+.. note:: each node needs to listen to bind to a different port.
+
+
 TODO
 ^^^^
 - create ansible playbook for bootstrap the server so it does:
