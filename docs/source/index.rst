@@ -11,6 +11,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   servers
    setup
    vagrant
    run-pull-request-jobs
