@@ -237,19 +237,8 @@
 
 - project:
     name: python 3.x support
-    package:
-        - plone.alterego
-        - plone.behavior
-        - plone.dexterity
-        - plone.namedfile
-        - plone.registry
-        - plone.rfc822
-        - plone.scale
-        - plone.supermodel
-        - plone.synchronize
-        - plone.uuid
     jobs:
-        - 'py3-{package}'
+        - 'py3-test'
 
 
 - project:
@@ -807,13 +796,8 @@
 
 
 - job-template:
-    name: py3-{package}
-    display-name: '{package} (py3 support)'
-
-    scm:
-        - git:
-            url: git://github.com/plone/{package}.git
-            wipe-workspace: false
+    name: py3-test
+    display-name: 'Python 3'
 
     builders:
         - shell:
