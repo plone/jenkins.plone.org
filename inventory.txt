@@ -1,3 +1,6 @@
+[mroboto]
+roboto.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8087 ansible_python_interpreter=/usr/bin/python2.7
+
 [jenkins_nodes]
 node5.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8085 ansible_python_interpreter=/usr/bin/python2.7
 node6.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8086 ansible_python_interpreter=/usr/bin/python2.7
