@@ -209,6 +209,8 @@
             top-level: 'plone'
         - plone.caching:
             top-level: 'plone'
+        - plone.event:
+            top-level: 'plone'
         - plone.indexer:
             top-level: 'plone'
         - plone.intelligenttext:
