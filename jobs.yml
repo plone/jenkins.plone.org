@@ -122,7 +122,7 @@
             buildout: plips/merge-collective-indexing.cfg
             branch: 5.1
         - zope4:
-            buildout: plips/plip-zope4.cfg
+            buildout: plip-zope4.cfg
             branch: 5.1
         - 1334-PlonePAS:
             buildout: plips/plip-1334-PlonePAS.cfg
@@ -190,6 +190,8 @@
         - plone.app.drafts:
             top-level: 'plone'
         - plone.app.intid:
+            top-level: 'plone'
+        - plone.app.iterate:
             top-level: 'plone'
         - plone.app.openid:
             top-level: 'plone'
