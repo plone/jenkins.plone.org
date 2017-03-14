@@ -9,7 +9,9 @@ if [ "$COREDEV" = "1" ]; then
     git checkout $BRANCH
 fi
 
+./marker.sh set $$
 bin/buildout -c jenkins.cfg
+./marker.sh release
 
 return_code="all_right"
 
