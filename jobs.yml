@@ -136,7 +136,9 @@
         - 1485-react:
             buildout: plips/plip-1485.cfg
             branch: 5.1
-
+        - 1734-icons-and-thumbs:
+            buildout: plips/plip-1734-icons-and-thumbs.cfg
+            branch: 5.1
     jobs:
         - 'plip-{plip}'
 
