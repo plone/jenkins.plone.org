@@ -183,6 +183,8 @@
             top-level: 'plone'
         - plone.app.contentlisting:
             top-level: 'plone'
+        - plone.app.contenrules:
+            top-level: 'plone'
         - plone.app.contentmenu:
             top-level: 'plone'
         - plone.app.customerize:
