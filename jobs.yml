@@ -197,6 +197,8 @@
             top-level: 'plone'
         - plone.app.iterate:
             top-level: 'plone'
+        - plone.app.linkintegrity:
+            top-level: 'plone'
         - plone.app.openid:
             top-level: 'plone'
         - plone.app.relationfield:
