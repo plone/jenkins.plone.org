@@ -32,11 +32,11 @@ Install Ansible:
 
     $ pip install ansible
 
-Fetch Ansible Galaxy Dependencies as Git Submodules:
+Install Ansible Galaxy Dependencies:
 
 .. code-block:: shell
 
-    $ git submodule update --init
+    $ ansible-galaxy install -r roles.yml
 
 Change inventory.txt and make sure that you can connect to the machines listed there.
 

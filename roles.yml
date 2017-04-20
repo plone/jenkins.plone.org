@@ -1,0 +1,20 @@
+# roles downloaded from galaxy.ansible.com
+# (as we do not expect to be hacking on them)
+- src: geerlingguy.java
+  version: 1.7.4
+
+- src: geerlingguy.jenkins
+  version: 2.7.3
+
+- src: geerlingguy.nodejs
+  version: 4.1.0
+
+- src: gforcada.compile-python
+  version: 1.2
+
+# roles downloaded from git as we expect to modify them
+- src: https://github.com/plone/plone.jenkins_server
+  version: master
+
+- src: https://github.com/plone/plone.jenkins_node
+  version: master
