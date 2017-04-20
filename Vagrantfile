@@ -1,8 +1,8 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/trusty64"
   config.ssh.insert_key = false
 
   config.vm.define "master", primary: true do |master|
+    master.vm.box = "ubuntu/trusty64"
     master.vm.network :forwarded_port, guest: 80, host: 8080
     master.vm.network "private_network", ip: "192.168.50.2"
 
@@ -14,6 +14,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "node" do |node|
+    node.vm.box = "bento/ubuntu-16.04"
     node.vm.network "private_network", ip: "192.168.50.10"
 
     node.vm.provision "ansible" do |ansible|
