@@ -34,7 +34,7 @@
       become: yes
       replace: dest=/var/lib/jenkins/config.xml regexp='<useSecurity>true</useSecurity>' replace='<useSecurity>false</useSecurity>'
       notify:
-      - 'Restart Jenkins'
+      - 'restart jenkins'
       - 'restart nginx'
 
     - name: 'Override node configuration'
@@ -63,6 +63,7 @@
 
 - hosts: node
   remote_user: vagrant
+  become: yes
   roles:
     - plone.jenkins_node
 
