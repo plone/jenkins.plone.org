@@ -19,18 +19,19 @@ Checkout this repository:
     $ git clone git@github.com:plone/jenkins.plone.org.git
     $ cd jenkins.plone.org
 
-Create and activate virtualenv:
+Create and activate a virtualenv:
 
 .. code-block:: shell
 
     $ virtualenv .env
     $ source .env/bin/activate
 
-Install Ansible:
+Install setuptools and buildout and run it:
 
 .. code-block:: shell
 
-    $ pip install ansible
+    $ pip install setuptools zc.buildout
+    $ bin/buildout
 
 Install Ansible Galaxy Dependencies:
 
