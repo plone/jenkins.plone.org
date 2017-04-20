@@ -1,5 +1,5 @@
 ---
-# Playbook for Jenkins Node on Ubuntu 14.04 LTS
+# Playbook for Jenkins Node on Ubuntu 16.04 LTS
 
 - hosts: jenkins_nodes
   remote_user: root
