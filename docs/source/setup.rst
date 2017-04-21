@@ -87,6 +87,21 @@ Add your own credentials to jenkins.ini.
 You can find them when you log into Jenkins and copy your API token
 (e.g. http://jenkins.plone.org/user/tisto/configure).
 
+Create your own ``secrets.yml`` by copying it from ``secrets.yml.in``:
+
+.. code-block:: shell
+
+    $ cp secrets.yml.in secrets.yml
+
+Add github API secrets that are needed for the github login functionality on jenkins.plone.org.
+You can find those settings on plone organization in github:
+https://github.com/organizations/plone/settings/applications
+
+Look for the ``Plone Jenkins CI`` application name.
+
+For the ``github_api_key`` you need a personal token
+(from https://github.com/jenkins-plone-org github user).
+
 Now finally install the jobs on the server:
 
 .. code-block:: shell
