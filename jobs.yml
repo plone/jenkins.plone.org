@@ -235,6 +235,8 @@
             top-level: 'plone'
         - plone.subrequest:
             top-level: 'plone'
+        - plone.testing:
+            top-level: 'src'
         - plone.tiles:
             top-level: 'plone'
         - plone.transformchain:
