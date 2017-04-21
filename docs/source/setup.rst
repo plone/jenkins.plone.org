@@ -23,25 +23,20 @@ Create and activate a virtualenv:
 
 .. code-block:: shell
 
-    $ virtualenv .env
-    $ source .env/bin/activate
+    $ virtualenv -p python2.7 .
+    $ source ./bin/activate
 
-Install setuptools and buildout and run it:
-
-.. code-block:: shell
-
-    $ pip install setuptools zc.buildout
-    $ bin/buildout
-
-Install Ansible Galaxy Dependencies:
+Install all the tools needed (ansible, ansible roles and jenkins-job-builder):
 
 .. code-block:: shell
 
+    $ pip install -r requirements.txt
     $ ansible-galaxy install -r roles.yml
+    $ git submodule update --init
 
-Change inventory.txt and make sure that you can connect to the machines listed there.
+Check inventory.txt and make sure that you can connect to the machines listed there.
 
-Copy your public ssh key to the machine:
+Copy your public ssh key to all servers:
 
 .. code-block:: shell
 
@@ -51,13 +46,13 @@ Set Up Jenkins Server
 ---------------------
 .. code-block:: shell
 
-    $ ansible-playbook -i inventory.txt jenkins_server.yml
+    $ ./update_master.sh
 
 Set Up Jenkins Nodes
 --------------------
 .. code-block:: shell
 
-    $ ansible-playbook -i inventory.txt jenkins_node.yml
+    $ ./update_nodes.sh
 
 Set Up Jenkins Jobs
 -------------------
@@ -95,18 +90,25 @@ Now finally install the jobs on the server:
 
 .. code-block:: shell
 
-    $ jenkins-jobs --conf jenkins.ini update jobs.yml
+    $ ./update_jobs.sh
 
-Manual Jenkins Configuration
-----------------------------
+Manual Configuration
+--------------------
 There are currently a few steps that we need to carry out manually.
 We will automate them later.
 
-Github post-commit hook for buildout.coredev:
+1) Github post-commit hook for buildout.coredev:
 
-* Go to https://github.com/plone/buildout.coredev/settings/hooks and add a 'http://jenkins.plone.org/github-webhook/' post-commit hook.
+* go to https://github.com/plone/buildout.coredev/settings/hooks
+* create a new webhook with the following details:
 
-Manage Jenkins -> Configure System:
+  * Payload URL: http://jenkins.plone.org/github-webhook/
+  * Content type: application/x-www-form-urlencoded
+  * Secret: *nothing*
+  * Which events would you like to trigger this webhook?: Send me everything
+  * Active: yes
+
+2) Manage Jenkins -> Configure System:
 
 * E-mail Notification:
 
@@ -119,7 +121,7 @@ Manage Jenkins -> Configure System:
     * User Name: jenkins@plone.org
     * Password: ...
 
-Manage Jenkins -> Manage Credentials -> Add Credentials: SSH Username with private key:
+3) Manage Jenkins -> Manage Credentials -> Add Credentials: SSH Username with private key:
 
 * Scope: System
 * Username: jenkins
