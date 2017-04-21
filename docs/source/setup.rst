@@ -64,6 +64,7 @@ Put jenkins-job-builder in development mode:
 .. code-block:: shell
 
     $ cd src/jenkins-job-builder
+    $ pip install -r requirements.txt
     $ python setup.py develop
 
 Test the jobs are properly setup:
