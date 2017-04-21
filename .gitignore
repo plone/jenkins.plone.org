@@ -28,4 +28,4 @@ docs/Makefile
 docs/make.bat
 docs/doctrees
 docs/html
-.env
+roles/
