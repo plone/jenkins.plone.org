@@ -51,6 +51,6 @@ Finally, to run ``jenkins-job-builder`` on it, run:
 
 .. code-block:: shell
 
-    jenkins-jobs --conf jenkins.ini.in update jobs.yml
+    jenkins-jobs --conf jobs/config.ini.in update jobs/jobs.yml
 
 *Enjoy!*

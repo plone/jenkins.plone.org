@@ -71,19 +71,19 @@ Test the jobs are properly setup:
 
 .. code-block:: shell
 
-    $ jenkins-jobs --conf jenkins.ini.in test jobs.yml -o output
+    $ jenkins-jobs --conf jobs/config.ini.in test jobs/jobs.yml -o output
 
 .. note::
    A folder named ``output`` should contain one file per each jenkins job
    configured on jobs.yml
 
-Create your own ``jenkins.ini`` by copying it from ``jenkins.ini.in``:
+Create your own ``jobs/config.ini`` by copying it from ``jobs/config.ini.in``:
 
 .. code-block:: shell
 
-    $ cp jenkins.ini.in jenkins.ini
+    $ cp jobs/config.ini.in jobs/config.ini
 
-Add your own credentials to jenkins.ini.
+Add your own credentials to jobs/config.ini.
 You can find them when you log into Jenkins and copy your API token
 (e.g. http://jenkins.plone.org/user/tisto/configure).
 

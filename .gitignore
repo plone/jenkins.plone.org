@@ -1,4 +1,4 @@
-jenkins.ini
+jobs/config.ini
 ansible/secrets.yml
 auth.py
 /develop-eggs

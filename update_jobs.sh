@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-jenkins-jobs --conf jenkins.ini update jobs.yml
+jenkins-jobs --conf jobs/config.ini update jobs/jobs.yml
