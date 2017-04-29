@@ -17,10 +17,16 @@
     github_orgs:
       - plone
       - collective
-    node_names:
-      - Node5
-      - Node6
-      - Node7
+    nodes_info:
+      - name: "Node1"
+        host: "88.99.26.113"
+        port: "8085"
+      - name: "Node2"
+        host: "88.99.26.113"
+        port: "8086"
+      - name: "Node3"
+        host: "88.99.26.113"
+        port: "8087"
   vars_files:
     - secrets.yml
 
