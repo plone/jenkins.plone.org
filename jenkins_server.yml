@@ -24,6 +24,7 @@
       - Node4
       - Node5
       - Node6
+      - Node7
   vars_files:
     - secrets.yml
 
