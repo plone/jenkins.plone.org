@@ -126,4 +126,5 @@ TODO
 
   - create containers with ansible
   - configure SSH
+  - install python2.7 on containers
   - configure firewall
