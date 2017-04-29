@@ -738,8 +738,7 @@
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
             $PYTHON27 bootstrap.py --setuptools-version 26.1.1 -c jenkins-package-dependencies.cfg
             bin/buildout -c core.cfg
-            grep -R ZopeTestCase parts/packages > deps.txt || echo 0
-            grep -v 'Binary file ' deps.txt > deps.txt.tmp
+            grep -RI ZopeTestCase parts/packages > deps.txt.tmp || echo 0
             sed -i 's|parts/packages||' deps.txt.tmp
             grep -Ev '/(Testing|OFS|PloneTestCase|Zope2|ZPublisher)/' deps.txt.tmp > deps.txt
 
