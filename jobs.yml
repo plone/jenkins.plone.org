@@ -710,7 +710,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 -c jenkins-package-dependencies.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
             bin/buildout -c jenkins-package-dependencies.cfg
             bin/jenkins-package-dependencies-{kind}
             bin/jenkins-package-dependencies-{kind}-imports
@@ -736,7 +736,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 -c jenkins-package-dependencies.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
             bin/buildout -c core.cfg
             grep -RI ZopeTestCase parts/packages > deps.txt.tmp || echo 0
             sed -i 's|parts/packages||' deps.txt.tmp
@@ -763,7 +763,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 -c jenkins-package-dependencies.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
             bin/buildout -c jenkins-package-dependencies.cfg
             bin/jenkins-package-dependencies-text
 
@@ -933,7 +933,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 -c release.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 --buildout-version 2.8.0 -c release.cfg
             bin/buildout -c release.cfg install releaser
             bin/manage jenkins > changelog.txt
 
@@ -977,7 +977,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 -c experimental/i18n.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 --buildout-version 2.8.0 -c experimental/i18n.cfg
             bin/buildout -c experimental/i18n.cfg install i18n-find-untranslated i18ndude
             bin/i18n-find-untranslated details > missing.txt
 
@@ -1055,7 +1055,7 @@
     builders:
         - shell: |
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 26.1.1
+            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 --buildout-version 2.8.0
             bin/buildout
             cd src
             grep -R collective.monkeypatcher * > ../results.txt
@@ -1172,7 +1172,7 @@
         - shell: |
             # checkout all packages
             sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
-            $PYTHON27 bootstrap.py -c jenkins-package-dependencies.cfg
+            $PYTHON27 bootstrap.py --setuptools-version 26.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
             bin/buildout -c jenkins-package-dependencies.cfg install dependencies
 
             echo "" > deps.txt
