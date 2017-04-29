@@ -52,6 +52,7 @@ Create nodes:
 
     lxc launch ubuntu:16.04 node1
     lxc launch ubuntu:16.04 node2
+    lxc launch ubuntu:16.04 node3
 
 Add SSH keys:
 
@@ -59,6 +60,7 @@ Add SSH keys:
 
     lxc file push /root/.ssh/authorized_keys node1/root/.ssh/authorized_keys
     lxc file push /root/.ssh/authorized_keys node2/root/.ssh/authorized_keys
+    lxc file push /root/.ssh/authorized_keys node3/root/.ssh/authorized_keys
 
 Write down nodes IPs:
 
@@ -85,12 +87,18 @@ Configure a jump host to connect to them:
       User root
       ProxyCommand ssh jenkins-plone-org-nodes-host nc %h %p 2> /dev/null
 
+    Host node3-jenkins-plone-org
+      HostName XX.XX.XX.XX
+      User root
+      ProxyCommand ssh jenkins-plone-org-nodes-host nc %h %p 2> /dev/null
+
 Connect to all nodes to accept their fingerprint:
 
 .. code-block:: shell
 
     ssh node1-jenkins-plone-org
     ssh node2-jenkins-plone-org
+    ssh node3-jenkins-plone-org
 
 Install python 2.7 (as ansible still needs it):
 
@@ -98,18 +106,19 @@ Install python 2.7 (as ansible still needs it):
 
     ssh node1-jenkins-plone-org "apt-get update && apt-get install -y python2.7"
     ssh node2-jenkins-plone-org "apt-get update && apt-get install -y python2.7"
+    ssh node3-jenkins-plone-org "apt-get update && apt-get install -y python2.7"
 
-Add iptables rules to let jenkins master connect to the nodes:
+Add iptables rules to let jenkins master connect to the nodes,
+these two lines are needed **for each** node:
 
 .. code-block:: shell
 
-    iptables -t nat -A PREROUTING -p tcp --dport 8085 -j DNAT --to-destination 10.250.122.164:22
-    iptables -t nat -A POSTROUTING -p tcp -d 10.250.122.164 --dport 8085 -j SNAT --to-source 88.99.26.113
+    iptables -t nat -A PREROUTING -p tcp --dport ${SPECIFIC_PORT} -j DNAT --to-destination ${NODE_IP}:22
+    iptables -t nat -A POSTROUTING -p tcp -d ${NODE_IP} --dport ${SPECIFIC_PORT} -j SNAT --to-source ${SERVER_IP}
 
-    iptables -t nat -A PREROUTING -p tcp --dport 8086 -j DNAT --to-destination 10.250.122.155:22
-    iptables -t nat -A POSTROUTING -p tcp -d 10.250.122.155 --dport 8086 -j SNAT --to-source 88.99.26.113
-
-.. note:: update ports and IPs accordingly.
+.. note:: update SPECIFIC_PORT to something like 808X (each node a different port),
+   NODE_IP to the IP of each node (node IP can be seen with ``lxc list``)
+   and SERVER_IP to the server host (i.e. 88.99.26.113)
 
 TODO
 ^^^^
