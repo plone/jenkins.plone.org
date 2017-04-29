@@ -94,7 +94,7 @@ Connect to all nodes to accept their fingerprint:
 
 Install python 2.7 (as ansible still needs it):
 
-.. code-block: shell
+.. code-block:: shell
 
     ssh node1-jenkins-plone-org "apt-get update && apt-get install -y python2.7"
     ssh node2-jenkins-plone-org "apt-get update && apt-get install -y python2.7"
