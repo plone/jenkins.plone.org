@@ -18,10 +18,6 @@
       - plone
       - collective
     node_names:
-      - Node1
-      - Node2
-      - Node3
-      - Node4
       - Node5
       - Node6
       - Node7

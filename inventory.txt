@@ -3,11 +3,5 @@ node5.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8085 ansible_pyth
 node6.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8086 ansible_python_interpreter=/usr/bin/python2.7
 node7.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8087 ansible_python_interpreter=/usr/bin/python2.7
 
-[jenkins_old_nodes]
-node1.jenkins.plone.org
-node2.jenkins.plone.org
-node3.jenkins.plone.org
-node4.jenkins.plone.org
-
 [jenkins_server]
 jenkins.plone.org ansible_ssh_host=78.47.49.108
