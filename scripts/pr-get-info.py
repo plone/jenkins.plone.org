@@ -143,7 +143,7 @@ for pr in pull_request_urls.split():
         print(msg % pr)
 
     if plone_repo != 'buildout.coredev':
-        # export the pacakges so it can be reported by mail
+        # export the packages so it can be reported by mail
         PKGS.append(plone_repo)
         # change the package source
         for line in fileinput.input('sources.cfg', inplace=True):
