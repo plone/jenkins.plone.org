@@ -82,6 +82,15 @@
         - 'pull-request-{plone-version}'
 
 - project:
+    name: Test add-ons
+    plone-version:
+        - '5.1'
+        - '5.0'
+        - '4.3'
+    jobs:
+        - 'test-addon-{plone-version}'
+
+- project:
     name: Plone 5.x
     plone-version:
         - '5.1'
@@ -699,6 +708,53 @@
 
     <<: *plone-xvfb
 
+- job-template:
+    name: 'test-addon-{plone-version}'
+    display-name: 'Test add-on against Plone {plone-version}'
+    description: |
+        Run an add-on tests with the current checkouts of Plone {plone-version}.
+        To trigger a job, login with your GitHub account and provide the anonymous git URL of you add-on and, optionally, a branch.
+        After the job is finished you will get an email about the result.
+
+    parameters:
+        - text:
+            name: ADDON_URL
+            description: 'URL of the add-on git repository, something like https://github.com/collective/collective.cover.git, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-add-on-jobs.html'
+
+        - text:
+            name: ADDON_BRANCH
+            description: 'branch of the add-on that should be tested, if left blank, master branch is assumed'
+
+    scm:
+        - buildout-coredev:
+            branch: '{plone-version}'
+
+    builders:
+        - python:
+            !include-raw-escape: scripts/addon-get-info.py
+
+        - inject:
+            properties-file: vars.properties
+
+        - shell:
+            !include-raw: scripts/addon-tests.sh
+
+    publishers:
+        - junit:
+            results: 'parts/test/testreports/*.xml'
+            keep-long-stdio: false
+
+        - email-ext:
+            recipients: "${{BUILD_USER_EMAIL}}"
+            reply-to:
+            content-type: default
+            always: true
+            failure: false
+            subject: "[${{BUILD_STATUS}}]: ${{ADDON_NAME}} tested against {plone-version}"
+            body:
+                !include-raw: scripts/addon.email
+
+    <<: *plone-basic
 
 - job-template:
     name: plone-package-dependencies-{kind}
