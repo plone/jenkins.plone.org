@@ -135,13 +135,15 @@ class AddonInfo(object):
             'ADDON_NAME = {0}\n'
             'ADDON_URL = {1}\n'
             'ADDON_BRANCH = {2}\n'
-            'REPORT_ON_GITHUB = {3}\n'
-            'GITHUB_LATEST_COMMIT = {4}\n'
+            'ADDON_GITHUB_ORG = {3}\n'
+            'REPORT_ON_GITHUB = {4}\n'
+            'GITHUB_LATEST_COMMIT = {5}\n'
         )
         data = [
             self.addon_name,
             self.addon_url,
             self.addon_branch,
+            self.github_org,
             str(self.in_known_github_org),
             self.latest_commit,
         ]
@@ -175,11 +177,3 @@ add_on = AddonInfo()
 add_on.process_input()
 add_on.add_package_to_buildout()
 add_on.write_properties_file()
-"""
-RUN TEST
-- report with a comment if REPORT_ON_GITHUB is true
-  - if tests pass and no trove classifier is found, warn about it
-
-REPORT BY EMAIL
-  - if tests pass and no trove classifier is found, warn about it
-"""
