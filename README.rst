@@ -22,7 +22,7 @@ Who's on the team
 Who leads it
 ------------
 
-Timo Stollenwerk ``< tisto @ plone.org>``
+Gil Forcada Codinachs ``< gil.gnome @ gmail.com>``
 
 What is the mission of the team
 -------------------------------
