@@ -8,6 +8,6 @@ fi
 bin/buildout -c jenkins.cfg
 bin/test --xml -s ${{ADDON_NAME}}
 
-#if [ "${{REPORT_ON_GITHUB}}" = "True" ]; then
-#    $PYTHON27 templates/addon-report_status.py
-#fi
+if [ "${{REPORT_ON_GITHUB}}" = "True" ]; then
+    $PYTHON27 templates/addon-report-status.py
+fi
