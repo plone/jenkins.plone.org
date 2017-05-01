@@ -16,6 +16,7 @@ Contents
    vagrant
    run-pull-request-jobs
    run-qa-on-package
+   run-add-on-jobs
 
 .. include:: ../../README.rst
 
