@@ -19,7 +19,6 @@ Contents
    run-qa-on-package
    run-add-on-jobs
 
-.. include:: ../../README.rst
 
 Indices and tables
 ==================
