@@ -15,15 +15,8 @@ Master
 Nodes
 =====
 
-Current nodes
--------------
-- hosted at Rackspace
-- IPs: 23.253.244.222 104.130.135.173 23.253.61.36
-- donor: Rackspace
-- contact: Sven (svx) and Gil Forcada (gforcada)
-
-New nodes server
-----------------
+Nodes server
+------------
 - hosted at hetzner.de
 - IP: 88.99.26.113 / 2a01:4f8:10a:2ae::2
 - donor: Plone Foundation
