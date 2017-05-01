@@ -7,7 +7,7 @@
     - plone.jenkins_server
   vars:
     admin_email: gil.gnome@gmail.com
-    simple_theme_css_url: https://rawgit.com/plone/jenkins.plone.org/master/jenkins.plone.org.css
+    simple_theme_css_url: https://rawgit.com/plone/jenkins.plone.org/master/files/jenkins.plone.org.css
     simple_theme_js_url: https://cdnjs.cloudflare.com/ajax/libs/doony/2.1/js/doony.min.js
     jenkins_admins:
       - tisto
