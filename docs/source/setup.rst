@@ -34,6 +34,19 @@ Install all the tools needed (ansible, ansible roles and jenkins-job-builder):
     $ ansible-galaxy install -r ansible/roles.yml
     $ git submodule update --init
 
+.. note::
+   For the roles that are downloaded from checkouts,
+   plone.jenkins_server and plone.jenkins_node,
+   you will need to remove them and clone them manually if you want to make changes on them.
+
+   .. code-block:: shell
+
+       $ cd ansible/roles
+       $ rm -rf plone.jenkins_server
+       $ rm -rf plone.jenkins_node
+       $ git clone git@github.com:plone/plone.jenkins_server
+       $ git clone git@github.com:plone/plone.jenkins_node
+
 Check ansible/inventory.txt and make sure that you can connect to the machines listed there.
 
 Copy your public ssh key to all servers:
