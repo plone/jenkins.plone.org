@@ -1,56 +1,25 @@
-PLONE JENKINS/CI TEAM
----------------------
+.. -*- coding: utf-8 -*-
 
-Who's on the team
------------------
+================
+PLONE JENKINS/CI
+================
+This repository is used to configure http://jenkins.plone.org
 
-* Ramiro B. da Luz
-* Jonas Baumann
-* William Deegan
-* Thomas Desvain
-* Gil Forcada
-* Tom Gross
-* Ed Manlove
-* Ramon Navarro Bosch
-* Ross Patterson
-* Martin Peeters
-* Asko Soukka
-* Eric Steele
-* Timo Stollenwerk
-* Héctor Velarde
+See ``docs/source/team.rst`` for the members of the Plone testing and CI team,
+as well as their responsibilities.
 
-Who leads it
-------------
+Servers configuration
+=====================
+Our servers and nodes are configured with `ansible<http://ansible.com/>`_.
 
-Timo Stollenwerk ``< tisto @ plone.org>``
+See the `documentation<https://pypi.python.org/pypi/jenkins-job-builder>`_ on how to set them,
+the actual configuration files are located at the ``ansible`` folder.
 
-What is the mission of the team
--------------------------------
+Jobs
+====
+A jenkins server without any job is quite useless.
 
-* Running automated software tests and code analysis for Plone core,
-  Plone core projects and selected Plone add-ons
-* Notifying developers about regressions and code quality
+All our jenkins jobs are configured through `jenkins-job-builder<https://pypi.python.org/pypi/jenkins-job-builder>`_.
 
-What is the team doing, why the team exists
--------------------------------------------
-
-* What we are doing: running jenkins.plone.org
-* Why do we exist: to ensure a high software quality for Plone
-
-How to contact the team
------------------------
-
-* We currently use the plone-website mailinglist:
-  ``plone-website@lists.sourceforge.net``
-
-How the activities are organized
---------------------------------
-
-* See https://github.com/plone/jenkins.plone.org and
-  https://github.com/plone/jenkins.plone.org/issues for current activities
-* We currently do not have regular meetings
-
-How to become part of the team
-------------------------------
-
-* Send an email to tisto @ plone.org or ping me on irc (tisto)
+See the `documentation<https://pypi.python.org/pypi/jenkins-job-builder>`_ on how to set them,
+the actual configuration files are located at the ``jobs`` folder.
