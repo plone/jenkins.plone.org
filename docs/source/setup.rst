@@ -31,10 +31,10 @@ Install all the tools needed (ansible, ansible roles and jenkins-job-builder):
 .. code-block:: shell
 
     $ pip install -r requirements.txt
-    $ ansible-galaxy install -r roles.yml
+    $ ansible-galaxy install -r ansible/roles.yml
     $ git submodule update --init
 
-Check inventory.txt and make sure that you can connect to the machines listed there.
+Check ansible/inventory.txt and make sure that you can connect to the machines listed there.
 
 Copy your public ssh key to all servers:
 
@@ -87,11 +87,11 @@ Add your own credentials to jenkins.ini.
 You can find them when you log into Jenkins and copy your API token
 (e.g. http://jenkins.plone.org/user/tisto/configure).
 
-Create your own ``secrets.yml`` by copying it from ``secrets.yml.in``:
+Create your own ``ansible/secrets.yml`` by copying it from ``ansible/secrets.yml.in``:
 
 .. code-block:: shell
 
-    $ cp secrets.yml.in secrets.yml
+    $ cp ansible/secrets.yml.in ansible/secrets.yml
 
 Add github API secrets that are needed for the github login functionality on jenkins.plone.org.
 You can find those settings on plone organization in github:
