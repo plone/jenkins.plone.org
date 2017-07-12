@@ -148,6 +148,9 @@
         - 1734-icons-and-thumbs:
             buildout: plips/plip-1734-icons-and-thumbs.cfg
             branch: 5.1
+        - 2092-login:
+            buildout: plips/plip-2092-login.cfg
+            branch: 5.1
     jobs:
         - 'plip-{plip}'
 
