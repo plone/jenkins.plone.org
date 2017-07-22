@@ -1,6 +1,27 @@
 ---
 # Jenkins server to test jenkins.plone.org locally with vagrant
 
+# TODO(gforcada) remove it as soon as jenkins master is on Ubuntu 16.04
+- hosts: master
+  tasks:
+    - name: Install repository for Java 8 in Ubuntu
+      become: yes
+      apt_repository: repo='ppa:openjdk-r/ppa'
+    - name: Update
+      become: yes
+      apt:
+        update_cache=yes
+    - name: Install Java 8
+      become: yes
+      apt:
+        name=openjdk-8-jdk
+        state=installed
+    - name: Fix java version selected
+      become: yes
+      alternatives:
+        name: java
+        path: /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+
 - hosts: master
   remote_user: vagrant
   become: yes
@@ -18,8 +39,10 @@
     github_orgs:
       - plone
       - collective
-    node_names:
-      - node
+    nodes_info:
+      - name: node
+        host: "127.0.0.1"
+        port: "8085"
     python_26: true
     pillow: true
     lxml: true
