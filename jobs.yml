@@ -257,6 +257,8 @@
             top-level: 'plone'
         - plonetheme.barceloneta:
             top-level: 'plonetheme'
+        - Products.statusmessages:
+            top-level: 'Products'
     jobs:
         - 'package-{package}'
 
