@@ -24,7 +24,7 @@
     pillow: true
     lxml: true
   vars_files:
-    - secrets.yml
+    - ../secrets.yml
 
   tasks:
     # most probably this vagrant box will not have a public Internet IP
@@ -40,7 +40,7 @@
     - name: 'Override node configuration'
       become: yes
       copy:
-        src=etc/node.xml
+        src=files/node.xml
         dest=/var/lib/jenkins/nodes/node/config.xml
         owner=jenkins
         group=jenkins
@@ -48,7 +48,7 @@
     - name: 'Add dummy private key'
       become: yes
       copy:
-        src=etc/vagrant.priv
+        src=files/key.priv
         dest=/var/lib/jenkins/private_key
         owner=jenkins
         group=jenkins
@@ -56,7 +56,7 @@
     - name: 'Add credentials.xml'
       become: yes
       copy:
-        src=etc/jenkins_credentials.xml
+        src=files/credentials.xml
         dest=/var/lib/jenkins/credentials.xml
         owner=jenkins
         group=jenkins
@@ -73,4 +73,4 @@
       become: yes
       authorized_key:
         user=jenkins
-        key="{{ lookup('file', 'etc/vagrant.pub') }}"
+        key="{{ lookup('file', 'files/key.pub') }}"

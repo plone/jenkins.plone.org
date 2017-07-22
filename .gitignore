@@ -1,5 +1,5 @@
-jenkins.ini
-secrets.yml
+jobs/config.ini
+ansible/secrets.yml
 auth.py
 /develop-eggs
 /eggs
@@ -28,4 +28,4 @@ docs/Makefile
 docs/make.bat
 docs/doctrees
 docs/html
-roles/
+ansible/roles/

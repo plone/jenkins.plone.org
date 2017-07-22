@@ -31,10 +31,23 @@ Install all the tools needed (ansible, ansible roles and jenkins-job-builder):
 .. code-block:: shell
 
     $ pip install -r requirements.txt
-    $ ansible-galaxy install -r roles.yml
+    $ ansible-galaxy install -r ansible/roles.yml
     $ git submodule update --init
 
-Check inventory.txt and make sure that you can connect to the machines listed there.
+.. note::
+   For the roles that are downloaded from checkouts,
+   plone.jenkins_server and plone.jenkins_node,
+   you will need to remove them and clone them manually if you want to make changes on them.
+
+   .. code-block:: shell
+
+       $ cd ansible/roles
+       $ rm -rf plone.jenkins_server
+       $ rm -rf plone.jenkins_node
+       $ git clone git@github.com:plone/plone.jenkins_server
+       $ git clone git@github.com:plone/plone.jenkins_node
+
+Check ansible/inventory.txt and make sure that you can connect to the machines listed there.
 
 Copy your public ssh key to all servers:
 
@@ -71,27 +84,27 @@ Test the jobs are properly setup:
 
 .. code-block:: shell
 
-    $ jenkins-jobs --conf jenkins.ini.in test jobs.yml -o output
+    $ jenkins-jobs --conf jobs/config.ini.in test jobs/jobs.yml -o output
 
 .. note::
    A folder named ``output`` should contain one file per each jenkins job
    configured on jobs.yml
 
-Create your own ``jenkins.ini`` by copying it from ``jenkins.ini.in``:
+Create your own ``jobs/config.ini`` by copying it from ``jobs/config.ini.in``:
 
 .. code-block:: shell
 
-    $ cp jenkins.ini.in jenkins.ini
+    $ cp jobs/config.ini.in jobs/config.ini
 
-Add your own credentials to jenkins.ini.
+Add your own credentials to jobs/config.ini.
 You can find them when you log into Jenkins and copy your API token
 (e.g. http://jenkins.plone.org/user/tisto/configure).
 
-Create your own ``secrets.yml`` by copying it from ``secrets.yml.in``:
+Create your own ``ansible/secrets.yml`` by copying it from ``ansible/secrets.yml.in``:
 
 .. code-block:: shell
 
-    $ cp secrets.yml.in secrets.yml
+    $ cp ansible/secrets.yml.in ansible/secrets.yml
 
 Add github API secrets that are needed for the github login functionality on jenkins.plone.org.
 You can find those settings on plone organization in github:
