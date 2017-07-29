@@ -113,9 +113,6 @@
         regexp=^[localhost.localdomain]
         line="[jenkins.plone.org]"
 
-    # XXX: not sure if we want to protect munin with pw yet.
-    #- htpasswd: path=/etc/nginx/passwdfile name=guest password=guest owner=root group=www-data mode=0640
-
   handlers:
 
     - name: Start mr.roboto
