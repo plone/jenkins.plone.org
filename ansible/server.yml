@@ -113,6 +113,12 @@
         regexp=^[localhost.localdomain]
         line="[jenkins.plone.org]"
 
+    - cron:
+        name: Start mr.roboto at reboot
+        special_time: reboot
+        job: "supervisord -c /srv/mr.roboto/supervisord.conf"
+        user: root
+
   handlers:
 
     - name: Start mr.roboto
