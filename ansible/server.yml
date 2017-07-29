@@ -63,31 +63,56 @@
     # Install mr.roboto
     - name: Install nginx-extras
       apt: name=nginx-extras state=present
+
     - name: Install supervisor
       pip: name=supervisor
+
     - name: Checkout mr.roboto
       git: repo=https://github.com/plone/mr.roboto.git dest=/srv/mr.roboto
+
     - name: Create a virtualenv for mr.roboto
       pip:
         requirements=/srv/mr.roboto/requirements.txt
         virtualenv=/srv/mr.roboto
         virtualenv_command=/srv/python2.7.11/bin/virtualenv
+
     - name: Run mr.roboto bootstrap
       shell: bin/python2.7 bootstrap.py
         chdir=/srv/mr.roboto/
         creates=/srv/mr.roboto/bin/buildout
+
     - name: Run mr.roboto buildout
       shell: bin/buildout
         chdir=/srv/mr.roboto/
       notify: Restart mr.roboto
-    - lineinfile: dest=/usr/lib/python2.7/sitecustomize.py line="import sys; sys.setdefaultencoding('utf-8');"
+
+    - name: Ensure system encoding is utf-8
+      lineinfile:
+        dest=/usr/lib/python2.7/sitecustomize.py
+        line="import sys; sys.setdefaultencoding('utf-8');"
 
     # Install munin
     - name: Install munin
       apt: name=munin state=present
-    - lineinfile: dest=/etc/munin/munin.conf regexp=^#htmldir line="htmldir /var/cache/munin/www"
-    - lineinfile: dest=/etc/munin/munin.conf regexp=^#tmpldir line="tmpldir /etc/munin/templates"
-    - lineinfile: dest=/etc/munin/munin.conf regexp=^[localhost.localdomain] line="[jenkins.plone.org]"
+
+    - name: Set htmldir variable
+      lineinfile:
+        dest=/etc/munin/munin.conf
+        regexp=^#htmldir
+        line="htmldir /var/cache/munin/www"
+
+    - name: Set tmpldir variable
+      lineinfile:
+        dest=/etc/munin/munin.conf
+        regexp=^#tmpldir
+        line="tmpldir/etc/munin/templates"
+
+    - name: Set domain in configuration
+      lineinfile:
+        dest=/etc/munin/munin.conf
+        regexp=^[localhost.localdomain]
+        line="[jenkins.plone.org]"
+
     # XXX: not sure if we want to protect munin with pw yet.
     #- htpasswd: path=/etc/nginx/passwdfile name=guest password=guest owner=root group=www-data mode=0640
 
