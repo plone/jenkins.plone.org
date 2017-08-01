@@ -358,6 +358,9 @@
         - shell: |
             curl -H "Content-Type: application/json" --data '{"docker_tag_name": "5.0"}' -X POST https://registry.hub.docker.com/u/ramonnb/docker-base-plone/trigger/bc86c734-4a33-497d-91d0-8eb1f689cf5b/
 
+    wrappers:
+        - custom-timeout
+
 - job-template:
     # Plone 5.x robot tests job definition.
     name: plone-{plone-version}-python-2.7-robot
@@ -456,6 +459,7 @@
             keep-long-stdio: false
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -594,6 +598,7 @@
             allow-missing: false
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
         - port-allocator:
             names:
@@ -750,6 +755,7 @@
             allow-empty: 'false'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -777,6 +783,7 @@
             allow-empty: 'false'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -802,6 +809,7 @@
             allow-empty: 'false'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -832,6 +840,7 @@
             allow-empty: 'true'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -851,6 +860,7 @@
         - custom-junit-new
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -896,6 +906,7 @@
                 Jenkins
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -940,6 +951,7 @@
                 Jenkins
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -974,6 +986,7 @@
             allow-empty: 'false'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -999,6 +1012,7 @@
             allow-empty: 'false'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -1019,6 +1033,7 @@
             bin/buildout
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -1056,6 +1071,7 @@
             allow-empty: 'true'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -1089,6 +1105,7 @@
             allow-empty: 'true'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone-basic
@@ -1129,6 +1146,7 @@
             allow-empty: 'true'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -1155,6 +1173,7 @@
             allow-empty: 'true'
 
     wrappers:
+        - custom-timeout
         - custom-workspace-cleanup
 
     <<: *plone
@@ -1228,6 +1247,7 @@
         - timeout:
             timeout: 180
             type: absolute
+            abort: true
 
 - wrapper:
     name: custom-port-allocator
