@@ -656,14 +656,33 @@
             branch: '{plone-version}'
 
     builders:
-        - python:
-            !include-raw-escape: scripts/pr-get-info.py
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: pull_request
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.26.0
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: pull_request
+            nature: python
+            command:
+                !include-raw-escape: scripts/pr-get-info.py
 
         - inject:
             properties-file: vars.properties
 
-        - shell:
-            !include-raw: scripts/pr-tests.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: pull_request
+            nature: shell
+            command:
+                !include-raw: scripts/pr-tests.sh
 
     publishers:
         - junit:
@@ -848,10 +867,30 @@
             wipe-workspace: false
 
     builders:
-        - shell:
-            !include-raw: scripts/pkg-qa.sh
-        - python:
-            !include-raw: scripts/pkg-qa-report.py
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: package_qa
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.26.0
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: package_qa
+            nature: shell
+            command:
+                !include-raw: scripts/pkg-qa.sh
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: package_qa
+            nature: python
+            command:
+                !include-raw: scripts/pkg-qa-report.py
 
     publishers:
         - violations:
