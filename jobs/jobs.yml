@@ -261,8 +261,6 @@
         - qa-code-analysis
         - qa-i18n-find-untranslated
         - qa-i18n-statistics
-        - qa-monkey-patches
-        - qa-setuptools
 
 ###
 # JOBS
@@ -915,32 +913,6 @@
             done) > raw_numbers.txt
             cd utils
             python statistics.py ../raw_numbers.txt > ../results.txt
-
-    publishers:
-        - archive:
-            artifacts: '*.txt'
-            allow-empty: 'false'
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
-
-- job:
-    name: qa-monkey-patches
-    display-name: Monkey patches
-
-    triggers:
-        - timed: '@weekly'
-
-    builders:
-        - shell: |
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0
-            bin/buildout
-            cd src
-            grep -R collective.monkeypatcher * > ../results.txt
 
     publishers:
         - archive:
