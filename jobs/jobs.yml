@@ -118,17 +118,8 @@
         - 680-restapi:
             buildout: plips/plip-680-restapi.cfg
             branch: 5.1
-        - 13770-portal-tools-removal:
-            buildout: plips/plip13770-portal-tools-removal.cfg
-            branch: 5.1
-        - 14929-lxml-safehtml-transform:
-            buildout: plips/plip14929-lxml-safehtml-transform.cfg
-            branch: 5.1
         - mosaic:
             buildout: plips/plip-mosaic.cfg
-            branch: 5.1
-        - collective-indexing:
-            buildout: plips/merge-collective-indexing.cfg
             branch: 5.1
         - zope4:
             buildout: plip-zope4.cfg
@@ -136,17 +127,8 @@
         - 1334-PlonePAS:
             buildout: plips/plip-1334-PlonePAS.cfg
             branch: 5.1
-        - 1340-QuickInstaller:
-            buildout: plips/plip1340-get-rid-of-qi.cfg
-            branch: 5.1
-        - 1483-retina-image-scales:
-            buildout: plips/plip-1483-retina-image-scales.cfg
-            branch: 5.1
         - 1485-react:
             buildout: plips/plip-1485.cfg
-            branch: 5.1
-        - 1734-icons-and-thumbs:
-            buildout: plips/plip-1734-icons-and-thumbs.cfg
             branch: 5.1
         - 2092-login:
             buildout: plips/plip-2092-login.cfg
