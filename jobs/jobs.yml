@@ -317,8 +317,13 @@
             branch: '{plone-version}'
 
     builders:
-        - shell:
-            !include-raw: scripts/5.x-tests.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/5.x-tests.sh
 
     publishers:
         - custom-junit-new
@@ -348,8 +353,13 @@
             branch: '{plone-version}'
 
     builders:
-        - shell:
-            !include-raw: scripts/5.x-robot.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/5.x-robot.sh
 
     publishers:
         - custom-email-ext
@@ -398,8 +408,13 @@
             branch: '{plone-version}'
 
     builders:
-        - shell:
-            !include-raw: scripts/5.x-at.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/5.x-at.sh
 
     publishers:
         - custom-junit-new
@@ -452,8 +467,13 @@
             branch: '{branch}'
 
     builders:
-        - shell:
-            !include-raw: scripts/plips.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/plips.sh
 
     publishers:
         - custom-junit-new
@@ -512,10 +532,15 @@
         - timed: '@midnight'
 
     builders:
-        - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c buildout.cfg
-            bin/buildout -c buildout.cfg
-            bin/sphinx-build source build
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                pip install -r requirements.txt
+                buildout -c buildout.cfg
+                bin/sphinx-build source build
 
     publishers:
         - email-ext:
@@ -561,10 +586,15 @@
         - timed: '@midnight'
 
     builders:
-        - shell: |
-            $PYTHON27 bootstrap.py -c buildout.cfg
-            bin/buildout -c buildout.cfg
-            bin/sphinx-build src/plone.themepreview/source build
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                pip install -r requirements.txt
+                buildout -c buildout.cfg
+                bin/sphinx-build src/plone.themepreview/source build
 
     publishers:
         - html-publisher:
@@ -719,12 +749,18 @@
         - timed: "@daily"
 
     builders:
-        - shell: |
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
-            bin/buildout -c jenkins-package-dependencies.cfg
-            bin/jenkins-package-dependencies-{kind}
-            bin/jenkins-package-dependencies-{kind}-imports
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+                pip install -r requirements.txt
+                buildout -c jenkins-package-dependencies.cfg
+                bin/jenkins-package-dependencies-{kind}
+                bin/jenkins-package-dependencies-{kind}-imports
 
     publishers:
         - archive:
@@ -746,13 +782,18 @@
         - timed: "@daily"
 
     builders:
-        - shell: |
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
-            bin/buildout -c core.cfg
-            grep -RI ZopeTestCase parts/packages > deps.txt.tmp || echo 0
-            sed -i 's|parts/packages||' deps.txt.tmp
-            grep -Ev '/(Testing|OFS|PloneTestCase|Zope2|ZPublisher)/' deps.txt.tmp > deps.txt
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+                pip install -r requirements.txt
+                buildout -c core.cfg
+                grep -RI ZopeTestCase parts/packages > deps.txt.tmp || echo 0
+                sed -i 's|parts/packages||' deps.txt.tmp
+                grep -Ev '/(Testing|OFS|PloneTestCase|Zope2|ZPublisher)/' deps.txt.tmp > deps.txt
 
     publishers:
         - archive:
@@ -774,11 +815,16 @@
         - timed: "@daily"
 
     builders:
-        - shell: |
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
-            bin/buildout -c jenkins-package-dependencies.cfg
-            bin/jenkins-package-dependencies-text
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+                pip install -r requirements.txt
+                buildout -c jenkins-package-dependencies.cfg
+                bin/jenkins-package-dependencies-text
 
     publishers:
         - archive:

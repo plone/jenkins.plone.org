@@ -1,8 +1,8 @@
 #!/bin/bash
 # buildout, core and AT tests
 sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-$PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c {buildout}
-bin/buildout -c {buildout}
+pip install -r requirements.txt
+buildout -c {buildout}
 
 return_code="all_right"
 
