@@ -251,7 +251,6 @@
         - 'py3-test'
 
 
-
 - project:
     name: QA scripts
     jobs:
