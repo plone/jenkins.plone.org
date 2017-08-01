@@ -259,7 +259,6 @@
         - qa-docs-age
         - qa-undeclared-dependencies
         - qa-code-analysis
-        - qa-pending-releases
         - qa-i18n-find-untranslated
         - qa-i18n-statistics
         - qa-monkey-patches
@@ -847,51 +846,6 @@
 
     <<: *plone
 
-
-- job:
-    name: qa-pending-releases
-    display-name: Pending releases
-
-    triggers:
-        - timed: '@weekly'
-
-    builders:
-        - shell: |
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c release.cfg
-            bin/buildout -c release.cfg install releaser
-            bin/manage jenkins > changelog.txt
-
-    publishers:
-        - archive:
-            artifacts: 'changelog.txt'
-            allow-empty: 'false'
-
-        - email-ext:
-            recipients: 'eric@esteele.net'
-            reply-to:
-            content-type: default
-            always: true
-            failure: false
-            subject: "Plone changelog"
-            attachments: 'changelog.txt'
-            body: |
-                Dear Eric,
-
-                see attached the changelog reported by ``bin/manage jenkins``.
-
-                You can also see it online at:
-
-                ${{BUILD_URL}}artifact/changelog.txt
-
-                Yours truly,
-                Jenkins
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
 
 - job:
     name: qa-i18n-find-untranslated
