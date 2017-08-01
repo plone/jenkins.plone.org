@@ -328,7 +328,6 @@
 
 
 - job:
-    # Plone 5.0 core tests job definition.
     name: plone-5.0-build-docker
     display-name: 'Plone 5.0 - Docker Image'
 
