@@ -317,8 +317,13 @@
             branch: '{plone-version}'
 
     builders:
-        - shell:
-            !include-raw: scripts/5.x-tests.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/5.x-tests.sh
 
     publishers:
         - custom-junit-new
@@ -328,7 +333,6 @@
 
 
 - job:
-    # Plone 5.0 core tests job definition.
     name: plone-5.0-build-docker
     display-name: 'Plone 5.0 - Docker Image'
 
@@ -349,8 +353,13 @@
             branch: '{plone-version}'
 
     builders:
-        - shell:
-            !include-raw: scripts/5.x-robot.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/5.x-robot.sh
 
     publishers:
         - custom-email-ext
@@ -399,8 +408,13 @@
             branch: '{plone-version}'
 
     builders:
-        - shell:
-            !include-raw: scripts/5.x-at.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/5.x-at.sh
 
     publishers:
         - custom-junit-new
@@ -453,8 +467,13 @@
             branch: '{branch}'
 
     builders:
-        - shell:
-            !include-raw: scripts/plips.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/plips.sh
 
     publishers:
         - custom-junit-new
@@ -513,10 +532,15 @@
         - timed: '@midnight'
 
     builders:
-        - shell: |
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c buildout.cfg
-            bin/buildout -c buildout.cfg
-            bin/sphinx-build source build
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                pip install -r requirements.txt
+                buildout -c buildout.cfg
+                bin/sphinx-build source build
 
     publishers:
         - email-ext:
@@ -562,10 +586,15 @@
         - timed: '@midnight'
 
     builders:
-        - shell: |
-            $PYTHON27 bootstrap.py -c buildout.cfg
-            bin/buildout -c buildout.cfg
-            bin/sphinx-build src/plone.themepreview/source build
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                pip install -r requirements.txt
+                buildout -c buildout.cfg
+                bin/sphinx-build src/plone.themepreview/source build
 
     publishers:
         - html-publisher:
@@ -627,14 +656,33 @@
             branch: '{plone-version}'
 
     builders:
-        - python:
-            !include-raw-escape: scripts/pr-get-info.py
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: pull_request
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.26.0
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: pull_request
+            nature: python
+            command:
+                !include-raw-escape: scripts/pr-get-info.py
 
         - inject:
             properties-file: vars.properties
 
-        - shell:
-            !include-raw: scripts/pr-tests.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: pull_request
+            nature: shell
+            command:
+                !include-raw: scripts/pr-tests.sh
 
     publishers:
         - junit:
@@ -720,12 +768,18 @@
         - timed: "@daily"
 
     builders:
-        - shell: |
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
-            bin/buildout -c jenkins-package-dependencies.cfg
-            bin/jenkins-package-dependencies-{kind}
-            bin/jenkins-package-dependencies-{kind}-imports
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+                pip install -r requirements.txt
+                buildout -c jenkins-package-dependencies.cfg
+                bin/jenkins-package-dependencies-{kind}
+                bin/jenkins-package-dependencies-{kind}-imports
 
     publishers:
         - archive:
@@ -747,13 +801,18 @@
         - timed: "@daily"
 
     builders:
-        - shell: |
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
-            bin/buildout -c core.cfg
-            grep -RI ZopeTestCase parts/packages > deps.txt.tmp || echo 0
-            sed -i 's|parts/packages||' deps.txt.tmp
-            grep -Ev '/(Testing|OFS|PloneTestCase|Zope2|ZPublisher)/' deps.txt.tmp > deps.txt
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+                pip install -r requirements.txt
+                buildout -c core.cfg
+                grep -RI ZopeTestCase parts/packages > deps.txt.tmp || echo 0
+                sed -i 's|parts/packages||' deps.txt.tmp
+                grep -Ev '/(Testing|OFS|PloneTestCase|Zope2|ZPublisher)/' deps.txt.tmp > deps.txt
 
     publishers:
         - archive:
@@ -775,11 +834,16 @@
         - timed: "@daily"
 
     builders:
-        - shell: |
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
-            bin/buildout -c jenkins-package-dependencies.cfg
-            bin/jenkins-package-dependencies-text
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+                pip install -r requirements.txt
+                buildout -c jenkins-package-dependencies.cfg
+                bin/jenkins-package-dependencies-text
 
     publishers:
         - archive:
@@ -803,10 +867,30 @@
             wipe-workspace: false
 
     builders:
-        - shell:
-            !include-raw: scripts/pkg-qa.sh
-        - python:
-            !include-raw: scripts/pkg-qa-report.py
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: package_qa
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.26.0
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: package_qa
+            nature: shell
+            command:
+                !include-raw: scripts/pkg-qa.sh
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: package_qa
+            nature: python
+            command:
+                !include-raw: scripts/pkg-qa-report.py
 
     publishers:
         - violations:
@@ -852,11 +936,16 @@
         - timed: '@weekly'
 
     builders:
-        - shell: |
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c experimental/i18n.cfg
-            bin/buildout -c experimental/i18n.cfg install i18n-find-untranslated i18ndude
-            bin/i18n-find-untranslated details > missing.txt
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+                pip install -r requirements.txt
+                buildout -c experimental/i18n.cfg install i18n-find-untranslated i18ndude
+                bin/i18n-find-untranslated details > missing.txt
 
     publishers:
         - archive:
@@ -931,8 +1020,13 @@
         - timed: '@weekly'
 
     builders:
-        - shell:
-            !include-raw: scripts/docs-styleguide.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/docs-styleguide.sh
 
         - python: |
             import os
@@ -1005,26 +1099,31 @@
         - timed: '@daily'
 
     builders:
-        - shell: |
-            # checkout all packages
-            sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
-            $PYTHON27 bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c jenkins-package-dependencies.cfg
-            bin/buildout -c jenkins-package-dependencies.cfg install dependencies
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                # checkout all packages
+                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
+                pip install -r requirements.txt
+                buildout -c jenkins-package-dependencies.cfg install dependencies
 
-            echo "" > deps.txt
+                echo "" > deps.txt
 
-            blacklist="Plone plone.themepreview ZODB3 diazo jquery.recurrenceinput.js mockup txtfilter"
-            cd src
-            for pkg in *;
-            do
-                if [ `echo $blacklist | grep -c $pkg` -eq 0 ];
-                then
-                    cd $pkg
-                    echo $pkg >> ../../deps.txt
-                    ../../bin/dependencychecker >> ../../deps.txt
-                    cd ..
-                fi
-            done
+                blacklist="Plone plone.themepreview ZODB3 diazo jquery.recurrenceinput.js mockup txtfilter"
+                cd src
+                for pkg in *;
+                do
+                    if [ `echo $blacklist | grep -c $pkg` -eq 0 ];
+                    then
+                        cd $pkg
+                        echo $pkg >> ../../deps.txt
+                        ../../bin/dependencychecker >> ../../deps.txt
+                        cd ..
+                    fi
+                done
 
     publishers:
         - archive:
@@ -1046,8 +1145,13 @@
         - timed: '@daily'
 
     builders:
-        - shell:
-            !include-raw: scripts/qa-global-code-analysis.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/qa-global-code-analysis.sh
 
     publishers:
         - violations:
