@@ -32,8 +32,8 @@ Get the QA configuration and bootstrap:
 
 .. code-block:: shell
 
-    wget https://raw.githubusercontent.com/plone/buildout.coredev/5.1/bootstrap.py -O bootstrap.py
-    wget https://raw.githubusercontent.com/plone/buildout.coredev/5.1/experimental/qa.cfg -O qa.cfg
+    wget https://raw.githubusercontent.com/plone/buildout.coredev/5.2/bootstrap.py -O bootstrap.py
+    wget https://raw.githubusercontent.com/plone/buildout.coredev/5.2/experimental/qa.cfg -O qa.cfg
     wget https://raw.githubusercontent.com/plone/plone.recipe.codeanalysis/master/.isort.cfg -O .isort.cfg
 
     python bootstrap.py --setuptools-version 31.1.1 --buildout-version 2.8.0 -c qa.cfg

@@ -16,10 +16,12 @@ Test an add-on
 ==============
 - go to http://jenkins.plone.org
 - log in with your github user
-- click on the `Test add-on against Plone 5.1 job <http://jenkins.plone.org/job/test-addon-5.1>`_
+- click on the `Test add-on against Plone 5.2 job <http://jenkins.plone.org/job/test-addon-5.2>`_
+  or `Test add-on against Plone 5.1 job <http://jenkins.plone.org/job/test-addon-5.1>`_
   or `Test add-on against Plone 5.0 job <http://jenkins.plone.org/job/test-addon-5.0>`_
   or `Test add-on against Plone 4.3 job <http://jenkins.plone.org/job/test-addon-4.3>`_ if you are targeting that Plone version
 - click on the huge button **Build with Parameters**
+  `Plone 5.2 <http://jenkins.plone.org/job/test-addon-5.2/build?delay=0sec>`_ or
   `Plone 5.1 <http://jenkins.plone.org/job/test-addon-5.1/build?delay=0sec>`_ or
   `Plone 5.0 <http://jenkins.plone.org/job/test-addon-5.0/build?delay=0sec>`_ or
   `Plone 4.3 <http://jenkins.plone.org/job/test-addon-4.3/build?delay=0sec>`_

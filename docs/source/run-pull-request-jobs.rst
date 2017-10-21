@@ -8,11 +8,12 @@ one needs to be sure that nothing breaks due to the changes made on the pull req
 
 For that we have some special jenkins job meant for that:
 
+- If the pull request targets Plone 5.2: http://jenkins.plone.org/job/pull-request-5.2
 - If the pull request targets Plone 5.1: http://jenkins.plone.org/job/pull-request-5.1
 - If the pull request targets Plone 5.0: http://jenkins.plone.org/job/pull-request-5.0
 - If the pull request targets Plone 4.3: http://jenkins.plone.org/job/pull-request-4.3
 
-If the pull request targets **both** 5.1 *and* 5.0 you need to run a job on each of the jenkins jobs mentioned above.
+If the pull request targets **both** 5.2 *and* 5.1 you need to run a job on each of the jenkins jobs mentioned above.
 
 Test a pull request
 ===================
@@ -25,10 +26,12 @@ Run a pull request job
 ----------------------
 - go to http://jenkins.plone.org
 - log in with your github user
-- click on the `Pull Request 5.1 job <http://jenkins.plone.org/job/pull-request-5.1>`_
+- click on the `Pull Request 5.2 job <http://jenkins.plone.org/job/pull-request-5.2>`_
+  or `Pull Request 5.1 job <http://jenkins.plone.org/job/pull-request-5.1>`_
   or `Pull Request 5.0 job <http://jenkins.plone.org/job/pull-request-5.0>`_
   or `Pull Request 4.3 job <http://jenkins.plone.org/job/pull-request-4.3>`_ if you are targeting that Plone version
 - click on the huge button **Build with Parameters**
+  `Plone 5.2 <http://jenkins.plone.org/job/pull-request-5.2/build?delay=0sec>`_ or
   `Plone 5.1 <http://jenkins.plone.org/job/pull-request-5.1/build?delay=0sec>`_ or
   `Plone 5.0 <http://jenkins.plone.org/job/pull-request-5.0/build?delay=0sec>`_ or
   `Plone 4.3 <http://jenkins.plone.org/job/pull-request-4.3/build?delay=0sec>`_

@@ -72,6 +72,8 @@
 - project:
     name: Pull requests
     plone-version:
+        - '5.2':
+            report-path: 'parts/test'
         - '5.1':
             report-path: 'parts/test'
         - '5.0':
@@ -84,6 +86,7 @@
 - project:
     name: Test add-ons
     plone-version:
+        - '5.2'
         - '5.1'
         - '5.0'
         - '4.3'
@@ -93,6 +96,7 @@
 - project:
     name: Plone 5.x
     plone-version:
+        - '5.2'
         - '5.1'
         - '5.0'
     jobs:
@@ -117,22 +121,22 @@
     plip:
         - 680-restapi:
             buildout: plips/plip-680-restapi.cfg
-            branch: 5.1
+            branch: 5.2
         - mosaic:
             buildout: plips/plip-mosaic.cfg
-            branch: 5.1
+            branch: 5.2
         - zope4:
             buildout: plip-zope4.cfg
-            branch: 5.1
+            branch: 5.2
         - 1334-PlonePAS:
             buildout: plips/plip-1334-PlonePAS.cfg
-            branch: 5.1
+            branch: 5.2
         - 1485-react:
             buildout: plips/plip-1485.cfg
-            branch: 5.1
+            branch: 5.2
         - 2092-login:
             buildout: plips/plip-2092-login.cfg
-            branch: 5.1
+            branch: 5.2
     jobs:
         - 'plip-{plip}'
 
@@ -140,6 +144,7 @@
 - project:
     name: Theme preview
     plone-version:
+        - '5.2'
         - '5.1'
         - '5.0'
         - '4.3'
