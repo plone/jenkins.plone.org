@@ -261,6 +261,7 @@
     jobs:
         - qa-docs-package-styleguide
         - qa-docs-age
+        - qa-docs-screenshots
         - qa-undeclared-dependencies
         - qa-code-analysis
         - qa-i18n-find-untranslated
@@ -1094,6 +1095,47 @@
         - custom-workspace-cleanup
 
     <<: *plone-basic
+
+- job:
+    name: qa-docs-screenshots
+    display-name: 'Screenshots for docs'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/robotshots.sh
+
+    publishers:
+
+        - robot:
+            output-path: parts/test
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-port-allocator
+        - custom-xvfb
+
+    <<: *plone-xvfb
 
 
 - job:
