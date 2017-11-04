@@ -1102,7 +1102,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.2'
+            branch: '5.1'
 
     triggers:
         - timed: '@weekly'
