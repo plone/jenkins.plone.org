@@ -96,7 +96,7 @@
 - project:
     name: Plone 5.x
     plone-version:
-        - '5.2'
+#        - '5.2'
         - '5.1'
         - '5.0'
     jobs:
@@ -104,6 +104,13 @@
         - 'plone-{plone-version}-python-2.7-robot'
         - 'plone-{plone-version}-python-2.7-at'
         - 'plone-{plone-version}-js'
+
+- project:
+    name: Plone 5.2
+    jobs:
+        - 'plone-5.2-python-2.7'
+        - 'plone-5.2-python-2.7-at'
+        - 'plone-5.2-python-2.7-robot'
 
 - project:
     name: Plone 4.3
@@ -312,7 +319,7 @@
     <<: *plone-xvfb
 
 
-- job-template:
+- job-template: &plone-core-job
     # Plone 5.x core tests job definition.
     name: plone-{plone-version}-python-2.7
     display-name: 'Plone {plone-version} - Python 2.7'
@@ -338,6 +345,21 @@
 
 
 - job:
+    name: plone-5.2-python-2.7
+    display-name: 'Plone 5.2 - Python 2.7'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    triggers:
+        - github
+        - timed: 'H H/12 * * *'
+
+    <<: *plone-core-job
+
+
+- job:
     name: plone-5.0-build-docker
     display-name: 'Plone 5.0 - Docker Image'
 
@@ -348,7 +370,7 @@
     wrappers:
         - custom-timeout
 
-- job-template:
+- job-template: &plone-core-job-robot
     # Plone 5.x robot tests job definition.
     name: plone-{plone-version}-python-2.7-robot
     display-name: 'Plone {plone-version} - Python 2.7 - Robot Framework Tests'
@@ -396,7 +418,22 @@
     <<: *plone
 
 
-- job-template:
+- job:
+    name: plone-5.2-python-2.7-robot
+    display-name: 'Plone 5.2 - Python 2.7 - Robot Framework Tests'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    triggers:
+        - github
+        - timed: 'H H/12 * * *'
+
+    <<: *plone-core-job-robot
+
+
+- job-template: &plone-core-job-at
     # Plone 5.x Archetypes tests job definition.
     name: plone-{plone-version}-python-2.7-at
     display-name: 'Plone {plone-version} - Python 2.7 - Archetypes'
@@ -430,6 +467,20 @@
 
     <<: *plone
 
+
+- job:
+    name: plone-5.2-python-2.7-at
+    display-name: 'Plone 5.2 - Python 2.7 - Archetypes'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    triggers:
+        - github
+        - timed: 'H H/12 * * *'
+
+    <<: *plone-core-job-at
 
 
 - job-template:
