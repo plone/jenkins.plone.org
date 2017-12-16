@@ -32,7 +32,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.1'
+            branch: '5.2'
 
     wrappers:
         - custom-workspace-cleanup
