@@ -126,9 +126,6 @@
 - project:
     name: PLIPs
     plip:
-        - 680-restapi:
-            buildout: plips/plip-680-restapi.cfg
-            branch: 5.2
         - mosaic:
             buildout: plips/plip-mosaic.cfg
             branch: 5.2
@@ -143,6 +140,9 @@
             branch: 5.2
         - 2092-login:
             buildout: plips/plip-2092-login.cfg
+            branch: 5.2
+        - plone-restapi:
+            buildout: plips/plip-2177-plone-restapi.cfg
             branch: 5.2
     jobs:
         - 'plip-{plip}'
