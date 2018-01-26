@@ -52,6 +52,9 @@
       - name: "Node3"
         host: "88.99.26.113"
         port: "8087"
+      - name: "Node4"
+        host: "tau.vm.zoplo.com"
+        port: "22"
   vars_files:
     - secrets.yml
 
