@@ -585,7 +585,7 @@
             tag-builds: true
 
     triggers:
-        - timed: '@midnight'
+        - timed: '@weekly'
 
     builders:
         - shining-panda:
@@ -594,9 +594,7 @@
             clear: true
             nature: shell
             command:
-                pip install -r requirements.txt
-                buildout -c buildout.cfg
-                bin/sphinx-build source build
+                !include-raw: scripts/themetest.sh
 
     publishers:
         - email-ext:
