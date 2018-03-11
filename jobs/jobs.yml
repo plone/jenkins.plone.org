@@ -637,7 +637,7 @@
             tag-builds: true
 
     triggers:
-        - timed: '@midnight'
+        - timed: '@weekly'
 
     builders:
         - shining-panda:
@@ -646,9 +646,7 @@
             clear: true
             nature: shell
             command:
-                pip install -r requirements.txt
-                buildout -c buildout.cfg
-                bin/sphinx-build src/plone.themepreview/source build
+                !include-raw: scripts/themetest-ploneorg.sh
 
     publishers:
         - html-publisher:
