@@ -166,15 +166,6 @@
 
 
 - project:
-    name: Dependencies
-    kind:
-        - cmf:
-            bin: bin/jenkins-package-dependencies-cmf
-    jobs:
-        - plone-package-dependencies-{kind}
-
-
-- project:
     name: per-package job
     package:
         - borg.localrole:
@@ -812,38 +803,6 @@
 
     <<: *plone-basic
 
-- job-template:
-    name: plone-package-dependencies-{kind}
-    display-name: 'Plone {kind} dependencies'
-
-    triggers:
-        - timed: "@daily"
-
-    builders:
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: System-CPython-2.7
-            clear: true
-            nature: shell
-            command:
-                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-                pip install -r requirements.txt
-                buildout -c jenkins-package-dependencies.cfg
-                bin/jenkins-package-dependencies-{kind}
-                bin/jenkins-package-dependencies-{kind}-imports
-
-    publishers:
-        - archive:
-            artifacts: 'deps/*.???'
-            allow-empty: 'false'
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
-
 
 - job:
     name: plone-package-dependencies-ztc
@@ -859,47 +818,11 @@
             clear: true
             nature: shell
             command:
-                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-                pip install -r requirements.txt
-                buildout -c core.cfg
-                grep -RI ZopeTestCase parts/packages > deps.txt.tmp || echo 0
-                sed -i 's|parts/packages||' deps.txt.tmp
-                grep -Ev '/(Testing|OFS|PloneTestCase|Zope2|ZPublisher)/' deps.txt.tmp > deps.txt
+                !include-raw: scripts/dependencies-ztc.sh
 
     publishers:
         - archive:
             artifacts: 'deps.txt'
-            allow-empty: 'false'
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
-
-
-- job:
-    name: plone-package-dependencies
-    display-name: 'Plone dependencies'
-
-    triggers:
-        - timed: "@daily"
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: System-CPython-2.7
-            clear: true
-            nature: shell
-            command:
-                sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
-                pip install -r requirements.txt
-                buildout -c jenkins-package-dependencies.cfg
-                bin/jenkins-package-dependencies-text
-
-    publishers:
-        - archive:
-            artifacts: 'package-dependencies.txt'
             allow-empty: 'false'
 
     wrappers:
