@@ -14,6 +14,8 @@ fi
 cd src/plone.app.locales/plone/app/locales/locales
 mkdir reports
 
+export PYTHONIOENCODING=utf-8
+
 ../../../../../../bin/i18ndude list -p plone > reports/plone.txt
 ../../../../../../bin/i18ndude list -p atcontenttypes  > reports/atcontenttypes.txt
 ../../../../../../bin/i18ndude list -p atreferencebrowserwidget  > reports/atreferencebrowserwidget.txt
