@@ -122,6 +122,15 @@
     jobs:
         - 'plone-4.3-python-{python-version}'
 
+- project:
+    name: Translations
+    plone-version:
+        - 4.3
+        - 5.0
+        - 5.1
+        - 5.2
+    jobs:
+        - 'plone-{plone-version}-i18n'
 
 - project:
     name: PLIPs
@@ -308,6 +317,37 @@
                 - robot_*.png
 
     <<: *plone-xvfb
+
+
+- job-template:
+    name: plone-{plone-version}-i18n
+    display-name: 'Plone {plone-version} - Translations'
+
+    scm:
+        - buildout-coredev:
+            branch: '{plone-version}'
+
+    triggers:
+        - timed: 'H H * * *'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/translations.sh
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+
+    publishers:
+        - custom-archive:
+            glob: 'src/plone.app.locales/plone/app/locales/locales/reports/*.txt'
+
+    <<: *plone-basic
 
 
 - job-template: &plone-core-job
