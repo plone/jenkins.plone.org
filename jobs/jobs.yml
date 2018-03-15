@@ -131,6 +131,7 @@
         - 5.2
     jobs:
         - 'plone-{plone-version}-i18n'
+        - 'plone-{plone-version}-i18n-find-missing'
 
 - project:
     name: PLIPs
@@ -270,7 +271,6 @@
         - qa-docs-age
         - qa-undeclared-dependencies
         - qa-code-analysis
-        - qa-i18n-find-untranslated
 
 ###
 # JOBS
@@ -942,9 +942,13 @@
     <<: *plone
 
 
-- job:
-    name: qa-i18n-find-untranslated
-    display-name: i18n find untranslated
+- job-template:
+    name: plone-{plone-version}-i18n-find-missing
+    display-name: 'Plone {plone-version} - Find strings'
+
+    scm:
+        - buildout-coredev:
+            branch: '{plone-version}'
 
     triggers:
         - timed: '@weekly'
@@ -958,6 +962,10 @@
             command:
                 !include-raw: scripts/i18n-find-untranslated.sh
 
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+
     publishers:
         - archive:
             artifacts: 'missing.txt'
@@ -969,12 +977,12 @@
             content-type: default
             always: true
             failure: false
-            subject: "Jenkins: untranslated messages on Plone core"
+            subject: "Jenkins: Plone {plone-version} strings not marked for translation"
             attachments: 'missing.txt'
             body: |
                 Dear translators,
 
-                see attached the log of files which have potential strings not marked for translation.
+                see attached a report for strings not marked for translation on Plone {plone-version}.
 
                 You can also see it online at:
 
@@ -983,11 +991,7 @@
                 Yours truly,
                 Jenkins
 
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
+    <<: *plone-basic
 
 - job:
     name: qa-docs-package-styleguide
