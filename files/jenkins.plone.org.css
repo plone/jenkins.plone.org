@@ -15,7 +15,7 @@ body[data-model-type="hudson.model.ParametersDefinitionProperty"] .doony-build {
 }
 
 #jenkins-home-link {
-  background: url('http://docs.plone.org/_static/img/plone.svg') no-repeat scroll 10px center;
+  background: url('https://docs.plone.org/_static/img/plone.svg') no-repeat scroll 10px center;
   width: 215px;
   text-indent: -999px;
 }
