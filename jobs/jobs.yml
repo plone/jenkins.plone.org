@@ -157,7 +157,6 @@
     jobs:
         - 'plip-{plip}'
 
-
 - project:
     name: Theme preview
     plone-version:
@@ -168,12 +167,10 @@
     jobs:
         - 'plone-{plone-version}-themetest'
 
-
 - project:
     name: Plone.org themepreview
     jobs:
         - 'ploneorg-themepreview'
-
 
 - project:
     name: per-package job
@@ -257,12 +254,10 @@
     jobs:
         - 'package-{package}'
 
-
 - project:
     name: python 3.x support
     jobs:
         - 'py3-test'
-
 
 - project:
     name: QA scripts
