@@ -168,11 +168,6 @@
         - 'plone-{plone-version}-themetest'
 
 - project:
-    name: Plone.org themepreview
-    jobs:
-        - 'ploneorg-themepreview'
-
-- project:
     name: per-package job
     package:
         - borg.localrole:
@@ -633,45 +628,6 @@
             fixed: true
 
     <<: *plone-xvfb
-
-
-- job:
-    # Plone.org theme preview.
-    name: 'ploneorg-themepreview'
-    display-name: 'Plone.org - theme preview'
-
-    properties:
-        - custom-throttle:
-            total: '0'
-            enable: '' # false
-
-        - disk-usage
-
-        - build-discarder:
-            days-to-keep: 20
-            num-to-keep: 30
-            artifact-days-to-keep: 3
-            artifact-num-to-keep: 10
-
-    scm:
-        - git:
-            url: git://github.com/plone/ploneorg.core.git
-            branches:
-                - 'master'
-            wipe-workspace: false
-            tag-builds: true
-
-    triggers:
-        - timed: '@weekly'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: System-CPython-2.7
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/themetest-ploneorg.sh
 
     publishers:
         - html-publisher:
