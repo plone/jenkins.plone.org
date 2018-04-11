@@ -152,6 +152,11 @@
         - 'plip-{plip}'
 
 - project:
+    name: special PLIPs
+    jobs:
+      - 'plip-py3'
+
+- project:
     name: Theme preview
     plone-version:
         - '5.2'
@@ -570,6 +575,31 @@
                 !include-raw: scripts/plips.email
 
     <<: *plone-xvfb
+
+
+- job:
+    name: 'plip-py3'
+    display-name: 'PLIP - Python 3'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-3.5
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/plip-py3.sh
+
+    publishers:
+        - archive:
+            artifacts: 'output.txt'
+            allow-empty: 'false'
+
+    <<: *plone-basic
 
 
 - job-template:
