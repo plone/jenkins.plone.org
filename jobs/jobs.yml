@@ -1051,7 +1051,7 @@
     display-name: 'Undeclared dependencies'
 
     triggers:
-        - timed: '@daily'
+        - timed: '@weekly'
 
     builders:
         - shining-panda:
