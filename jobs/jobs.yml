@@ -139,12 +139,6 @@
         - mosaic:
             buildout: plips/plip-mosaic.cfg
             branch: 5.2
-        - zope4:
-            buildout: plip-zope4.cfg
-            branch: 5.2
-        - 1334-PlonePAS:
-            buildout: plips/plip-1334-PlonePAS.cfg
-            branch: 5.2
         - 1485-react:
             buildout: plips/plip-1485.cfg
             branch: 5.2
