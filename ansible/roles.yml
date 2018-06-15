@@ -1,19 +1,19 @@
 # roles downloaded from galaxy.ansible.com
 # (as we do not expect to be hacking on them)
 - src: geerlingguy.java
-  version: 1.7.4
+  version: 1.8.1
 
 - src: geerlingguy.jenkins
-  version: 3.1.2
+  version: 3.5.0
 
 - src: geerlingguy.nodejs
-  version: 4.1.1
+  version: 4.2.0
 
 - src: gforcada.compile-python
   version: 1.2
 
 - src: geerlingguy.munin-node
-  version: 1.2.0
+  version: 1.2.1
 
 - src: geerlingguy.munin
   version: 1.2.0
