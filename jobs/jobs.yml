@@ -791,8 +791,22 @@
             branch: '{plone-version}'
 
     builders:
-        - python:
-            !include-raw-escape: scripts/addon-get-info.py
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: package_qa
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.26.0
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: package_qa
+            nature: python
+            command:
+                !include-raw-escape: scripts/addon-get-info.py
 
         - inject:
             properties-file: vars.properties
