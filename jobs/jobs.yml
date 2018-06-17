@@ -904,8 +904,23 @@
     builders:
         - shell:
             !include-raw: scripts/pkg-py3.sh
-        - python:
-            !include-raw: scripts/pkg-py3-report.py
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-3.5
+            name: py3_status
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.26.0
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-3.5
+            name: py3_status
+            nature: python
+            command:
+                !include-raw: scripts/pkg-py3-report.py
 
     publishers:
         - custom-junit-new
