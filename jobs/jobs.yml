@@ -566,7 +566,7 @@
 
         - email-ext:
             recipients: "${{BUILD_USER_EMAIL}}"
-            reply-to:
+            reply-to: 'no-reply@jenkins.plone.org'
             content-type: default
             always: true
             failure: false
@@ -643,7 +643,7 @@
     publishers:
         - email-ext:
             recipients: tisto@plone.org, asko.soukka@iki.fi
-            reply-to:
+            reply-to: 'no-reply@jenkins.plone.org'
             content-type: default
             regression: true
             failure: false
@@ -759,7 +759,7 @@
 
         - email-ext:
             recipients: "${{BUILD_USER_EMAIL}}"
-            reply-to:
+            reply-to: 'no-reply@jenkins.plone.org'
             content-type: default
             always: true
             failure: false
@@ -807,7 +807,7 @@
 
         - email-ext:
             recipients: "${{BUILD_USER_EMAIL}}"
-            reply-to:
+            reply-to: 'no-reply@jenkins.plone.org'
             content-type: default
             always: true
             failure: false
@@ -948,7 +948,7 @@
 
         - email-ext:
             recipients: 'plone-i18n@lists.sourceforge.net'
-            reply-to:
+            reply-to: 'no-reply@jenkins.plone.org'
             content-type: default
             always: true
             failure: false
@@ -1147,7 +1147,7 @@
     publishers:
         - email-ext:
             recipients: plone-testbot@lists.plone.org
-            reply-to:
+            reply-to: 'no-reply@jenkins.plone.org'
             content-type: default
             regression: true
             failure: false
