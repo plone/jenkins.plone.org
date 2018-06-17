@@ -65,7 +65,7 @@ g = Github(github_api_key)
 
 try:
     org, repo = re.search(GIT_URL_RE, git_url).groups()
-except AttributeError, ValueError:
+except (AttributeError, ValueError):
     msg = (
         '\n\n\n'
         'Error on trying to get info from the git URL %s'
