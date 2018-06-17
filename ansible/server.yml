@@ -109,7 +109,7 @@
     - cron:
         name: Start mr.roboto at reboot
         special_time: reboot
-        job: "supervisord -c /srv/mr.roboto/supervisord.conf"
+        job: "/srv/mr.roboto/bin/supervisord -c /srv/mr.roboto/supervisord.conf"
         user: root
 
   handlers:
