@@ -794,7 +794,7 @@
         - shining-panda:
             build-environment: virtualenv
             python-version: System-CPython-2.7
-            name: package_qa
+            name: addon
             clear: true
             nature: shell
             command:
@@ -803,7 +803,7 @@
         - shining-panda:
             build-environment: virtualenv
             python-version: System-CPython-2.7
-            name: package_qa
+            name: addon
             nature: python
             command:
                 !include-raw-escape: scripts/addon-get-info.py
@@ -811,8 +811,13 @@
         - inject:
             properties-file: vars.properties
 
-        - shell:
-            !include-raw: scripts/addon-tests.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            name: addon
+            nature: shell
+            command:
+                !include-raw: scripts/addon-tests.sh
 
     publishers:
         - junit:
