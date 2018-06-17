@@ -69,9 +69,6 @@
         name=nginx-extras
         state=present
 
-    - name: Install supervisor
-      pip: name=supervisor
-
     - name: Checkout mr.roboto
       git:
         repo=https://github.com/plone/mr.roboto.git
@@ -81,22 +78,12 @@
       pip:
         requirements=/srv/mr.roboto/requirements.txt
         virtualenv=/srv/mr.roboto
-        virtualenv_command=/srv/python2.7.11/bin/virtualenv
-
-    - name: Run mr.roboto bootstrap
-      shell: bin/python2.7 bootstrap.py
-        chdir=/srv/mr.roboto/
-        creates=/srv/mr.roboto/bin/buildout
+        virtualenv_command="/srv/python3.6/bin/python3.6 -m venv"
 
     - name: Run mr.roboto buildout
       shell: bin/buildout
         chdir=/srv/mr.roboto/
       notify: Restart mr.roboto
-
-    - name: Ensure system encoding is utf-8
-      lineinfile:
-        dest=/usr/lib/python2.7/sitecustomize.py
-        line="import sys; sys.setdefaultencoding('utf-8');"
 
     # Install munin
     - name: Install munin
@@ -133,8 +120,11 @@
         name="roboto:"
         state=started
         config=/srv/mr.roboto/supervisord.conf
+        supervisorctl_path=/srv/mr.roboto/bin/supervisorctl
+
     - name: Restart mr.roboto
       supervisorctl:
         name="roboto:"
         state=restarted
         config=/srv/mr.roboto/supervisord.conf
+        supervisorctl_path=/srv/mr.roboto/bin/supervisorctl
