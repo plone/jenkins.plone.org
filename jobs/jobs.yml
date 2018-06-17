@@ -125,10 +125,10 @@
 - project:
     name: Translations
     plone-version:
-        - 4.3
-        - 5.0
-        - 5.1
-        - 5.2
+        - '4.3'
+        - '5.0'
+        - '5.1'
+        - '5.2'
     jobs:
         - 'plone-{plone-version}-i18n'
         - 'plone-{plone-version}-i18n-find-missing'
@@ -138,16 +138,16 @@
     plip:
         - mosaic:
             buildout: plips/plip-mosaic.cfg
-            branch: 5.2
+            branch: '5.2'
         - 1485-react:
             buildout: plips/plip-1485.cfg
-            branch: 5.2
+            branch: '5.2'
         - 2092-login:
             buildout: plips/plip-2092-login.cfg
-            branch: 5.2
+            branch: '5.2'
         - plone-restapi:
             buildout: plips/plip-2177-plone-restapi.cfg
-            branch: 5.2
+            branch: '5.2'
     jobs:
         - 'plip-{plip}'
 
