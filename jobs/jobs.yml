@@ -921,14 +921,19 @@
     display-name: 'Python 3'
 
     builders:
-        - shell:
-            !include-raw: scripts/pkg-py3.sh
-
         - shining-panda:
             build-environment: virtualenv
             python-version: System-CPython-3.5
             name: py3_status
             clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/pkg-py3.sh
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-3.5
+            name: py3_status
             nature: shell
             command:
                 pip install pygithub==1.26.0
