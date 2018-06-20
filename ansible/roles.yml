@@ -10,7 +10,7 @@
   version: 4.2.0
 
 - src: gforcada.compile-python
-  version: 1.2
+  version: 2.0.0
 
 - src: geerlingguy.munin-node
   version: 1.2.1
