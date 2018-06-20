@@ -321,7 +321,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -350,7 +350,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -401,7 +401,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -471,7 +471,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -544,7 +544,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -588,7 +588,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-3.5
+            python-version: Python3.6
             clear: true
             nature: shell
             command:
@@ -634,7 +634,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -715,7 +715,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             name: pull_request
             clear: true
             nature: shell
@@ -724,7 +724,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             name: pull_request
             nature: python
             command:
@@ -735,7 +735,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             name: pull_request
             nature: shell
             command:
@@ -793,7 +793,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             name: addon
             clear: true
             nature: shell
@@ -802,7 +802,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             name: addon
             nature: python
             command:
@@ -813,7 +813,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             name: addon
             nature: shell
             command:
@@ -847,7 +847,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -877,7 +877,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             name: package_qa
             clear: true
             nature: shell
@@ -886,7 +886,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             name: package_qa
             nature: shell
             command:
@@ -894,7 +894,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             name: package_qa
             nature: python
             command:
@@ -923,7 +923,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-3.5
+            python-version: Python3.6
             name: py3_status
             clear: true
             nature: shell
@@ -932,7 +932,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-3.5
+            python-version: Python3.6
             name: py3_status
             nature: shell
             command:
@@ -940,7 +940,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-3.5
+            python-version: Python3.6
             name: py3_status
             nature: python
             command:
@@ -970,7 +970,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -1016,7 +1016,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -1095,7 +1095,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
@@ -1123,7 +1123,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: System-CPython-2.7
+            python-version: Python2.7
             clear: true
             nature: shell
             command:
