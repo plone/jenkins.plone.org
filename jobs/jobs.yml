@@ -255,6 +255,7 @@
         - qa-docs-age
         - qa-undeclared-dependencies
         - qa-code-analysis
+        - qa-pkg-dependencies
 
 ###
 # JOBS
@@ -1118,6 +1119,64 @@
         - custom-workspace-cleanup
 
     <<: *plone
+
+
+- job:
+    name: qa-pkg-dependencies
+    display-name: 'Package dependencies'
+    description: |
+        Manually test the dependencies of a given package.
+
+    parameters:
+        - string:
+            name: PACKAGE_NAME
+            description: 'Name of the package to test its dependencies, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/qa-dependencies.html'
+
+        - string:
+            name: BRANCH
+            default: 'master'
+            description: 'Name of branch of the package to check'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: Python2.7
+            name: pkg-deps
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.26.0
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: Python2.7
+            name: pkg-deps
+            nature: shell
+            command:
+                !include-raw: scripts/qa-pkg-deps.sh
+
+    publishers:
+        - archive:
+            artifacts: 'deps.txt'
+            allow-empty: 'true'
+
+        - email-ext:
+            recipients: "${BUILD_USER_EMAIL}"
+            reply-to: 'no-reply@jenkins.plone.org'
+            content-type: default
+            always: false
+            failure: true
+            subject: "Dependencies of ${PACKAGE_NAME}"
+            attachments: 'deps.txt'
+            body:
+                !include-raw: scripts/deps.email
+
+    wrappers:
+        - build-user-vars
+        - custom-timeout
+        - custom-workspace-cleanup
+
+    <<: *plone-basic
 
 
 ###
