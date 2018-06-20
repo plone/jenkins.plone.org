@@ -7,7 +7,7 @@ if [ "$COREDEV" = "1" ]; then
 fi
 
 if [ "{plone-version}" = "4.3" ]; then
-    $PYTHON27 bootstrap.py -c jenkins.cfg
+    python bootstrap.py -c jenkins.cfg
 else
     pip install -r requirements.txt
     BUILDOUT="buildout"
@@ -29,7 +29,7 @@ if [ $return_code = "all_right" ]; then
 fi
 
 # Update GitHub pull request status
-$PYTHON27 templates/pr-update-status.py
+python templates/pr-update-status.py
 
 # Keep tests return code
 exit $return_code
