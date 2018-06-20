@@ -1,8 +1,8 @@
 #!/bin/bash
 # checkout all packages
-sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
+sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
 pip install -r requirements.txt
-buildout -c jenkins-package-dependencies.cfg
+buildout -c core.cfg
 
 sed -i 's#jenkins = True#jenkins = False#' experimental/qa.cfg
 sed -i 's#\[buildout\]#\[buildout\]\nbin-directory = ../bin#' experimental/qa.cfg

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # checkout all packages
-sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' jenkins-package-dependencies.cfg
+sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
 pip install -r requirements.txt
-buildout -c jenkins-package-dependencies.cfg install dependencies
+buildout -c core.cfg install dependencies
 
 echo "" > deps.txt
 
