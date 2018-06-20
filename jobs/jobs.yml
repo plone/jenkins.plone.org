@@ -142,9 +142,6 @@
         - 1485-react:
             buildout: plips/plip-1485.cfg
             branch: '5.2'
-        - 2092-login:
-            buildout: plips/plip-2092-login.cfg
-            branch: '5.2'
         - plone-restapi:
             buildout: plips/plip-2177-plone-restapi.cfg
             branch: '5.2'
