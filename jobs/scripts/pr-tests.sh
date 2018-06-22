@@ -5,11 +5,11 @@ if [ "$COREDEV" = "1" ]; then
     git checkout $BRANCH
 fi
 
+pip install -r requirements.txt
+
 if [ "{plone-version}" = "4.3" ]; then
-    pip install setuptools==26.1.1 zc.buildout==1.7.1
     buildout -c jenkins.cfg
 else
-    pip install -r requirements.txt
     buildout -c core.cfg
 fi
 
