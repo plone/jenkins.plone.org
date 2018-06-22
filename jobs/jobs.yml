@@ -1058,8 +1058,28 @@
 
     publishers:
         - archive:
-            artifacts: 'deps.txt'
+            artifacts: 'deps.txt, lines.log, pkgs.log'
             allow-empty: 'true'
+
+        - plot:
+            - title: Undeclared dependencies
+              num-builds: '500'
+              yaxis: dependencies not declared
+              style: line
+              use-description: true
+              group: plot
+              series:
+                  - file: lines.log
+                    format: properties
+            - title: Compliant packages
+              num-builds: '500'
+              yaxis: compliant packages
+              style: line
+              use-description: true
+              group: plot
+              series:
+                  - file: pkgs.log
+                    format: properties
 
     wrappers:
         - custom-timeout

@@ -1,20 +1,30 @@
 #!/usr/bin/env bash
-# checkout all packages
-sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
+# checkout all plone and collective org packages
+cat > checkouts.cfg << EOF
+[buildout]
+git-clone-depth = 10
+always-checkout = force
+auto-checkout =
+EOF
+
+for pkg in `grep -E "remotes:(plone|collective)" sources.cfg | cut -d" " -f1 | sed 's/=//'`;
+do
+    echo "    ${pkg}" >> checkouts.cfg
+done
+
+# bootstrap and install z3c.dependencychecker
 pip install -r requirements.txt
 buildout -c core.cfg install dependencies
 
+# get all dependencies
 echo "" > deps.txt
-
-blacklist="Plone plone.themepreview ZODB3 diazo jquery.recurrenceinput.js mockup txtfilter"
-cd src
-for pkg in *;
+for pkg in src/*;
 do
-    if [ `echo $blacklist | grep -c $pkg` -eq 0 ];
-    then
-        cd $pkg
-        echo $pkg >> ../../deps.txt
-        ../../bin/dependencychecker >> ../../deps.txt
-        cd ..
-    fi
+    echo "$pkg" >> deps.txt
+    ./bin/dependencychecker --exit-zero $pkg >> deps.txt || echo "Failed for $pkg"
 done
+
+LINES=`wc -l deps.txt | cut -d" " -f1`
+echo "YVALUE=${LINES}" > lines.log
+PKGS=`ls src/*/pyproject.toml | wc -l`
+echo "YVALUE=${PKGS}" > pkgs.log
