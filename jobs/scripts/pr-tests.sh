@@ -6,9 +6,8 @@ if [ "$COREDEV" = "1" ]; then
 fi
 
 if [ "{plone-version}" = "4.3" ]; then
-    pip install setuptools==26.1.1
-    python bootstrap.py -c jenkins.cfg
-    bin/buildout -c jenkins.cfg
+    pip install setuptools==26.1.1 zc.buildout==1.7.1
+    buildout -c jenkins.cfg
 else
     pip install -r requirements.txt
     buildout -c core.cfg
