@@ -145,6 +145,9 @@
         - plone-restapi:
             buildout: plips/plip-2177-plone-restapi.cfg
             branch: '5.2'
+        - dx-siteroot:
+            buildout: plips/plip-2454-dx-siteroot.cfg
+            branch: '5.1'
     jobs:
         - 'plip-{plip}'
 
