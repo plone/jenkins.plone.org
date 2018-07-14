@@ -54,7 +54,8 @@ a table (in TOML parlance) is expected to help ``z3c.dependencychecker`` know ab
 
 For example, given this content:
 
-::
+.. code-block:: ini
+
     [tool.dependencychecker]
     ignore-packages = ['plone.app.dexterity' ]
     Zope2 = ['Products.Five', 'Products.OFSP']
@@ -118,16 +119,16 @@ To clean a package do the following:
 - run dependencychecker on the package
 - repeat the last two steps (see below) until the output is completely clean up
 
-```
-git clone https://github.com/plone/buildout.coredev
-cd buildout.coredev
-git checkout 5.2
-${EDITOR} checkouts.cfg
-virtualenv .
-pip install -r requirements.txt
-buildout -c core.cfg install dependencies
-./bin/dependencychecker src/${PACKAGE}
-```
+.. code-block:: shell
+
+    git clone https://github.com/plone/buildout.coredev
+    cd buildout.coredev
+    git checkout 5.2
+    ${EDITOR} checkouts.cfg
+    virtualenv .
+    pip install -r requirements.txt
+    buildout -c core.cfg install dependencies
+    ./bin/dependencychecker src/${PACKAGE}
 
 .. note:: The idea of changing ``checkouts.cfg`` is to speed up the buildout run.
 
