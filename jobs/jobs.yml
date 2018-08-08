@@ -649,10 +649,6 @@
             improvement: true
             still-failing: true
             fixed: true
-
-    <<: *plone-xvfb
-
-    publishers:
         - html-publisher:
             name: report
             dir: build
