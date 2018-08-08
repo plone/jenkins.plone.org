@@ -39,6 +39,7 @@
         - custom-timeout
         - custom-port-allocator
         - build-user-vars
+        - custom-github-api-key
 
 - job-template: &plone
     name: 'plone triggered by github'
@@ -57,6 +58,7 @@
         - custom-port-allocator
         - custom-xvfb
         - build-user-vars
+        - custom-github-api-key
 
     <<: *plone-basic
 
@@ -426,6 +428,7 @@
         - custom-timeout
         - custom-port-allocator
         - custom-xvfb
+        - custom-github-api-key
 
         - inject:
             properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
@@ -908,6 +911,7 @@
     wrappers:
         - custom-timeout
         - custom-workspace-cleanup
+        - custom-github-api-key
 
     <<: *plone
 
@@ -1175,6 +1179,7 @@
         - build-user-vars
         - custom-timeout
         - custom-workspace-cleanup
+        - custom-github-api-key
 
     <<: *plone-basic
 
@@ -1266,3 +1271,11 @@
             debug: false
             timeout: 0
             shutdown: false
+
+- wrapper:
+    name: custom-github-api-key
+    wrappers:
+        - credentials-binding:
+          - text:
+              credential-id: GITHUB_API_KEY
+              variable: GITHUB_API_KEY
