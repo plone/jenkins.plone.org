@@ -63,7 +63,7 @@ Write down nodes IPs:
 
 Configure a jump host to connect to them:
 
-.. code-block:: config
+.. code-block:: text
 
     Host jenkins-plone-org-nodes-host
       HostName 88.99.26.113
