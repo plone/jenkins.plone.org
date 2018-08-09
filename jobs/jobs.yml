@@ -119,8 +119,6 @@
     python-version:
         - '2.7':
             pybinary: '$PYTHON27'
-        - '2.6':
-            pybinary: '$PYTHON26'
     jobs:
         - 'plone-4.3-python-{python-version}'
 
