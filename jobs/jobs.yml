@@ -98,7 +98,7 @@
 - project:
     name: Plone 5.x
     plone-version:
-#        - '5.2'
+        - '5.2'
         - '5.1'
         - '5.0'
     jobs:
@@ -117,12 +117,6 @@
         - chrome
     jobs:
         - 'plone-{plone-version}-python-2.7-robot-{browser}'
-
-- project:
-    name: Plone 5.2
-    jobs:
-        - 'plone-5.2-python-2.7'
-        - 'plone-5.2-python-2.7-at'
 
 - project:
     name: Plone 4.3
@@ -370,21 +364,6 @@
 
 
 - job:
-    name: plone-5.2-python-2.7
-    display-name: 'Plone 5.2 - Python 2.7'
-
-    scm:
-        - buildout-coredev:
-            branch: '5.2'
-
-    triggers:
-        - github
-        - timed: 'H H/12 * * *'
-
-    <<: *plone-core-job
-
-
-- job:
     name: plone-5.0-build-docker
     display-name: 'Plone 5.0 - Docker Image'
 
@@ -477,21 +456,6 @@
             glob: 'parts/test/testreports/*.xml'
 
     <<: *plone
-
-
-- job:
-    name: plone-5.2-python-2.7-at
-    display-name: 'Plone 5.2 - Python 2.7 - Archetypes'
-
-    scm:
-        - buildout-coredev:
-            branch: '5.2'
-
-    triggers:
-        - github
-        - timed: 'H H/12 * * *'
-
-    <<: *plone-core-job-at
 
 
 - job-template:
