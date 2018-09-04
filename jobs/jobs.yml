@@ -103,16 +103,26 @@
         - '5.0'
     jobs:
         - 'plone-{plone-version}-python-2.7'
-        - 'plone-{plone-version}-python-2.7-robot'
         - 'plone-{plone-version}-python-2.7-at'
         - 'plone-{plone-version}-js'
+
+- project:
+    name: Plone 5.x robot
+    plone-version:
+        - '5.2'
+        - '5.1'
+        - '5.0'
+    browser:
+        - firefox
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-2.7-robot-{browser}'
 
 - project:
     name: Plone 5.2
     jobs:
         - 'plone-5.2-python-2.7'
         - 'plone-5.2-python-2.7-at'
-        - 'plone-5.2-python-2.7-robot'
 
 - project:
     name: Plone 4.3
@@ -387,8 +397,8 @@
 
 - job-template: &plone-core-job-robot
     # Plone 5.x robot tests job definition.
-    name: plone-{plone-version}-python-2.7-robot
-    display-name: 'Plone {plone-version} - Python 2.7 - Robot Framework Tests'
+    name: plone-{plone-version}-python-2.7-robot-{browser}
+    display-name: 'Plone {plone-version} - Python 2.7 - Robot Framework Tests ({browser})'
 
     scm:
         - buildout-coredev:
@@ -432,21 +442,6 @@
             properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
 
     <<: *plone
-
-
-- job:
-    name: plone-5.2-python-2.7-robot
-    display-name: 'Plone 5.2 - Python 2.7 - Robot Framework Tests'
-
-    scm:
-        - buildout-coredev:
-            branch: '5.2'
-
-    triggers:
-        - github
-        - timed: 'H H/12 * * *'
-
-    <<: *plone-core-job-robot
 
 
 - job-template: &plone-core-job-at
