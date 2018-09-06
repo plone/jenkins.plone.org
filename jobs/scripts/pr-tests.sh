@@ -15,6 +15,7 @@ fi
 
 return_code="all_right"
 
+ROBOT_BROWSER="chrome"
 if [ "{plone-version}" = "4.3" ]; then
     bin/jenkins-alltests -1 || return_code=$?
 else
