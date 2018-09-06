@@ -338,7 +338,7 @@
     <<: *plone-basic
 
 
-- job-template: &plone-core-job
+- job-template:
     # Plone 5.x core tests job definition.
     name: plone-{plone-version}-python-2.7
     display-name: 'Plone {plone-version} - Python 2.7'
@@ -374,7 +374,7 @@
     wrappers:
         - custom-timeout
 
-- job-template: &plone-core-job-robot
+- job-template:
     # Plone 5.x robot tests job definition.
     name: plone-{plone-version}-python-2.7-robot-{browser}
     display-name: 'Plone {plone-version} - Python 2.7 - Robot Framework Tests ({browser})'
@@ -423,7 +423,7 @@
     <<: *plone
 
 
-- job-template: &plone-core-job-at
+- job-template:
     # Plone 5.x Archetypes tests job definition.
     name: plone-{plone-version}-python-2.7-at
     display-name: 'Plone {plone-version} - Python 2.7 - Archetypes'
