@@ -15,16 +15,30 @@ Master
 Nodes
 =====
 
-Nodes server
-------------
+Nodes server 1
+--------------
 - hosted at hetzner.de
 - IP: 88.99.26.113 / 2a01:4f8:10a:2ae::2
 - donor: Plone Foundation
 - contact: Paul Roeland (polyester) and Gil Forcada (gforcada)
 
+Node 4
+------
+- hosted at hetzner.de
+- IP: 46.4.157.69
+- donor: Jens Klein
+- contact: Jens Klein (jensens) and Gil Forcada (gforcada)
+
+Nodes server 2
+--------------
+- hosted at hetzner.de
+- IP: 136.243.46.143 / 2a01:4f8:212:e8c::2
+- donor: Plone Foundation
+- contact: Paul Roeland (polyester) and Gil Forcada (gforcada)
+
 Configuration
 *************
-Base system: Ubuntu 16.04 LTS minimal
+Base system: Ubuntu 18.04 LTS minimal
 
 Install lxd:
 
@@ -43,9 +57,9 @@ Create nodes:
 
 .. code-block:: shell
 
-    lxc launch ubuntu:16.04 node1
-    lxc launch ubuntu:16.04 node2
-    lxc launch ubuntu:16.04 node3
+    lxc launch ubuntu:18.04 node1
+    lxc launch ubuntu:18.04 node2
+    lxc launch ubuntu:18.04 node3
 
 Add SSH keys:
 
