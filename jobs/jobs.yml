@@ -673,16 +673,16 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: Python3.6
             name: pull_request
             clear: true
             nature: shell
             command:
-                pip install pygithub==1.26.0
+                pip install pygithub==1.43.2
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: Python3.6
             name: pull_request
             nature: python
             command:
@@ -693,7 +693,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: Python3.6
             name: pull_request
             nature: shell
             command:
