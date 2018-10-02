@@ -36,6 +36,13 @@ Nodes server 2
 - donor: Plone Foundation
 - contact: Paul Roeland (polyester) and Gil Forcada (gforcada)
 
+Nodes server 3
+--------------
+- hosted at hetzner.de
+- IP: 136.243.44.103 / 2a01:4f8:212:c5a::2
+- donor: Plone Foundation
+- contact: Paul Roeland (polyester) and Gil Forcada (gforcada)
+
 Configuration
 *************
 Base system: Ubuntu 18.04 LTS minimal
