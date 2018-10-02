@@ -60,13 +60,27 @@ Initial configuration:
     lxd init
     (all default options)
 
+Be sure that enough space is given!
+By default LXD from Ubuntu 18.04 creates a loop device with only ~30Gb of space,
+if that's the case, do the following:
+
+.. code-block:: shell
+
+    truncate -s100G /var/lib/lxd/disks/more-space.img
+    ld=$(losetup --show --find /var/lib/lxd/disks/more-space.img); echo "$ld"
+    lxc storage create more-space btrfs source="$ld"
+
 Create nodes:
 
 .. code-block:: shell
 
-    lxc launch ubuntu:18.04 node1
-    lxc launch ubuntu:18.04 node2
-    lxc launch ubuntu:18.04 node3
+    lxc launch ubuntu:18.04 node1 -s more-space
+    lxc launch ubuntu:18.04 node2 -s more-space
+    lxc launch ubuntu:18.04 node3 -s more-space
+
+.. note::
+   The ``-s`` parameter with its value are not needed,
+   if the default storage is big enough already.
 
 Add SSH keys:
 
