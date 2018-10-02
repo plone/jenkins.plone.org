@@ -86,6 +86,13 @@
         - 'pull-request-{plone-version}'
 
 - project:
+    name: Pull requests on python 3
+    python-version:
+      - 'Python3.6'
+    jobs:
+        - 'pull-request-{python-version}'
+
+- project:
     name: Test add-ons
     plone-version:
         - '5.2'
@@ -706,6 +713,80 @@
 
         - robot:
             output-path: '{report-path}'
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
+        - email-ext:
+            recipients: "${{BUILD_USER_EMAIL}}"
+            reply-to: 'no-reply@jenkins.plone.org'
+            content-type: default
+            always: true
+            failure: false
+            subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: packages ${{PKGS}}"
+            body:
+                !include-raw: scripts/pr.email
+
+    <<: *plone-xvfb
+
+- job-template:
+    name: 'pull-request-{python-version}'
+    display-name: 'Pull Request {python-version}'
+    description: |
+        Manually test pull requests targeted at Plone 5.2 on {python-version}.
+        To trigger a job, just login with your GitHub account and provide the pull request URL.
+        After the job is finished you will get an email about the result.
+
+    parameters:
+        - text:
+            name: PULL_REQUEST_URL
+            description: 'URLs of the github pull requests, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-pull-request-jobs.html'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: {python-version}
+            name: pull_request
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.43.2
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: {python-version}
+            name: pull_request
+            nature: python
+            command:
+                !include-raw-escape: scripts/pr-get-info.py
+
+        - inject:
+            properties-file: vars.properties
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: {python-version}
+            name: pull_request
+            nature: shell
+            command:
+                !include-raw: scripts/pr-tests-py3.sh
+
+    publishers:
+        - junit:
+            results: 'parts/test/testreports/*.xml'
+            keep-long-stdio: false
+
+        - robot:
+            output-path: 'parts/test'
             report-html: robot_report.html
             log-html: robot_log.html
             output-xml: robot_output.xml
