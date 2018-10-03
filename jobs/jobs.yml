@@ -152,6 +152,9 @@
         - dx-siteroot:
             buildout: plips/plip-2454-dx-siteroot.cfg
             branch: '5.1'
+        - plone-staticresources:
+            buildout: plips/plip-1653-staticresources.cfg
+            branch: '5.2'
     jobs:
         - 'plip-{plip}'
 
