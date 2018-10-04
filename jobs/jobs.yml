@@ -49,14 +49,12 @@
 
     <<: *plone-basic
 
-- job-template: &plone-xvfb
-    name: 'generic plone plus xvfb on it'
+- job-template: &plone-no-ports-no-xvfb
+    name: 'generic plone without ports allocation nor xvfb'
 
     wrappers:
         - custom-workspace-cleanup
         - custom-timeout
-        - custom-port-allocator
-        - custom-xvfb
         - build-user-vars
         - custom-github-api-key
 
@@ -314,7 +312,7 @@
             other-files:
                 - robot_*.png
 
-    <<: *plone-xvfb
+    <<: *plone-no-ports-no-xvfb
 
 
 - job-template:
@@ -541,7 +539,7 @@
             body:
                 !include-raw: scripts/plips.email
 
-    <<: *plone-xvfb
+    <<: *plone-no-ports-no-xvfb
 
 
 - job:
@@ -732,7 +730,7 @@
             body:
                 !include-raw: scripts/pr.email
 
-    <<: *plone-xvfb
+    <<: *plone-no-ports-no-xvfb
 
 - job-template:
     name: 'pull-request-{python-version}'
@@ -806,7 +804,7 @@
             body:
                 !include-raw: scripts/pr.email
 
-    <<: *plone-xvfb
+    <<: *plone-no-ports-no-xvfb
 
 - job-template:
     name: 'test-addon-{plone-version}'

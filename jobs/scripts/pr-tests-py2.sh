@@ -17,10 +17,10 @@ return_code="all_right"
 
 ROBOT_BROWSER="chrome"
 if [ "{plone-version}" = "4.3" ]; then
-    bin/jenkins-alltests -1 || return_code=$?
+    xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/jenkins-alltests -1 || return_code=$?
 else
-    bin/alltests --xml --all || return_code=$?
-    bin/alltests-at --xml || return_code=$?
+    xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/alltests --xml --all || return_code=$?
+    xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/alltests-at --xml || return_code=$?
 fi
 
 if [ $return_code = "all_right" ]; then
