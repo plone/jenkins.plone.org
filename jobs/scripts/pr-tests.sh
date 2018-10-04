@@ -6,22 +6,10 @@ if [ "$COREDEV" = "1" ]; then
 fi
 
 pip install -r requirements.txt
-
-if [ "{plone-version}" = "4.3" ]; then
-    buildout -c jenkins.cfg
-else
-    buildout -c core.cfg
-fi
+buildout -c py3.cfg
 
 return_code="all_right"
-
-ROBOT_BROWSER="chrome"
-if [ "{plone-version}" = "4.3" ]; then
-    bin/jenkins-alltests -1 || return_code=$?
-else
-    bin/alltests --xml --all || return_code=$?
-    bin/alltests-at --xml || return_code=$?
-fi
+./bin/test --xml -vvv  || return_code=$?
 
 if [ $return_code = "all_right" ]; then
     return_code=$?
