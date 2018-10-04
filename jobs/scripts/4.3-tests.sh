@@ -4,4 +4,4 @@
 bin/buildout -c jenkins.cfg
 
 ROBOT_BROWSER=chrome
-bin/jenkins-alltests -1
+xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/jenkins-alltests -1

@@ -9,7 +9,7 @@ pip install -r requirements.txt
 buildout -c py3.cfg
 
 return_code="all_right"
-./bin/test --xml -vvv  || return_code=$?
+xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test --xml -vvv  || return_code=$?
 
 if [ $return_code = "all_right" ]; then
     return_code=$?
