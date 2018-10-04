@@ -15,13 +15,12 @@ PR_RE = r'https://github.com/(.*)/(.*)/pull/(.*)'
 
 PKGS = []
 COREDEV = 0
+BRANCH = ''
 
-try:
-    github_api_key = os.environ['GITHUB_API_KEY']
-except KeyError:
+def error(message):
     print(
         '\n\n\n'
-        'GITHUB_API_KEY does not exist, pull request job can not run. '
+        f'{message}'
         '\n'
         'Please contact the testing team: '
         'https://github.com/orgs/plone/teams/testing-team'
@@ -32,138 +31,155 @@ except KeyError:
     )
     sys.exit(1)
 
-try:
-    pull_request_urls = os.environ['PULL_REQUEST_URL']
-except KeyError:
-    print(
-        '\n\n\n'
-        'You seem to forgot to add a pull request URL on the '
-        '"Build with parameters" form!'
-        '\n\n\n'
-    )
-    sys.exit(1)
 
-build_url = os.environ['BUILD_URL']
-job_name = os.environ['JOB_NAME']
-
-g = Github(github_api_key)
-
-for pr in pull_request_urls.split():
-    org, plone_repo, pr_number = re.search(PR_RE, pr).groups()
-
+def api_key():
     try:
-        pr_number = int(pr_number)
-    except ValueError:
-        msg = (
-            '\n\n\n'
-            'Error on trying to get info from Pull Request %s'
-            '\n'
-            'The pull request number "%s" is not a number!'
-            '\n\n\n'
-        )
-        print(msg % (pr, pr_number))
-        sys.exit(1)
+        return os.environ['GITHUB_API_KEY']
+    except KeyError:
+        error('GITHUB_API_KEY does not exist, pull request job can not run. ')
 
-    # get the pull request organization it belongs to
+
+def pull_requests():
     try:
-        g_org = g.get_organization(org)
-    except BadCredentialsException:
-        print(
-            '\n\n\n'
-            'The API key used seems to not be valid any longer.'
-            '\n'
-            'Please contact the testing team: '
-            'https://github.com/orgs/plone/teams/testing-team'
-            '\n'
-            'Fill an issue as well: '
-            'https://github.com/plone/jenkins.plone.org/issues/new'
-            '\n\n\n'
+        return os.environ['PULL_REQUEST_URL'].split()
+    except KeyError:
+        error(
+            'You seem to forgot to add a pull request URL on the '
+            '"Build with parameters" form!'
         )
-        sys.exit(1)
-    except UnknownObjectException:
-        msg = (
-            '\n\n\n'
-            'Error on trying to get info from Pull Request %s'
-            '\n'
-            'The organization "%s" does not seem to exist.'
-            '\n\n\n'
-        )
-        print(msg % (pr, org))
-        sys.exit(1)
 
-    # the repo where the pull request is from
-    try:
-        g_repo = g_org.get_repo(plone_repo)
-    except UnknownObjectException:
-        msg = (
-            '\n\n\n'
-            'Error on trying to get info from Pull Request %s'
-            '\n'
-            'The repository "%s" does not seem to exist.'
-            '\n\n\n'
-        )
-        print(msg % (pr, plone_repo))
-        sys.exit(1)
 
-    # the pull request itself
-    try:
-        g_pr = g_repo.get_pull(pr_number)
-    except UnknownObjectException:
-        msg = (
-            '\n\n\n'
-            'Error on trying to get info from Pull Request %s'
-            '\n'
-            'The pull request num "%s" does not seem to exist.'
-            '\n\n\n'
-        )
-        print(msg % (pr, pr_number))
-        sys.exit(1)
+class PullRequest:
 
-    # get the branch
-    branch = g_pr.head.ref
+    def __init__(self, github, job_name, build_url):
+        self.g = github
+        self.job_name = job_name
+        self.build_url = build_url
 
-    # get the user where the pull request comes from
-    user = g_pr.head.repo.owner.login
+    def __call__(self, url):
+        self.url = url
 
-    # add a 'pending' status
-    last_commit = g_pr.get_commits().reversed[0]
-    try:
-        last_commit.create_status(
-            u'pending',
-            target_url=build_url,
-            description='Job started, wait until it finishes',
-            context='Plone Jenkins CI - {0}'.format(job_name),
-        )
-    except UnknownObjectException:
-        msg = (
-            '\n\n\n'
-            'Could not update Pull Request %s'
-            '\n\n\n'
-        )
-        print(msg % pr)
+        data = re.search(PR_RE, url).groups()
+        self.org, self.repo, self.pr_number = data
 
-    if plone_repo != 'buildout.coredev':
+        self._pr_number()
+        self._pr_org()
+        self._pr_repo()
+        self._pr_itself()
+        self._user_and_branch()
+        self._add_pending_status()
+
+        if self.repo != 'buildout.coredev':
+            self._no_coredev_pkg()
+        else:
+            COREDEV = 1
+            BRANCH = self.branch
+
+    def _pr_number(self):
+        try:
+            self.pr_number = int(self.pr_number)
+        except ValueError:
+            error(
+                f'Error on trying to get info from Pull Request {self.url}'
+                '\n'
+                f'The pull request number "{self.pr_number}" is not a number!'
+            )
+
+    def _pr_org(self):
+        """Get the pull request organization it belongs to"""
+        try:
+            self.g_org = self.g.get_organization(self.org)
+        except BadCredentialsException:
+            error('The API key used seems to not be valid any longer.')
+        except UnknownObjectException:
+            error(
+                f'Error on trying to get info from Pull Request {self.url}'
+                '\n'
+                f'The organization "{self.org}" does not seem to exist.'
+            )
+
+    def _pr_repo(self):
+        """The repo where the pull request is from"""
+        try:
+            self.g_repo = self.g_org.get_repo(self.repo)
+        except UnknownObjectException:
+            error(
+                f'Error on trying to get info from Pull Request {self.url}'
+                '\n'
+                f'The repository "{self.repo}" does not seem to exist.'
+            )
+
+    def _pr_itself(self):
+        """The pull request itself"""
+        try:
+            self.g_pr = self.g_repo.get_pull(self.pr_number)
+        except UnknownObjectException:
+            error(
+                f'Error on trying to get info from Pull Request {self.url}'
+                '\n'
+                f'The pull request num "{self.pr_number}" does not seem to exist.'
+            )
+
+    def _user_and_branch(self):
+        # get the branch
+        self.branch = self.g_pr.head.ref
+
+        # get the user where the pull request comes from
+        self.user = self.g_pr.head.repo.owner.login
+
+    def _add_pending_status(self):
+        last_commit = self.g_pr.get_commits().reversed[0]
+        try:
+            last_commit.create_status(
+                u'pending',
+                target_url=self.build_url,
+                description='Job started, wait until it finishes',
+                context=f'Plone Jenkins CI - {self.job_name}',
+            )
+        except UnknownObjectException:
+            error(f'Could not update Pull Request {self.url}')
+
+    def _no_coredev_pkg(self):
         # export the packages so it can be reported by mail
-        PKGS.append(plone_repo)
+        PKGS.append(self.repo)
         # change the package source
-        for line in fileinput.input('sources.cfg', inplace=True):
-            if line.find(plone_repo) != -1:
-                line = re.sub(
-                    PKG_RE.format(plone_repo),
-                    SOURCE_RE.format(plone_repo, user, branch),
-                    line
-                )
-            sys.stdout.write(line)
+        with fileinput.input('sources.cfg', inplace=True) as file_handler:
+            for line in file_handler:
+                if line.find(self.repo) != -1:
+                    line = re.sub(
+                        PKG_RE.format(self.repo),
+                        SOURCE_RE.format(self.repo, self.user, self.branch),
+                        line,
+                    )
+                sys.stdout.write(line)
 
         # add the package on the checkouts
         with open('checkouts.cfg', 'a') as myfile:
-            myfile.write('    {0}'.format(plone_repo))
-    else:
-        COREDEV = 1
+            myfile.write(f'    {self.repo}\n')
 
-with open('vars.properties', 'w') as f:
-    f.write(u'PKGS = {0}\n'.format(' '.join(PKGS)))
-    f.write(u'COREDEV = {0}\n'.format(COREDEV))
-    if COREDEV == 1:
-        f.write(u'PKGS = \n')
-        f.write(u'BRANCH = {0}\n'.format(branch))
+
+def write_properties_file():
+    with open('vars.properties', 'w') as vars_file:
+        packages = ' '.join(PKGS)
+        vars_file.write(f'PKGS = {packages}\n')
+        vars_file.write(f'COREDEV = {COREDEV}\n')
+        if COREDEV == 1:
+            vars_file.write('PKGS = \n')
+            vars_file.write(f'BRANCH = {branch}\n')
+
+
+def main():
+    github_api_key = api_key()
+    pull_request_urls = pull_requests()
+
+    build_url = os.environ['BUILD_URL']
+    job_name = os.environ['JOB_NAME']
+    g = Github(github_api_key)
+
+    pull_request_handler = PullRequest(g, job_name, build_url)
+    for pr in pull_request_urls:
+        pull_request_handler(pr)
+
+    write_properties_file()
+
+main()
