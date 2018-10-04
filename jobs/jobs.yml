@@ -754,7 +754,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: {python-version}
+            python-version: '{python-version}'
             name: pull_request
             clear: true
             nature: shell
@@ -763,7 +763,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: {python-version}
+            python-version: '{python-version}'
             name: pull_request
             nature: python
             command:
@@ -774,7 +774,7 @@
 
         - shining-panda:
             build-environment: virtualenv
-            python-version: {python-version}
+            python-version: '{python-version}'
             name: pull_request
             nature: shell
             command:
