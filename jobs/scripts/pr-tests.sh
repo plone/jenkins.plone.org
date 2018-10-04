@@ -16,7 +16,7 @@ if [ $return_code = "all_right" ]; then
 fi
 
 # Update GitHub pull request status
-python templates/pr-update-status.py
+python templates/pr-update-status-py3.py
 
 # Keep tests return code
 exit $return_code
