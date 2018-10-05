@@ -85,10 +85,13 @@
 
 - project:
     name: Pull requests on python 3
-    python-version:
-      - 'Python3.6'
+    py:
+        - '3.6':
+            python-version: 'Python3.6'
+        - '3.7':
+            python-version: 'Python3.7'
     jobs:
-        - 'pull-request-{python-version}'
+        - 'pull-request-5.2-{py}'
 
 - project:
     name: Test add-ons
@@ -733,10 +736,10 @@
     <<: *plone-no-ports-no-xvfb
 
 - job-template:
-    name: 'pull-request-{python-version}'
-    display-name: 'Pull Request {python-version}'
+    name: 'pull-request-5.2-{py}'
+    display-name: 'Pull Request 5.2 on py{py}'
     description: |
-        Manually test pull requests targeted at Plone 5.2 on {python-version}.
+        Manually test pull requests targeted at Plone 5.2 on Python {py}.
         To trigger a job, just login with your GitHub account and provide the pull request URL.
         After the job is finished you will get an email about the result.
 
