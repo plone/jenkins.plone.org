@@ -2,7 +2,7 @@
 # checkout all plone and collective org packages
 cat > checkouts.cfg << EOF
 [buildout]
-git-clone-depth = 10
+git-clone-depth = 1
 always-checkout = force
 auto-checkout =
 EOF

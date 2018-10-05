@@ -1,8 +1,7 @@
 #!/bin/bash
 # buildout, core and AT tests
-sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
 pip install -r requirements.txt
-buildout -c {buildout}
+buildout buildout:git-clone-depth=1 -c {buildout}
 
 return_code="all_right"
 ROBOT_BROWSER=chrome

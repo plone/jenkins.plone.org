@@ -1,7 +1,6 @@
 #!/bin/bash
-sed -i 's/    mr.developer/    mr.developer\ngit-clone-depth = 100/' core.cfg
 pip install -r requirements.txt
-buildout -c py3.cfg
+buildout buildout:git-clone-depth=1 -c py3.cfg
 cat bin/test
 
 return_code="all_right"

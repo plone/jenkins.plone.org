@@ -8,9 +8,9 @@ fi
 pip install -r requirements.txt
 
 if [ "{plone-version}" = "4.3" ]; then
-    buildout -c jenkins.cfg
+    buildout buildout:git-clone-depth=1 -c jenkins.cfg
 else
-    buildout -c core.cfg
+    buildout buildout:git-clone-depth=1 -c core.cfg
 fi
 
 return_code="all_right"

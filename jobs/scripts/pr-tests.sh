@@ -6,7 +6,7 @@ if [ "$COREDEV" = "1" ]; then
 fi
 
 pip install -r requirements.txt
-buildout -c py3.cfg
+buildout buildout:git-clone-depth=1 -c py3.cfg
 
 return_code="all_right"
 export PATH="/usr/lib/chromium-browser:$PATH"

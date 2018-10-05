@@ -2,7 +2,7 @@
 # checkout only the package being tested
 cat > checkouts.cfg << EOF
 [buildout]
-git-clone-depth = 10
+git-clone-depth = 1
 always-checkout = force
 auto-checkout =
     ${PACKAGE_NAME}

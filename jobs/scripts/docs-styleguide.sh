@@ -3,7 +3,7 @@ cat > docs.cfg << EOF
 [buildout]
 extends = core.cfg
 auto-checkout = *
-git-clone-depth = 100
+git-clone-depth = 1
 EOF
 sed -i 's/^Zope2/#Zope2/' sources.cfg
 sed -i 's/^ZODB/#ZODB/' sources.cfg
