@@ -16,23 +16,23 @@ Checkout this repository:
 
 .. code-block:: shell
 
-    $ git clone git@github.com:plone/jenkins.plone.org.git
-    $ cd jenkins.plone.org
+    git clone git@github.com:plone/jenkins.plone.org.git
+    cd jenkins.plone.org
 
 Create and activate a virtualenv:
 
 .. code-block:: shell
 
-    $ virtualenv -p python2.7 .
-    $ source ./bin/activate
+    python3.6 -m venv .
+    ./bin/activate
 
 Install all the tools needed (ansible, ansible roles and jenkins-job-builder):
 
 .. code-block:: shell
 
-    $ pip install -r requirements.txt
-    $ ansible-galaxy install -r ansible/roles.yml
-    $ git submodule update --init
+    pip install -r requirements.txt
+    ansible-galaxy install -r ansible/roles.yml
+    git submodule update --init
 
 .. note::
    For the roles that are downloaded from checkouts,
@@ -41,11 +41,11 @@ Install all the tools needed (ansible, ansible roles and jenkins-job-builder):
 
    .. code-block:: shell
 
-       $ cd ansible/roles
-       $ rm -rf plone.jenkins_server
-       $ rm -rf plone.jenkins_node
-       $ git clone git@github.com:plone/plone.jenkins_server
-       $ git clone git@github.com:plone/plone.jenkins_node
+       cd ansible/roles
+       rm -rf plone.jenkins_server
+       rm -rf plone.jenkins_node
+       git clone git@github.com:plone/plone.jenkins_server
+       git clone git@github.com:plone/plone.jenkins_node
 
 Check ansible/inventory.txt and make sure that you can connect to the machines listed there.
 
@@ -53,19 +53,19 @@ Copy your public ssh key to all servers:
 
 .. code-block:: shell
 
-    $ ssh-copy-id -i ~/.ssh/<SSH-KEY>.pub root@<SERVER_IP>
+    ssh-copy-id -i ~/.ssh/<SSH-KEY>.pub root@<SERVER_IP>
 
 Set Up Jenkins Server
 ---------------------
 .. code-block:: shell
 
-    $ ./update_master.sh
+    ./update_master.sh
 
 Set Up Jenkins Nodes
 --------------------
 .. code-block:: shell
 
-    $ ./update_nodes.sh
+    ./update_nodes.sh
 
 Set Up Jenkins Jobs
 -------------------
@@ -76,15 +76,15 @@ Put jenkins-job-builder in development mode:
 
 .. code-block:: shell
 
-    $ cd src/jenkins-job-builder
-    $ pip install -r requirements.txt
-    $ python setup.py develop
+    cd src/jenkins-job-builder
+    pip install -r requirements.txt -c ../../requirements.txt
+    python setup.py develop
 
 Test the jobs are properly setup:
 
 .. code-block:: shell
 
-    $ jenkins-jobs --conf jobs/config.ini.in test jobs/jobs.yml -o output
+    jenkins-jobs --conf jobs/config.ini.in test jobs/jobs.yml -o output
 
 .. note::
    A folder named ``output`` should contain one file per each jenkins job
@@ -94,7 +94,7 @@ Create your own ``jobs/config.ini`` by copying it from ``jobs/config.ini.in``:
 
 .. code-block:: shell
 
-    $ cp jobs/config.ini.in jobs/config.ini
+    cp jobs/config.ini.in jobs/config.ini
 
 Add your own credentials to jobs/config.ini.
 You can find them when you log into Jenkins and copy your API token
@@ -119,7 +119,7 @@ Now finally install the jobs on the server:
 
 .. code-block:: shell
 
-    $ ./update_jobs.sh
+    ./update_jobs.sh
 
 Manual Configuration
 --------------------
