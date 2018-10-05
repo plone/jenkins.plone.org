@@ -271,6 +271,11 @@
         - qa-code-analysis
         - qa-pkg-dependencies
 
+- project:
+    name: Special jobs
+    jobs:
+      - exp-parallel-tests
+
 ###
 # JOBS
 ###
@@ -1229,6 +1234,40 @@
 
     <<: *plone-basic
 
+- job:
+    name: exp-parallel-tests
+    display-name: 'Plone 5.2 parallel tests'
+
+    properties:
+        - custom-throttle:
+            total: '7'
+            enable: 'true'
+
+        - disk-usage
+
+        - build-discarder:
+            days-to-keep: 60
+            num-to-keep: 100
+            artifact-days-to-keep: 3
+            artifact-num-to-keep: 10
+
+        - heavy-job:
+            weight: 6
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: Python3.6
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/parallel-tests.sh
+
+    publishers:
+        - custom-junit-new
+        - custom-email-ext
+
+    <<: *plone-basic
 
 ###
 # MACROS
