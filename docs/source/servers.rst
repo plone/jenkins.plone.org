@@ -128,14 +128,6 @@ Connect to all nodes to accept their fingerprint:
     ssh node2-jenkins-plone-org
     ssh node3-jenkins-plone-org
 
-Install python 2.7 (as ansible still needs it):
-
-.. code-block:: shell
-
-    ssh node1-jenkins-plone-org "apt-get update && apt-get install -y python2.7"
-    ssh node2-jenkins-plone-org "apt-get update && apt-get install -y python2.7"
-    ssh node3-jenkins-plone-org "apt-get update && apt-get install -y python2.7"
-
 Add iptables rules to let jenkins master connect to the nodes,
 these two lines are needed **for each** node:
 
@@ -154,5 +146,4 @@ TODO
 
   - create containers with ansible
   - configure SSH
-  - install python2.7 on containers
   - configure firewall
