@@ -17,7 +17,7 @@ else
     grep "${PACKAGE_NAME}" sources.cfg
 fi
 
-pip install -r requirements.txt
+pip install -Ur requirements.txt
 buildout -c core.cfg install dependencies
 
 return_code=0

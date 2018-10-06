@@ -1,4 +1,4 @@
 #!/bin/sh
-pip install -r requirements.txt
-buildout buildout:git-clone-depth=1 -c core.cfg
-bin/alltests-at --xml
+pip install -Ur requirements.txt
+buildout buildout:git-clone-depth=1
+bin/alltests-at --all --xml

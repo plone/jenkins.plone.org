@@ -1,14 +1,13 @@
 #!/bin/sh
-if [ "{plone-version}" = "4.3" ]; then
-    python bootstrap.py -c jenkins.cfg
-    bin/buildout buildout:git-clone-depth=1 -c jenkins.cfg
-else
-    python bootstrap.py --setuptools-version 33.1.1 --buildout-version 2.8.0 -c core.cfg
-    bin/buildout buildout:git-clone-depth=1 -c core.cfg
-fi
+python bootstrap.py
+bin/buildout buildout:git-clone-depth=1
 
-bin/test --xml -s ${{ADDON_NAME}}
+bin/test --all --xml -s ${{ADDON_NAME}}
+
+return_code="$?"
 
 if [ "${{REPORT_ON_GITHUB}}" = "True" ]; then
     python templates/addon-report-status.py
 fi
+
+exit "$return_code"

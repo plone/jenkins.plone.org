@@ -2,7 +2,7 @@
 wget https://raw.githubusercontent.com/plone/buildout.coredev/5.2/requirements.txt -O requirements.txt
 wget https://raw.githubusercontent.com/plone/buildout.coredev/5.2/experimental/qa.cfg -O qa.cfg
 wget https://raw.githubusercontent.com/plone/plone.recipe.codeanalysis/master/.isort.cfg -O .isort.cfg
-sed -i 's#directory = src#directory = {top-level}#' qa.cfg
-pip install -r requirements.txt
-buildout buildout:git-clone-depth=1 -c qa.cfg
+
+pip install -Ur requirements.txt
+buildout buildout:git-clone-depth=1 code-analysis:directory={top-level} -c qa.cfg
 bin/code-analysis

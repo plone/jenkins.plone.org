@@ -5,21 +5,26 @@ if [ "$COREDEV" = "1" ]; then
     git checkout $BRANCH
 fi
 
-pip install -r requirements.txt
+pip install -Ur requirements.txt
 buildout buildout:git-clone-depth=1 -c py3.cfg
 
-return_code="all_right"
 export PATH="/usr/lib/chromium-browser:$PATH"
-export ROBOT_BROWSER='chrome'
+export ROBOT_BROWSER=chrome
+export ROBOTSUITE_PREFIX=ROBOT
 
-xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test --xml -vvv  || return_code=$?
+alias xvfb-wrap="xvfb-run -a --server-args='-screen 0 1920x1200x24'"
 
-if [ $return_code = "all_right" ]; then
-    return_code=$?
+# All tests without Robot
+xvfb-wrap bin/test --all --xml -t '!ROBOT' || return_code="$?"
+# All tests with Robot
+xvfb-wrap bin/test --all --xml -t ROBOT || return_code="$?"
+
+if [ "$return_code" = 'all_right' ]; then
+    return_code="$?"
 fi
 
 # Update GitHub pull request status
 python templates/pr-update-status-py3.py
 
 # Keep tests return code
-exit $return_code
+exit "$return_code"
