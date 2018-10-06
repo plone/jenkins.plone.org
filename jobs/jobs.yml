@@ -479,7 +479,8 @@
             wipe-workspace: false
             tag-builds: true
             shallow-clone: true
-            depth: 50
+            depth: 10
+            do-not-fetch-tags: true
 
     builders:
         - shell:
@@ -593,7 +594,8 @@
             wipe-workspace: false
             tag-builds: true
             shallow-clone: true
-            depth: 50
+            depth: 10
+            do-not-fetch-tags: true
 
     triggers:
         - timed: '@weekly'
@@ -911,7 +913,8 @@
             url: git://github.com/plone/{package}.git
             wipe-workspace: false
             shallow-clone: true
-            depth: 50
+            depth: 10
+            do-not-fetch-tags: true
 
     builders:
         - shining-panda:
@@ -1063,6 +1066,7 @@
             wipe-workspace: false
             shallow-clone: true
             depth: 50
+            do-not-fetch-tags: true
 
     triggers:
         - timed: '@weekly'
@@ -1248,7 +1252,8 @@
             wipe-workspace: false
             tag-builds: true
             shallow-clone: true
-            depth: 50
+            depth: 10
+            do-not-fetch-tags: true
 
 - publisher:
     name: custom-junit
