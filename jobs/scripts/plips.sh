@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # buildout, core and AT tests
 pip install -r requirements.txt
 buildout buildout:git-clone-depth=1 -c {buildout}

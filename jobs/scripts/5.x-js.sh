@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # run mockup tests
 echo $PATH
 node --version

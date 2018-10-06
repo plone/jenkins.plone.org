@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 if [ "{plone-version}" = "4.3" ]; then
     python bootstrap.py -c jenkins.cfg
     bin/buildout buildout:git-clone-depth=1 -c jenkins.cfg

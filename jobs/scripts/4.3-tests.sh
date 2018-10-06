@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # run buildout and tests
 {pybinary} bootstrap.py -c jenkins.cfg
 bin/buildout buildout:git-clone-depth=1 -c jenkins.cfg

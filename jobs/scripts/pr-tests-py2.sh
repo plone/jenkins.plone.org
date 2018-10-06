@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ "$COREDEV" = "1" ]; then
     # TODO(gforcada): allow to test remote branches (i.e. branches not in github.com/plone/buildout.coredev)
