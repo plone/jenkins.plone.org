@@ -98,6 +98,20 @@
         - 'test-addon-{plone-version}'
 
 - project:
+    name: Plone 5.2 pyhton jobs
+    plone-version:
+        - '5.2'
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
+        - '3.6':
+            python-version: 'Python3.6'
+        - '3.7':
+            python-version: 'Python3.7'
+    jobs:
+        - 'plone-{plone-version}-python-{py}'
+
+- project:
     name: Plone 5.2 pyhton jobs (robot tests)
     plone-version:
         - '5.2'
@@ -115,14 +129,16 @@
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
 - project:
-    name: Plone 5.x
+    name: Plone 5.1 and 5.0
     plone-version:
-        - '5.2'
         - '5.1'
         - '5.0'
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
     jobs:
-        - 'plone-{plone-version}-python-2.7'
-        - 'plone-{plone-version}-python-2.7-at'
+        - 'plone-{plone-version}-python-{py}'
+        - 'plone-{plone-version}-python-{py}-at'
 
 - project:
     name: Plone 5.x robot
@@ -368,8 +384,8 @@
 
 - job-template:
     # Plone 5.x core tests job definition.
-    name: plone-{plone-version}-python-2.7
-    display-name: 'Plone {plone-version} - Python 2.7'
+    name: plone-{plone-version}-python-{py}
+    display-name: 'Plone {plone-version} - Python {py}'
 
     scm:
         - buildout-coredev:
@@ -378,7 +394,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: '{python-version}'
             clear: true
             nature: shell
             command:
@@ -451,8 +467,8 @@
 
 - job-template:
     # Plone 5.x Archetypes tests job definition.
-    name: plone-{plone-version}-python-2.7-at
-    display-name: 'Plone {plone-version} - Python 2.7 - Archetypes'
+    name: plone-{plone-version}-python-{py}-at
+    display-name: 'Plone {plone-version} - Python {py} - Archetypes'
 
     properties:
         - custom-throttle:
@@ -468,7 +484,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: '{python-version}'
             clear: true
             nature: shell
             command:
