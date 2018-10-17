@@ -17,6 +17,7 @@ PKGS = []
 COREDEV = 0
 BRANCH = ''
 
+
 def error(message):
     print(
         '\n\n\n'
@@ -72,6 +73,8 @@ class PullRequest:
         if self.repo != 'buildout.coredev':
             self._no_coredev_pkg()
         else:
+            global COREDEV
+            global BRANCH
             COREDEV = 1
             BRANCH = self.branch
 
@@ -165,7 +168,7 @@ def write_properties_file():
         vars_file.write(f'COREDEV = {COREDEV}\n')
         if COREDEV == 1:
             vars_file.write('PKGS = \n')
-            vars_file.write(f'BRANCH = {branch}\n')
+            vars_file.write(f'BRANCH = {BRANCH}\n')
 
 
 def main():
@@ -181,5 +184,6 @@ def main():
         pull_request_handler(pr)
 
     write_properties_file()
+
 
 main()
