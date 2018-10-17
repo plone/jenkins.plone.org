@@ -98,6 +98,23 @@
         - 'test-addon-{plone-version}'
 
 - project:
+    name: Plone 5.2 pyhton jobs (robot tests)
+    plone-version:
+        - '5.2'
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
+        - '3.6':
+            python-version: 'Python3.6'
+        - '3.7':
+            python-version: 'Python3.7'
+    browser:
+        - firefox
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-{py}-robot-{browser}'
+
+- project:
     name: Plone 5.x
     plone-version:
         - '5.2'
@@ -110,14 +127,16 @@
 - project:
     name: Plone 5.x robot
     plone-version:
-        - '5.2'
         - '5.1'
         - '5.0'
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
     browser:
         - firefox
         - chrome
     jobs:
-        - 'plone-{plone-version}-python-2.7-robot-{browser}'
+        - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
 - project:
     name: Plone 4.3
@@ -385,8 +404,8 @@
 
 - job-template:
     # Plone 5.x robot tests job definition.
-    name: plone-{plone-version}-python-2.7-robot-{browser}
-    display-name: 'Plone {plone-version} - Python 2.7 - Robot Framework Tests ({browser})'
+    name: plone-{plone-version}-python-{py}-robot-{browser}
+    display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser})'
 
     scm:
         - buildout-coredev:
@@ -395,7 +414,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: '{python-version}'
             clear: true
             nature: shell
             command:
