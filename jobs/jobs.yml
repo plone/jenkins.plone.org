@@ -63,11 +63,6 @@
 # PROJECTS
 ###
 
-#- project:
-#    name: workflow
-#    jobs:
-#        - 'workflow-plone-5.0'
-
 - project:
     name: Pull requests
     plone-version:
@@ -103,27 +98,61 @@
         - 'test-addon-{plone-version}'
 
 - project:
-    name: Plone 5.x
+    name: Plone 5.2 pyhton jobs
     plone-version:
         - '5.2'
-        - '5.1'
-        - '5.0'
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
+        - '3.6':
+            python-version: 'Python3.6'
+        - '3.7':
+            python-version: 'Python3.7'
     jobs:
-        - 'plone-{plone-version}-python-2.7'
-        - 'plone-{plone-version}-python-2.7-at'
-        - 'plone-{plone-version}-js'
+        - 'plone-{plone-version}-python-{py}'
 
 - project:
-    name: Plone 5.x robot
+    name: Plone 5.2 pyhton jobs (robot tests)
     plone-version:
         - '5.2'
-        - '5.1'
-        - '5.0'
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
+        - '3.6':
+            python-version: 'Python3.6'
+        - '3.7':
+            python-version: 'Python3.7'
     browser:
         - firefox
         - chrome
     jobs:
-        - 'plone-{plone-version}-python-2.7-robot-{browser}'
+        - 'plone-{plone-version}-python-{py}-robot-{browser}'
+
+- project:
+    name: Plone 5.1 and 5.0
+    plone-version:
+        - '5.1'
+        - '5.0'
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
+    jobs:
+        - 'plone-{plone-version}-python-{py}'
+        - 'plone-{plone-version}-python-{py}-at'
+
+- project:
+    name: Plone 5.x robot
+    plone-version:
+        - '5.1'
+        - '5.0'
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
+    browser:
+        - firefox
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
 - project:
     name: Plone 4.3
@@ -132,6 +161,11 @@
             pybinary: '$PYTHON27'
     jobs:
         - 'plone-4.3-python-{python-version}'
+
+- project:
+    name: Javascript tests
+    jobs:
+        - 'mockup'
 
 - project:
     name: Translations
@@ -350,8 +384,8 @@
 
 - job-template:
     # Plone 5.x core tests job definition.
-    name: plone-{plone-version}-python-2.7
-    display-name: 'Plone {plone-version} - Python 2.7'
+    name: plone-{plone-version}-python-{py}
+    display-name: 'Plone {plone-version} - Python {py}'
 
     scm:
         - buildout-coredev:
@@ -360,7 +394,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: '{python-version}'
             clear: true
             nature: shell
             command:
@@ -386,8 +420,8 @@
 
 - job-template:
     # Plone 5.x robot tests job definition.
-    name: plone-{plone-version}-python-2.7-robot-{browser}
-    display-name: 'Plone {plone-version} - Python 2.7 - Robot Framework Tests ({browser})'
+    name: plone-{plone-version}-python-{py}-robot-{browser}
+    display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser})'
 
     scm:
         - buildout-coredev:
@@ -396,7 +430,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: '{python-version}'
             clear: true
             nature: shell
             command:
@@ -433,8 +467,8 @@
 
 - job-template:
     # Plone 5.x Archetypes tests job definition.
-    name: plone-{plone-version}-python-2.7-at
-    display-name: 'Plone {plone-version} - Python 2.7 - Archetypes'
+    name: plone-{plone-version}-python-{py}-at
+    display-name: 'Plone {plone-version} - Python {py} - Archetypes'
 
     properties:
         - custom-throttle:
@@ -450,7 +484,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: '{python-version}'
             clear: true
             nature: shell
             command:
@@ -466,10 +500,10 @@
     <<: *plone
 
 
-- job-template:
-    # Plone 5.x JavaScript mockup unittests.
-    name: plone-{plone-version}-js
-    display-name: 'Plone {plone-version} - JavaScript'
+- job:
+    # JavaScript mockup unittests.
+    name: mockup
+    display-name: 'Mockup JavaScript tests'
 
     scm:
         - git:
@@ -484,7 +518,7 @@
 
     builders:
         - shell:
-            !include-raw: scripts/5.x-js.sh
+            !include-raw: scripts/js.sh
 
     publishers:
         - junit:
@@ -495,7 +529,7 @@
         - custom-timeout
         - custom-workspace-cleanup
 
-    <<: *plone
+    <<: *plone-basic
 
 
 - job-template:
@@ -646,19 +680,6 @@
                 ROBOT_INSTALL_PRODUCTS=Products.DateRecurringIndex
 
     <<: *plone
-
-
-#- job:
-#    name: 'workflow-plone-5.0'
-#    project-type: workflow
-#    definitions:
-#        - script:
-#            filename: 'flow.groovy'
-#        - scm:
-#            url: https://github.com/plone/jenkins.plone.org.git
-#            branches:
-#                - '*/master'
-
 
 - job-template:
     name: 'pull-request-{plone-version}'
