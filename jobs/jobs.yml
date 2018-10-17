@@ -106,7 +106,6 @@
     jobs:
         - 'plone-{plone-version}-python-2.7'
         - 'plone-{plone-version}-python-2.7-at'
-        - 'plone-{plone-version}-js'
 
 - project:
     name: Plone 5.x robot
@@ -127,6 +126,11 @@
             pybinary: '$PYTHON27'
     jobs:
         - 'plone-4.3-python-{python-version}'
+
+- project:
+    name: Javascript tests
+    jobs:
+        - 'mockup'
 
 - project:
     name: Translations
@@ -461,10 +465,10 @@
     <<: *plone
 
 
-- job-template:
-    # Plone 5.x JavaScript mockup unittests.
-    name: plone-{plone-version}-js
-    display-name: 'Plone {plone-version} - JavaScript'
+- job:
+    # JavaScript mockup unittests.
+    name: mockup
+    display-name: 'Mockup JavaScript tests'
 
     scm:
         - git:
@@ -479,7 +483,7 @@
 
     builders:
         - shell:
-            !include-raw: scripts/5.x-js.sh
+            !include-raw: scripts/js.sh
 
     publishers:
         - junit:
@@ -490,7 +494,7 @@
         - custom-timeout
         - custom-workspace-cleanup
 
-    <<: *plone
+    <<: *plone-basic
 
 
 - job-template:
