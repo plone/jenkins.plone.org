@@ -9,6 +9,8 @@ pip install -r requirements.txt
 
 if [ "{plone-version}" = "4.3" ]; then
     buildout buildout:git-clone-depth=1 -c jenkins.cfg
+elif [ "{plone-version}" = "5.2" ]; then
+    buildout buildout:git-clone-depth=1 -c buildout-py2.cfg
 else
     buildout buildout:git-clone-depth=1 -c core.cfg
 fi
@@ -20,6 +22,8 @@ export ROBOT_BROWSER='chrome'
 
 if [ "{plone-version}" = "4.3" ]; then
     xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/jenkins-alltests -1 || return_code=$?
+elif [ "{plone-version}" = "5.2" ]; then
+    xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test --all --xml || return_code=$?
 else
     xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/alltests --xml --all || return_code=$?
     xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/alltests-at --xml || return_code=$?
