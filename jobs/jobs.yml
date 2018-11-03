@@ -192,17 +192,12 @@
             branch: '5.2'
         - dx-siteroot:
             buildout: plips/plip-2454-dx-siteroot.cfg
-            branch: '5.1'
+            branch: '5.2'
         - plone-staticresources:
             buildout: plips/plip-1653-staticresources.cfg
             branch: '5.2'
     jobs:
         - 'plip-{plip}'
-
-- project:
-    name: special PLIPs
-    jobs:
-      - 'plip-py3'
 
 - project:
     name: Theme preview
@@ -575,31 +570,6 @@
                 !include-raw: scripts/plips.email
 
     <<: *plone-no-ports-no-xvfb
-
-
-- job:
-    name: 'plip-py3'
-    display-name: 'PLIP - Python 3'
-
-    scm:
-        - buildout-coredev:
-            branch: '5.2'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python3.6
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/plip-py3.sh
-
-    publishers:
-        - archive:
-            artifacts: 'output.txt'
-            allow-empty: 'false'
-
-    <<: *plone-basic
 
 
 - job-template:
