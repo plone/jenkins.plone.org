@@ -196,8 +196,15 @@
         - plone-staticresources:
             buildout: plips/plip-1653-staticresources.cfg
             branch: '5.2'
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
+        - '3.6':
+            python-version: 'Python3.6'
+        - '3.7':
+            python-version: 'Python3.7'
     jobs:
-        - 'plip-{plip}'
+        - 'plip-{plip}-{py}'
 
 - project:
     name: Theme preview
@@ -529,8 +536,8 @@
 
 - job-template:
     # PLIPs jobs definition
-    name: 'plip-{plip}'
-    display-name: 'PLIP - {plip}'
+    name: 'plip-{plip}-{py}'
+    display-name: 'PLIP - {plip} on {py}'
 
     scm:
         - buildout-coredev:
@@ -539,7 +546,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: '{python-version}'
             clear: true
             nature: shell
             command:
@@ -565,7 +572,7 @@
             content-type: default
             always: true
             failure: false
-            subject: "Jenkins PLIP {plip} [${{BUILD_STATUS}}]"
+            subject: "Jenkins PLIP {plip} on {py} [${{BUILD_STATUS}}]"
             body:
                 !include-raw: scripts/plips.email
 
