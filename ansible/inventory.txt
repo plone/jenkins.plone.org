@@ -9,10 +9,3 @@ node7.jenkins.plone.org ansible_host=136.243.44.103 ansible_port=8087
 
 [jenkins_server]
 jenkins.plone.org ansible_ssh_host=78.47.49.108
-
-[new_firefox]
-node2.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8089
-
-[new_firefox:vars]
-firefox_version=62.0.3-0ubuntu1
-firefox_checksum=bf364a2da6254ccc1c071032bd0295fe4dcc595b4ba85c2b7bd8a26946b94af1307a21d52d691623992deb063090486fef924d4dfb2b49f5ee5b248d2619ca0f
