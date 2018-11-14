@@ -10,7 +10,7 @@ pip install -r requirements.txt
 if [ "{plone-version}" = "4.3" ]; then
     buildout buildout:git-clone-depth=1 -c jenkins.cfg
 elif [ "{plone-version}" = "5.2" ]; then
-    buildout buildout:git-clone-depth=1 -c buildout-py2.cfg
+    buildout buildout:git-clone-depth=1 -c buildout.cfg
 else
     buildout buildout:git-clone-depth=1 -c core.cfg
 fi
