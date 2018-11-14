@@ -6,9 +6,10 @@ if [ "$COREDEV" = "1" ]; then
 fi
 
 pip install -r requirements.txt
-buildout buildout:git-clone-depth=1 -c buildout-py3.cfg
+buildout buildout:git-clone-depth=1 -c buildout.cfg
 
 return_code="all_right"
+
 export PATH="/usr/lib/chromium-browser:$PATH"
 export ROBOT_BROWSER='chrome'
 
