@@ -1,10 +1,7 @@
 [jenkins_nodes]
 node1.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8088
-node2.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8089
-node3.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8090
-node4.jenkins.plone.org ansible_host=tau.vm.zoplo.com
+#node4.jenkins.plone.org ansible_host=tau.vm.zoplo.com
 node5.jenkins.plone.org ansible_host=136.243.46.143 ansible_port=8085
-node6.jenkins.plone.org ansible_host=136.243.46.143 ansible_port=8086
 node7.jenkins.plone.org ansible_host=136.243.44.103 ansible_port=8087
 
 [jenkins_server]
