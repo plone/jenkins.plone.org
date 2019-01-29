@@ -12,9 +12,6 @@ Servers configuration
 =====================
 Our servers and nodes are configured with `ansible<http://ansible.com/>`_.
 
-See the `documentation<https://pypi.python.org/pypi/jenkins-job-builder>`_ on how to set them,
-the actual configuration files are located at the ``ansible`` folder.
-
 Jobs
 ====
 A jenkins server without any job is quite useless.
