@@ -38,16 +38,20 @@
     nodes_info:
       - name: "Node1"
         host: "88.99.26.113"
-        port: "8085"
+        port: "8088"
+        cores: "8"
       - name: "Node2"
-        host: "88.99.26.113"
-        port: "8086"
-      - name: "Node3"
-        host: "88.99.26.113"
-        port: "8087"
-      - name: "Node4"
         host: "tau.vm.zoplo.com"
         port: "22"
+        cores: "8"
+      - name: "Node3"
+        host: "136.243.46.143"
+        port: "8085"
+        cores: "12"
+      - name: "Node4"
+        host: "136.243.44.103"
+        port: "8087"
+        cores: "12"
   vars_files:
     - secrets.yml
 
