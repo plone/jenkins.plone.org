@@ -95,6 +95,16 @@
         - 'test-addon-{plone-version}'
 
 - project:
+    name: Test add-ons on python 3
+    py:
+        - '3.6':
+            python-version: 'Python3.6'
+        - '3.7':
+            python-version: 'Python3.7'
+    jobs:
+        - 'test-addon-5.2-{py}'
+
+- project:
     name: Plone 5.2 pyhton jobs
     plone-version:
         - '5.2'
@@ -848,6 +858,73 @@
             subject: "[${{BUILD_STATUS}}]: ${{ADDON_NAME}} tested against {plone-version}"
             body:
                 !include-raw: scripts/addon.email
+
+    <<: *plone-basic
+
+- job-template:
+    name: 'test-addon-5.2-{py}'
+    display-name: 'Test add-on against Plone 5.2 on {python-version}'
+    description: |
+        Run an add-on tests with the current checkouts of Plone 5.2 on {python-version}.
+        To trigger a job, login with your GitHub account and provide the anonymous git URL of you add-on and, optionally, a branch.
+        After the job is finished you will get an email about the result.
+
+    parameters:
+        - text:
+            name: ADDON_URL
+            description: 'URL of the add-on git repository, something like https://github.com/collective/collective.cover.git, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-add-on-jobs.html'
+
+        - text:
+            name: ADDON_BRANCH
+            description: 'branch of the add-on that should be tested, if left blank, master branch is assumed'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: '{python-version}'
+            name: addon
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.26.0
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: '{python-version}'
+            name: addon
+            nature: python
+            command:
+                !include-raw-escape: scripts/addon-get-info.py
+
+        - inject:
+            properties-file: vars.properties
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: '{python-version}'
+            name: addon
+            nature: shell
+            command:
+                !include-raw: scripts/addon-py3-tests.sh
+
+    publishers:
+        - junit:
+            results: 'parts/test/testreports/*.xml'
+            keep-long-stdio: false
+
+        - email-ext:
+            recipients: "${{BUILD_USER_EMAIL}}"
+            reply-to: 'no-reply@jenkins.plone.org'
+            content-type: default
+            always: true
+            failure: false
+            subject: "[${{BUILD_STATUS}}]: ${{ADDON_NAME}} tested against Plone 5.2 on {python-version}"
+            body:
+                !include-raw: scripts/addon-py3.email
 
     <<: *plone-basic
 
