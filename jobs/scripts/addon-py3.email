@@ -1,0 +1,14 @@
+Dear ${{BUILD_USER}},
+
+the Jenkins add-on test for ${{ADDON_NAME}} has finished:
+
+${{BUILD_URL}}
+
+As tests go green, please ensure you add the proper trove classifiers to your setup.py:
+
+Framework :: Plone :: 5.2
+Programming Language :: Python :: {py}
+
+
+Yours truly,
+Jenkins

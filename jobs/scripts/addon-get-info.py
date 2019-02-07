@@ -157,12 +157,15 @@ class AddonInfo(object):
             myfile.write('    {0}'.format(self.addon_name))
 
         # add the package on sources
-        with open('sources.cfg', 'a') as myfile:
-            myfile.write('{0} = git {1} rev={2}'.format(
-                self.addon_name,
-                self.addon_url,
-                self.latest_commit,
-            ))
+        for line in fileinput.input('sources.cfg', inplace=True):
+            if line.find('Products.CMFPlone') != -1:
+                line = '{0}\n{1} = git {2} branch={3}\n'.format(
+                    line,
+                    self.addon_name,
+                    self.addon_url,
+                    self.addon_branch,
+                )
+            sys.stdout.write(line)
 
         # add the package to tests.cfg
         for line in fileinput.input('tests.cfg', inplace=True):
