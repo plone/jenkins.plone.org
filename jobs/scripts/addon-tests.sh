@@ -1,5 +1,5 @@
 #!/bin/sh
-OPTIONS="buildout:git-clone-depth=1 buildout:show-picked-versions=True"
+OPTIONS="buildout:git-clone-depth=1 buildout:allow-picked-versions=true buildout:show-picked-versions=true"
 if [ "{plone-version}" = "4.3" ]; then
     python bootstrap.py -c jenkins.cfg
     bin/buildout $OPTIONS -c jenkins.cfg
