@@ -1,6 +1,8 @@
 #!/bin/sh
+OPTIONS="buildout:git-clone-depth=1 buildout:show-picked-versions=True"
+
 pip install -r requirements.txt
-buildout buildout:git-clone-depth=1 -c core.cfg
+buildout $OPTIONS -c core.cfg
 
 bin/test --xml -s ${{ADDON_NAME}}
 
