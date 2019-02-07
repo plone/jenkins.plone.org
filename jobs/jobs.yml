@@ -194,6 +194,9 @@
         - dx-siteroot:
             buildout: plips/plip-2454-dx-siteroot.cfg
             branch: '5.2'
+        - 1486-redirection:
+            buildout: plips/plip-1486-redirection.cfg
+            branch: '5.2'
     py:
         - '2.7':
             python-version: 'Python2.7'
