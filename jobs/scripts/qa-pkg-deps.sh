@@ -25,7 +25,11 @@ return_code=0
 
 if [ -f "src/${PACKAGE_NAME}/pyproject.toml" ];
 then
-  python templates/deps-update-status.py
+  result=`grep "tool.dependencychecker" "src/${PACKAGE_NAME}/pyproject.toml"`
+  if [ $result ];
+  then
+      python templates/deps-update-status.py
+  fi
 fi
 
 exit ${return_code}
