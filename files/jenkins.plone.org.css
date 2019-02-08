@@ -20,8 +20,9 @@ body[data-model-type="hudson.model.ParametersDefinitionProperty"] .doony-build {
   text-indent: -999px;
 }
 
-/* Make "Build" or "Build with Parameters" links really prominent*/
-a.task-link[href$="0sec"] {
+/* Make "Build", "Build with Parameters" or "Rebuild" links really prominent*/
+a.task-link[href$="0sec"],
+a.task-link[href$="rebuild"] {
   font-size: 20px;
   font-weight: bold;
 }
