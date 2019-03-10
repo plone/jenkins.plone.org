@@ -502,6 +502,8 @@
             shallow-clone: true
             depth: 10
             do-not-fetch-tags: true
+            ignore-commits-with-messages:
+                - ci-skip
 
     builders:
         - shell:
@@ -592,6 +594,8 @@
             shallow-clone: true
             depth: 10
             do-not-fetch-tags: true
+            ignore-commits-with-messages:
+                - ci-skip
 
     triggers:
         - timed: '@weekly'
@@ -965,6 +969,8 @@
             shallow-clone: true
             depth: 10
             do-not-fetch-tags: true
+            ignore-commits-with-messages:
+                - ci-skip
 
     builders:
         - shining-panda:
@@ -1117,6 +1123,8 @@
             shallow-clone: true
             depth: 50
             do-not-fetch-tags: true
+            ignore-commits-with-messages:
+                - ci-skip
 
     triggers:
         - timed: '@weekly'
@@ -1304,6 +1312,8 @@
             shallow-clone: true
             depth: 10
             do-not-fetch-tags: true
+            ignore-commits-with-messages:
+                - ci-skip
 
 - publisher:
     name: custom-junit
