@@ -44,14 +44,6 @@
         host: "tau.vm.zoplo.com"
         port: "22"
         cores: "8"
-      - name: "Node3"
-        host: "136.243.46.143"
-        port: "8085"
-        cores: "12"
-      - name: "Node4"
-        host: "136.243.44.103"
-        port: "8087"
-        cores: "12"
   vars_files:
     - secrets.yml
 
