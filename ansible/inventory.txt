@@ -3,4 +3,4 @@ node1.jenkins.plone.org ansible_host=88.99.26.113 ansible_port=8088
 node4.jenkins.plone.org ansible_host=tau.vm.zoplo.com
 
 [jenkins_server]
-jenkins.plone.org ansible_ssh_host=78.47.49.108
+jenkins.plone.org ansible_ssh_host=159.69.22.155 ansible_python_interpreter=/usr/bin/python3
