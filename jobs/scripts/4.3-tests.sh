@@ -4,6 +4,6 @@
 bin/buildout buildout:git-clone-depth=1 -c jenkins.cfg
 
 export PATH="/usr/lib/chromium-browser:$PATH"
-export ROBOT_BROWSER=chrome
+export ROBOT_BROWSER=headlesschrome
 
-xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/jenkins-alltests -1
+bin/jenkins-alltests -1

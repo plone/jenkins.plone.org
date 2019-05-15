@@ -18,15 +18,15 @@ fi
 return_code="all_right"
 
 export PATH="/usr/lib/chromium-browser:$PATH"
-export ROBOT_BROWSER='chrome'
+export ROBOT_BROWSER='headlesschrome'
 
 if [ "{plone-version}" = "4.3" ]; then
-    xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/jenkins-alltests -1 || return_code=$?
+    bin/jenkins-alltests -1 || return_code=$?
 elif [ "{plone-version}" = "5.2" ]; then
-    xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test --all --xml || return_code=$?
+    bin/test --all --xml || return_code=$?
 else
-    xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/alltests --xml --all || return_code=$?
-    xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/alltests-at --xml || return_code=$?
+    bin/alltests --xml --all || return_code=$?
+    bin/alltests-at --xml || return_code=$?
 fi
 
 if [ $return_code = "all_right" ]; then

@@ -15,4 +15,4 @@ export PATH="/usr/lib/chromium-browser:$PATH"
 export ROBOT_BROWSER={browser}
 export ROBOTSUITE_PREFIX=ONLYROBOT
 
-xvfb-run -a --server-args='-screen 0 1920x1200x24' ${{SCRIPT}} -t ONLYROBOT --all --xml
+${{SCRIPT}} -t ONLYROBOT --all --xml

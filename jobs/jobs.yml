@@ -130,8 +130,8 @@
         - '3.7':
             python-version: 'Python3.7'
     browser:
-        - firefox
-        - chrome
+        - headlessfirefox
+        - headlesschrome
     jobs:
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
@@ -154,8 +154,8 @@
         - '2.7':
             python-version: 'Python2.7'
     browser:
-        - firefox
-        - chrome
+        - headlessfirefox
+        - headlesschrome
     jobs:
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
@@ -632,12 +632,6 @@
         - port-allocator:
             names:
                 - ZSERVER_PORT
-        - xvfb:
-            name: default
-            screen: 1200x900x24
-            debug: false
-            timeout: 0
-            shutdown: false
 
         - inject:
             properties-content: |
