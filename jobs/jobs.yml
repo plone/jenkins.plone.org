@@ -408,6 +408,30 @@
 
     <<: *plone
 
+- job:
+    # Plone 5.2 core tests job definition for python 3.8.
+    name: plone-5.2-python-3.8
+    display-name: 'Plone 5.2 - Python 3.8'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: 'Python3.8'
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/5.x-tests-3.8.sh
+
+    publishers:
+        - custom-junit-new
+        - custom-email-ext
+
+    <<: *plone-basic
+
 
 - job-template:
     # Plone 5.x robot tests job definition.
