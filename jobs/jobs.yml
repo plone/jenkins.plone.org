@@ -475,6 +475,47 @@
 
     <<: *plone
 
+- job:
+    # Plone 5.2 robot tests job definition for python 3.8 and chrome.
+    name: plone-5.2-python-3.8-robot-chrome
+    display-name: 'Plone 5.2 - Python 3.8 - Robot Framework Tests (chrome)'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: 'Python3.8'
+            clear: true
+            nature: shell
+            command:
+                !include-raw: scripts/5.x-robot-chrome-3.8.sh
+
+    publishers:
+        - custom-email-ext
+
+        - robot:
+            output-path: parts/test
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 80.0
+            only-critical: true
+            other-files:
+                - robot_*.png
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+        - custom-github-api-key
+
+        - inject:
+            properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
+
+    <<: *plone-basic
 
 - job-template:
     # Plone 5.x Archetypes tests job definition.
