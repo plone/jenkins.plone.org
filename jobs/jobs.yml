@@ -103,7 +103,7 @@
             python-version: 'Python3.6'
         - '3.7':
             python-version: 'Python3.7'
-        - '3.8'
+        - '3.8':
             python-version: 'Python3.8'
     jobs:
         - 'test-addon-5.2-{py}'
