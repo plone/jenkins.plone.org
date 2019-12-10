@@ -198,9 +198,10 @@
 - project:
     name: Translations
     plone-version:
-        - '4.3'
-        - '5.1'
+        - '6.0'
         - '5.2'
+        - '5.1'
+        - '4.3'
     jobs:
         - 'plone-{plone-version}-i18n'
         - 'plone-{plone-version}-i18n-find-missing'
@@ -235,6 +236,7 @@
 - project:
     name: Theme preview
     plone-version:
+        - '6.0'
         - '5.2'
         - '5.1'
         - '4.3'
