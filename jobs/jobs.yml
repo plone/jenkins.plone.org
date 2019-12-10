@@ -77,6 +77,9 @@
 
 - project:
     name: Pull requests on python 3
+    plone-version:
+        - '6.0'
+        - '5.2'
     py:
         - '3.6':
             python-version: 'Python3.6'
@@ -85,7 +88,7 @@
         - '3.8':
             python-version: 'Python3.8'
     jobs:
-        - 'pull-request-5.2-{py}'
+        - 'pull-request-{plone-version}-{py}'
 
 - project:
     name: Test add-ons
@@ -98,6 +101,9 @@
 
 - project:
     name: Test add-ons on python 3
+    plone-version:
+        - '6.0'
+        - '5.2'
     py:
         - '3.6':
             python-version: 'Python3.6'
@@ -106,15 +112,24 @@
         - '3.8':
             python-version: 'Python3.8'
     jobs:
-        - 'test-addon-5.2-{py}'
+        - 'test-addon-{plone-version}-{py}'
 
 - project:
-    name: Plone 5.2 pyhton jobs
+    name: Plone 5.2 jobs on python 2.7
     plone-version:
         - '5.2'
     py:
         - '2.7':
             python-version: 'Python2.7'
+    jobs:
+        - 'plone-{plone-version}-python-{py}'
+
+- project:
+    name: Plone 5.2/6.0 jobs on pyhton 3.x
+    plone-version:
+        - '6.0'
+        - '5.2'
+    py:
         - '3.6':
             python-version: 'Python3.6'
         - '3.7':
@@ -125,12 +140,25 @@
         - 'plone-{plone-version}-python-{py}'
 
 - project:
-    name: Plone 5.2 pyhton jobs (robot tests)
+    name: Plone 5.1/5.2 jobs on python 2.7 (robot tests)
     plone-version:
         - '5.2'
+        - '5.1'
     py:
         - '2.7':
             python-version: 'Python2.7'
+    browser:
+        - firefox
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-{py}-robot-{browser}'
+
+- project:
+    name: Plone 5.2/6.0 jobs on python 3.x (robot tests)
+    plone-version:
+        - '6.0'
+        - '5.2'
+    py:
         - '3.6':
             python-version: 'Python3.6'
         - '3.7':
@@ -153,19 +181,6 @@
     jobs:
         - 'plone-{plone-version}-python-{py}'
         - 'plone-{plone-version}-python-{py}-at'
-
-- project:
-    name: Plone 5.x robot
-    plone-version:
-        - '5.1'
-    py:
-        - '2.7':
-            python-version: 'Python2.7'
-    browser:
-        - firefox
-        - chrome
-    jobs:
-        - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
 - project:
     name: Plone 4.3
@@ -732,10 +747,10 @@
     <<: *plone-no-ports-no-xvfb
 
 - job-template:
-    name: 'pull-request-5.2-{py}'
-    display-name: 'Pull Request 5.2 on py{py}'
+    name: 'pull-request-{plone-version}-{py}'
+    display-name: 'Pull Request {plone-version} on py{py}'
     description: |
-        Manually test pull requests targeted at Plone 5.2 on Python {py}.
+        Manually test pull requests targeted at Plone {plone-version} on Python {py}.
         To trigger a job, just login with your GitHub account and provide the pull request URL.
         After the job is finished you will get an email about the result.
 
@@ -746,7 +761,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.2'
+            branch: '{plone-version}'
 
     builders:
         - shining-panda:
@@ -873,10 +888,10 @@
     <<: *plone-basic
 
 - job-template:
-    name: 'test-addon-5.2-{py}'
-    display-name: 'Test add-on against Plone 5.2 on {python-version}'
+    name: 'test-addon-{plone-version}-{py}'
+    display-name: 'Test add-on against Plone {plone-version} on {python-version}'
     description: |
-        Run an add-on tests with the current checkouts of Plone 5.2 on {python-version}.
+        Run an add-on tests with the current checkouts of Plone {plone-version} on {python-version}.
         To trigger a job, login with your GitHub account and provide the anonymous git URL of you add-on and, optionally, a branch.
         After the job is finished you will get an email about the result.
 
@@ -891,7 +906,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.2'
+            branch: '{plone-version}'
 
     builders:
         - shining-panda:
@@ -933,7 +948,7 @@
             content-type: default
             always: true
             failure: false
-            subject: "[${{BUILD_STATUS}}]: ${{ADDON_NAME}} tested against Plone 5.2 on {python-version}"
+            subject: "[${{BUILD_STATUS}}]: ${{ADDON_NAME}} tested against Plone {plone-version} on {python-version}"
             body:
                 !include-raw: scripts/addon-py3.email
 

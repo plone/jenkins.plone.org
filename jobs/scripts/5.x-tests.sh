@@ -9,5 +9,10 @@ if [ "{plone-version}" = "5.2" ]; then
     SCRIPT="bin/test"
 fi
 
+if [ "{plone-version}" = "6.0" ]; then
+    BUILDOUT="buildout.cfg"
+    SCRIPT="bin/test"
+fi
+
 buildout buildout:git-clone-depth=1 -c ${{BUILDOUT}}
 ${{SCRIPT}} --xml
