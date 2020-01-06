@@ -237,9 +237,6 @@
     name: Theme preview
     plone-version:
         - '6.0'
-        - '5.2'
-        - '5.1'
-        - '4.3'
     jobs:
         - 'plone-{plone-version}-themetest'
 
@@ -548,22 +545,13 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: Python3.7
             clear: true
             nature: shell
             command:
                 !include-raw: scripts/themetest.sh
 
     publishers:
-        - email-ext:
-            recipients: tisto@plone.org, asko.soukka@iki.fi
-            reply-to: 'no-reply@jenkins.plone.org'
-            content-type: default
-            regression: true
-            failure: false
-            improvement: true
-            still-failing: true
-            fixed: true
         - html-publisher:
             name: report
             dir: build
@@ -574,15 +562,6 @@
     wrappers:
         - custom-timeout
         - custom-workspace-cleanup
-        - port-allocator:
-            names:
-                - ZSERVER_PORT
-        - xvfb:
-            name: default
-            screen: 1200x900x24
-            debug: false
-            timeout: 0
-            shutdown: false
 
         - inject:
             properties-content: |
