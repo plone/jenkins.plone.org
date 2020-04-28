@@ -250,7 +250,6 @@
         - qa-docs-age
         - qa-undeclared-dependencies
         - qa-code-analysis
-        - qa-pkg-dependencies
 
 ###
 # JOBS
