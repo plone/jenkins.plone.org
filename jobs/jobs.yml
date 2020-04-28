@@ -221,6 +221,9 @@
         - 1486-redirection:
             buildout: plips/plip-1486-redirection.cfg
             branch: '5.2'
+        - 1775-quickinstaller:
+            buildout: plips/plip-1775-remove-qi.cfg
+            branch: '6.0'
     py:
         - '3.8':
             python-version: 'Python3.8'
