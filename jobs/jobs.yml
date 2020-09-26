@@ -217,7 +217,7 @@
             branch: '5.2'
         - dx-siteroot:
             buildout: plips/plip-2454-dx-siteroot.cfg
-            branch: '5.2'
+            branch: '6.0'
         - 1486-redirection:
             buildout: plips/plip-1486-redirection.cfg
             branch: '5.2'
