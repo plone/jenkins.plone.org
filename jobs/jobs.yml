@@ -224,6 +224,9 @@
         - 1775-quickinstaller:
             buildout: plips/plip-1775-remove-qi.cfg
             branch: '6.0'
+        - 2967-barceloneta-lts:
+            buildout: plips/plip-2967-barceloneta-lts-source-checkouts.cfg
+            branch: '6.0'
     py:
         - '3.8':
             python-version: 'Python3.8'
