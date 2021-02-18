@@ -81,6 +81,8 @@
         - '6.0'
         - '5.2'
     py:
+        - '3.9':
+            python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
         - '3.7':
@@ -105,6 +107,8 @@
         - '6.0'
         - '5.2'
     py:
+        - '3.9':
+            python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
         - '3.7':
@@ -130,6 +134,8 @@
         - '6.0'
         - '5.2'
     py:
+        - '3.9':
+            python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
         - '3.7':
@@ -159,6 +165,8 @@
         - '6.0'
         - '5.2'
     py:
+        - '3.9':
+            python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
         - '3.7':
@@ -228,6 +236,8 @@
             buildout: plips/plip-2967-barceloneta-lts-source-checkouts.cfg
             branch: '6.0'
     py:
+        - '3.9':
+            python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
         - '3.7':
