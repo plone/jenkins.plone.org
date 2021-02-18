@@ -154,7 +154,6 @@
         - '2.7':
             python-version: 'Python2.7'
     browser:
-        - firefox
         - chrome
     jobs:
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
@@ -174,7 +173,6 @@
         - '3.6':
             python-version: 'Python3.6'
     browser:
-        - firefox
         - chrome
     jobs:
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
