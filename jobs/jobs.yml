@@ -76,10 +76,23 @@
         - 'pull-request-{plone-version}'
 
 - project:
-    name: Pull requests on python 3
+    name: Pull requests on Plone 5.2 for python 3
+    plone-version:
+        - '5.2'
+    py:
+        - '3.8':
+            python-version: 'Python3.8'
+        - '3.7':
+            python-version: 'Python3.7'
+        - '3.6':
+            python-version: 'Python3.6'
+    jobs:
+        - 'pull-request-{plone-version}-{py}'
+
+- project:
+    name: Pull requests on Plone 6 for python 3
     plone-version:
         - '6.0'
-        - '5.2'
     py:
         - '3.9':
             python-version: 'Python3.9'
@@ -87,8 +100,6 @@
             python-version: 'Python3.8'
         - '3.7':
             python-version: 'Python3.7'
-        - '3.6':
-            python-version: 'Python3.6'
     jobs:
         - 'pull-request-{plone-version}-{py}'
 
@@ -129,10 +140,23 @@
         - 'plone-{plone-version}-python-{py}'
 
 - project:
-    name: Plone 6.0/5.2 jobs on pyhton 3.x
+    name: Plone 5.2 jobs on pyhton 3.x
+    plone-version:
+        - '5.2'
+    py:
+        - '3.8':
+            python-version: 'Python3.8'
+        - '3.7':
+            python-version: 'Python3.7'
+        - '3.6':
+            python-version: 'Python3.6'
+    jobs:
+        - 'plone-{plone-version}-python-{py}'
+
+- project:
+    name: Plone 6.0 jobs on pyhton 3.x
     plone-version:
         - '6.0'
-        - '5.2'
     py:
         - '3.9':
             python-version: 'Python3.9'
@@ -140,8 +164,6 @@
             python-version: 'Python3.8'
         - '3.7':
             python-version: 'Python3.7'
-        - '3.6':
-            python-version: 'Python3.6'
     jobs:
         - 'plone-{plone-version}-python-{py}'
 
@@ -159,7 +181,23 @@
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
 - project:
-    name: Plone 6.0/5.2 jobs on python 3.x (robot tests)
+    name: Plone 5.2 jobs on python 3.x (robot tests)
+    plone-version:
+        - '5.2'
+    py:
+        - '3.8':
+            python-version: 'Python3.8'
+        - '3.7':
+            python-version: 'Python3.7'
+        - '3.6':
+            python-version: 'Python3.6'
+    browser:
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-{py}-robot-{browser}'
+
+- project:
+    name: Plone 6.0 jobs on python 3.x (robot tests)
     plone-version:
         - '6.0'
         - '5.2'
@@ -170,8 +208,6 @@
             python-version: 'Python3.8'
         - '3.7':
             python-version: 'Python3.7'
-        - '3.6':
-            python-version: 'Python3.6'
     browser:
         - chrome
     jobs:
