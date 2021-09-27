@@ -2,6 +2,9 @@
 if [ "{plone-version}" = "4.3" ]; then
     python bootstrap.py
     bin/buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
+elif [ "{plone-version}" = "6.0" ]; then
+    pip3 install -r requirements.txt
+    buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
 else
     pip install -r requirements.txt
     buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
