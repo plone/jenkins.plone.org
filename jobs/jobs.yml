@@ -269,48 +269,6 @@
 ###
 
 - job-template:
-    # Plone 4.3 job definition.
-    name: 'plone-4.3-python-{python-version}'
-    display-name: 'Plone 4.3 - Python {python-version}'
-
-    properties:
-        - custom-throttle:
-            total: '0'
-            enable: '' # false
-
-        - disk-usage
-
-    scm:
-        - buildout-coredev:
-            branch: '4.3'
-
-    triggers:
-        - github
-
-    builders:
-        - shell:
-            !include-raw: scripts/4.3-tests.sh
-
-    publishers:
-        - custom-junit
-
-        - custom-email-ext
-
-        - robot:
-            output-path: parts/jenkins-test
-            report-html: robot_report.html
-            log-html: robot_log.html
-            output-xml: robot_output.xml
-            pass-threshold: 100.0
-            unstable-threshold: 80.0
-            only-critical: true
-            other-files:
-                - robot_*.png
-
-    <<: *plone-no-ports-no-xvfb
-
-
-- job-template:
     name: plone-{plone-version}-i18n
     display-name: 'Plone {plone-version} - Translations'
 
