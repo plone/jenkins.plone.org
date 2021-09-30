@@ -64,14 +64,10 @@
 ###
 
 - project:
-    name: Pull requests
+    name: Pull requests on Plone 5.2 for python 2.7
     plone-version:
         - '5.2':
             report-path: 'parts/test'
-        - '5.1':
-            report-path: 'parts/test'
-        - '4.3':
-            report-path: 'parts/jenkins-test'
     jobs:
         - 'pull-request-{plone-version}'
 
@@ -104,11 +100,9 @@
         - 'pull-request-{plone-version}-{py}'
 
 - project:
-    name: Test add-ons
+    name: Test add-ons on on Plone 5.2 for python 2.7
     plone-version:
         - '5.2'
-        - '5.1'
-        - '4.3'
     jobs:
         - 'test-addon-{plone-version}'
 
@@ -168,10 +162,9 @@
         - 'plone-{plone-version}-python-{py}'
 
 - project:
-    name: Plone 5.2/5.1 jobs on python 2.7 (robot tests)
+    name: Plone 5.2 jobs on python 2.7 (robot tests)
     plone-version:
         - '5.2'
-        - '5.1'
     py:
         - '2.7':
             python-version: 'Python2.7'
@@ -200,7 +193,6 @@
     name: Plone 6.0 jobs on python 3.x (robot tests)
     plone-version:
         - '6.0'
-        - '5.2'
     py:
         - '3.9':
             python-version: 'Python3.9'
@@ -214,36 +206,10 @@
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
 - project:
-    name: Plone 5.1
-    plone-version:
-        - '5.1'
-    py:
-        - '2.7':
-            python-version: 'Python2.7'
-    jobs:
-        - 'plone-{plone-version}-python-{py}'
-        - 'plone-{plone-version}-python-{py}-at'
-
-- project:
-    name: Plone 4.3
-    python-version:
-        - '2.7':
-            pybinary: '$PYTHON27'
-    jobs:
-        - 'plone-4.3-python-{python-version}'
-
-- project:
-    name: Javascript tests
-    jobs:
-        - 'mockup'
-
-- project:
     name: Translations
     plone-version:
         - '6.0'
         - '5.2'
-        - '5.1'
-        - '4.3'
     jobs:
         - 'plone-{plone-version}-i18n'
         - 'plone-{plone-version}-i18n-find-missing'
