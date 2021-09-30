@@ -1,14 +1,6 @@
 #!/bin/sh
-if [ "{plone-version}" = "4.3" ]; then
-    python bootstrap.py
-    bin/buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
-elif [ "{plone-version}" = "6.0" ]; then
-    pip3 install -r requirements.txt
-    buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
-else
-    pip install -r requirements.txt
-    buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
-fi
+pip install -r requirements.txt
+buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
 
 ./bin/i18n-update-all
 
@@ -23,12 +15,7 @@ export PYTHONIOENCODING=utf-8
 ../../../../../../bin/i18ndude list -p plonefrontpage  > reports/plonefrontpage.txt
 ../../../../../../bin/i18ndude list -p plonelocales  > reports/plonelocales.txt
 
-if [ "{plone-version}" = "4.3" ]; then
-    ../../../../../../bin/i18ndude list -p linguaplone  > reports/linguaplone.txt
-    ../../../../../../bin/i18ndude list -p passwordresettool  > reports/passwordresettool.txt
-else
-    ../../../../../../bin/i18ndude list -p widgets  > reports/widgets.txt
-fi
+../../../../../../bin/i18ndude list -p widgets  > reports/widgets.txt
 
 if [ "{plone-version}" != "6.0" ]; then
 ../../../../../../bin/i18ndude list -p atcontenttypes  > reports/atcontenttypes.txt
