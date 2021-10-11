@@ -206,13 +206,26 @@
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
 - project:
-    name: Translations
+    name: Translations on Plone 5.2 for python 2.7
+    py:
+        - '2.7':
+            python-version: 'Python2.7'
     plone-version:
-        - '6.0'
         - '5.2'
     jobs:
-        - 'plone-{plone-version}-i18n'
-        - 'plone-{plone-version}-i18n-find-missing'
+        - 'plone-{plone-version}-python-{py}-i18n'
+        - 'plone-{plone-version}-python-{py}-i18n-find-missing'
+
+- project:
+    name: Translations on Plone 6.0 for python 3.x
+    py:
+        - '3.8':
+            python-version: 'Python3.8'
+    plone-version:
+        - '6.0'
+    jobs:
+        - 'plone-{plone-version}-python-{py}-i18n'
+        - 'plone-{plone-version}-python-{py}-i18n-find-missing'
 
 - project:
     name: PLIPs
@@ -269,8 +282,8 @@
 ###
 
 - job-template:
-    name: plone-{plone-version}-i18n
-    display-name: 'Plone {plone-version} - Translations'
+    name: plone-{plone-version}-python-{py}-i18n
+    display-name: 'Plone {plone-version} - Python {py} - Translations'
 
     scm:
         - buildout-coredev:
@@ -282,7 +295,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: '{python-version}'
             clear: true
             nature: shell
             command:
@@ -856,8 +869,8 @@
 
 
 - job-template:
-    name: plone-{plone-version}-i18n-find-missing
-    display-name: 'Plone {plone-version} - Find strings'
+    name: plone-{plone-version}-python-{py}-i18n-find-missing
+    display-name: 'Plone {plone-version} - Python {py} - Find strings'
 
     scm:
         - buildout-coredev:
@@ -869,7 +882,7 @@
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: Python2.7
+            python-version: '{python-version}'
             clear: true
             nature: shell
             command:
