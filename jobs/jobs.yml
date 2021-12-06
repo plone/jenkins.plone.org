@@ -248,6 +248,9 @@
         - 2967-barceloneta-lts:
             buildout: plips/plip-2967-barceloneta-lts-source-checkouts.cfg
             branch: '6.0'
+        - 3339-plone-autoinclude:
+            buildout: plips/plip-3339-plone-autoinclude.cfg
+            branch: '6.0'
     py:
         - '3.9':
             python-version: 'Python3.9'
