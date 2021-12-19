@@ -10,6 +10,7 @@ auth.py
 /var
 /build
 /dist
+/output
 /local.cfg
 /*.egg-info
 /.installed.cfg
@@ -29,3 +30,5 @@ docs/make.bat
 docs/doctrees
 docs/html
 ansible/roles/
+pyvenv.cfg
+.python-version
