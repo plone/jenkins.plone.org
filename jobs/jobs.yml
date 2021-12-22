@@ -230,26 +230,8 @@
 - project:
     name: PLIPs
     plip:
-        - mosaic:
-            buildout: plips/plip-mosaic.cfg
-            branch: '5.2'
-        - 1485-react:
-            buildout: plips/plip-1485.cfg
-            branch: '5.2'
-        - dx-siteroot:
-            buildout: plips/plip-2454-dx-siteroot.cfg
-            branch: '6.0'
-        - 1486-redirection:
-            buildout: plips/plip-1486-redirection.cfg
-            branch: '5.2'
-        - 1775-quickinstaller:
-            buildout: plips/plip-1775-remove-qi.cfg
-            branch: '6.0'
         - 2967-barceloneta-lts:
             buildout: plips/plip-2967-barceloneta-lts-source-checkouts.cfg
-            branch: '6.0'
-        - 3339-plone-autoinclude:
-            buildout: plips/plip-3339-plone-autoinclude.cfg
             branch: '6.0'
         - 3211-mockup-redone:
              buildout: plips/plip-3211-mockup-redone.cfg
@@ -261,10 +243,6 @@
             python-version: 'Python3.8'
         - '3.7':
             python-version: 'Python3.7'
-        - '3.6':
-            python-version: 'Python3.6'
-        - '2.7':
-            python-version: 'Python2.7'
     jobs:
         - 'plip-{plip}-{py}'
 
