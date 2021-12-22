@@ -230,9 +230,6 @@
 - project:
     name: PLIPs
     plip:
-        - 2967-barceloneta-lts:
-            buildout: plips/plip-2967-barceloneta-lts-source-checkouts.cfg
-            branch: '6.0'
         - 3211-mockup-redone:
              buildout: plips/plip-3211-mockup-redone.cfg
              branch: '6.0'
