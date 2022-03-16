@@ -10,7 +10,7 @@ import sys
 
 
 PKG_RE = r'^{0}\s.*'
-SOURCE_RE = r'{0} = git git://github.com/{1}/{0}.git branch={2}'
+SOURCE_RE = r'{0} = git https://github.com/{1}/{0}.git branch={2}'
 PR_RE = r'https://github.com/(.*)/(.*)/pull/(.*)'
 
 PKGS = []

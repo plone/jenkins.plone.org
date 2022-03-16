@@ -1,4 +1,4 @@
 [submodule "src/jenkins-job-builder"]
 	path = src/jenkins-job-builder
-	url = git://github.com/gforcada/jenkins-job-builder.git
+	url = https://github.com/gforcada/jenkins-job-builder.git
 	pushurl = git@github.com:gforcada/jenkins-job-builder.git
