@@ -406,7 +406,7 @@
 
     scm:
         - git:
-            url: git://github.com/plone/mockup.git
+            url: https://github.com/plone/mockup.git
             branches:
                 - 'master'
             wipe-workspace: false
@@ -498,7 +498,7 @@
 
     scm:
         - git:
-            url: git://github.com/plone/plone.themepreview.git
+            url: https://github.com/plone/plone.themepreview.git
             branches:
                 - 'master'
             wipe-workspace: false
@@ -953,7 +953,7 @@
 
     scm:
         - git:
-            url: git://github.com/plone/documentation.git
+            url: https://github.com/plone/documentation.git
             branches:
                 - '5.2'
             wipe-workspace: false
@@ -1082,7 +1082,7 @@
     name: buildout-coredev
     scm:
         - git:
-            url: git://github.com/plone/buildout.coredev.git
+            url: https://github.com/plone/buildout.coredev.git
             branches:
                 - '{branch}'
             wipe-workspace: false
