@@ -13,6 +13,8 @@ auth.py
 /local.cfg
 /*.egg-info
 /.installed.cfg
+/pyvenv.cfg
+/.python-version
 *.pyc
 /.Python
 /include

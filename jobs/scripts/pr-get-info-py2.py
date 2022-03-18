@@ -16,6 +16,10 @@ PR_RE = r'https://github.com/(.*)/(.*)/pull/(.*)'
 PKGS = []
 COREDEV = 0
 
+# version 20220318a -py2
+
+
+
 try:
     github_api_key = os.environ['GITHUB_API_KEY']
 except KeyError:

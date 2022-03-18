@@ -17,6 +17,7 @@ PKGS = []
 COREDEV = 0
 BRANCH = ''
 
+# version 20220318a -py3
 
 def error(message):
     print(

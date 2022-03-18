@@ -13,7 +13,7 @@ return_code="all_right"
 export PATH="/usr/lib/chromium-browser:$PATH"
 export ROBOT_BROWSER='chrome'
 
-xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test --all --xml  || return_code=$?
+xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test --all --xml || return_code=$?
 
 if [ $return_code = "all_right" ]; then
     return_code=$?
