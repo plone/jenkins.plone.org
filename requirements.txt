@@ -11,7 +11,7 @@ Jinja2==2.11.3
 MarkupSafe==1.1.1
 monotonic==1.5
 multi-key-dict==2.0.3
-paramiko==2.4.2
+paramiko==2.10.1
 passlib==1.7.1
 pbr==4.3.0
 pyasn1==0.4.5
