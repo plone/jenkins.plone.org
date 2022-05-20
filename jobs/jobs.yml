@@ -96,6 +96,8 @@
     plone-version:
         - '6.0'
     py:
+        - '3.10':
+            python-version: 'Python3.10'
         - '3.9':
             python-version: 'Python3.9'
         - '3.8':
@@ -154,10 +156,12 @@
         - 'plone-{plone-version}-python-{py}'
 
 - project:
-    name: Plone 6.0 jobs on pyhton 3.x
+    name: Plone 6.0 jobs on python 3.x
     plone-version:
         - '6.0'
     py:
+        - '3.10':
+            python-version: 'Python3.10'
         - '3.9':
             python-version: 'Python3.9'
         - '3.8':
@@ -200,6 +204,8 @@
     plone-version:
         - '6.0'
     py:
+        - '3.10':
+            python-version: 'Python3.10'
         - '3.9':
             python-version: 'Python3.9'
         - '3.8':
@@ -354,8 +360,8 @@
             log-html: robot_log.html
             output-xml: robot_output.xml
             pass-threshold: 100.0
-            unstable-threshold: 80.0
-            only-critical: true
+            unstable-threshold: 98.0
+            only-critical: false
             other-files:
                 - robot_*.png
 
@@ -466,8 +472,8 @@
             log-html: robot_log.html
             output-xml: robot_output.xml
             pass-threshold: 100.0
-            unstable-threshold: 80.0
-            only-critical: true
+            unstable-threshold: 98.0
+            only-critical: false
             other-files:
                 - robot_*.png
 
@@ -606,8 +612,8 @@
             log-html: robot_log.html
             output-xml: robot_output.xml
             pass-threshold: 100.0
-            unstable-threshold: 80.0
-            only-critical: true
+            unstable-threshold: 98.0
+            only-critical: false
             other-files:
                 - robot_*.png
 
