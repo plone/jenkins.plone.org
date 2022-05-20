@@ -96,6 +96,8 @@
     plone-version:
         - '6.0'
     py:
+        - '3.10':
+            python-version: 'Python3.10'
         - '3.9':
             python-version: 'Python3.9'
         - '3.8':
