@@ -7,18 +7,17 @@ SCRIPT="bin/alltests"
 if [ "{plone-version}" = "5.2" ]; then
     BUILDOUT="buildout.cfg"
     SCRIPT="bin/test"
-    REALBROWSER="chrome"
+    export ROBOT_BROWSER="chrome"
 fi
 if [ "{plone-version}" = "6.0" ]; then
     BUILDOUT="buildout.cfg"
     SCRIPT="bin/test"
-    REALBROWSER="headlesschrome"
+    export ROBOT_BROWSER="headlesschrome"
 fi
 
 buildout buildout:git-clone-depth=1 -c ${{BUILDOUT}}
 
 export PATH="/usr/lib/chromium-browser:$PATH"
-export ROBOT_BROWSER=REALBROWSER
 export ROBOTSUITE_PREFIX=ONLYROBOT
 
 if [ "{plone-version}" = "5.2" ]; then
