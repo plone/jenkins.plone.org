@@ -242,19 +242,14 @@
 - project:
     name: PLIPs
     plip:
-        - 3211-mockup-redone:
-             buildout: plips/plip-3211-mockup-redone.cfg
-             branch: '6.0'
-        - 3395-plone.base-part-1:
-             buildout: plips/plip-3395-plone.base-part-1.cfg
+        - plip-image-srcsets:
+             buildout: plips/plip-img-srcsets.cfg
              branch: '6.0'
     py:
         - '3.9':
             python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
-        - '3.7':
-            python-version: 'Python3.7'
     jobs:
         - 'plip-{plip}-{py}'
 
@@ -334,7 +329,7 @@
 
 
 - job-template:
-    # Plone 5.x robot tests job definition.
+    # Plone robot tests job definition.
     name: plone-{plone-version}-python-{py}-robot-{browser}
     display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser})'
 
