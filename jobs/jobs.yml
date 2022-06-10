@@ -329,7 +329,7 @@
 
 
 - job-template:
-    # Plone 5.x robot tests job definition.
+    # Plone robot tests job definition.
     name: plone-{plone-version}-python-{py}-robot-{browser}
     display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser})'
 
