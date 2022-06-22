@@ -242,8 +242,8 @@
 - project:
     name: PLIPs
     plip:
-        - plip-image-srcsets:
-             buildout: plips/plip-image-srcsets.cfg
+        - plip-image-scales-metadata:
+             buildout: plips/plip-image-scales-metadata.cfg
              branch: '6.0'
     py:
         - '3.9':
