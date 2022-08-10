@@ -4,12 +4,6 @@ body {
   border-top: 11px solid #329FD7;
 }
 
-#jenkins-head-icon,
-#jenkins-name-icon,
-body[data-model-type="hudson.model.ParametersDefinitionProperty"] .doony-build {
-  display: none;
-}
-
 #header {
   background-color: black !important;
 }
