@@ -4,19 +4,8 @@ body {
   border-top: 11px solid #329FD7;
 }
 
-#header {
-  background-color: black !important;
-}
-
 #jenkins-home-link {
   background: url('https://docs.plone.org/_static/img/plone.svg') no-repeat scroll 10px center;
   width: 215px;
   text-indent: -999px;
-}
-
-/* Make "Build", "Build with Parameters" or "Rebuild" links really prominent*/
-a.task-link[href$="0sec"],
-a.task-link[href$="rebuild"] {
-  font-size: 20px;
-  font-weight: bold;
 }
