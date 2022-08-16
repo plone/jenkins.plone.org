@@ -556,7 +556,7 @@
     test-script: 'pr-tests.sh'
     description: |
         Manually test pull requests targeted at Plone {plone-version} on Python {py}.
-        To trigger a job, just login with your GitHub account and provide the pull request URL.
+        To trigger a job, login with your GitHub account and provide the pull request URL.
         After the job is finished you will get an email about the result.
 
     parameters:
