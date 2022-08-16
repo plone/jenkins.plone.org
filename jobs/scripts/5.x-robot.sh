@@ -1,27 +1,18 @@
 #!/bin/sh
+
+PYTHON_VERSION="{py}"
+/srv/python${{PYTHON_VERSION}}/bin/python3 -m venv venv
+. venv/bin/activate
+
 pip install -r requirements.txt
-
-BUILDOUT="core.cfg"
-SCRIPT="bin/alltests"
-
-if [ "{plone-version}" = "5.2" ]; then
-    BUILDOUT="buildout.cfg"
-    SCRIPT="bin/test"
-    export ROBOT_BROWSER="chrome"
-fi
-if [ "{plone-version}" = "6.0" ]; then
-    BUILDOUT="buildout.cfg"
-    SCRIPT="bin/test"
-    export ROBOT_BROWSER="headlesschrome"
-fi
-
-buildout buildout:git-clone-depth=1 -c ${{BUILDOUT}}
+buildout buildout:git-clone-depth=1 -c buildout.cfg
 
 export PATH="/usr/lib/chromium-browser:$PATH"
+export ROBOT_BROWSER="headlesschrome"
 export ROBOTSUITE_PREFIX=ONLYROBOT
 
 if [ "{plone-version}" = "5.2" ]; then
-    xvfb-run -a --server-args='-screen 0 1920x1200x24' ${{SCRIPT}} -t ONLYROBOT --all --xml
-else
-    ${{SCRIPT}} -t ONLYROBOT --all --xml
+    export ROBOT_BROWSER="chrome"
 fi
+
+bin/test -t ONLYROBOT --all --xml

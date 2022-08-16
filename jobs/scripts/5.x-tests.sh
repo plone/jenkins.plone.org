@@ -1,18 +1,10 @@
 #!/bin/sh
+
+PYTHON_VERSION="{py}"
+/srv/python${{PYTHON_VERSION}}/bin/python3 -m venv venv
+. venv/bin/activate
+
 pip install -r requirements.txt
 
-BUILDOUT="core.cfg"
-SCRIPT="bin/alltests"
-
-if [ "{plone-version}" = "5.2" ]; then
-    BUILDOUT="buildout.cfg"
-    SCRIPT="bin/test"
-fi
-
-if [ "{plone-version}" = "6.0" ]; then
-    BUILDOUT="buildout.cfg"
-    SCRIPT="bin/test"
-fi
-
-buildout buildout:git-clone-depth=1 -c ${{BUILDOUT}}
-${{SCRIPT}} --xml
+buildout buildout:git-clone-depth=1 -c buildout.cfg
+bin/test --xml
