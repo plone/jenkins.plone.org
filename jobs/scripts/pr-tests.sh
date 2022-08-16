@@ -1,5 +1,9 @@
 #!/bin/sh
 
+python_version="{py}"
+/srv/python${{python_version}}/bin/python3 -m venv venv
+. venv/bin/activate
+
 if [ "$COREDEV" = "1" ]; then
     # TODO(gforcada): allow to test remote branches (i.e. branches not in github.com/plone/buildout.coredev)
     git checkout $BRANCH

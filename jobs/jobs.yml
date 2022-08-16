@@ -644,12 +644,8 @@
         - inject:
             properties-file: vars.properties
 
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            name: pull_request
-            nature: shell
-            command: !include-raw: scripts/{test-script}
+        - shell:
+            !include-raw: scripts/{test-script}
 
     publishers:
         - junit:
