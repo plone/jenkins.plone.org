@@ -133,13 +133,8 @@
 
 - project:
     name: Plone 5.2 jobs on python 2.7
-    plone-version:
-        - '5.2'
-    py:
-        - '2.7':
-            python-version: 'Python2.7'
     jobs:
-        - 'plone-{plone-version}-python-{py}'
+        - 'plone-5.2-python-2.7'
 
 - project:
     name: Plone 5.2 jobs on python 3.x
@@ -173,15 +168,8 @@
 
 - project:
     name: Plone 5.2 jobs on python 2.7 (robot tests)
-    plone-version:
-        - '5.2'
-    py:
-        - '2.7':
-            python-version: 'Python2.7'
-    browser:
-        - chrome
     jobs:
-        - 'plone-{plone-version}-python-{py}-robot-{browser}'
+        - 'plone-5.2-python-2.7-robot-chrome'
 
 - project:
     name: Plone 5.2 jobs on python 3.x (robot tests)
@@ -303,23 +291,26 @@
     <<: *plone-basic
 
 
-- job-template:
+- job:
     # Plone 5.x core tests job definition.
-    name: plone-{plone-version}-python-{py}
-    display-name: 'Plone {plone-version} - Python {py}'
+    name: plone-5.2-python-2.7
+    display-name: 'Plone 5.2 - Python 2.7'
 
     scm:
         - buildout-coredev:
-            branch: '{plone-version}'
+            branch: '5.2'
 
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: '{python-version}'
+            python-version: 'Python2.7'
             clear: true
             nature: shell
-            command:
-                !include-raw: scripts/5.x-tests.sh
+            command: |
+              #!/bin/sh
+              pip install -r requirements.txt
+              buildout buildout:git-clone-depth=1 -c buildout.cfg
+              bin/test --xml
 
     publishers:
         - custom-junit-new
@@ -328,23 +319,29 @@
     <<: *plone
 
 
-- job-template:
-    # Plone robot tests job definition.
-    name: plone-{plone-version}-python-{py}-robot-{browser}
-    display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser})'
+- job:
+    # Plone 5.x robot tests job definition.
+    name: plone-5.2-python-2.7-robot-chrome
+    display-name: 'Plone 5.2 - Python 2.7 - Robot Framework Tests (chrome)'
 
     scm:
         - buildout-coredev:
-            branch: '{plone-version}'
+            branch: '5.2'
 
     builders:
         - shining-panda:
             build-environment: virtualenv
-            python-version: '{python-version}'
+            python-version: 'Python2.7'
             clear: true
             nature: shell
-            command:
-                !include-raw: scripts/5.x-robot.sh
+            command: |
+                #!/bin/sh
+                pip install -r requirements.txt
+                buildout buildout:git-clone-depth=1 -c buildout.cfg
+                export PATH="/usr/lib/chromium-browser:$PATH"
+                export ROBOT_BROWSER="chrome"
+                export ROBOTSUITE_PREFIX=ONLYROBOT
+                xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test -t ONLYROBOT --all --xml
 
     publishers:
         - custom-email-ext
