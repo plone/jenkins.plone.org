@@ -64,30 +64,24 @@
 ###
 
 - project:
+    name: Pull requests on Plone 5.2 for python 2
+    jobs:
+        - 'pull-request-5.2-2.7'
+
+- project:
     name: Pull requests on Plone 5.2 for python 3
     plone-version:
         - '5.2'
     py:
-        - '2.7':
-            python-version: 'Python2.7'
-            info-script: 'pr-get-info-py2.py'
-            test-script: 'pr-tests-py2.sh'
-
         - '3.8':
             python-version: 'Python3.8'
             info-script: 'pr-get-info.py'
-            test-script: 'pr-tests.sh'
-
         - '3.7':
             python-version: 'Python3.7'
             info-script: 'pr-get-info.py'
-            test-script: 'pr-tests.sh'
-
         - '3.6':
             python-version: 'Python3.6'
             info-script: 'pr-get-info.py'
-            test-script: 'pr-tests.sh'
-
     jobs:
         - 'pull-request-{plone-version}-{py}'
 
@@ -607,8 +601,6 @@
 - job-template:
     name: 'pull-request-{plone-version}-{py}'
     display-name: 'Pull Request {plone-version} on py{py}'
-    info-script: 'pr-get-info.py'
-    test-script: 'pr-tests.sh'
     description: |
         Manually test pull requests targeted at Plone {plone-version} on Python {py}.
         To trigger a job, login with your GitHub account and provide the pull request URL.
@@ -631,13 +623,82 @@
             clear: true
             nature: python
             command:
-                !include-raw-escape: scripts/{info-script}
+                !include-raw-escape: scripts/pr-get-info.py
 
         - inject:
             properties-file: vars.properties
 
         - shell:
-            !include-raw: scripts/{test-script}
+            !include-raw: scripts/pr-tests.sh
+
+    publishers:
+        - junit:
+            results: 'parts/test/testreports/*.xml'
+            keep-long-stdio: false
+
+        - robot:
+            output-path: 'parts/test'
+            report-html: robot_report.html
+            log-html: robot_log.html
+            output-xml: robot_output.xml
+            pass-threshold: 100.0
+            unstable-threshold: 98.0
+            only-critical: false
+            other-files:
+                - robot_*.png
+
+        - email-ext:
+            recipients: "${{BUILD_USER_EMAIL}}"
+            reply-to: 'no-reply@jenkins.plone.org'
+            content-type: default
+            always: true
+            failure: false
+            subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: packages ${{PKGS}}"
+            body:
+                !include-raw: scripts/pr.email
+
+    <<: *plone-no-ports-no-xvfb
+
+- job-template:
+    name: 'pull-request-5.2-2.7'
+    display-name: 'Pull Request 5.2 on py2.7'
+    description: |
+        Manually test pull requests targeted at Plone 5.2 on Python 2.7.
+        To trigger a job, login with your GitHub account and provide the pull request URL.
+        After the job is finished you will get an email about the result.
+
+    parameters:
+        - text:
+            name: PULL_REQUEST_URL
+            description: 'URLs of the github pull requests, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-pull-request-jobs.html'
+
+    scm:
+        - buildout-coredev:
+            branch: '5.2'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: 'Python3.9'
+            name: pull_request
+            clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.43.2
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: 'Python3.9'
+            name: pull_request
+            nature: python
+            command:
+                !include-raw-escape: scripts/pr-get-info-py2.py
+
+        - inject:
+            properties-file: vars.properties
+
+        - shell:
+            !include-raw: scripts/pr-tests-py2.sh
 
     publishers:
         - junit:
