@@ -11,8 +11,4 @@ export PATH="/usr/lib/chromium-browser:$PATH"
 export ROBOT_BROWSER="headlesschrome"
 export ROBOTSUITE_PREFIX=ONLYROBOT
 
-if [ "{plone-version}" = "5.2" ]; then
-    export ROBOT_BROWSER="chrome"
-fi
-
 bin/test -t ONLYROBOT --all --xml
