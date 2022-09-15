@@ -23,7 +23,7 @@ Create and activate a virtualenv:
 
 .. code-block:: shell
 
-    python3.6 -m venv .
+    python3.9 -m venv .
     ./bin/activate
 
 Install all the tools needed (ansible, ansible roles and jenkins-job-builder):
