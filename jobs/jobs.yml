@@ -75,13 +75,10 @@
     py:
         - '3.8':
             python-version: 'Python3.8'
-            info-script: 'pr-get-info.py'
         - '3.7':
             python-version: 'Python3.7'
-            info-script: 'pr-get-info.py'
         - '3.6':
             python-version: 'Python3.6'
-            info-script: 'pr-get-info.py'
     jobs:
         - 'pull-request-{plone-version}-{py}'
 
@@ -621,6 +618,14 @@
             python-version: 'Python3.9'
             name: pull_request
             clear: true
+            nature: shell
+            command:
+                pip install pygithub==1.43.2
+
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: 'Python3.9'
+            name: pull_request
             nature: python
             command:
                 !include-raw-escape: scripts/pr-get-info.py
@@ -692,7 +697,7 @@
             name: pull_request
             nature: python
             command:
-                !include-raw-escape: scripts/pr-get-info-py2.py
+                !include-raw-escape: scripts/pr-get-info.py
 
         - inject:
             properties-file: vars.properties
