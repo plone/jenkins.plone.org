@@ -77,8 +77,6 @@
             python-version: 'Python3.8'
         - '3.7':
             python-version: 'Python3.7'
-        - '3.6':
-            python-version: 'Python3.6'
     jobs:
         - 'pull-request-{plone-version}-{py}'
 
@@ -112,8 +110,6 @@
             python-version: 'Python3.8'
         - '3.7':
             python-version: 'Python3.7'
-        - '3.6':
-            python-version: 'Python3.6'
     jobs:
         - 'test-addon-{plone-version}-{py}'
 
@@ -145,8 +141,6 @@
             python-version: 'Python3.8'
         - '3.7':
             python-version: 'Python3.7'
-        - '3.6':
-            python-version: 'Python3.6'
     jobs:
         - 'plone-{plone-version}-python-{py}'
 
@@ -178,8 +172,6 @@
             python-version: 'Python3.8'
         - '3.7':
             python-version: 'Python3.7'
-        - '3.6':
-            python-version: 'Python3.6'
     browser:
         - chrome
     jobs:
