@@ -617,7 +617,7 @@
             clear: true
             nature: shell
             command:
-                pip install pygithub==1.43.2
+                pip install pygithub==1.56
 
         - shining-panda:
             build-environment: virtualenv
@@ -686,7 +686,7 @@
             clear: true
             nature: shell
             command:
-                pip install pygithub==1.43.2
+                pip install pygithub==1.56
 
         - shining-panda:
             build-environment: virtualenv

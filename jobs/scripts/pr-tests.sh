@@ -9,7 +9,7 @@ if [ "$COREDEV" = "1" ]; then
     git checkout $BRANCH
 fi
 
-pip install pygithub==1.55
+pip install pygithub==1.56
 pip install -r requirements.txt
 buildout buildout:git-clone-depth=1 -c buildout.cfg
 
