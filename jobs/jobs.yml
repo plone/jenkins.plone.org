@@ -699,8 +699,12 @@
         - inject:
             properties-file: vars.properties
 
-        - shell:
-            !include-raw: scripts/pr-tests-py2.sh
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: 'Python2.7'
+            name: pull_request
+            nature: shell
+            command: !include-raw: scripts/pr-tests-py2.sh
 
     publishers:
         - junit:

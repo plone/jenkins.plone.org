@@ -6,6 +6,7 @@ if [ "$COREDEV" = "1" ]; then
 fi
 
 pip install -r requirements.txt
+pip install PyGithub==1.45
 buildout buildout:git-clone-depth=1 -c buildout.cfg
 
 return_code="all_right"
