@@ -1,25 +1,6 @@
 ---
 # Jenkins server for Plone CI testing
 
-# TODO(gforcada) remove it as soon as jenkins uses Java 11
-- hosts: jenkins.plone.org
-  remote_user: root
-  tasks:
-    - name: Install repository for Java 8 in Ubuntu
-      become: yes
-      apt_repository: repo='ppa:webupd8team/java'
-
-    - name: Update
-      become: yes
-      apt:
-        update_cache=yes
-
-    - name: Install Java 8
-      become: yes
-      apt:
-        name=oracle-java8-installer
-        state=present
-
 - hosts: jenkins.plone.org
   remote_user: root
   roles:
