@@ -7,10 +7,10 @@
   version: 3.8.0
 
 - src: geerlingguy.nodejs
-  version: 5.0.0
+  version: 6.0.0
 
 - src: gforcada.compile-python
-  version: 3.0.0
+  version: 4.1.0
 
 - src: geerlingguy.munin-node
   version: 1.2.2
