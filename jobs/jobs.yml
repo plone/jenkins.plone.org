@@ -151,6 +151,8 @@
     plone-version:
         - '6.0'
     py:
+        - '3.11':
+            python-version: 'Python3.11'
         - '3.10':
             python-version: 'Python3.10'
         - '3.9':
@@ -184,6 +186,8 @@
     plone-version:
         - '6.0'
     py:
+        - '3.11':
+            python-version: 'Python3.11'
         - '3.10':
             python-version: 'Python3.10'
         - '3.9':
