@@ -376,41 +376,6 @@
     <<: *plone
 
 
-- job-template:
-    # Plone 5.x Archetypes tests job definition.
-    name: plone-{plone-version}-python-{py}-at
-    display-name: 'Plone {plone-version} - Python {py} - Archetypes'
-
-    properties:
-        - custom-throttle:
-            total: '0'
-            enable: '' # false
-
-        - disk-usage
-
-    scm:
-        - buildout-coredev:
-            branch: '{plone-version}'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/5.x-at.sh
-
-    publishers:
-        - custom-junit-new
-        - custom-email-ext
-
-        - custom-archive:
-            glob: 'parts/test/testreports/*.xml'
-
-    <<: *plone
-
-
 - job:
     # JavaScript mockup unittests.
     name: mockup
