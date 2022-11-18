@@ -220,7 +220,7 @@
             branch: '{plone-version}'
 
     triggers:
-        - timed: '@daily'
+        - timed: '@weekly'
 
     builders:
         - shining-panda:
@@ -632,7 +632,7 @@
     display-name: 'Plone ZopeTestCase dependencies'
 
     triggers:
-        - timed: "@daily"
+        - timed: "@weekly"
 
     builders:
         - shining-panda:
@@ -842,7 +842,7 @@
     display-name: 'Code analysis'
 
     triggers:
-        - timed: '@daily'
+        - timed: '@weekly'
 
     builders:
         - shining-panda:
