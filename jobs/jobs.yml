@@ -264,7 +264,7 @@
               bin/test --xml
 
     publishers:
-        - custom-junit-new
+        - custom-junit
         - custom-email-ext
 
     <<: *plone
@@ -284,7 +284,7 @@
             !include-raw: scripts/tests.sh
 
     publishers:
-        - custom-junit-new
+        - custom-junit
         - custom-email-ext
 
     <<: *plone
@@ -395,7 +395,7 @@
                 !include-raw: scripts/plips.sh
 
     publishers:
-        - custom-junit-new
+        - custom-junit
 
         - robot:
             output-path: parts/test
@@ -898,13 +898,6 @@
 
 - publisher:
     name: custom-junit
-    publishers:
-        - junit:
-            results: parts/jenkins-test/testreports/*.xml
-            keep-long-stdio: false
-
-- publisher:
-    name: custom-junit-new
     publishers:
         - junit:
             results: parts/test/testreports/*.xml
