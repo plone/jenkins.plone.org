@@ -375,41 +375,6 @@
 
     <<: *plone
 
-
-- job:
-    # JavaScript mockup unittests.
-    name: mockup
-    display-name: 'Mockup JavaScript tests'
-
-    scm:
-        - git:
-            url: https://github.com/plone/mockup.git
-            branches:
-                - 'master'
-            wipe-workspace: false
-            tag-builds: true
-            shallow-clone: true
-            depth: 10
-            do-not-fetch-tags: true
-            ignore-commits-with-messages:
-                - ci-skip
-
-    builders:
-        - shell:
-            !include-raw: scripts/js.sh
-
-    publishers:
-        - junit:
-            results: mockup/PhantomJS*/test-results.xml
-            keep-long-stdio: false
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone-basic
-
-
 - job-template:
     # PLIPs jobs definition
     name: 'plip-{plip}-{py}'
