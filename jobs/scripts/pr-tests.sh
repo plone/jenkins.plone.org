@@ -19,9 +19,6 @@ export PATH="/usr/lib/chromium-browser:$PATH"
 export ROBOT_BROWSER='headlesschrome'
 export PYTHONWARNINGS='ignore'
 
-# switch to headless chrome
-#xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test --all --xml || return_code=$?
-
 bin/test --all --xml || return_code=$?
 
 if [ $return_code = "all_right" ]; then
