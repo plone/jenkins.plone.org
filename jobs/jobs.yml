@@ -48,17 +48,6 @@
 
     <<: *plone-basic
 
-- job-template: &plone-no-ports-no-xvfb
-    name: 'generic plone without ports allocation nor xvfb'
-
-    wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - build-user-vars
-        - custom-github-api-key
-
-    <<: *plone-basic
-
 ###
 # PROJECTS
 ###
@@ -531,7 +520,7 @@
             body:
                 !include-raw: scripts/plips.email
 
-    <<: *plone-no-ports-no-xvfb
+    <<: *plone-basic
 
 
 - job-template:
@@ -665,7 +654,7 @@
             body:
                 !include-raw: scripts/pr.email
 
-    <<: *plone-no-ports-no-xvfb
+    <<: *plone-basic
 
 - job-template:
     name: 'pull-request-5.2-2.7'
@@ -738,7 +727,7 @@
             body:
                 !include-raw: scripts/pr.email
 
-    <<: *plone-no-ports-no-xvfb
+    <<: *plone-basic
 
 - job-template:
     name: 'test-addon-{plone-version}'
