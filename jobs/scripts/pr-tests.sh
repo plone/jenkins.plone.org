@@ -17,16 +17,20 @@ return_code="all_right"
 
 export PATH="/usr/lib/chromium-browser:$PATH"
 export ROBOT_BROWSER='headlesschrome'
+export ROBOTSUITE_PREFIX=ONLYROBOT
 export PYTHONWARNINGS='ignore'
 
-bin/test --all --xml || return_code=$?
+# All tests without Robot
+bin/test --all --xml -t '!ONLYROBOT' || return_code="$?"
+# All tests with Robot
+bin/test --all --xml -t ONLYROBOT || return_code="$?"
 
-if [ $return_code = "all_right" ]; then
-    return_code=$?
+if [ "$return_code" = "all_right" ]; then
+    return_code="$?"
 fi
 
 # Update GitHub pull request status
 python templates/pr-update-status-py3.py
 
 # Keep tests return code
-exit $return_code
+exit "$return_code"
