@@ -178,6 +178,11 @@
         - 'plone-{plone-version}-python-{py}-i18n-find-missing'
 
 - project:
+    name: Translations of Volto
+    jobs:
+        - 'volto-translations'
+
+- project:
     name: PLIPs
     plip:
         - plip-image-scales-metadata:
@@ -238,6 +243,45 @@
     publishers:
         - custom-archive:
             glob: 'src/plone.app.locales/plone/app/locales/locales/reports/*.txt'
+
+    <<: *plone-basic
+
+- job-template:
+    name: volto-translations
+    display-name: 'Volto translations'
+
+    scm:
+        - git:
+            url: https://github.com/plone/volto.git
+            branches:
+                - master
+            wipe-workspace: false
+            tag-builds: true
+            shallow-clone: true
+            depth: 10
+            do-not-fetch-tags: true
+            ignore-commits-with-messages:
+                - ci-skip
+
+    triggers:
+        - timed: '@weekly'
+
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: '{python-version}'
+            clear: true
+            nature: shell
+            command:
+              !include-raw: scripts/volto-i18n.sh
+
+    wrappers:
+        - custom-workspace-cleanup
+        - custom-timeout
+
+    publishers:
+        - custom-archive:
+            glob: 'volto-18n-report.txt'
 
     <<: *plone-basic
 
