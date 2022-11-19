@@ -48,17 +48,6 @@
 
     <<: *plone-basic
 
-- job-template: &plone-no-ports-no-xvfb
-    name: 'generic plone without ports allocation nor xvfb'
-
-    wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - build-user-vars
-        - custom-github-api-key
-
-    <<: *plone-basic
-
 ###
 # PROJECTS
 ###
@@ -95,39 +84,6 @@
             python-version: 'Python3.8'
     jobs:
         - 'pull-request-{plone-version}-{py}'
-
-- project:
-    name: Test add-ons on on Plone 5.2 for python 2.7
-    plone-version:
-        - '5.2'
-    jobs:
-        - 'test-addon-{plone-version}'
-
-- project:
-    name: Test add-ons on Plone 5.2 Python 3
-    plone-version:
-        - '5.2'
-    py:
-        - '3.8':
-            python-version: 'Python3.8'
-        - '3.7':
-            python-version: 'Python3.7'
-    jobs:
-        - 'test-addon-{plone-version}-{py}'
-
-- project:
-    name: Test add-ons on Plone 6.0 Python 3
-    plone-version:
-        - '6.0'
-    py:
-        - '3.10':
-            python-version: 'Python3.10'
-        - '3.9':
-            python-version: 'Python3.9'
-        - '3.8':
-            python-version: 'Python3.8'
-    jobs:
-        - 'test-addon-{plone-version}-{py}'
 
 - project:
     name: Plone 5.2 jobs on python 2.7
@@ -249,6 +205,7 @@
         - qa-docs-age
         - qa-undeclared-dependencies
         - qa-code-analysis
+        - plone-package-dependencies-ztc
 
 ###
 # JOBS
@@ -263,7 +220,7 @@
             branch: '{plone-version}'
 
     triggers:
-        - timed: '@daily'
+        - timed: '@weekly'
 
     builders:
         - shining-panda:
@@ -307,7 +264,7 @@
               bin/test --xml
 
     publishers:
-        - custom-junit-new
+        - custom-junit
         - custom-email-ext
 
     <<: *plone
@@ -324,10 +281,10 @@
 
     builders:
         - shell:
-            !include-raw: scripts/5.x-tests.sh
+            !include-raw: scripts/tests.sh
 
     publishers:
-        - custom-junit-new
+        - custom-junit
         - custom-email-ext
 
     <<: *plone
@@ -348,14 +305,8 @@
             python-version: 'Python2.7'
             clear: true
             nature: shell
-            command: |
-                #!/bin/sh
-                pip install -r requirements.txt
-                buildout buildout:git-clone-depth=1 -c buildout.cfg
-                export PATH="/usr/lib/chromium-browser:$PATH"
-                export ROBOT_BROWSER="chrome"
-                export ROBOTSUITE_PREFIX=ONLYROBOT
-                xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test -t ONLYROBOT --all --xml
+            command:
+              !include-raw: scripts/robot-py2.sh
 
     publishers:
         - custom-email-ext
@@ -393,7 +344,7 @@
 
     builders:
         - shell:
-            !include-raw: scripts/5.x-robot.sh
+            !include-raw: scripts/robot.sh
 
     publishers:
         - custom-email-ext
@@ -419,76 +370,6 @@
 
     <<: *plone
 
-
-- job-template:
-    # Plone 5.x Archetypes tests job definition.
-    name: plone-{plone-version}-python-{py}-at
-    display-name: 'Plone {plone-version} - Python {py} - Archetypes'
-
-    properties:
-        - custom-throttle:
-            total: '0'
-            enable: '' # false
-
-        - disk-usage
-
-    scm:
-        - buildout-coredev:
-            branch: '{plone-version}'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/5.x-at.sh
-
-    publishers:
-        - custom-junit-new
-        - custom-email-ext
-
-        - custom-archive:
-            glob: 'parts/test/testreports/*.xml'
-
-    <<: *plone
-
-
-- job:
-    # JavaScript mockup unittests.
-    name: mockup
-    display-name: 'Mockup JavaScript tests'
-
-    scm:
-        - git:
-            url: https://github.com/plone/mockup.git
-            branches:
-                - 'master'
-            wipe-workspace: false
-            tag-builds: true
-            shallow-clone: true
-            depth: 10
-            do-not-fetch-tags: true
-            ignore-commits-with-messages:
-                - ci-skip
-
-    builders:
-        - shell:
-            !include-raw: scripts/js.sh
-
-    publishers:
-        - junit:
-            results: mockup/PhantomJS*/test-results.xml
-            keep-long-stdio: false
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone-basic
-
-
 - job-template:
     # PLIPs jobs definition
     name: 'plip-{plip}-{py}'
@@ -508,7 +389,7 @@
                 !include-raw: scripts/plips.sh
 
     publishers:
-        - custom-junit-new
+        - custom-junit
 
         - robot:
             output-path: parts/test
@@ -531,7 +412,7 @@
             body:
                 !include-raw: scripts/plips.email
 
-    <<: *plone-no-ports-no-xvfb
+    <<: *plone-basic
 
 
 - job-template:
@@ -665,7 +546,7 @@
             body:
                 !include-raw: scripts/pr.email
 
-    <<: *plone-no-ports-no-xvfb
+    <<: *plone-basic
 
 - job-template:
     name: 'pull-request-5.2-2.7'
@@ -738,149 +619,14 @@
             body:
                 !include-raw: scripts/pr.email
 
-    <<: *plone-no-ports-no-xvfb
-
-- job-template:
-    name: 'test-addon-{plone-version}'
-    display-name: 'Test add-on against Plone {plone-version}'
-    description: |
-        Run an add-on tests with the current checkouts of Plone {plone-version}.
-        To trigger a job, login with your GitHub account and provide the anonymous git URL of you add-on and, optionally, a branch.
-        After the job is finished you will get an email about the result.
-
-    parameters:
-        - text:
-            name: ADDON_URL
-            description: 'URL of the add-on git repository, something like https://github.com/collective/collective.cover.git, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-add-on-jobs.html'
-
-        - text:
-            name: ADDON_BRANCH
-            description: 'branch of the add-on that should be tested, if left blank, master branch is assumed'
-
-    scm:
-        - buildout-coredev:
-            branch: '{plone-version}'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python2.7
-            name: addon
-            clear: true
-            nature: shell
-            command:
-                pip install pygithub==1.26.0
-
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python2.7
-            name: addon
-            nature: python
-            command:
-                !include-raw-escape: scripts/addon-get-info.py
-
-        - inject:
-            properties-file: vars.properties
-
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python2.7
-            name: addon
-            nature: shell
-            command:
-                !include-raw: scripts/addon-tests.sh
-
-    publishers:
-        - junit:
-            results: 'parts/test/testreports/*.xml'
-            keep-long-stdio: false
-
-        - email-ext:
-            recipients: "${{BUILD_USER_EMAIL}}"
-            reply-to: 'no-reply@jenkins.plone.org'
-            content-type: default
-            always: true
-            failure: false
-            subject: "[${{BUILD_STATUS}}]: ${{ADDON_NAME}} tested against {plone-version}"
-            body:
-                !include-raw: scripts/addon.email
-
     <<: *plone-basic
-
-- job-template:
-    name: 'test-addon-{plone-version}-{py}'
-    display-name: 'Test add-on against Plone {plone-version} on {python-version}'
-    description: |
-        Run an add-on tests with the current checkouts of Plone {plone-version} on {python-version}.
-        To trigger a job, login with your GitHub account and provide the anonymous git URL of you add-on and, optionally, a branch.
-        After the job is finished you will get an email about the result.
-
-    parameters:
-        - text:
-            name: ADDON_URL
-            description: 'URL of the add-on git repository, something like https://github.com/collective/collective.cover.git, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-add-on-jobs.html'
-
-        - text:
-            name: ADDON_BRANCH
-            description: 'branch of the add-on that should be tested, if left blank, master branch is assumed'
-
-    scm:
-        - buildout-coredev:
-            branch: '{plone-version}'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            name: addon
-            clear: true
-            nature: shell
-            command:
-                pip install pygithub==1.26.0
-
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            name: addon
-            nature: python
-            command:
-                !include-raw-escape: scripts/addon-get-info.py
-
-        - inject:
-            properties-file: vars.properties
-
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            name: addon
-            nature: shell
-            command:
-                !include-raw: scripts/addon-py3-tests.sh
-
-    publishers:
-        - junit:
-            results: 'parts/test/testreports/*.xml'
-            keep-long-stdio: false
-
-        - email-ext:
-            recipients: "${{BUILD_USER_EMAIL}}"
-            reply-to: 'no-reply@jenkins.plone.org'
-            content-type: default
-            always: true
-            failure: false
-            subject: "[${{BUILD_STATUS}}]: ${{ADDON_NAME}} tested against Plone {plone-version} on {python-version}"
-            body:
-                !include-raw: scripts/addon-py3.email
-
-    <<: *plone-basic
-
 
 - job:
     name: plone-package-dependencies-ztc
     display-name: 'Plone ZopeTestCase dependencies'
 
     triggers:
-        - timed: "@daily"
+        - timed: "@weekly"
 
     builders:
         - shining-panda:
@@ -1090,7 +836,7 @@
     display-name: 'Code analysis'
 
     triggers:
-        - timed: '@daily'
+        - timed: '@weekly'
 
     builders:
         - shining-panda:
@@ -1146,13 +892,6 @@
 
 - publisher:
     name: custom-junit
-    publishers:
-        - junit:
-            results: parts/jenkins-test/testreports/*.xml
-            keep-long-stdio: false
-
-- publisher:
-    name: custom-junit-new
     publishers:
         - junit:
             results: parts/test/testreports/*.xml

@@ -7,6 +7,4 @@ export PATH="/usr/lib/chromium-browser:$PATH"
 export ROBOT_BROWSER=headlesschrome
 export PYTHONWARNINGS='ignore'
 
-#xvfb-run -a --server-args='-screen 0 1920x1200x24' bin/test --xml --all
-
 bin/test --xml --all
