@@ -197,13 +197,6 @@
         - 'plip-{plip}-{py}'
 
 - project:
-    name: Theme preview
-    plone-version:
-        - '6.0'
-    jobs:
-        - 'plone-{plone-version}-themetest'
-
-- project:
     name: QA scripts
     jobs:
         - qa-docs-package-styleguide
@@ -457,71 +450,6 @@
                 !include-raw: scripts/plips.email
 
     <<: *plone-basic
-
-
-- job-template:
-    # Plone theme preview.
-    name: 'plone-{plone-version}-themetest'
-    display-name: 'Plone {plone-version} - Themetest'
-
-    properties:
-        - custom-throttle:
-            total: '0'
-            enable: '' # false
-
-        - disk-usage
-
-        - build-discarder:
-            days-to-keep: 20
-            num-to-keep: 30
-            artifact-days-to-keep: 3
-            artifact-num-to-keep: 10
-
-    scm:
-        - git:
-            url: https://github.com/plone/plone.themepreview.git
-            branches:
-                - 'master'
-            wipe-workspace: false
-            tag-builds: true
-            shallow-clone: true
-            depth: 10
-            do-not-fetch-tags: true
-            ignore-commits-with-messages:
-                - ci-skip
-
-    triggers:
-        - timed: '@weekly'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python3.7
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/themetest.sh
-
-    publishers:
-        - html-publisher:
-            name: report
-            dir: build
-            files: "index.html"
-            keep-all: false
-            allow-missing: false
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-        - inject:
-            properties-content: |
-                ROBOT_CONFIGURE_PACKAGES=plone.app.widgets,ploneorg.core
-                ROBOT_APPLY_PROFILES=ploneorg.core:default
-                ROBOT_INSTALL_PRODUCTS=Products.DateRecurringIndex
-
-    <<: *plone
-
 
 - job-template:
     name: 'pull-request-{plone-version}-{py}'
