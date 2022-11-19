@@ -17,12 +17,11 @@ pip install -r requirements.txt
 buildout -c core.cfg install dependencies
 
 # get all dependencies
-echo "" > deps.txt
 for pkg in src/*;
 do
-    echo "$pkg" >> deps.txt
-    ./bin/dependencychecker --exit-zero $pkg >> deps.txt || echo "Failed for $pkg"
-done
+    echo "$pkg"
+    ./bin/dependencychecker --exit-zero $pkg
+done | tee deps.txt
 
 LINES=`wc -l deps.txt | cut -d" " -f1`
 echo "YVALUE=${LINES}" > lines.log
