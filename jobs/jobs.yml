@@ -178,9 +178,13 @@
         - 'plone-{plone-version}-python-{py}-i18n-find-missing'
 
 - project:
-    name: Translations of Volto
+    name: Translations of Volto (16.x.x)
+    branch:
+        - '16.x.x'
+        - 'master'
+    python-version: 'Python3.9'
     jobs:
-        - 'volto-translations'
+        - 'volto-translations-{branch}'
 
 - project:
     name: PLIPs
@@ -240,14 +244,14 @@
     <<: *plone-basic
 
 - job-template:
-    name: volto-translations
-    display-name: 'Volto translations'
+    name: volto-translations-{branch}
+    display-name: 'Volto translations - {branch}'
 
     scm:
         - git:
             url: https://github.com/plone/volto.git
             branches:
-                - master
+                - '{branch}'
             wipe-workspace: false
             tag-builds: true
             shallow-clone: true
