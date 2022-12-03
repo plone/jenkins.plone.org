@@ -182,6 +182,7 @@
     branch:
         - '16.x.x'
         - 'master'
+    python-version: 'Python3.9'
     jobs:
         - 'volto-translations-{branch}'
 
