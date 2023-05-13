@@ -70,7 +70,7 @@
         - 'pull-request-{plone-version}-{py}'
 
 - project:
-    name: Pull requests on Plone 6 for python 3
+    name: Pull requests on Plone 6.0 for python 3
     plone-version:
         - '6.0'
     py:
@@ -82,6 +82,16 @@
             python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
+    jobs:
+        - 'pull-request-{plone-version}-{py}'
+
+- project:
+    name: Pull requests on Plone 6.1 for python 3
+    plone-version:
+        - '6.1'
+    py:
+        - '3.11':
+            python-version: 'Python3.11'
     jobs:
         - 'pull-request-{plone-version}-{py}'
 
@@ -119,6 +129,16 @@
         - 'plone-{plone-version}-python-{py}'
 
 - project:
+    name: Plone 6.1 jobs on python 3.x
+    plone-version:
+        - '6.1'
+    py:
+        - '3.11':
+            python-version: 'Python3.11'
+    jobs:
+        - 'plone-{plone-version}-python-{py}'
+
+- project:
     name: Plone 5.2 jobs on python 2.7 (robot tests)
     jobs:
         - 'plone-5.2-python-2.7-robot-chrome'
@@ -150,6 +170,18 @@
             python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
+    browser:
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-{py}-robot-{browser}'
+
+- project:
+    name: Plone 6.1 jobs on python 3.x (robot tests)
+    plone-version:
+        - '6.1'
+    py:
+        - '3.11':
+            python-version: 'Python3.11'
     browser:
         - chrome
     jobs:
