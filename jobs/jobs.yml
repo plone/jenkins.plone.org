@@ -52,131 +52,47 @@
 # PROJECTS
 ###
 
+### CORE JOBS
+
 - project:
-    name: Pull requests on Plone 5.2 for python 2
+    name: Plone 5.2 on python 2
     jobs:
         - 'pull-request-5.2-2.7'
-
-- project:
-    name: Pull requests on Plone 5.2 for python 3
-    plone-version:
-        - '5.2'
-    py:
-        - '3.8':
-            python-version: 'Python3.8'
-        - '3.7':
-            python-version: 'Python3.7'
-    jobs:
-        - 'pull-request-{plone-version}-{py}'
-
-- project:
-    name: Pull requests on Plone 6.0 for python 3
-    plone-version:
-        - '6.0'
-    py:
-        - '3.11':
-            python-version: 'Python3.11'
-        - '3.10':
-            python-version: 'Python3.10'
-        - '3.9':
-            python-version: 'Python3.9'
-        - '3.8':
-            python-version: 'Python3.8'
-    jobs:
-        - 'pull-request-{plone-version}-{py}'
-
-- project:
-    name: Pull requests on Plone 6.1 for python 3
-    plone-version:
-        - '6.1'
-    py:
-        - '3.11':
-            python-version: 'Python3.11'
-    jobs:
-        - 'pull-request-{plone-version}-{py}'
-
-- project:
-    name: Plone 5.2 jobs on python 2.7
-    jobs:
         - 'plone-5.2-python-2.7'
-
-- project:
-    name: Plone 5.2 jobs on python 3.x
-    plone-version:
-        - '5.2'
-    py:
-        - '3.8':
-            python-version: 'Python3.8'
-        - '3.7':
-            python-version: 'Python3.7'
-    jobs:
-        - 'plone-{plone-version}-python-{py}'
-
-- project:
-    name: Plone 6.0 jobs on python 3.x
-    plone-version:
-        - '6.0'
-    py:
-        - '3.11':
-            python-version: 'Python3.11'
-        - '3.10':
-            python-version: 'Python3.10'
-        - '3.9':
-            python-version: 'Python3.9'
-        - '3.8':
-            python-version: 'Python3.8'
-    jobs:
-        - 'plone-{plone-version}-python-{py}'
-
-- project:
-    name: Plone 6.1 jobs on python 3.x
-    plone-version:
-        - '6.1'
-    py:
-        - '3.11':
-            python-version: 'Python3.11'
-    jobs:
-        - 'plone-{plone-version}-python-{py}'
-
-- project:
-    name: Plone 5.2 jobs on python 2.7 (robot tests)
-    jobs:
         - 'plone-5.2-python-2.7-robot-chrome'
 
 - project:
-    name: Plone 5.2 jobs on python 3.x (robot tests)
+    name: Plone 5.2 on python 3.x
     plone-version:
         - '5.2'
     py:
         - '3.8':
             python-version: 'Python3.8'
-        - '3.7':
-            python-version: 'Python3.7'
     browser:
         - chrome
     jobs:
+        - 'pull-request-{plone-version}-{py}'
+        - 'plone-{plone-version}-python-{py}'
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
 - project:
-    name: Plone 6.0 jobs on python 3.x (robot tests)
+    name: Plone 6.0 on python 3.x
     plone-version:
         - '6.0'
     py:
         - '3.11':
             python-version: 'Python3.11'
-        - '3.10':
-            python-version: 'Python3.10'
-        - '3.9':
-            python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
     browser:
         - chrome
     jobs:
+        - 'pull-request-{plone-version}-{py}'
+        - 'plone-{plone-version}-python-{py}'
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
 
 - project:
-    name: Plone 6.1 jobs on python 3.x (robot tests)
+    name: Plone 6.1 on python 3.x
     plone-version:
         - '6.1'
     py:
@@ -185,7 +101,42 @@
     browser:
         - chrome
     jobs:
+        - 'pull-request-{plone-version}-{py}'
+        - 'plone-{plone-version}-python-{py}'
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
+
+
+### CORE JOBS (SCHEDULED)
+
+- project:
+    name: Plone 5.2 jobs on python 3.x (scheduled)
+    plone-version:
+        - '5.2'
+    py:
+        - '3.7':
+            python-version: 'Python3.7'
+    browser:
+        - chrome
+    jobs:
+      - 'plone-{plone-version}-python-{py}-scheduled'
+      - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
+
+- project:
+    name: Plone 6.0 jobs on python 3.x (scheduled)
+    plone-version:
+        - '6.0'
+    py:
+        - '3.10':
+            python-version: 'Python3.10'
+        - '3.9':
+            python-version: 'Python3.9'
+    browser:
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-{py}-scheduled'
+        - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
+
+### OTHER
 
 - project:
     name: Translations on Plone 5.2 for python 2.7
@@ -341,8 +292,8 @@
     <<: *plone
 
 
-- job-template:
-    # Plone 5.x core tests job definition.
+- job-template: &plone-core
+    # Plone core tests job definition.
     name: plone-{plone-version}-python-{py}
     display-name: 'Plone {plone-version} - Python {py}'
 
@@ -360,6 +311,16 @@
 
     <<: *plone
 
+
+- job-template:
+    # Plone core tests job definition.
+    name: plone-{plone-version}-python-{py}-scheduled
+    display-name: 'Plone {plone-version} - Python {py} (scheduled)'
+
+    triggers:
+        - timed: "@weekly"
+
+    <<: *plone-core
 
 - job:
     # Plone 5.x robot tests job definition.
@@ -404,8 +365,8 @@
     <<: *plone
 
 
-- job-template:
-    # Plone 5.x robot tests job definition.
+- job-template: &plone-core-robot
+    # Plone robot tests job definition.
     name: plone-{plone-version}-python-{py}-robot-{browser}
     display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser})'
 
@@ -440,6 +401,17 @@
             properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
 
     <<: *plone
+
+
+- job-template:
+    # Plone robot tests job definition.
+    name: plone-{plone-version}-python-{py}-robot-{browser}-scheduled
+    display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser}) (scheduled)'
+
+    triggers:
+        - timed: "@weekly"
+
+    <<: *plone-core-robot
 
 - job-template:
     # PLIPs jobs definition
