@@ -101,8 +101,6 @@
     py:
         - '3.8':
             python-version: 'Python3.8'
-        - '3.7':
-            python-version: 'Python3.7'
     jobs:
         - 'plone-{plone-version}-python-{py}'
 
@@ -113,10 +111,6 @@
     py:
         - '3.11':
             python-version: 'Python3.11'
-        - '3.10':
-            python-version: 'Python3.10'
-        - '3.9':
-            python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
     jobs:
@@ -144,8 +138,6 @@
     py:
         - '3.8':
             python-version: 'Python3.8'
-        - '3.7':
-            python-version: 'Python3.7'
     browser:
         - chrome
     jobs:
@@ -158,10 +150,6 @@
     py:
         - '3.11':
             python-version: 'Python3.11'
-        - '3.10':
-            python-version: 'Python3.10'
-        - '3.9':
-            python-version: 'Python3.9'
         - '3.8':
             python-version: 'Python3.8'
     browser:
@@ -180,6 +168,54 @@
         - chrome
     jobs:
         - 'plone-{plone-version}-python-{py}-robot-{browser}'
+
+- project:
+    name: Plone 5.2 jobs on python 3.x (scheduled)
+    plone-version:
+        - '5.2'
+    py:
+        - '3.7':
+            python-version: 'Python3.7'
+    jobs:
+        - 'plone-{plone-version}-python-{py}-scheduled'
+
+- project:
+    name: Plone 6.0 jobs on python 3.x (scheduled)
+    plone-version:
+        - '6.0'
+    py:
+        - '3.10':
+            python-version: 'Python3.10'
+        - '3.9':
+            python-version: 'Python3.9'
+    jobs:
+        - 'plone-{plone-version}-python-{py}-scheduled'
+
+- project:
+    name: Plone 5.2 jobs on python 3.x (robot tests) (scheduled)
+    plone-version:
+        - '5.2'
+    py:
+        - '3.7':
+            python-version: 'Python3.7'
+    browser:
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
+
+- project:
+    name: Plone 6.0 jobs on python 3.x (robot tests) (scheduled)
+    plone-version:
+        - '6.0'
+    py:
+        - '3.10':
+            python-version: 'Python3.10'
+        - '3.9':
+            python-version: 'Python3.9'
+    browser:
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
 
 - project:
     name: Translations on Plone 5.2 for python 2.7
@@ -335,8 +371,8 @@
     <<: *plone
 
 
-- job-template:
-    # Plone 5.x core tests job definition.
+- job-template: &plone-core
+    # Plone core tests job definition.
     name: plone-{plone-version}-python-{py}
     display-name: 'Plone {plone-version} - Python {py}'
 
@@ -354,6 +390,16 @@
 
     <<: *plone
 
+
+- job-template:
+    # Plone core tests job definition.
+    name: plone-{plone-version}-python-{py}-scheduled
+    display-name: 'Plone {plone-version} - Python {py} (scheduled)'
+
+    triggers:
+        - timed: "@weekly"
+
+    <<: *plone-core
 
 - job:
     # Plone 5.x robot tests job definition.
@@ -398,8 +444,8 @@
     <<: *plone
 
 
-- job-template:
-    # Plone 5.x robot tests job definition.
+- job-template: &plone-core-robot
+    # Plone robot tests job definition.
     name: plone-{plone-version}-python-{py}-robot-{browser}
     display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser})'
 
@@ -434,6 +480,17 @@
             properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
 
     <<: *plone
+
+
+- job-template:
+    # Plone robot tests job definition.
+    name: plone-{plone-version}-python-{py}-robot-{browser}-scheduled
+    display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser}) (scheduled)'
+
+    triggers:
+        - timed: "@weekly"
+
+    <<: *plone-core-robot
 
 - job-template:
     # PLIPs jobs definition
