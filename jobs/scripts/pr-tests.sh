@@ -1,6 +1,8 @@
 #!/bin/sh
 
 python_version="{py}"
+PLONE_VERSION="{plone-version}"
+
 /srv/python${{python_version}}/bin/python3 -m venv venv
 . venv/bin/activate
 
@@ -20,6 +22,11 @@ export ROBOT_BROWSER='headlesschrome'
 export ROBOTSUITE_PREFIX=ONLYROBOT
 export PYTHONWARNINGS='ignore'
 
+if [[ "${{PLONE_VERSION}}" == 6* ]]; then
+  export PLAYWRIGHT_BROWSERS_PATH='/home/jenkins/robot-browsers/'
+
+  bin/rfbrowser init
+fi
 # All tests without Robot
 bin/test --all --xml -t '!ONLYROBOT' || return_code="$?"
 # All tests with Robot
