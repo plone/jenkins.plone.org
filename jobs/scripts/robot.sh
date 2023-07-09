@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+set -x
 
 PYTHON_VERSION="{py}"
 PLONE_VERSION="{plone-version}"
