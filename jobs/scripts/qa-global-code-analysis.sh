@@ -1,4 +1,6 @@
 #!/bin/sh
+set -x
+
 # checkout all packages
 pip install -r requirements.txt
 buildout buildout:git-clone-depth=1 -c core.cfg

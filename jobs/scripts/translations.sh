@@ -1,4 +1,6 @@
 #!/bin/sh
+set -x
+
 pip install -r requirements.txt
 buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
 

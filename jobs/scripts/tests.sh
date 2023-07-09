@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x
 
 PYTHON_VERSION="{py}"
 /srv/python${{PYTHON_VERSION}}/bin/python3 -m venv venv

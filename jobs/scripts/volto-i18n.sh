@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 python -m venv venv
 . venv/bin/activate

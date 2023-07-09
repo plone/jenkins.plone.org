@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -x
+
 # checkout all plone and collective org packages
 cat > checkouts.cfg << EOF
 [buildout]
