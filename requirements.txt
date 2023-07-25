@@ -1,7 +1,7 @@
 ansible==2.7.16
 asn1crypto==0.24.0
 bcrypt==3.1.6
-certifi==2018.11.29
+certifi==2023.7.22
 cffi==1.15.1
 chardet==3.0.4
 cryptography==38.0.1
