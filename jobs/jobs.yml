@@ -80,8 +80,6 @@
     plone-version:
         - '6.0'
     py:
-        - '3.12':
-            python-version: 'Python3.12'
         - '3.11':
             python-version: 'Python3.11'
         - '3.8':
@@ -98,8 +96,6 @@
     plone-version:
         - '6.1'
     py:
-        - '3.11':
-            python-version: 'Python3.11'
         - '3.12':
             python-version: 'Python3.12'
     browser:
@@ -130,10 +126,25 @@
     plone-version:
         - '6.0'
     py:
+        - '3.12':
+            python-version: 'Python3.12'
         - '3.10':
             python-version: 'Python3.10'
         - '3.9':
             python-version: 'Python3.9'
+    browser:
+        - chrome
+    jobs:
+        - 'plone-{plone-version}-python-{py}-scheduled'
+        - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
+
+- project:
+    name: Plone 6.1 jobs on python 3.x (scheduled)
+    plone-version:
+        - '6.1'
+    py:
+        - '3.11':
+            python-version: 'Python3.11'
     browser:
         - chrome
     jobs:
