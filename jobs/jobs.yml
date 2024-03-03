@@ -62,46 +62,29 @@
         - 'plone-5.2-python-2.7-robot-chrome'
 
 - project:
-    name: Plone 5.2 on python 3.x
+    name: Plone 5.2 and 6.x
     plone-version:
+        - '6.1'
+        - '6.0'
         - '5.2'
     py:
-        - '3.8':
-            python-version: 'Python3.8'
-    browser:
-        - chrome
-    jobs:
-        - 'pull-request-{plone-version}-{py}'
-        - 'plone-{plone-version}-python-{py}'
-        - 'plone-{plone-version}-python-{py}-robot-{browser}'
-
-- project:
-    name: Plone 6.0 on python 3.x
-    plone-version:
-        - '6.0'
-    py:
+        - '3.12':
+            python-version: 'Python3.12'
         - '3.11':
             python-version: 'Python3.11'
         - '3.8':
             python-version: 'Python3.8'
     browser:
         - chrome
-    jobs:
-        - 'pull-request-{plone-version}-{py}'
-        - 'plone-{plone-version}-python-{py}'
-        - 'plone-{plone-version}-python-{py}-robot-{browser}'
-
-- project:
-    name: Plone 6.1 on python 3.x
-    plone-version:
-        - '6.1'
-    py:
-        - '3.12':
-            python-version: 'Python3.12'
-        - '3.8':
-            python-version: 'Python3.8'
-    browser:
-        - chrome
+    exclude:
+        - plone-version: '6.1'
+          py: '3.11'
+        - plone-version: '6.0'
+          py: '3.12'
+        - plone-version: '5.2'
+          py: '3.12'
+        - plone-version: '5.2'
+          py: '3.11'
     jobs:
         - 'pull-request-{plone-version}-{py}'
         - 'plone-{plone-version}-python-{py}'
@@ -124,31 +107,30 @@
       - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
 
 - project:
-    name: Plone 6.0 jobs on python 3.x (scheduled)
+    name: Plone 6.x jobs on python 3.x (scheduled)
     plone-version:
+        - '6.1'
         - '6.0'
     py:
         - '3.12':
             python-version: 'Python3.12'
+        - '3.11':
+            python-version: 'Python3.11'
         - '3.10':
             python-version: 'Python3.10'
         - '3.9':
             python-version: 'Python3.9'
     browser:
         - chrome
-    jobs:
-        - 'plone-{plone-version}-python-{py}-scheduled'
-        - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
-
-- project:
-    name: Plone 6.1 jobs on python 3.x (scheduled)
-    plone-version:
-        - '6.1'
-    py:
-        - '3.11':
-            python-version: 'Python3.11'
-    browser:
-        - chrome
+    exclude:
+        - plone-version: '6.1'
+          py: '3.12'
+        - plone-version: '6.1'
+          py: '3.10'
+        - plone-version: '6.1'
+          py: '3.9'
+        - plone-version: '6.0'
+          py: '3.11'
     jobs:
         - 'plone-{plone-version}-python-{py}-scheduled'
         - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
