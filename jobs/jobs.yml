@@ -182,12 +182,6 @@
     jobs:
         - 'plip-{plip}-{py}'
 
-- project:
-    name: QA scripts
-    jobs:
-        - qa-undeclared-dependencies
-        - qa-code-analysis
-        - plone-package-dependencies-ztc
 
 ###
 # JOBS
@@ -598,34 +592,6 @@
 
     <<: *plone-basic
 
-- job:
-    name: plone-package-dependencies-ztc
-    display-name: 'Plone ZopeTestCase dependencies'
-
-    triggers:
-        - timed: "@weekly"
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python2.7
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/dependencies-ztc.sh
-
-    publishers:
-        - archive:
-            artifacts: 'deps.txt'
-            allow-empty: 'false'
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
-
-
 - job-template:
     name: plone-{plone-version}-python-{py}-i18n-find-missing
     display-name: 'Plone {plone-version} - Python {py} - Find strings'
@@ -676,86 +642,6 @@
                 Jenkins
 
     <<: *plone-basic
-
-- job:
-    name: qa-undeclared-dependencies
-    display-name: 'Undeclared dependencies'
-
-    triggers:
-        - timed: '@weekly'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python2.7
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/undeclared-dependencies.sh
-
-    publishers:
-        - archive:
-            artifacts: 'deps.txt, lines.log, pkgs.log'
-            allow-empty: 'true'
-
-        - plot:
-            - title: Undeclared dependencies
-              num-builds: '500'
-              yaxis: dependencies not declared
-              style: line
-              use-description: true
-              group: plot
-              series:
-                  - file: lines.log
-                    format: properties
-            - title: Compliant packages
-              num-builds: '500'
-              yaxis: compliant packages
-              style: line
-              use-description: true
-              group: plot
-              series:
-                  - file: pkgs.log
-                    format: properties
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
-
-
-- job:
-    name: qa-code-analysis
-    display-name: 'Code analysis'
-
-    triggers:
-        - timed: '@weekly'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python2.7
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/qa-global-code-analysis.sh
-
-    publishers:
-        - violations:
-            pep8:
-                pattern: 'qa.txt'
-
-        - archive:
-            artifacts: 'qa.txt'
-            allow-empty: 'true'
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
-
 
 ###
 # MACROS
