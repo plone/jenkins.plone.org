@@ -98,6 +98,8 @@
     py:
         - '3.12':
             python-version: 'Python3.12'
+        - '3.8':
+            python-version: 'Python3.8'
     browser:
         - chrome
     jobs:
