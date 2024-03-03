@@ -413,13 +413,8 @@
             branch: '{branch}'
 
     builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/plips.sh
+        - shell:
+            !include-raw: scripts/plips.sh
 
     publishers:
         - custom-junit
