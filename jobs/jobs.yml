@@ -390,9 +390,6 @@
         - custom-timeout
         - custom-github-api-key
 
-        - inject:
-            properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
-
     <<: *plone
 
 
