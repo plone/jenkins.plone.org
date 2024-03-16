@@ -5,18 +5,22 @@ PLONE JENKINS/CI
 ================
 This repository is used to configure http://jenkins.plone.org
 
-See ``docs/source/team.rst`` for the members of the Plone testing and CI team,
-as well as their responsibilities.
-
 Servers configuration
 =====================
 Our servers and nodes are configured with `ansible<http://ansible.com/>`_.
 
 Jobs
 ====
-A jenkins server without any job is quite useless.
 
-All our jenkins jobs are configured through `jenkins-job-builder<https://pypi.python.org/pypi/jenkins-job-builder>`_.
+Get the repository and python:
 
-See the `documentation<https://pypi.python.org/pypi/jenkins-job-builder>`_ on how to set them,
-the actual configuration files are located at the ``jobs`` folder.
+::
+    git clone git@github.com:plone/jenkins.plone.org
+    cd jenkins.plone.org
+    python3.11 -m venv venv
+    . venv/bin/activate
+    pip install -r requirements.txt
+
+Test creating the jobs locally::
+
+    jenkins-jobs --conf jobs/config.ini test jobs/jobs.yml -o output --config-xml

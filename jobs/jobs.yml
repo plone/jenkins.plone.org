@@ -32,7 +32,7 @@
 
     scm:
         - buildout-coredev:
-            branch: '5.2'
+            branch: '6.0'
 
     wrappers:
         - custom-workspace-cleanup
@@ -62,46 +62,29 @@
         - 'plone-5.2-python-2.7-robot-chrome'
 
 - project:
-    name: Plone 5.2 on python 3.x
+    name: Plone 5.2 and 6.x
     plone-version:
+        - '6.1'
+        - '6.0'
         - '5.2'
     py:
-        - '3.8':
-            python-version: 'Python3.8'
-    browser:
-        - chrome
-    jobs:
-        - 'pull-request-{plone-version}-{py}'
-        - 'plone-{plone-version}-python-{py}'
-        - 'plone-{plone-version}-python-{py}-robot-{browser}'
-
-- project:
-    name: Plone 6.0 on python 3.x
-    plone-version:
-        - '6.0'
-    py:
+        - '3.12':
+            python-version: 'Python3.12'
         - '3.11':
             python-version: 'Python3.11'
         - '3.8':
             python-version: 'Python3.8'
     browser:
         - chrome
-    jobs:
-        - 'pull-request-{plone-version}-{py}'
-        - 'plone-{plone-version}-python-{py}'
-        - 'plone-{plone-version}-python-{py}-robot-{browser}'
-
-- project:
-    name: Plone 6.1 on python 3.x
-    plone-version:
-        - '6.1'
-    py:
-        - '3.12':
-            python-version: 'Python3.12'
-        - '3.8':
-            python-version: 'Python3.8'
-    browser:
-        - chrome
+    exclude:
+        - plone-version: '6.1'
+          py: '3.11'
+        - plone-version: '6.0'
+          py: '3.12'
+        - plone-version: '5.2'
+          py: '3.12'
+        - plone-version: '5.2'
+          py: '3.11'
     jobs:
         - 'pull-request-{plone-version}-{py}'
         - 'plone-{plone-version}-python-{py}'
@@ -124,31 +107,30 @@
       - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
 
 - project:
-    name: Plone 6.0 jobs on python 3.x (scheduled)
+    name: Plone 6.x jobs on python 3.x (scheduled)
     plone-version:
+        - '6.1'
         - '6.0'
     py:
         - '3.12':
             python-version: 'Python3.12'
+        - '3.11':
+            python-version: 'Python3.11'
         - '3.10':
             python-version: 'Python3.10'
         - '3.9':
             python-version: 'Python3.9'
     browser:
         - chrome
-    jobs:
-        - 'plone-{plone-version}-python-{py}-scheduled'
-        - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
-
-- project:
-    name: Plone 6.1 jobs on python 3.x (scheduled)
-    plone-version:
-        - '6.1'
-    py:
-        - '3.11':
-            python-version: 'Python3.11'
-    browser:
-        - chrome
+    exclude:
+        - plone-version: '6.1'
+          py: '3.12'
+        - plone-version: '6.1'
+          py: '3.10'
+        - plone-version: '6.1'
+          py: '3.9'
+        - plone-version: '6.0'
+          py: '3.11'
     jobs:
         - 'plone-{plone-version}-python-{py}-scheduled'
         - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
@@ -186,26 +168,20 @@
     jobs:
         - 'volto-translations-{branch}'
 
-- project:
-    name: PLIPs
-    plip:
-        - plip-image-scales-metadata:
-             buildout: plips/plip-image-scales-metadata.cfg
-             branch: '6.0'
-    py:
-        - '3.9':
-            python-version: 'Python3.9'
-        - '3.8':
-            python-version: 'Python3.8'
-    jobs:
-        - 'plip-{plip}-{py}'
+#- project:
+#    name: PLIPs
+#    plip:
+#        - plip-image-scales-metadata:
+#             buildout: plips/plip-image-scales-metadata.cfg
+#             branch: '6.0'
+#    py:
+#        - '3.12':
+#            python-version: 'Python3.9'
+#        - '3.8':
+#            python-version: 'Python3.8'
+#    jobs:
+#        - 'plip-{plip}-{py}'
 
-- project:
-    name: QA scripts
-    jobs:
-        - qa-undeclared-dependencies
-        - qa-code-analysis
-        - plone-package-dependencies-ztc
 
 ###
 # JOBS
@@ -414,9 +390,6 @@
         - custom-timeout
         - custom-github-api-key
 
-        - inject:
-            properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
-
     <<: *plone
 
 
@@ -440,13 +413,8 @@
             branch: '{branch}'
 
     builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/plips.sh
+        - shell:
+            !include-raw: scripts/plips.sh
 
     publishers:
         - custom-junit
@@ -616,34 +584,6 @@
 
     <<: *plone-basic
 
-- job:
-    name: plone-package-dependencies-ztc
-    display-name: 'Plone ZopeTestCase dependencies'
-
-    triggers:
-        - timed: "@weekly"
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python2.7
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/dependencies-ztc.sh
-
-    publishers:
-        - archive:
-            artifacts: 'deps.txt'
-            allow-empty: 'false'
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
-
-
 - job-template:
     name: plone-{plone-version}-python-{py}-i18n-find-missing
     display-name: 'Plone {plone-version} - Python {py} - Find strings'
@@ -694,86 +634,6 @@
                 Jenkins
 
     <<: *plone-basic
-
-- job:
-    name: qa-undeclared-dependencies
-    display-name: 'Undeclared dependencies'
-
-    triggers:
-        - timed: '@weekly'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python2.7
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/undeclared-dependencies.sh
-
-    publishers:
-        - archive:
-            artifacts: 'deps.txt, lines.log, pkgs.log'
-            allow-empty: 'true'
-
-        - plot:
-            - title: Undeclared dependencies
-              num-builds: '500'
-              yaxis: dependencies not declared
-              style: line
-              use-description: true
-              group: plot
-              series:
-                  - file: lines.log
-                    format: properties
-            - title: Compliant packages
-              num-builds: '500'
-              yaxis: compliant packages
-              style: line
-              use-description: true
-              group: plot
-              series:
-                  - file: pkgs.log
-                    format: properties
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
-
-
-- job:
-    name: qa-code-analysis
-    display-name: 'Code analysis'
-
-    triggers:
-        - timed: '@weekly'
-
-    builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: Python2.7
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/qa-global-code-analysis.sh
-
-    publishers:
-        - violations:
-            pep8:
-                pattern: 'qa.txt'
-
-        - archive:
-            artifacts: 'qa.txt'
-            allow-empty: 'true'
-
-    wrappers:
-        - custom-timeout
-        - custom-workspace-cleanup
-
-    <<: *plone
-
 
 ###
 # MACROS
