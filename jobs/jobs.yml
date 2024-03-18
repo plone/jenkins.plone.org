@@ -73,7 +73,7 @@
         - '3.11':
             python-version: 'Python3.11'
         - '3.10':
-            python-version: 'Python3.11'
+            python-version: 'Python3.10'
         - '3.8':
             python-version: 'Python3.8'
     browser:
