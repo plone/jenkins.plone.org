@@ -22,7 +22,7 @@ cryptography==42.0.2
     # via ansible-core
 fasteners==0.19
     # via jenkins-job-builder
-idna==3.6
+idna==3.7
     # via requests
 jenkins-job-builder==6.0.0
     # via -r requirements.in
