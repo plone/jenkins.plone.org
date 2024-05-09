@@ -18,5 +18,7 @@ if [[ "${{PLONE_VERSION}}" == 6* ]]; then
   export PLAYWRIGHT_BROWSERS_PATH='/home/jenkins/robot-browsers/'
 
   bin/rfbrowser init
+  bin/test -t ONLYROBOT --all --xml parts/test
+else
+  bin/test -t ONLYROBOT --all --xml
 fi
-bin/test -t ONLYROBOT --all --xml

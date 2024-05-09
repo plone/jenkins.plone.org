@@ -27,11 +27,16 @@ if [[ "${{PLONE_VERSION}}" == 6* ]]; then
   export PLAYWRIGHT_BROWSERS_PATH='/home/jenkins/robot-browsers/'
 
   bin/rfbrowser init
+  # All tests without Robot
+  bin/test --all --xml parts/test -t '!ONLYROBOT' || return_code="$?"
+  # All tests with Robot
+  bin/test --all --xml parts/test -t ONLYROBOT || return_code="$?"
+else
+  # All tests without Robot
+  bin/test --all --xml -t '!ONLYROBOT' || return_code="$?"
+  # All tests with Robot
+  bin/test --all --xml -t ONLYROBOT || return_code="$?"
 fi
-# All tests without Robot
-bin/test --all --xml -t '!ONLYROBOT' || return_code="$?"
-# All tests with Robot
-bin/test --all --xml -t ONLYROBOT || return_code="$?"
 
 if [ "$return_code" = "all_right" ]; then
     return_code="$?"
