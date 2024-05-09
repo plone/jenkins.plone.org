@@ -4,11 +4,11 @@
 #
 #    pip-compile requirements.in
 #
-ansible==9.2.0
+ansible==9.5.1
     # via -r requirements.in
-ansible-core==2.16.3
+ansible-core==2.16.6
     # via ansible
-build==1.0.3
+build==1.2.1
     # via pip-tools
 certifi==2024.2.2
     # via requests
@@ -18,15 +18,15 @@ charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via pip-tools
-cryptography==42.0.2
+cryptography==42.0.7
     # via ansible-core
 fasteners==0.19
     # via jenkins-job-builder
-idna==3.6
+idna==3.7
     # via requests
-jenkins-job-builder==6.0.0
+jenkins-job-builder==6.3.0
     # via -r requirements.in
-jinja2==3.1.3
+jinja2==3.1.4
     # via
     #   ansible-core
     #   jenkins-job-builder
@@ -34,7 +34,7 @@ markupsafe==2.1.5
     # via jinja2
 multi-key-dict==2.0.3
     # via python-jenkins
-packaging==23.2
+packaging==24.0
     # via
     #   ansible-core
     #   build
@@ -43,12 +43,14 @@ pbr==6.0.0
     #   jenkins-job-builder
     #   python-jenkins
     #   stevedore
-pip-tools==7.3.0
+pip-tools==7.4.1
     # via -r requirements.in
-pycparser==2.21
+pycparser==2.22
     # via cffi
-pyproject-hooks==1.0.0
-    # via build
+pyproject-hooks==1.1.0
+    # via
+    #   build
+    #   pip-tools
 python-jenkins==1.8.2
     # via jenkins-job-builder
 pyyaml==6.0.1
@@ -63,11 +65,11 @@ six==1.16.0
     # via
     #   jenkins-job-builder
     #   python-jenkins
-stevedore==5.1.0
+stevedore==5.2.0
     # via jenkins-job-builder
-urllib3==2.2.0
+urllib3==2.2.1
     # via requests
-wheel==0.42.0
+wheel==0.43.0
     # via pip-tools
 
 # The following packages are considered to be unsafe in a requirements file:
