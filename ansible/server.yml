@@ -53,28 +53,6 @@
         chdir=/srv/mr.roboto/
       notify: Restart mr.roboto
 
-    # Install munin
-    - name: Install munin
-      apt: name=munin state=present
-
-    - name: Set htmldir variable
-      lineinfile:
-        dest=/etc/munin/munin.conf
-        regexp=^#htmldir
-        line="htmldir /var/cache/munin/www"
-
-    - name: Set tmpldir variable
-      lineinfile:
-        dest=/etc/munin/munin.conf
-        regexp=^#tmpldir
-        line="tmpldir/etc/munin/templates"
-
-    - name: Set domain in configuration
-      lineinfile:
-        dest=/etc/munin/munin.conf
-        regexp=^[localhost.localdomain]
-        line="[jenkins.plone.org]"
-
     - cron:
         name: Start mr.roboto at reboot
         special_time: reboot
