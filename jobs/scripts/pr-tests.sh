@@ -28,9 +28,9 @@ if [[ "${{PLONE_VERSION}}" == 6* ]]; then
 
   bin/rfbrowser init
   # All tests without Robot
-  bin/test --all --xml parts/test -t '!ONLYROBOT' || return_code="$?"
+  bin/test --all --xml . -t '!ONLYROBOT' || return_code="$?"
   # All tests with Robot
-  bin/test --all --xml parts/test -t ONLYROBOT || return_code="$?"
+  bin/test --all --xml . -t ONLYROBOT || return_code="$?"
 else
   # All tests without Robot
   bin/test --all --xml -t '!ONLYROBOT' || return_code="$?"

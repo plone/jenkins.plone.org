@@ -11,7 +11,7 @@ pip install -r requirements.txt
 buildout buildout:git-clone-depth=1 -c buildout.cfg
 
 if [[ "${{PLONE_VERSION}}" == 6* ]]; then
-  bin/test --xml parts/test
+  bin/test --xml .
 else
   bin/test --xml
 fi

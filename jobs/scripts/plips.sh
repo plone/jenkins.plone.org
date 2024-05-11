@@ -19,4 +19,4 @@ export PYTHONWARNINGS='ignore'
 export PLAYWRIGHT_BROWSERS_PATH='/home/jenkins/robot-browsers/'
 bin/rfbrowser init
 
-bin/test --xml parts/test --all
+bin/test --xml . --all
