@@ -9,8 +9,8 @@
 - src: geerlingguy.nodejs
   version: 6.0.0
 
-- src: gforcada.compile-python
-  version: 4.1.0
+- src: gforcada.compile_python
+  version: 6.0.0
 
 # roles downloaded from git as we expect to modify them
 - src: https://github.com/plone/plone.jenkins_server
