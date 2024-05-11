@@ -12,39 +12,39 @@
 ###
 
 - job-template: &plone-basic
-    name: 'generic options shared across plone jobs'
+    name: "generic options shared across plone jobs"
     project-type: freestyle
     concurrent: true
     disabled: false
 
     properties:
-        - custom-throttle:
-            total: '7'
-            enable: 'true'
+      - custom-throttle:
+          total: "7"
+          enable: "true"
 
-        - disk-usage
+      - disk-usage
 
-        - build-discarder:
-            days-to-keep: 60
-            num-to-keep: 100
-            artifact-days-to-keep: 3
-            artifact-num-to-keep: 10
+      - build-discarder:
+          days-to-keep: 60
+          num-to-keep: 100
+          artifact-days-to-keep: 3
+          artifact-num-to-keep: 10
 
     scm:
-        - buildout-coredev:
-            branch: '6.0'
+      - buildout-coredev:
+          branch: "6.0"
 
     wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - build-user-vars
-        - custom-github-api-key
+      - custom-workspace-cleanup
+      - custom-timeout
+      - build-user-vars
+      - custom-github-api-key
 
 - job-template: &plone
-    name: 'plone triggered by github'
+    name: "plone triggered by github"
 
     triggers:
-        - github
+      - github
 
     <<: *plone-basic
 
@@ -57,124 +57,123 @@
 - project:
     name: Plone 5.2 on python 2
     jobs:
-        - 'pull-request-5.2-2.7'
-        - 'plone-5.2-python-2.7'
-        - 'plone-5.2-python-2.7-robot-chrome'
+      - "pull-request-5.2-2.7"
+      - "plone-5.2-python-2.7"
+      - "plone-5.2-python-2.7-robot-chrome"
 
 - project:
     name: Plone 5.2 and 6.x
     plone-version:
-        - '6.1'
-        - '6.0'
-        - '5.2'
+      - "6.1"
+      - "6.0"
+      - "5.2"
     py:
-        - '3.12':
-            python-version: 'Python3.12'
-        - '3.11':
-            python-version: 'Python3.11'
-        - '3.10':
-            python-version: 'Python3.10'
-        - '3.8':
-            python-version: 'Python3.8'
+      - "3.12":
+          python-version: "Python3.12"
+      - "3.11":
+          python-version: "Python3.11"
+      - "3.10":
+          python-version: "Python3.10"
+      - "3.8":
+          python-version: "Python3.8"
     browser:
-        - chrome
+      - chrome
     exclude:
-        - plone-version: '6.1'
-          py: '3.11'
-        - plone-version: '6.1'
-          py: '3.8'
-        - plone-version: '6.0'
-          py: '3.12'
-        - plone-version: '6.0'
-          py: '3.10'
-        - plone-version: '5.2'
-          py: '3.12'
-        - plone-version: '5.2'
-          py: '3.11'
-        - plone-version: '5.2'
-          py: '3.10'
+      - plone-version: "6.1"
+        py: "3.11"
+      - plone-version: "6.1"
+        py: "3.8"
+      - plone-version: "6.0"
+        py: "3.12"
+      - plone-version: "6.0"
+        py: "3.10"
+      - plone-version: "5.2"
+        py: "3.12"
+      - plone-version: "5.2"
+        py: "3.11"
+      - plone-version: "5.2"
+        py: "3.10"
     jobs:
-        - 'pull-request-{plone-version}-{py}'
-        - 'plone-{plone-version}-python-{py}'
-        - 'plone-{plone-version}-python-{py}-robot-{browser}'
-
+      - "pull-request-{plone-version}-{py}"
+      - "plone-{plone-version}-python-{py}"
+      - "plone-{plone-version}-python-{py}-robot-{browser}"
 
 ### CORE JOBS (SCHEDULED)
 
 - project:
     name: Plone 5.2 jobs on python 3.x (scheduled)
     plone-version:
-        - '5.2'
+      - "5.2"
     py:
-        - '3.7':
-            python-version: 'Python3.7'
+      - "3.7":
+          python-version: "Python3.7"
     browser:
-        - chrome
+      - chrome
     jobs:
-      - 'plone-{plone-version}-python-{py}-scheduled'
-      - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
+      - "plone-{plone-version}-python-{py}-scheduled"
+      - "plone-{plone-version}-python-{py}-robot-{browser}-scheduled"
 
 - project:
     name: Plone 6.x jobs on python 3.x (scheduled)
     plone-version:
-        - '6.1'
-        - '6.0'
+      - "6.1"
+      - "6.0"
     py:
-        - '3.12':
-            python-version: 'Python3.12'
-        - '3.11':
-            python-version: 'Python3.11'
-        - '3.10':
-            python-version: 'Python3.10'
-        - '3.9':
-            python-version: 'Python3.9'
+      - "3.12":
+          python-version: "Python3.12"
+      - "3.11":
+          python-version: "Python3.11"
+      - "3.10":
+          python-version: "Python3.10"
+      - "3.9":
+          python-version: "Python3.9"
     browser:
-        - chrome
+      - chrome
     exclude:
-        - plone-version: '6.1'
-          py: '3.12'
-        - plone-version: '6.1'
-          py: '3.10'
-        - plone-version: '6.1'
-          py: '3.9'
-        - plone-version: '6.0'
-          py: '3.11'
+      - plone-version: "6.1"
+        py: "3.12"
+      - plone-version: "6.1"
+        py: "3.10"
+      - plone-version: "6.1"
+        py: "3.9"
+      - plone-version: "6.0"
+        py: "3.11"
     jobs:
-        - 'plone-{plone-version}-python-{py}-scheduled'
-        - 'plone-{plone-version}-python-{py}-robot-{browser}-scheduled'
+      - "plone-{plone-version}-python-{py}-scheduled"
+      - "plone-{plone-version}-python-{py}-robot-{browser}-scheduled"
 
 ### OTHER
 
 - project:
     name: Translations on Plone 5.2 for python 2.7
     py:
-        - '2.7':
-            python-version: 'Python2.7'
+      - "2.7":
+          python-version: "Python2.7"
     plone-version:
-        - '5.2'
+      - "5.2"
     jobs:
-        - 'plone-{plone-version}-python-{py}-i18n'
-        - 'plone-{plone-version}-python-{py}-i18n-find-missing'
+      - "plone-{plone-version}-python-{py}-i18n"
+      - "plone-{plone-version}-python-{py}-i18n-find-missing"
 
 - project:
     name: Translations on Plone 6.0 for python 3.x
     py:
-        - '3.8':
-            python-version: 'Python3.8'
+      - "3.8":
+          python-version: "Python3.8"
     plone-version:
-        - '6.0'
+      - "6.0"
     jobs:
-        - 'plone-{plone-version}-python-{py}-i18n'
-        - 'plone-{plone-version}-python-{py}-i18n-find-missing'
+      - "plone-{plone-version}-python-{py}-i18n"
+      - "plone-{plone-version}-python-{py}-i18n-find-missing"
 
 - project:
     name: Translations of Volto (16.x.x)
     branch:
-        - '16.x.x'
-        - 'master'
-    python-version: 'Python3.9'
+      - "16.x.x"
+      - "master"
+    python-version: "Python3.9"
     jobs:
-        - 'volto-translations-{branch}'
+      - "volto-translations-{branch}"
 
 #- project:
 #    name: PLIPs
@@ -190,456 +189,433 @@
 #    jobs:
 #        - 'plip-{plip}-{py}'
 
-
 ###
 # JOBS
 ###
 
 - job-template:
     name: plone-{plone-version}-python-{py}-i18n
-    display-name: 'Plone {plone-version} - Python {py} - Translations'
+    display-name: "Plone {plone-version} - Python {py} - Translations"
 
     scm:
-        - buildout-coredev:
-            branch: '{plone-version}'
+      - buildout-coredev:
+          branch: "{plone-version}"
 
     triggers:
-        - timed: '@weekly'
+      - timed: "@weekly"
 
     builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/translations.sh
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "{python-version}"
+          clear: true
+          nature: shell
+          command: !include-raw: scripts/translations.sh
 
     wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
+      - custom-workspace-cleanup
+      - custom-timeout
 
     publishers:
-        - custom-archive:
-            glob: 'src/plone.app.locales/plone/app/locales/locales/reports/*.txt'
+      - custom-archive:
+          glob: "src/plone.app.locales/plone/app/locales/locales/reports/*.txt"
 
     <<: *plone-basic
 
 - job-template:
     name: volto-translations-{branch}
-    display-name: 'Volto translations - {branch}'
+    display-name: "Volto translations - {branch}"
 
     scm:
-        - git:
-            url: https://github.com/plone/volto.git
-            branches:
-                - '{branch}'
-            wipe-workspace: false
-            tag-builds: true
-            shallow-clone: true
-            depth: 10
-            do-not-fetch-tags: true
-            ignore-commits-with-messages:
-                - ci-skip
+      - git:
+          url: https://github.com/plone/volto.git
+          branches:
+            - "{branch}"
+          wipe-workspace: false
+          tag-builds: true
+          shallow-clone: true
+          depth: 10
+          do-not-fetch-tags: true
+          ignore-commits-with-messages:
+            - ci-skip
 
     triggers:
-        - timed: '@weekly'
+      - timed: "@weekly"
 
     builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            clear: true
-            nature: shell
-            command:
-              !include-raw: scripts/volto-i18n.sh
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "{python-version}"
+          clear: true
+          nature: shell
+          command: !include-raw: scripts/volto-i18n.sh
 
     wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
+      - custom-workspace-cleanup
+      - custom-timeout
 
     publishers:
-        - custom-archive:
-            glob: 'volto-18n-report.txt'
+      - custom-archive:
+          glob: "volto-18n-report.txt"
 
     <<: *plone-basic
-
 
 - job:
     # Plone 5.x core tests job definition.
     name: plone-5.2-python-2.7
-    display-name: 'Plone 5.2 - Python 2.7'
+    display-name: "Plone 5.2 - Python 2.7"
 
     scm:
-        - buildout-coredev:
-            branch: '5.2'
+      - buildout-coredev:
+          branch: "5.2"
 
     builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: 'Python2.7'
-            clear: true
-            nature: shell
-            command: |
-              #!/bin/sh
-              pip install -r requirements.txt
-              buildout buildout:git-clone-depth=1 -c buildout.cfg
-              bin/test --xml
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "Python2.7"
+          clear: true
+          nature: shell
+          command: |
+            #!/bin/sh
+            pip install -r requirements.txt
+            buildout buildout:git-clone-depth=1 -c buildout.cfg
+            bin/test --xml
 
     publishers:
-        - custom-junit
-        - custom-email-ext
+      - custom-junit
+      - custom-email-ext
 
     <<: *plone
 
-
-- job-template: &plone-core
-    # Plone core tests job definition.
+- job-template: &plone-core # Plone core tests job definition.
     name: plone-{plone-version}-python-{py}
-    display-name: 'Plone {plone-version} - Python {py}'
+    display-name: "Plone {plone-version} - Python {py}"
 
     scm:
-        - buildout-coredev:
-            branch: '{plone-version}'
+      - buildout-coredev:
+          branch: "{plone-version}"
 
     builders:
-        - shell:
-            !include-raw: scripts/tests.sh
+      - shell: !include-raw: scripts/tests.sh
 
     publishers:
-        - custom-junit
-        - custom-email-ext
+      - custom-junit
+      - custom-email-ext
 
     <<: *plone
-
 
 - job-template:
     # Plone core tests job definition.
     name: plone-{plone-version}-python-{py}-scheduled
-    display-name: 'Plone {plone-version} - Python {py} (scheduled)'
+    display-name: "Plone {plone-version} - Python {py} (scheduled)"
 
     triggers:
-        - timed: "@weekly"
+      - timed: "@weekly"
 
     <<: *plone-core
 
 - job:
     # Plone 5.x robot tests job definition.
     name: plone-5.2-python-2.7-robot-chrome
-    display-name: 'Plone 5.2 - Python 2.7 - Robot Framework Tests (chrome)'
+    display-name: "Plone 5.2 - Python 2.7 - Robot Framework Tests (chrome)"
 
     scm:
-        - buildout-coredev:
-            branch: '5.2'
+      - buildout-coredev:
+          branch: "5.2"
 
     builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: 'Python2.7'
-            clear: true
-            nature: shell
-            command:
-              !include-raw: scripts/robot-py2.sh
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "Python2.7"
+          clear: true
+          nature: shell
+          command: !include-raw: scripts/robot-py2.sh
 
     publishers:
-        - custom-email-ext
+      - custom-email-ext
 
-        - robot:
-            output-path: parts/test
-            report-html: robot_report.html
-            log-html: robot_log.html
-            output-xml: robot_output.xml
-            pass-threshold: 100.0
-            unstable-threshold: 98.0
-            only-critical: false
-            other-files:
-                - robot_*.png
+      - robot:
+          output-path: parts/test
+          report-html: robot_report.html
+          log-html: robot_log.html
+          output-xml: robot_output.xml
+          pass-threshold: 100.0
+          unstable-threshold: 98.0
+          only-critical: false
+          other-files:
+            - robot_*.png
 
     wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - custom-github-api-key
+      - custom-workspace-cleanup
+      - custom-timeout
+      - custom-github-api-key
 
-        - inject:
-            properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
+      - inject:
+          properties-content: ROBOTSUITE_PREFIX=ONLYROBOT
 
     <<: *plone
 
-
-- job-template: &plone-core-robot
-    # Plone robot tests job definition.
+- job-template: &plone-core-robot # Plone robot tests job definition.
     name: plone-{plone-version}-python-{py}-robot-{browser}
-    display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser})'
+    display-name: "Plone {plone-version} - Python {py} - Robot Framework Tests ({browser})"
 
     scm:
-        - buildout-coredev:
-            branch: '{plone-version}'
+      - buildout-coredev:
+          branch: "{plone-version}"
 
     builders:
-        - shell:
-            !include-raw: scripts/robot.sh
+      - shell: !include-raw: scripts/robot.sh
 
     publishers:
-        - custom-email-ext
+      - custom-email-ext
 
-        - robot:
-            output-path: parts/test
-            report-html: robot_report.html
-            log-html: robot_log.html
-            output-xml: robot_output.xml
-            pass-threshold: 100.0
-            unstable-threshold: 80.0
-            only-critical: true
-            other-files:
-                - robot_*.png
+      - robot:
+          output-path: parts/test
+          report-html: robot_report.html
+          log-html: robot_log.html
+          output-xml: robot_output.xml
+          pass-threshold: 100.0
+          unstable-threshold: 80.0
+          only-critical: true
+          other-files:
+            - robot_*.png
 
     wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
-        - custom-github-api-key
+      - custom-workspace-cleanup
+      - custom-timeout
+      - custom-github-api-key
 
     <<: *plone
-
 
 - job-template:
     # Plone robot tests job definition.
     name: plone-{plone-version}-python-{py}-robot-{browser}-scheduled
-    display-name: 'Plone {plone-version} - Python {py} - Robot Framework Tests ({browser}) (scheduled)'
+    display-name: "Plone {plone-version} - Python {py} - Robot Framework Tests ({browser}) (scheduled)"
 
     triggers:
-        - timed: "@weekly"
+      - timed: "@weekly"
 
     <<: *plone-core-robot
 
 - job-template:
     # PLIPs jobs definition
-    name: 'plip-{plip}-{py}'
-    display-name: 'PLIP - {plip} on {py}'
+    name: "plip-{plip}-{py}"
+    display-name: "PLIP - {plip} on {py}"
 
     scm:
-        - buildout-coredev:
-            branch: '{branch}'
+      - buildout-coredev:
+          branch: "{branch}"
 
     builders:
-        - shell:
-            !include-raw: scripts/plips.sh
+      - shell: !include-raw: scripts/plips.sh
 
     publishers:
-        - custom-junit
+      - custom-junit
 
-        - robot:
-            output-path: parts/test
-            report-html: robot_report.html
-            log-html: robot_log.html
-            output-xml: robot_output.xml
-            pass-threshold: 100.0
-            unstable-threshold: 98.0
-            only-critical: false
-            other-files:
-                - robot_*.png
+      - robot:
+          output-path: parts/test
+          report-html: robot_report.html
+          log-html: robot_log.html
+          output-xml: robot_output.xml
+          pass-threshold: 100.0
+          unstable-threshold: 98.0
+          only-critical: false
+          other-files:
+            - robot_*.png
 
-        - email-ext:
-            recipients: "${{BUILD_USER_EMAIL}}"
-            reply-to: 'no-reply@jenkins.plone.org'
-            content-type: default
-            always: true
-            failure: false
-            subject: "Jenkins PLIP {plip} on {py} [${{BUILD_STATUS}}]"
-            body:
-                !include-raw: scripts/plips.email
+      - email-ext:
+          recipients: "${{BUILD_USER_EMAIL}}"
+          reply-to: "no-reply@jenkins.plone.org"
+          content-type: default
+          always: true
+          failure: false
+          subject: "Jenkins PLIP {plip} on {py} [${{BUILD_STATUS}}]"
+          body: !include-raw: scripts/plips.email
 
     <<: *plone-basic
 
 - job-template:
-    name: 'pull-request-{plone-version}-{py}'
-    display-name: 'Pull Request {plone-version} on py{py}'
+    name: "pull-request-{plone-version}-{py}"
+    display-name: "Pull Request {plone-version} on py{py}"
     description: |
-        Manually test pull requests targeted at Plone {plone-version} on Python {py}.
-        To trigger a job, login with your GitHub account and provide the pull request URL.
-        After the job is finished you will get an email about the result.
+      Manually test pull requests targeted at Plone {plone-version} on Python {py}.
+      To trigger a job, login with your GitHub account and provide the pull request URL.
+      After the job is finished you will get an email about the result.
 
     parameters:
-        - text:
-            name: PULL_REQUEST_URL
-            description: 'URLs of the github pull requests, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-pull-request-jobs.html'
+      - text:
+          name: PULL_REQUEST_URL
+          description: "URLs of the github pull requests, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-pull-request-jobs.html"
 
     scm:
-        - buildout-coredev:
-            branch: '{plone-version}'
+      - buildout-coredev:
+          branch: "{plone-version}"
 
     builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: 'Python3.9'
-            name: pull_request
-            clear: true
-            nature: shell
-            command:
-                pip install pygithub==1.56
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "Python3.9"
+          name: pull_request
+          clear: true
+          nature: shell
+          command: pip install pygithub==1.56
 
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: 'Python3.9'
-            name: pull_request
-            nature: python
-            command:
-                !include-raw-escape: scripts/pr-get-info.py
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "Python3.9"
+          name: pull_request
+          nature: python
+          command: !include-raw-escape: scripts/pr-get-info.py
 
-        - inject:
-            properties-file: vars.properties
+      - inject:
+          properties-file: vars.properties
 
-        - shell:
-            !include-raw: scripts/pr-tests.sh
+      - shell: !include-raw: scripts/pr-tests.sh
 
     publishers:
-        - junit:
-            results: 'parts/test/testreports/*.xml'
-            keep-long-stdio: false
+      - junit:
+          results: "parts/test/testreports/*.xml"
+          keep-long-stdio: false
 
-        - robot:
-            output-path: 'parts/test'
-            report-html: robot_report.html
-            log-html: robot_log.html
-            output-xml: robot_output.xml
-            pass-threshold: 100.0
-            unstable-threshold: 98.0
-            only-critical: false
-            other-files:
-                - robot_*.png
+      - robot:
+          output-path: "parts/test"
+          report-html: robot_report.html
+          log-html: robot_log.html
+          output-xml: robot_output.xml
+          pass-threshold: 100.0
+          unstable-threshold: 98.0
+          only-critical: false
+          other-files:
+            - robot_*.png
 
-        - email-ext:
-            recipients: "${{BUILD_USER_EMAIL}}"
-            reply-to: 'no-reply@jenkins.plone.org'
-            content-type: default
-            always: true
-            failure: false
-            subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: packages ${{PKGS}}"
-            body:
-                !include-raw: scripts/pr.email
+      - email-ext:
+          recipients: "${{BUILD_USER_EMAIL}}"
+          reply-to: "no-reply@jenkins.plone.org"
+          content-type: default
+          always: true
+          failure: false
+          subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: packages ${{PKGS}}"
+          body: !include-raw: scripts/pr.email
 
     <<: *plone-basic
 
 - job-template:
-    name: 'pull-request-5.2-2.7'
-    display-name: 'Pull Request 5.2 on py2.7'
+    name: "pull-request-5.2-2.7"
+    display-name: "Pull Request 5.2 on py2.7"
     description: |
-        Manually test pull requests targeted at Plone 5.2 on Python 2.7.
-        To trigger a job, login with your GitHub account and provide the pull request URL.
-        After the job is finished you will get an email about the result.
+      Manually test pull requests targeted at Plone 5.2 on Python 2.7.
+      To trigger a job, login with your GitHub account and provide the pull request URL.
+      After the job is finished you will get an email about the result.
 
     parameters:
-        - text:
-            name: PULL_REQUEST_URL
-            description: 'URLs of the github pull requests, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-pull-request-jobs.html'
+      - text:
+          name: PULL_REQUEST_URL
+          description: "URLs of the github pull requests, see the documentation http://jenkinsploneorg.readthedocs.io/en/latest/run-pull-request-jobs.html"
 
     scm:
-        - buildout-coredev:
-            branch: '5.2'
+      - buildout-coredev:
+          branch: "5.2"
 
     builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: 'Python3.9'
-            name: pull_request
-            clear: true
-            nature: shell
-            command:
-                pip install pygithub==1.56
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "Python3.9"
+          name: pull_request
+          clear: true
+          nature: shell
+          command: pip install pygithub==1.56
 
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: 'Python3.9'
-            name: pull_request
-            nature: python
-            command:
-                !include-raw-escape: scripts/pr-get-info.py
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "Python3.9"
+          name: pull_request
+          nature: python
+          command: !include-raw-escape: scripts/pr-get-info.py
 
-        - inject:
-            properties-file: vars.properties
+      - inject:
+          properties-file: vars.properties
 
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: 'Python2.7'
-            name: pull_request
-            nature: shell
-            command: !include-raw: scripts/pr-tests-py2.sh
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "Python2.7"
+          name: pull_request
+          nature: shell
+          command: !include-raw: scripts/pr-tests-py2.sh
 
     publishers:
-        - junit:
-            results: 'parts/test/testreports/*.xml'
-            keep-long-stdio: false
+      - junit:
+          results: "parts/test/testreports/*.xml"
+          keep-long-stdio: false
 
-        - robot:
-            output-path: 'parts/test'
-            report-html: robot_report.html
-            log-html: robot_log.html
-            output-xml: robot_output.xml
-            pass-threshold: 100.0
-            unstable-threshold: 98.0
-            only-critical: false
-            other-files:
-                - robot_*.png
+      - robot:
+          output-path: "parts/test"
+          report-html: robot_report.html
+          log-html: robot_log.html
+          output-xml: robot_output.xml
+          pass-threshold: 100.0
+          unstable-threshold: 98.0
+          only-critical: false
+          other-files:
+            - robot_*.png
 
-        - email-ext:
-            recipients: "${{BUILD_USER_EMAIL}}"
-            reply-to: 'no-reply@jenkins.plone.org'
-            content-type: default
-            always: true
-            failure: false
-            subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: packages ${{PKGS}}"
-            body:
-                !include-raw: scripts/pr.email
+      - email-ext:
+          recipients: "${{BUILD_USER_EMAIL}}"
+          reply-to: "no-reply@jenkins.plone.org"
+          content-type: default
+          always: true
+          failure: false
+          subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: packages ${{PKGS}}"
+          body: !include-raw: scripts/pr.email
 
     <<: *plone-basic
 
 - job-template:
     name: plone-{plone-version}-python-{py}-i18n-find-missing
-    display-name: 'Plone {plone-version} - Python {py} - Find strings'
+    display-name: "Plone {plone-version} - Python {py} - Find strings"
 
     scm:
-        - buildout-coredev:
-            branch: '{plone-version}'
+      - buildout-coredev:
+          branch: "{plone-version}"
 
     triggers:
-        - timed: '@weekly'
+      - timed: "@weekly"
 
     builders:
-        - shining-panda:
-            build-environment: virtualenv
-            python-version: '{python-version}'
-            clear: true
-            nature: shell
-            command:
-                !include-raw: scripts/i18n-find-untranslated.sh
+      - shining-panda:
+          build-environment: virtualenv
+          python-version: "{python-version}"
+          clear: true
+          nature: shell
+          command: !include-raw: scripts/i18n-find-untranslated.sh
 
     wrappers:
-        - custom-workspace-cleanup
-        - custom-timeout
+      - custom-workspace-cleanup
+      - custom-timeout
 
     publishers:
-        - archive:
-            artifacts: 'missing.txt'
-            allow-empty: 'false'
+      - archive:
+          artifacts: "missing.txt"
+          allow-empty: "false"
 
-        - email-ext:
-            recipients: 'plone-i18n@lists.sourceforge.net'
-            reply-to: 'no-reply@jenkins.plone.org'
-            content-type: default
-            always: true
-            failure: false
-            subject: "Jenkins: Plone {plone-version} strings not marked for translation"
-            attachments: 'missing.txt'
-            body: |
-                Dear translators,
+      - email-ext:
+          recipients: "plone-i18n@lists.sourceforge.net"
+          reply-to: "no-reply@jenkins.plone.org"
+          content-type: default
+          always: true
+          failure: false
+          subject: "Jenkins: Plone {plone-version} strings not marked for translation"
+          attachments: "missing.txt"
+          body: |
+            Dear translators,
 
-                see attached a report for strings not marked for translation on Plone {plone-version}.
+            see attached a report for strings not marked for translation on Plone {plone-version}.
 
-                You can also see it online at:
+            You can also see it online at:
 
-                ${{BUILD_URL}}artifact/missing.txt
+            ${{BUILD_URL}}artifact/missing.txt
 
-                Yours truly,
-                Jenkins
+            Yours truly,
+            Jenkins
 
     <<: *plone-basic
 
@@ -650,71 +626,71 @@
 - property:
     name: custom-throttle
     properties:
-        - throttle:
-            max-total: '{total}'
-            enabled: '{enable}'
-            option: project
+      - throttle:
+          max-total: "{total}"
+          enabled: "{enable}"
+          option: project
 
 - scm:
     name: buildout-coredev
     scm:
-        - git:
-            url: https://github.com/plone/buildout.coredev.git
-            branches:
-                - '{branch}'
-            wipe-workspace: false
-            tag-builds: true
-            shallow-clone: true
-            depth: 10
-            do-not-fetch-tags: true
-            ignore-commits-with-messages:
-                - ci-skip
+      - git:
+          url: https://github.com/plone/buildout.coredev.git
+          branches:
+            - "{branch}"
+          wipe-workspace: false
+          tag-builds: true
+          shallow-clone: true
+          depth: 10
+          do-not-fetch-tags: true
+          ignore-commits-with-messages:
+            - ci-skip
 
 - publisher:
     name: custom-junit
     publishers:
-        - junit:
-            results: parts/test/testreports/*.xml
-            keep-long-stdio: false
+      - junit:
+          results: parts/test/testreports/*.xml
+          keep-long-stdio: false
 
 - publisher:
     name: custom-email-ext
     publishers:
-        - email-ext:
-            recipients: plone-testbot@lists.plone.org
-            reply-to: 'no-reply@jenkins.plone.org'
-            content-type: default
-            regression: true
-            failure: false
-            improvement: true
-            still-failing: true
-            fixed: true
+      - email-ext:
+          recipients: plone-testbot@lists.plone.org
+          reply-to: "no-reply@jenkins.plone.org"
+          content-type: default
+          regression: true
+          failure: false
+          improvement: true
+          still-failing: true
+          fixed: true
 
 - publisher:
     name: custom-archive
     publishers:
-        - archive:
-            artifacts: '{glob}'
-            allow-empty: 'true'
+      - archive:
+          artifacts: "{glob}"
+          allow-empty: "true"
 
 - wrapper:
     name: custom-workspace-cleanup
     wrappers:
-        - workspace-cleanup:
-            dirmatch: true
+      - workspace-cleanup:
+          dirmatch: true
 
 - wrapper:
     name: custom-timeout
     wrappers:
-        - timeout:
-            timeout: 180
-            type: absolute
-            abort: true
+      - timeout:
+          timeout: 180
+          type: absolute
+          abort: true
 
 - wrapper:
     name: custom-github-api-key
     wrappers:
-        - credentials-binding:
+      - credentials-binding:
           - text:
               credential-id: GITHUB_API_KEY
               variable: GITHUB_API_KEY
