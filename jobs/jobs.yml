@@ -101,19 +101,6 @@
 ### CORE JOBS (SCHEDULED)
 
 - project:
-    name: Plone 5.2 jobs on python 3.x (scheduled)
-    plone-version:
-      - "5.2"
-    py:
-      - "3.7":
-          python-version: "Python3.7"
-    browser:
-      - chrome
-    jobs:
-      - "plone-{plone-version}-python-{py}-scheduled"
-      - "plone-{plone-version}-python-{py}-robot-{browser}-scheduled"
-
-- project:
     name: Plone 6.x jobs on python 3.x (scheduled)
     plone-version:
       - "6.1"
