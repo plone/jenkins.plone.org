@@ -57,7 +57,7 @@ pyyaml==6.0.1
     # via
     #   ansible-core
     #   jenkins-job-builder
-requests==2.31.0
+requests==2.32.0
     # via python-jenkins
 resolvelib==1.0.1
     # via ansible-core
