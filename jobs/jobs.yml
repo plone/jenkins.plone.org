@@ -132,17 +132,6 @@
 ### OTHER
 
 - project:
-    name: Translations on Plone 5.2 for python 2.7
-    py:
-      - "2.7":
-          python-version: "Python2.7"
-    plone-version:
-      - "5.2"
-    jobs:
-      - "plone-{plone-version}-python-{py}-i18n"
-      - "plone-{plone-version}-python-{py}-i18n-find-missing"
-
-- project:
     name: Translations on Plone 6.0 for python 3.x
     py:
       - "3.8":
