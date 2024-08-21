@@ -146,7 +146,7 @@
     name: Translations of Volto (16.x.x)
     branch:
       - "16.x.x"
-      - "master"
+      - "main"
     python-version: "Python3.9"
     jobs:
       - "volto-translations-{branch}"
