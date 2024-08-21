@@ -18,10 +18,4 @@ i18ndude list -p cmfeditions  > reports/cmfeditions.txt
 i18ndude list -p cmfplacefulworkflow  > reports/cmfplacefulworkflow.txt
 i18ndude list -p plonefrontpage  > reports/plonefrontpage.txt
 i18ndude list -p plonelocales  > reports/plonelocales.txt
-
 i18ndude list -p widgets  > reports/widgets.txt
-
-if [ "{plone-version}" != "6.0" ]; then
-  i18ndude list -p atcontenttypes  > reports/atcontenttypes.txt
-  i18ndude list -p atreferencebrowserwidget  > reports/atreferencebrowserwidget.txt
-fi
