@@ -11,7 +11,7 @@ mkdir reports
 
 export PYTHONIOENCODING=utf-8
 
-alias i18ndude '../../../../../../bin/i18ndude'
+alias i18ndude='../../../../../../bin/i18ndude'
 
 i18ndude list -p plone > reports/plone.txt
 i18ndude list -p cmfeditions  > reports/cmfeditions.txt
