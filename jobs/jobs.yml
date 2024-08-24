@@ -143,9 +143,10 @@
       - "plone-{plone-version}-python-{py}-i18n-find-missing"
 
 - project:
-    name: Translations of Volto (16.x.x)
+    name: Translations of Volto
     branch:
       - "16.x.x"
+      - "17.x.x"
       - "main"
     python-version: "Python3.9"
     jobs:
@@ -232,7 +233,7 @@
 
     publishers:
       - custom-archive:
-          glob: "volto-18n-report.txt"
+          glob: "volto-i18n-report.txt"
 
     <<: *plone-basic
 
