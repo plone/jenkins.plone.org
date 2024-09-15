@@ -152,19 +152,19 @@
     jobs:
       - "volto-translations-{branch}"
 
-#- project:
-#    name: PLIPs
-#    plip:
-#        - plip-image-scales-metadata:
-#             buildout: plips/plip-image-scales-metadata.cfg
-#             branch: '6.0'
-#    py:
-#        - '3.12':
-#            python-version: 'Python3.9'
-#        - '3.8':
-#            python-version: 'Python3.8'
-#    jobs:
-#        - 'plip-{plip}-{py}'
+- project:
+    name: PLIPs
+    plip:
+      - plip-plone-distribution:
+          buildout: plips/plip-distributions.cfg
+          branch: "6.1"
+    py:
+      - "3.12":
+          python-version: "Python3.9"
+      - "3.8":
+          python-version: "Python3.8"
+    jobs:
+      - "plip-{plip}-{py}"
 
 ###
 # JOBS
