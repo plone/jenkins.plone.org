@@ -160,9 +160,9 @@
           branch: "6.1"
     py:
       - "3.12":
-          python-version: "Python3.9"
-      - "3.8":
-          python-version: "Python3.8"
+          python-version: "Python3.12"
+      - "3.10":
+          python-version: "Python3.10"
     jobs:
       - "plip-{plip}-{py}"
 
