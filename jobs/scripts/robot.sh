@@ -17,6 +17,10 @@ export ROBOTSUITE_PREFIX=ONLYROBOT
 if [[ "${{PLONE_VERSION}}" == 6* ]]; then
   export PLAYWRIGHT_BROWSERS_PATH='/home/jenkins/robot-browsers/'
 
+  # enable nvm
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
   bin/rfbrowser init
   bin/test -t ONLYROBOT --all --xml .
 else
