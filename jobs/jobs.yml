@@ -68,6 +68,8 @@
       - "6.0"
       - "5.2"
     py:
+      - "3.13":
+          python-version: "Python3.13"
       - "3.12":
           python-version: "Python3.12"
       - "3.11":
@@ -84,9 +86,13 @@
       - plone-version: "6.1"
         py: "3.8"
       - plone-version: "6.0"
+        py: "3.13"
+      - plone-version: "6.0"
         py: "3.12"
       - plone-version: "6.0"
         py: "3.10"
+      - plone-version: "5.2"
+        py: "3.13"
       - plone-version: "5.2"
         py: "3.12"
       - plone-version: "5.2"
@@ -106,6 +112,8 @@
       - "6.1"
       - "6.0"
     py:
+      - "3.13":
+          python-version: "Python3.13"
       - "3.12":
           python-version: "Python3.12"
       - "3.11":
@@ -123,6 +131,8 @@
         py: "3.10"
       - plone-version: "6.1"
         py: "3.9"
+      - plone-version: "6.0"
+        py: "3.13"
       - plone-version: "6.0"
         py: "3.11"
     jobs:
