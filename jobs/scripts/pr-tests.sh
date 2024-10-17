@@ -26,6 +26,10 @@ export PYTHONWARNINGS='ignore'
 if [[ "${{PLONE_VERSION}}" == 6* ]]; then
   export PLAYWRIGHT_BROWSERS_PATH='/home/jenkins/robot-browsers/'
 
+  # enable nvm
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
   bin/rfbrowser init
   # All tests without Robot
   bin/test --all --xml . -t '!ONLYROBOT' || return_code="$?"
