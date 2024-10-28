@@ -21,6 +21,6 @@ export PLAYWRIGHT_BROWSERS_PATH='/home/jenkins/robot-browsers/'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-bin/rfbrowser init
+bin/rfbrowser init chromium
 
 bin/test --xml . --all

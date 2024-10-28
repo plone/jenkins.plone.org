@@ -21,7 +21,7 @@ if [[ "${{PLONE_VERSION}}" == 6* ]]; then
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-  bin/rfbrowser init
+  bin/rfbrowser init chromium
   bin/test -t ONLYROBOT --all --xml .
 else
   bin/test -t ONLYROBOT --all --xml
