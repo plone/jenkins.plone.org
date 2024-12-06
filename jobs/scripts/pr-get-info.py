@@ -19,7 +19,7 @@ BRANCH = ''
 
 # version 20220318a -py3
 
-def error(message):
+def error(message, do_exit=True):
     print(
         '\n\n\n'
         f'{message}'
@@ -31,7 +31,8 @@ def error(message):
         'https://github.com/plone/jenkins.plone.org/issues/new'
         '\n\n\n'
     )
-    sys.exit(1)
+    if do_exit:
+        sys.exit(1)
 
 
 def api_key():
@@ -141,7 +142,7 @@ class PullRequest:
                 context=f'Plone Jenkins CI - {self.job_name}',
             )
         except UnknownObjectException:
-            error(f'Could not update Pull Request {self.url}')
+            error(f'Could not update Pull Request {self.url}', False)
 
     def _no_coredev_pkg(self):
         # export the packages so it can be reported by mail
