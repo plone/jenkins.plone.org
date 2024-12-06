@@ -76,6 +76,8 @@
           python-version: "Python3.11"
       - "3.10":
           python-version: "Python3.10"
+      - "3.9":
+          python-version: "Python3.9"
       - "3.8":
           python-version: "Python3.8"
     browser:
@@ -84,6 +86,8 @@
       - plone-version: "6.1"
         py: "3.11"
       - plone-version: "6.1"
+        py: "3.9"
+      - plone-version: "6.1"
         py: "3.8"
       - plone-version: "6.0"
         py: "3.13"
@@ -91,6 +95,8 @@
         py: "3.12"
       - plone-version: "6.0"
         py: "3.10"
+      - plone-version: "6.0"
+        py: "3.8"
       - plone-version: "5.2"
         py: "3.13"
       - plone-version: "5.2"
@@ -99,6 +105,8 @@
         py: "3.11"
       - plone-version: "5.2"
         py: "3.10"
+      - plone-version: "5.2"
+        py: "3.9"
     jobs:
       - "pull-request-{plone-version}-{py}"
       - "plone-{plone-version}-python-{py}"
@@ -126,6 +134,8 @@
       - chrome
     exclude:
       - plone-version: "6.1"
+        py: "3.13"
+      - plone-version: "6.1"
         py: "3.12"
       - plone-version: "6.1"
         py: "3.10"
@@ -135,6 +145,8 @@
         py: "3.13"
       - plone-version: "6.0"
         py: "3.11"
+      - plone-version: "6.0"
+        py: "3.9"
     jobs:
       - "plone-{plone-version}-python-{py}-scheduled"
       - "plone-{plone-version}-python-{py}-robot-{browser}-scheduled"
@@ -144,8 +156,8 @@
 - project:
     name: Translations on Plone 6.0 for python 3.x
     py:
-      - "3.8":
-          python-version: "Python3.8"
+      - "3.9":
+          python-version: "Python3.9"
     plone-version:
       - "6.0"
     jobs:
@@ -169,8 +181,8 @@
           buildout: plips/plip-distributions.cfg
           branch: "6.1"
     py:
-      - "3.12":
-          python-version: "Python3.12"
+      - "3.13":
+          python-version: "Python3.13"
       - "3.10":
           python-version: "Python3.10"
     jobs:
