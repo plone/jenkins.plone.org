@@ -3,10 +3,6 @@ set -x
 
 VOLTO_BRANCH="{branch}"
 
-python -m venv venv
-. venv/bin/activate
-pip install i18ndude
-
 export PYTHONIOENCODING=utf-8
 
 if [ "${{VOLTO_BRANCH}}" = "main" ]; then
@@ -18,4 +14,4 @@ else
 fi
 
 cd ${{path}}
-i18ndude list -p volto > ${{parent_path}}/volto-i18n-report.txt
+uv run -p {py} --with i18ndude i18ndude list -p volto > ${{parent_path}}/volto-i18n-report.txt
