@@ -106,6 +106,8 @@
       - "6.1"
       - "6.0"
     py:
+      - "3.14":
+          python-version: "Python3.14"
       - "3.12":
           python-version: "Python3.12"
       - "3.11":
@@ -119,6 +121,8 @@
         py: "3.10"
       - plone-version: "6.1"
         py: "3.10"
+      - plone-version: "6.0"
+        py: "3.14"
     jobs:
       - "plone-{plone-version}-python-{py}-scheduled"
       - "plone-{plone-version}-python-{py}-robot-{browser}-scheduled"
