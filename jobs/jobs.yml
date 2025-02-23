@@ -64,6 +64,7 @@
 - project:
     name: Plone 5.2 and 6.x
     plone-version:
+      - "6.2"
       - "6.1"
       - "6.0"
       - "5.2"
@@ -83,6 +84,14 @@
     browser:
       - chrome
     exclude:
+      - plone-version: "6.2"
+        py: "3.12"
+      - plone-version: "6.2"
+        py: "3.11"
+      - plone-version: "6.2"
+        py: "3.9"
+      - plone-version: "6.2"
+        py: "3.8"
       - plone-version: "6.1"
         py: "3.12"
       - plone-version: "6.1"
@@ -119,6 +128,7 @@
 - project:
     name: Plone 6.x jobs on python 3.x (scheduled)
     plone-version:
+      - "6.2"
       - "6.1"
       - "6.0"
     py:
@@ -131,6 +141,8 @@
     browser:
       - chrome
     exclude:
+      - plone-version: "6.2"
+        py: "3.10"
       - plone-version: "6.1"
         py: "3.10"
     jobs:
@@ -165,7 +177,7 @@
     plip:
       - plip-plone-distribution:
           buildout: plips/plip-distributions.cfg
-          branch: "6.1"
+          branch: "6.2"
     py:
       - "3.13":
           python-version: "Python3.13"
