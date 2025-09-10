@@ -146,7 +146,9 @@
       - "16.x.x"
       - "17.x.x"
       - "main"
-    python-version: "Python3.9"
+    py:
+      - "3.9":
+          python-version: "Python3.9"
     jobs:
       - "volto-translations-{branch}"
 
@@ -180,12 +182,7 @@
       - timed: "@weekly"
 
     builders:
-      - shining-panda:
-          build-environment: virtualenv
-          python-version: "{python-version}"
-          clear: true
-          nature: shell
-          command: !include-raw: scripts/translations.sh
+      - shell: !include-raw: scripts/translations.sh
 
     wrappers:
       - custom-workspace-cleanup
@@ -218,12 +215,7 @@
       - timed: "@weekly"
 
     builders:
-      - shining-panda:
-          build-environment: virtualenv
-          python-version: "{python-version}"
-          clear: true
-          nature: shell
-          command: !include-raw: scripts/volto-i18n.sh
+      - shell: !include-raw: scripts/volto-i18n.sh
 
     wrappers:
       - custom-workspace-cleanup
@@ -418,12 +410,7 @@
       - timed: "@weekly"
 
     builders:
-      - shining-panda:
-          build-environment: virtualenv
-          python-version: "{python-version}"
-          clear: true
-          nature: shell
-          command: !include-raw: scripts/i18n-find-untranslated.sh
+      - shell: !include-raw: scripts/i18n-find-untranslated.sh
 
     wrappers:
       - custom-workspace-cleanup
