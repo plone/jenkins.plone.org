@@ -1,6 +1,6 @@
 # PLONE JENKINS/CI
 
-This repository is used to configure <http://jenkins.plone.org>
+This repository is used to configure <https://jenkins.plone.org>
 
 ## Servers configuration
 
