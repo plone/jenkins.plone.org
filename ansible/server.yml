@@ -19,10 +19,6 @@
         host: "88.99.26.113"
         port: "8088"
         cores: "8"
-      - name: "Node2"
-        host: "tau.vm.zoplo.com"
-        port: "22"
-        cores: "8"
   vars_files:
     - secrets.yml
 
