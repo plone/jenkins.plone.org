@@ -61,6 +61,8 @@
       - "6.1"
       - "6.0"
     py:
+      - "3.14":
+          python-version: "Python3.14"
       - "3.13":
           python-version: "Python3.13"
       - "3.12":
@@ -75,17 +77,23 @@
       - chrome
     exclude:
       - plone-version: "6.2"
+        py: "3.13"
+      - plone-version: "6.2"
         py: "3.12"
       - plone-version: "6.2"
         py: "3.11"
       - plone-version: "6.2"
         py: "3.9"
       - plone-version: "6.1"
+        py: "3.14"
+      - plone-version: "6.1"
         py: "3.12"
       - plone-version: "6.1"
         py: "3.11"
       - plone-version: "6.1"
         py: "3.9"
+      - plone-version: "6.0"
+        py: "3.14"
       - plone-version: "6.0"
         py: "3.12"
       - plone-version: "6.0"
@@ -106,8 +114,8 @@
       - "6.1"
       - "6.0"
     py:
-      - "3.14":
-          python-version: "Python3.14"
+      - "3.13":
+          python-version: "Python3.13"
       - "3.12":
           python-version: "Python3.12"
       - "3.11":
@@ -121,8 +129,10 @@
         py: "3.10"
       - plone-version: "6.1"
         py: "3.10"
+      - plone-version: "6.1"
+        py: "3.13"
       - plone-version: "6.0"
-        py: "3.14"
+        py: "3.13"
     jobs:
       - "plone-{plone-version}-python-{py}-scheduled"
       - "plone-{plone-version}-python-{py}-robot-{browser}-scheduled"
