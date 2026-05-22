@@ -57,6 +57,7 @@
 - project:
     name: Plone 6.x
     plone-version:
+      - "6.3"
       - "6.2"
       - "6.1"
       - "6.0"
@@ -84,6 +85,14 @@
         py: "3.11"
       - plone-version: "6.2"
         py: "3.9"
+      - plone-version: "6.3"
+        py: "3.13"
+      - plone-version: "6.3"
+        py: "3.12"
+      - plone-version: "6.3"
+        py: "3.11"
+      - plone-version: "6.3"
+        py: "3.9"
       - plone-version: "6.1"
         py: "3.14"
       - plone-version: "6.1"
@@ -110,6 +119,7 @@
 - project:
     name: Plone 6.x jobs on python 3.x (scheduled)
     plone-version:
+      - "6.3"
       - "6.2"
       - "6.1"
       - "6.0"
@@ -125,6 +135,8 @@
     browser:
       - chrome
     exclude:
+      - plone-version: "6.3"
+        py: "3.10"
       - plone-version: "6.2"
         py: "3.10"
       - plone-version: "6.1"
