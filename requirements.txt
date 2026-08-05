@@ -18,7 +18,7 @@ charset-normalizer==3.4.9
     # via requests
 click==8.4.2
     # via pip-tools
-cryptography==49.0.0
+cryptography==50.0.0
     # via ansible-core
 fasteners==0.20
     # via jenkins-job-builder
