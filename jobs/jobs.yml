@@ -168,7 +168,9 @@
       - "16.x.x"
       - "17.x.x"
       - "main"
-    python-version: "Python3.9"
+    py:
+      - "3.9":
+          python-version: "Python3.9"
     jobs:
       - "volto-translations-{branch}"
 
@@ -202,12 +204,7 @@
       - timed: "@weekly"
 
     builders:
-      - shining-panda:
-          build-environment: virtualenv
-          python-version: "{python-version}"
-          clear: true
-          nature: shell
-          command: !include-raw: scripts/translations.sh
+      - shell: !include-raw-expand: scripts/translations.sh
 
     wrappers:
       - custom-workspace-cleanup
@@ -240,12 +237,7 @@
       - timed: "@weekly"
 
     builders:
-      - shining-panda:
-          build-environment: virtualenv
-          python-version: "{python-version}"
-          clear: true
-          nature: shell
-          command: !include-raw: scripts/volto-i18n.sh
+      - shell: !include-raw-expand: scripts/volto-i18n.sh
 
     wrappers:
       - custom-workspace-cleanup
@@ -266,7 +258,7 @@
           branch: "{plone-version}"
 
     builders:
-      - shell: !include-raw: scripts/tests.sh
+      - shell: !include-raw-expand: scripts/tests.sh
 
     publishers:
       - custom-junit
@@ -293,7 +285,7 @@
           branch: "{plone-version}"
 
     builders:
-      - shell: !include-raw: scripts/robot.sh
+      - shell: !include-raw-expand: scripts/robot.sh
 
     publishers:
       - custom-email-ext
@@ -336,7 +328,7 @@
           branch: "{branch}"
 
     builders:
-      - shell: !include-raw: scripts/plips.sh
+      - shell: !include-raw-expand: scripts/plips.sh
 
     publishers:
       - custom-junit
@@ -359,7 +351,7 @@
           always: true
           failure: false
           subject: "Jenkins PLIP {plip} on {py} [${{BUILD_STATUS}}]"
-          body: !include-raw: scripts/plips.email
+          body: !include-raw-expand: scripts/plips.email
 
     <<: *plone-basic
 
@@ -394,12 +386,12 @@
           python-version: "Python3.9"
           name: pull_request
           nature: python
-          command: !include-raw-escape: scripts/pr-get-info.py
+          command: !include-raw-verbatim: scripts/pr-get-info.py
 
       - inject:
           properties-file: vars.properties
 
-      - shell: !include-raw: scripts/pr-tests.sh
+      - shell: !include-raw-expand: scripts/pr-tests.sh
 
     publishers:
       - junit:
@@ -424,7 +416,7 @@
           always: true
           failure: false
           subject: "Jenkins Pull Request Job [${{BUILD_STATUS}}]: packages ${{PKGS}}"
-          body: !include-raw: scripts/pr.email
+          body: !include-raw-expand: scripts/pr.email
 
     <<: *plone-basic
 
@@ -440,12 +432,7 @@
       - timed: "@weekly"
 
     builders:
-      - shining-panda:
-          build-environment: virtualenv
-          python-version: "{python-version}"
-          clear: true
-          nature: shell
-          command: !include-raw: scripts/i18n-find-untranslated.sh
+      - shell: !include-raw-expand: scripts/i18n-find-untranslated.sh
 
     wrappers:
       - custom-workspace-cleanup
