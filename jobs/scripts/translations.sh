@@ -1,8 +1,7 @@
 #!/bin/sh
 set -x
 
-pip install -r requirements.txt
-buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
+uv run -p {py} --with-requirements requirements.txt buildout buildout:git-clone-depth=1 -c experimental/i18n.cfg install i18ndude i18n i18n-update-all
 
 ./bin/i18n-update-all
 
@@ -11,11 +10,9 @@ mkdir reports
 
 export PYTHONIOENCODING=utf-8
 
-alias i18ndude='../../../../../../bin/i18ndude'
-
-i18ndude list -p plone > reports/plone.txt
-i18ndude list -p cmfeditions  > reports/cmfeditions.txt
-i18ndude list -p cmfplacefulworkflow  > reports/cmfplacefulworkflow.txt
-i18ndude list -p plonefrontpage  > reports/plonefrontpage.txt
-i18ndude list -p plonelocales  > reports/plonelocales.txt
-i18ndude list -p widgets  > reports/widgets.txt
+uv run -p {py} --with i18ndude i18ndude list -p plone > reports/plone.txt
+uv run -p {py} --with i18ndude i18ndude list -p cmfeditions  > reports/cmfeditions.txt
+uv run -p {py} --with i18ndude i18ndude list -p cmfplacefulworkflow  > reports/cmfplacefulworkflow.txt
+uv run -p {py} --with i18ndude i18ndude list -p plonefrontpage  > reports/plonefrontpage.txt
+uv run -p {py} --with i18ndude i18ndude list -p plonelocales  > reports/plonelocales.txt
+uv run -p {py} --with i18ndude i18ndude list -p widgets  > reports/widgets.txt
