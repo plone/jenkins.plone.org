@@ -62,6 +62,8 @@
       - "6.1"
       - "6.0"
     py:
+      - "3.15":
+          python-version: "Python3.15"
       - "3.14":
           python-version: "Python3.14"
       - "3.13":
@@ -78,21 +80,27 @@
       - chrome
     exclude:
       - plone-version: "6.2"
+        py: "3.14"
+      - plone-version: "6.2"
         py: "3.13"
       - plone-version: "6.2"
         py: "3.12"
       - plone-version: "6.2"
-        py: "3.11"
+        py: "3.10"
       - plone-version: "6.2"
         py: "3.9"
+      - plone-version: "6.3"
+        py: "3.14"
       - plone-version: "6.3"
         py: "3.13"
       - plone-version: "6.3"
         py: "3.12"
       - plone-version: "6.3"
-        py: "3.11"
+        py: "3.10"
       - plone-version: "6.3"
         py: "3.9"
+      - plone-version: "6.1"
+        py: "3.15"
       - plone-version: "6.1"
         py: "3.14"
       - plone-version: "6.1"
@@ -101,6 +109,8 @@
         py: "3.11"
       - plone-version: "6.1"
         py: "3.9"
+      - plone-version: "6.0"
+        py: "3.15"
       - plone-version: "6.0"
         py: "3.14"
       - plone-version: "6.0"
@@ -124,6 +134,8 @@
       - "6.1"
       - "6.0"
     py:
+      - "3.14":
+          python-version: "Python3.14"
       - "3.13":
           python-version: "Python3.13"
       - "3.12":
@@ -136,13 +148,21 @@
       - chrome
     exclude:
       - plone-version: "6.3"
+        py: "3.11"
+      - plone-version: "6.3"
         py: "3.10"
+      - plone-version: "6.2"
+        py: "3.11"
       - plone-version: "6.2"
         py: "3.10"
       - plone-version: "6.1"
-        py: "3.10"
+        py: "3.14"
       - plone-version: "6.1"
         py: "3.13"
+      - plone-version: "6.1"
+        py: "3.10"
+      - plone-version: "6.0"
+        py: "3.14"
       - plone-version: "6.0"
         py: "3.13"
     jobs:
@@ -179,10 +199,10 @@
           buildout: plips/plip-distributions.cfg
           branch: "6.2"
     py:
-      - "3.13":
-          python-version: "Python3.13"
-      - "3.10":
-          python-version: "Python3.10"
+      - "3.15":
+          python-version: "Python3.15"
+      - "3.11":
+          python-version: "Python3.11"
     jobs:
       - "plip-{plip}-{py}"
 
